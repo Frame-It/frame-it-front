@@ -12,4 +12,4 @@ next.config.ts
 
 .env
 
-.github
+/github
