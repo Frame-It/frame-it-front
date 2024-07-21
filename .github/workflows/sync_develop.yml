@@ -10,22 +10,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout master
+      - name: Checkout develop
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.ACCESS_TOKEN }}
           fetch-depth: 0
-          ref: master
+          ref: develop
 
       - name: Add remote-url and Merge forked-repo changes
         run: |
-          git remote add forked-repo https://osh6006:${{ secrets.ACCESS_TOKEN }}@github.com/osh6006/frame-it-front
+          git remote add forked-repo https://osh6006:${{ secrets.ACCESS_TOKEN }}@github.com/osh6006/Maplanet_Front
           git config user.name osh6006
           git config user.email ohs6006@gmail.com
 
       - name: Push changes to forked-repo
         run: |
-          git push -f forked-repo master
+          git push -f forked-repo develop
 
       - name: Clean up
         run: |
