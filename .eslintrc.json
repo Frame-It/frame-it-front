@@ -67,5 +67,5 @@
       "version": "detect"
     }
   },
-  "ignorePatterns": ["public", "node_modules", ".github"]
+  "ignorePatterns": ["public", "next"]
 }
