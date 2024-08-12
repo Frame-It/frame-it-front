@@ -28,8 +28,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn(pretendard.className, 'mx-auto max-w-[640px]')}>
-        {children}
+      <body className={cn(pretendard.className)}>
+        <div className="mx-auto max-w-[640px] bg-red-300">{children}</div>
       </body>
     </html>
   );
