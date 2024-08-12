@@ -1,9 +1,8 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter } from 'next/font/google';
 import './globals.css';
 import { cn } from '@/lib/utils';
 
-const inter = Inter({ subsets: ['latin'] });
+import localFont from 'next/font/local';
 
 export const metadata: Metadata = {
   manifest: '/manifest.json',
@@ -15,6 +14,13 @@ export const viewport: Viewport = {
   themeColor: '#FFFFFF',
 };
 
+const pretendard = localFont({
+  src: '../fonts/PretendardVariable.woff2',
+  display: 'swap',
+  weight: '45 920',
+  variable: '--font-pretendard',
+});
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -22,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn(inter.className, 'mx-auto max-w-[640px]')}>
+      <body className={cn(pretendard.className, 'mx-auto max-w-[640px]')}>
         {children}
       </body>
     </html>
