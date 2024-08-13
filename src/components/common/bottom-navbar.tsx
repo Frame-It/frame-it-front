@@ -2,9 +2,9 @@
 
 import Link from 'next/link';
 import Icon from './icon';
-import { IConIdType } from '@/constants/icons';
 import { cn } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
+import IconIDTypes from '@/types/icon';
 
 // 원하면 path를 props로
 interface IBottomBarProps {}
@@ -12,7 +12,7 @@ interface IBottomBarProps {}
 interface IbottombarPaths {
   path: string;
   name: string;
-  iconId: IConIdType;
+  iconId: IconIDTypes;
 }
 interface INavLinkProps extends IbottombarPaths {
   children?: React.ReactNode;
