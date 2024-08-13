@@ -1,4 +1,4 @@
-export type bottomNavIconID =
+export type BottomNavIconID =
   | 'search-icon'
   | 'feed-icon'
   | 'profile-icon'

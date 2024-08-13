@@ -1,7 +1,7 @@
-import { IConIdType } from '@/constants/icons';
+import IconIDTypes from '@/types/icon';
 
 interface IIconProps {
-  id: IConIdType;
+  id: IconIDTypes;
   size?: number | string;
 }
 
