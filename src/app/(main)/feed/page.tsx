@@ -1,3 +1,4 @@
+import BottomNavbar from '@/components/common/bottom-navbar';
 import Header from '@/components/common/header';
 import React from 'react';
 
@@ -9,6 +10,7 @@ export default function FeedPage() {
         center={<div>중간</div>}
         right={<div>오른쪽</div>}
       />
+      <BottomNavbar />
     </div>
   );
 }

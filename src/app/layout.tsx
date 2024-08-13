@@ -3,6 +3,7 @@ import './globals.css';
 import { cn } from '@/lib/utils';
 
 import localFont from 'next/font/local';
+import SvgSymbols from '@/components/common/svg-symbols';
 
 export const metadata: Metadata = {
   manifest: '/manifest.json',
@@ -30,6 +31,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={cn(pretendard.className)}>
         <div className="mx-auto max-w-[640px] bg-red-300">{children}</div>
+        <SvgSymbols />
       </body>
     </html>
   );
