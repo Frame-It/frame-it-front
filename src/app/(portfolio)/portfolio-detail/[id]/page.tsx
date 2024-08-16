@@ -1,3 +1,7 @@
 export default function PortfolioDetailPage() {
-  return <div>PortfolioDetailPage</div>;
+  return (
+    <div>
+      <section></section>
+    </div>
+  );
 }
