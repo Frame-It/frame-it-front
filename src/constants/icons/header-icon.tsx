@@ -47,7 +47,7 @@ export const headerSVG = (
     </symbol>
 
     {/* share */}
-    <svg
+    <symbol
       viewBox="0 0 24 24"
       fill="none"
       id="share-icon"
@@ -90,6 +90,6 @@ export const headerSVG = (
           strokeLinejoin="round"
         />
       </g>
-    </svg>
+    </symbol>
   </>
 );

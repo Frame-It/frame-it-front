@@ -9,15 +9,15 @@ export default function PortfolioLayout({
 }) {
   return (
     <>
-      <Header>
+      <Header className="border-none shadow-none">
         <HeaderLeft>
           <Icon id="back-icon" size={24} />
         </HeaderLeft>
         <HeaderRight>
-          <Icon id="share-icon" size={24} />
+          <Icon id="share-icon" size={26} />
         </HeaderRight>
       </Header>
-      <main>{children}</main>
+      <main className="mb-[16px] mt-[56px] px-[16px]">{children}</main>
     </>
   );
 }

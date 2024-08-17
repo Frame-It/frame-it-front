@@ -1,5 +1,8 @@
 import { faker } from '@faker-js/faker';
 
 export const generateRandomImage = () => {
-  return faker.image.urlPicsumPhotos();
+  return {
+    imageUrl: faker.image.urlPicsumPhotos(),
+    height: [183, 411],
+  };
 };
