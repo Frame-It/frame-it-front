@@ -17,7 +17,7 @@ const PortfolioDetailFooter: React.FunctionComponent<
         <span>곱슬머리님과 작업했습니다.</span>
       </div>
       <div className="flex items-center gap-x-[8px]">
-        <Icon id="calendar-icon" size={24} />
+        <Icon id="calendar-icon" size={24} className="text-[#7E7774]" />
         <time>2024. 08. 04 일요일</time>
       </div>
       <div className="flex items-center gap-x-[8px]">
