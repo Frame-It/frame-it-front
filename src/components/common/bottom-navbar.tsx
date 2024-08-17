@@ -9,17 +9,17 @@ import IconIDTypes from '@/types/icon';
 // 원하면 path를 props로
 interface IBottomBarProps {}
 
-interface IbottombarPaths {
+interface IBottombarPaths {
   path: string;
   name: string;
   iconId: IconIDTypes;
 }
-interface INavLinkProps extends IbottombarPaths {
+interface INavLinkProps extends IBottombarPaths {
   children?: React.ReactNode;
   active?: boolean;
 }
 
-const bottombarPaths: IbottombarPaths[] = [
+const bottombarPaths: IBottombarPaths[] = [
   {
     path: '/',
     name: '모집',
