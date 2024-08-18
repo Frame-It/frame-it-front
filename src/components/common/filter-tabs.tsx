@@ -8,11 +8,40 @@ import {
   TabsTriggerProps,
 } from '@radix-ui/react-tabs';
 
-const FilterTabs = ({ ...props }: TabsProps) => {
+type TabItem = {
+  label: string;
+  value: string;
+};
+
+interface IFilterTabsProps {
+  defaultValue: string;
+  onValueChange: (value: string) => void;
+  tabsData: TabItem[];
+}
+
+const FilterTabs = ({
+  defaultValue,
+  onValueChange,
+  tabsData,
+}: IFilterTabsProps) => {
+  return (
+    <CustomTabs defaultValue={defaultValue} onValueChange={onValueChange}>
+      <CustomTabsList>
+        {tabsData.map((tab) => (
+          <CustomTabsTrigger key={tab.value} value={tab.value}>
+            {tab.label}
+          </CustomTabsTrigger>
+        ))}
+      </CustomTabsList>
+    </CustomTabs>
+  );
+};
+
+const CustomTabs = ({ ...props }: TabsProps) => {
   return <Tabs className={cn('flex flex-col')} {...props} />;
 };
 
-const FilterTabsList = ({ className, ...props }: TabsListProps) => {
+const CustomTabsList = ({ className, ...props }: TabsListProps) => {
   return (
     <TabsList
       className={cn(
@@ -25,7 +54,7 @@ const FilterTabsList = ({ className, ...props }: TabsListProps) => {
   );
 };
 
-const FilterTabsTrigger = ({ className, ...props }: TabsTriggerProps) => {
+const CustomTabsTrigger = ({ className, ...props }: TabsTriggerProps) => {
   return (
     <TabsTrigger
       className={cn(
@@ -39,4 +68,4 @@ const FilterTabsTrigger = ({ className, ...props }: TabsTriggerProps) => {
   );
 };
 
-export { FilterTabs, FilterTabsList, FilterTabsTrigger };
+export { CustomTabs, CustomTabsList, CustomTabsTrigger, FilterTabs };
