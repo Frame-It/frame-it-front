@@ -7,6 +7,7 @@ export const generateRandomImageList = () => {
   const roles = ['model', 'author'];
 
   return {
+    id: faker.string.uuid(),
     url: faker.image.urlPicsumPhotos({
       width,
       height,
