@@ -9,7 +9,7 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="pb-[65.93px] pt-[56px]">
+    <div className="h-screen pb-[65.93px] pt-[56px]">
       <Header>
         <HeaderLeft>
           <Image src="/logo.png" alt="로고" width={65} height={23} />
