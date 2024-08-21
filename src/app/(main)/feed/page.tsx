@@ -1,28 +1,24 @@
 import BottomNavbar from '@/components/common/bottom-navbar';
-import {
-  Header,
-  HeaderCenter,
-  HeaderLeft,
-  HeaderRight,
-} from '@/components/common/header';
+import { Header, HeaderLeft, HeaderRight } from '@/components/common/header';
 import Icon from '@/components/common/icon';
 import FeedList from '@/components/feed/feed-list';
 import Image from 'next/image';
 
 export default function FeedPage() {
   return (
-    <div className="pb-[65.93px] pt-[56px]">
-      {/* <Header
-        left={<Image src="/logo.png" alt="로고" width={65} height={23} />}
-        right={<Icon id="notification-icon" className="h-6 w-6" />}
-      /> */}
+    <div className="pb-[66px] pt-[56px]">
       <Header>
         <HeaderLeft>
-          <Image src="/logo.png" alt="로고" width={65} height={23} />
+          <div className="relative h-[23px] w-[65px]">
+            <Image
+              src="/logo.png"
+              alt="로고"
+              priority
+              fill
+              className="object-contain"
+            />
+          </div>
         </HeaderLeft>
-        <HeaderCenter>
-          <div>여기는 센터다</div>
-        </HeaderCenter>
         <HeaderRight>
           <Icon id="notification-icon" className="h-6 w-6" />
         </HeaderRight>
