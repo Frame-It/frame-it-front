@@ -1,6 +1,8 @@
 'use client';
 
 import { FilterTabs } from '@/components/common/filter-tabs';
+import RecruitCard from '@/components/recruit/recruit-card';
+import { cn } from '@/lib/utils';
 import { USER_TYPE, UserValue } from '@/types/filter';
 
 interface ITabData {
@@ -22,20 +24,25 @@ const RecruitPage = () => {
   };
 
   return (
-    <div>
-      <FilterTabs
-        defaultValue="ALL"
-        onValueChange={handleChange}
-        tabsData={tabsData}
-      />
-      <div>필터</div>
-      <div>
-        <div>구인 카드</div>
-        <div>구인 카드</div>
-        <div>구인 카드</div>
-        <div>구인 카드</div>
-        <div>구인 카드</div>
-        <div>구인 카드</div>
+    <div className={cn('relative h-[calc(100vh-122px)] overflow-hidden')}>
+      <div className={cn('sticky z-10 bg-white')}>
+        <FilterTabs
+          defaultValue="ALL"
+          onValueChange={handleChange}
+          tabsData={tabsData}
+        />
+        <div className={cn('h-[46px]')}>기타 필터</div>
+      </div>
+      <div className={cn('h-[calc(100%-94px)] overflow-auto py-[19px]')}>
+        <div className={cn('flex flex-col gap-[16px] px-[16px]')}>
+          <RecruitCard />
+          <RecruitCard />
+          <RecruitCard />
+          <RecruitCard />
+          <RecruitCard />
+          <RecruitCard />
+          <RecruitCard />
+        </div>
       </div>
     </div>
   );
