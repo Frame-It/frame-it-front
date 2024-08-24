@@ -7,14 +7,15 @@ import {
   Drawer as UiDrawer,
 } from '@/components/ui/drawer';
 import { cn } from '@/lib/utils';
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, ReactNode } from 'react';
 import Icon from './icon';
 
 interface IDrawerProps {
   title: string;
   open: boolean;
   toggleOpen: () => void;
-  onClose?: () => void;
+  onClose: () => void;
+  trigger: ReactNode;
 }
 
 const Drawer = ({
@@ -22,20 +23,21 @@ const Drawer = ({
   open,
   toggleOpen,
   onClose,
+  trigger,
   children,
 }: IDrawerProps & PropsWithChildren) => {
   return (
     <UiDrawer open={open}>
       <DrawerTrigger asChild>
         <button className="btn-primary" onClick={toggleOpen}>
-          Open Drawer
+          {trigger}
         </button>
       </DrawerTrigger>
       <DrawerContent>
-        <DrawerHeader className={cn('flex justify-between')}>
-          <DrawerTitle>{title}</DrawerTitle>
+        <DrawerHeader className={cn('flex items-center justify-between')}>
+          <DrawerTitle className={cn('text-[#4D4744]')}>{title}</DrawerTitle>
           <DrawerClose asChild>
-            <button className="btn-primary" onClick={toggleOpen}>
+            <button className="btn-primary" onClick={onClose}>
               <Icon id="close-icon" size={24} />
             </button>
           </DrawerClose>
