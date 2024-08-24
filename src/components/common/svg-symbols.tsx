@@ -1,4 +1,5 @@
 import { bottomNavSVG } from '@/constants/icons/bottombar-icon';
+import { drawerSVG } from '@/constants/icons/drawer-icon';
 import { headerSVG } from '@/constants/icons/header-icon';
 import { portfolioSVG } from '@/constants/icons/portfolio-icon';
 import { recruitSVG } from '@/constants/icons/recruit-icon';
@@ -9,6 +10,7 @@ const SvgSymbols: React.FunctionComponent = () => (
     {headerSVG}
     {portfolioSVG}
     {recruitSVG}
+    {drawerSVG}
   </svg>
 );
 

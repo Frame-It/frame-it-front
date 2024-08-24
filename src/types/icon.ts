@@ -1,4 +1,5 @@
 import { BottomNavIconID } from '@/constants/icons/bottombar-icon';
+import { DrawerIconID } from '@/constants/icons/drawer-icon';
 import { HeaderIconID } from '@/constants/icons/header-icon';
 import { PortfolioIconID } from '@/constants/icons/portfolio-icon';
 import { RecruitIconID } from '@/constants/icons/recruit-icon';
@@ -8,6 +9,7 @@ type IconIDTypes =
   | HeaderIconID
   | BottomNavIconID
   | PortfolioIconID
-  | RecruitIconID;
+  | RecruitIconID
+  | DrawerIconID;
 
 export default IconIDTypes;
