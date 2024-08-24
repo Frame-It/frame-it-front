@@ -1,6 +1,6 @@
 'use client';
 
-import { generateRandomImage } from '@/lib/faker';
+import { generateRandomImageList } from '@/lib/faker';
 import { cn } from '@/lib/utils';
 import { faker } from '@faker-js/faker/locale/ko';
 import Image from 'next/image';
@@ -12,10 +12,11 @@ const RecruitCard = () => {
 
   // 임시
   useEffect(() => {
-    const generatedImage = generateRandomImage();
+    const generatedImage = generateRandomImageList().url;
+
     setTemp({
       type: '모델구인',
-      image: generatedImage,
+      imageUrl: generatedImage,
       title: faker.music.songName(),
       location: faker.location.city(),
       date: faker.date.anytime(),
@@ -27,7 +28,7 @@ const RecruitCard = () => {
 
   return (
     <div className={cn('flex h-full w-full gap-[12px]')}>
-      <Thumbnail imageUrl={temp.image.imageUrl} />
+      <Thumbnail imageUrl={temp.imageUrl} />
       <div
         className={cn(
           'flex w-[calc(100%-160px)] flex-[1_1_0] flex-col justify-between gap-[5px]',
