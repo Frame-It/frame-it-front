@@ -1,15 +1,16 @@
 'use client';
 
+import Drawer from '@/components/common/drawer';
 import { FilterTabs } from '@/components/common/filter-tabs';
 import RecruitCard, {
   IRecruitCardProps,
 } from '@/components/recruit/recruit-card';
+import useDisclosure from '@/hooks/useDisclosure';
 import { generateRandomImageList } from '@/lib/faker';
 import { cn } from '@/lib/utils';
 import { USER_TYPE, UserValue } from '@/types/filter';
 import { faker } from '@faker-js/faker/locale/ko';
 import { useEffect, useState } from 'react';
-
 interface ITabData {
   value: UserValue;
   label: string;
@@ -27,6 +28,8 @@ const RecruitPage = () => {
   const [tempRecruitList, setTempRecruitList] = useState<IRecruitCardProps[]>(
     [],
   );
+
+  const { isOpen, toggle } = useDisclosure();
 
   const handleChange = (value: string) => {
     console.log('handleChange', value);
@@ -57,7 +60,17 @@ const RecruitPage = () => {
           onValueChange={handleChange}
           tabsData={tabsData}
         />
-        <div className={cn('h-[46px]')}>기타 필터</div>
+        <div className={cn('h-[46px]')}>
+          <Drawer
+            title={'title'}
+            open={isOpen}
+            onClose={toggle}
+            toggleOpen={toggle}
+            trigger={'기타 필터'}
+          >
+            filter drawer
+          </Drawer>
+        </div>
       </div>
       <div className={cn('h-[calc(100%-94px)] overflow-auto py-[19px]')}>
         <div className={cn('flex flex-col gap-[16px] px-[16px]')}>
