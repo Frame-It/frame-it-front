@@ -34,7 +34,10 @@ const RecruitCard = (props: IRecruitCardProps) => {
           >
             {props.title}
           </p>
-          <Icon id="bookmark-icon" className="h-[24px] w-[24px]" />
+          <Icon
+            id="bookmark-icon"
+            className="h-[24px] w-[24px] flex-shrink-0"
+          />
         </div>
         <div
           className={cn(
