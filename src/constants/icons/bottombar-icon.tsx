@@ -2,7 +2,8 @@ export type BottomNavIconID =
   | 'search-icon'
   | 'feed-icon'
   | 'profile-icon'
-  | 'talk-icon';
+  | 'talk-icon'
+  | 'add-icon';
 
 export const bottomNavSVG = (
   <>
@@ -43,6 +44,35 @@ export const bottomNavSVG = (
           strokeLinejoin="round"
         />
       </g>
+    </symbol>
+
+    {/* add */}
+    <symbol
+      id="add-icon"
+      viewBox="0 0 32 32"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g clipPath="url(#clip0_2326_2278)">
+        <circle cx="16" cy="16" r="11" stroke="currentColor" strokeWidth="2" />
+        <path
+          d="M16 10L16 22"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+        />
+        <path
+          d="M22 16H10"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_2326_2278">
+          <rect width="32" height="32" fill="white" />
+        </clipPath>
+      </defs>
     </symbol>
 
     {/* profile */}
