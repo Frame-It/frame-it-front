@@ -43,7 +43,7 @@ const bottombarPaths: IBottombarPaths[] = [
     iconId: 'talk-icon',
   },
   {
-    path: '/my',
+    path: '/my-studio',
     name: '마이',
     iconId: 'profile-icon',
   },

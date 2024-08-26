@@ -30,7 +30,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn(pretendard.className)}>
-        <div className="mx-auto max-w-[640px]">{children}</div>
+        <div className="mx-auto max-w-[640px] overflow-x-hidden">
+          {children}
+        </div>
         <SvgSymbols />
       </body>
     </html>
