@@ -17,7 +17,18 @@ const MyStudioPortfolioGallery: React.FunctionComponent<
   IPortfolioGalleryProps
 > = ({ imageArr }) => {
   return (
-    <div className="mt-[8px]">
+    <section className="mt-[8px]">
+      {/* <div className="flex items-center justify-center">
+         <div className="mt-[46px] space-y-1 text-center">
+          <p className="text-[16px] font-[600] leading-[135%]">
+            아직 등록된 포트폴리오가 없습니다.
+          </p>
+          <p className="text-[14px] leading-[150%] text-[#B4ADA9]">
+            포트폴리오를 등록해 매력을 뽐내주세요!
+          </p>
+        </div>
+      </div> */}
+
       {/* {imageArr.map((image) => (
         <div
           key={image.id}
@@ -76,7 +87,7 @@ const MyStudioPortfolioGallery: React.FunctionComponent<
           </div>
         ))} */}
       </Masonry>
-    </div>
+    </section>
   );
 };
 

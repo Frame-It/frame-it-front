@@ -10,9 +10,7 @@ interface IMySturioFilterProps {}
 const MySturioFilter: React.FunctionComponent<IMySturioFilterProps> = () => {
   const pathName = usePathname();
   const searchParams = useSearchParams();
-  const filter = searchParams.get('type');
-
-  console.log(filter);
+  const filter = searchParams.get('type') || 'portfolio';
 
   return (
     <section className="mt-[12px] flex items-center gap-x-[16px] px-[16px] py-[8px]">
