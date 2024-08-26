@@ -1,34 +1,22 @@
 'use client';
 
-import { generateRandomImageList } from '@/lib/faker';
 import { cn } from '@/lib/utils';
-import { faker } from '@faker-js/faker/locale/ko';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
 import Icon from '../common/icon';
 
-const RecruitCard = () => {
-  const [temp, setTemp] = useState<any>(null);
+export interface IRecruitCardProps {
+  type: '모델구인' | '작가구인';
+  imageUrl: string;
+  title: string;
+  location: string;
+  date: string;
+  tagList: string[];
+}
 
-  // 임시
-  useEffect(() => {
-    const generatedImage = generateRandomImageList().url;
-
-    setTemp({
-      type: '모델구인',
-      imageUrl: generatedImage,
-      title: faker.music.songName(),
-      location: faker.location.city(),
-      date: faker.date.anytime(),
-      tagList: Array.from({ length: 7 }, () => faker.music.genre()),
-    });
-  }, []);
-
-  if (!temp) return null;
-
+const RecruitCard = (props: IRecruitCardProps) => {
   return (
     <div className={cn('flex h-full w-full gap-[12px]')}>
-      <Thumbnail imageUrl={temp.imageUrl} />
+      <Thumbnail imageUrl={props.imageUrl} />
       <div
         className={cn(
           'flex w-[calc(100%-160px)] flex-[1_1_0] flex-col justify-between gap-[5px]',
@@ -44,9 +32,12 @@ const RecruitCard = () => {
               'flex self-stretch text-[16px] font-semibold leading-[1.35] text-[#201A17]',
             )}
           >
-            {temp.title}
+            {props.title}
           </p>
-          <Icon id="bookmark-icon" className="h-[24px] w-[24px]" />
+          <Icon
+            id="bookmark-icon"
+            className="h-[24px] w-[24px] flex-shrink-0"
+          />
         </div>
         <div
           className={cn(
@@ -55,13 +46,13 @@ const RecruitCard = () => {
         >
           <div className={cn('flex items-center gap-[6px]')}>
             <Icon id="location-icon" className="h-[18px] w-[18px]" />
-            <span>{temp.location}</span>
+            <span>{props.location}</span>
           </div>
           <div className={cn('flex items-center gap-[6px]')}>
             <Icon id="time-icon" className="h-[18px] w-[18px]" />
-            <span>{temp.date.toDateString()}</span>
+            <span>{props.date}</span>
           </div>
-          <TagList tags={temp.tagList} />
+          <TagList tags={props.tagList} />
         </div>
       </div>
     </div>
@@ -75,6 +66,7 @@ const Thumbnail = ({ imageUrl }: { imageUrl: string }) => {
         src={imageUrl}
         alt={'recruit image'}
         fill
+        sizes="120px"
         className={cn('rounded-[5.565px] object-cover')}
       />
       <div
