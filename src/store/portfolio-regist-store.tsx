@@ -23,19 +23,27 @@ export const usePortfolioRegisterStore = create<PortfolioRegisterState>(
       name: '',
       email: '',
     },
-    nextStep() {
-      if (this.currentStep === 2) {
-        return;
-      }
-      return set((state) => ({ currentStep: state.currentStep + 1 }));
-    },
+
     prevStep() {
-      if (this.currentStep === 1) {
-        return;
-      }
-      return set((state) => ({ currentStep: state.currentStep - 1 }));
+      return set((state) => {
+        if (state.currentStep === 1) {
+          return { currentStep: state.currentStep };
+        }
+        return { currentStep: state.currentStep - 1 };
+      });
     },
+
+    nextStep() {
+      return set((state) => {
+        if (state.currentStep === 2) {
+          return { currentStep: state.currentStep };
+        }
+        return { currentStep: state.currentStep + 1 };
+      });
+    },
+
     setPhoto: (photoList) => set({ photoList }),
+
     setUserInfo: (info) =>
       set((state) => ({
         userInfo: { ...state.userInfo, ...info },

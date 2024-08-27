@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 
 import localFont from 'next/font/local';
 import SvgSymbols from '@/components/common/svg-symbols';
+import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
   manifest: '/manifest.json',
@@ -33,6 +34,7 @@ export default function RootLayout({
         <div className="mx-auto max-w-[640px] overflow-x-hidden">
           {children}
         </div>
+        <Toaster />
         <SvgSymbols />
       </body>
     </html>

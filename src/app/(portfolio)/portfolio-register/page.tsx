@@ -2,6 +2,7 @@
 
 import StepOne from '@/components/my-studio/write/step-one';
 import StepTwo from '@/components/my-studio/write/step-two';
+import { Progress } from '@/components/ui/progress';
 import { usePortfolioRegisterStore } from '@/store/portfolio-regist-store';
 
 export default function MyStudioWritePage() {
@@ -10,9 +11,12 @@ export default function MyStudioWritePage() {
   const currentStep = usePortfolioRegisterStore((state) => state.currentStep);
 
   return (
-    <main>
-      {currentStep === 1 && <StepOne />}
-      {currentStep === 1 && <StepTwo />}
+    <main className="">
+      <Progress value={50} />
+      <div className="mt-[32px] px-[16px]">
+        {currentStep === 1 && <StepOne />}
+        {currentStep === 2 && <StepTwo />}
+      </div>
     </main>
   );
 }

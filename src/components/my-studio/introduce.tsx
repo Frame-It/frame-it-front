@@ -37,7 +37,7 @@ const MyStudioIntroduce: React.FunctionComponent<IMyStudioIntroduceProps> = ({
           프로필 편집
         </Button>
         <Button
-          onClick={() => router.push('/my-studio/write')}
+          onClick={() => router.push('/portfolio-register')}
           className="h-[37px] w-full rounded-[8px] bg-black text-[14px]"
         >
           포트폴리오 등록하기
