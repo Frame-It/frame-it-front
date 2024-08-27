@@ -116,18 +116,17 @@ const StepOne: React.FunctionComponent<IStepOneProps> = () => {
             <FormField
               control={form.control}
               name="images"
-              render={({ field: { ...rest } }) => (
+              render={() => (
                 <FormItem>
                   <FormControl>
                     <>
                       <FormLabel
-                        htmlFor="photos"
+                        htmlFor="images"
                         className="relative flex h-[328px] w-full cursor-pointer flex-col items-center justify-center rounded-[8px] border border-gray-60"
                       >
                         <PlusIcon size={32} className="text-gray-40" />
                         <Input
-                          {...rest}
-                          id="photos"
+                          id="images"
                           accept="image/*"
                           type="file"
                           multiple
@@ -142,7 +141,7 @@ const StepOne: React.FunctionComponent<IStepOneProps> = () => {
               )}
             />
           )}
-          <div className="fixed inset-x-0 bottom-0 w-full bg-white px-[16px] py-[9px]">
+          <div className="fixed inset-x-0 bottom-0 w-full max-w-[640px] bg-white px-[16px] py-[9px]">
             <Button
               type="submit"
               disabled={previews.length <= 0}

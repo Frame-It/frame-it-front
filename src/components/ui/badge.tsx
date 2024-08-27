@@ -18,6 +18,7 @@ const badgeVariants = cva(
         feed: 'px-[12px] py-[6px] text-[12px] leading-[12px]',
         portfolioDetail:
           'px-[8px] py-[6px] text-[12px] font-[400] text-[#4D4744] border-[#CDC8C6] bg-white bg-opacity-70 leading-[12px] select-none',
+        tag: 'flex items-center px-[10px] py-[4px] bg-gray-80 h-[26px] gap-x-[3px] font-[400] text-sm text-gray-20',
       },
       type: {
         author: 'bg-white border-[#4D4744] text-',

@@ -13,4 +13,12 @@ export const portfolioImageSchema = z.object({
     .max(10, 'You can upload up to 10 images.'), // 최대 10개 파일 허용
 });
 
+export const portfolioInfoSchema = z.object({
+  title: z.string().min(5).max(10),
+  detail: z.string().min(10).max(50),
+  tagList: z.array(z.string()).min(1).max(5),
+  togather: z.string().min(3),
+});
+
 export type PortfolioImageFormValues = z.infer<typeof portfolioImageSchema>;
+export type PortfolioDetailFormValues = z.infer<typeof portfolioInfoSchema>;

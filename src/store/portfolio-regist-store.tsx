@@ -1,27 +1,35 @@
 import { create } from 'zustand';
 
+export interface IPortfolioRegistInfo {
+  title: string;
+  detail: string;
+  tagList: string[];
+  togather: string;
+}
+
 interface PortfolioRegisterState {
   currentStep: number;
+  maxStep: number;
 
   photoList: File[] | null;
-  userInfo: {
-    name: string;
-    email: string;
-  };
+  portfolioInfo: IPortfolioRegistInfo;
 
   nextStep: () => void;
   prevStep: () => void;
   setPhoto: (photoList: File[]) => void;
-  setUserInfo: (info: { name: string; email: string }) => void;
+  setPortfolioInfo: (info: IPortfolioRegistInfo) => void;
 }
 
 export const usePortfolioRegisterStore = create<PortfolioRegisterState>(
   (set) => ({
     currentStep: 1,
+    maxStep: 2,
     photoList: null,
-    userInfo: {
-      name: '',
-      email: '',
+    portfolioInfo: {
+      title: '',
+      detail: '',
+      tagList: [],
+      togather: '',
     },
 
     prevStep() {
@@ -44,9 +52,9 @@ export const usePortfolioRegisterStore = create<PortfolioRegisterState>(
 
     setPhoto: (photoList) => set({ photoList }),
 
-    setUserInfo: (info) =>
+    setPortfolioInfo: (info) =>
       set((state) => ({
-        userInfo: { ...state.userInfo, ...info },
+        portfolioInfo: { ...state.portfolioInfo, ...info },
       })),
   }),
 );
