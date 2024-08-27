@@ -127,7 +127,7 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = () => {
         <FormField
           control={form.control}
           name="tagList"
-          render={() => (
+          render={({ field }) => (
             <FormItem>
               <div>
                 <FormLabel>해시태그</FormLabel>
