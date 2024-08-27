@@ -141,7 +141,7 @@ const StepOne: React.FunctionComponent<IStepOneProps> = () => {
               )}
             />
           )}
-          <div className="fixed inset-x-0 bottom-0 w-full max-w-[640px] bg-white px-[16px] py-[9px]">
+          <div className="fixed inset-x-0 bottom-0 mx-auto w-full max-w-[640px] bg-white px-[16px] py-[9px]">
             <Button
               type="submit"
               disabled={previews.length <= 0}

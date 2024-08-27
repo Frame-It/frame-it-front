@@ -16,6 +16,7 @@ import {
   PortfolioDetailFormValues,
   portfolioInfoSchema,
 } from '@/lib/schema/portfolio-regist-schema';
+import { calInputRows, calTextAreaRows } from '@/lib/utils';
 import { usePortfolioRegisterStore } from '@/store/portfolio-regist-store';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { XIcon } from 'lucide-react';
@@ -92,7 +93,7 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="mt-[16px] space-y-[24px] pb-[66px]"
+        className="space-y-[24px] pb-[66px]"
       >
         <FormField
           control={form.control}
@@ -101,7 +102,13 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = () => {
             <FormItem>
               <FormLabel>제목</FormLabel>
               <FormControl>
-                <Input placeholder="제목을 입력해 주세요" {...field} />
+                <Textarea
+                  placeholder="제목을 입력해 주세요"
+                  {...field}
+                  rows={calInputRows(field?.value?.length || 0)}
+                  maxLength={101}
+                  className="min-h-[40px]"
+                />
               </FormControl>
             </FormItem>
           )}
@@ -116,7 +123,9 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = () => {
               <FormControl>
                 <Textarea
                   placeholder="포트폴리오 설명을 작성해 주세요"
-                  className="resize-none"
+                  className="max-h-[209px] resize-none"
+                  rows={calTextAreaRows(field?.value?.length || 0)}
+                  maxLength={500}
                   {...field}
                 />
               </FormControl>
@@ -242,7 +251,7 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = () => {
           )}
         />
 
-        <div className="fixed inset-x-0 bottom-0 w-full max-w-[640px] bg-white px-[16px] py-[9px]">
+        <div className="fixed inset-x-0 bottom-0 mx-auto w-full max-w-[640px] bg-white px-[16px] py-[9px]">
           <Button type="submit" className="w-full" disabled={!isFormValid}>
             다음
           </Button>

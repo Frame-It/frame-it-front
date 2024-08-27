@@ -9,14 +9,18 @@ export default function MyStudioWritePage() {
   // Search Params로 데이터 불러오기
 
   const currentStep = usePortfolioRegisterStore((state) => state.currentStep);
+  const maxStep = usePortfolioRegisterStore((state) => state.maxStep);
 
   return (
-    <main className="">
-      <Progress value={50} />
-      <div className="mt-[32px] px-[16px]">
+    <>
+      <Progress
+        value={(currentStep / maxStep) * 100}
+        className="fixed max-w-[640px]"
+      />
+      <div className="px-[16px] pt-[38px]">
         {currentStep === 1 && <StepOne />}
         {currentStep === 2 && <StepTwo />}
       </div>
-    </main>
+    </>
   );
 }
