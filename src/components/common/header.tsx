@@ -39,7 +39,7 @@ const Header = forwardRef<
       ref={ref}
       {...props}
       className={cn(
-        'fixed top-0 z-30 mx-auto flex h-[56px] w-full max-w-[360px] items-center justify-between border-b border-b-[#ECE9E7] bg-white p-[16px] shadow-sm',
+        'fixed top-0 z-30 mx-auto flex h-[58px] w-full max-w-[360px] items-center justify-between border-b border-b-[#ECE9E7] bg-white px-[16px] py-[13px]',
         className,
       )}
     >
@@ -65,7 +65,11 @@ const HeaderCenter = forwardRef<
   HTMLDivElement,
   { className?: string; children: React.ReactNode }
 >(({ className = '', children, ...props }, ref) => (
-  <div ref={ref} className={cn('', className)} {...props}>
+  <div
+    ref={ref}
+    className={cn('text-base font-[500] text-gray-20', className)}
+    {...props}
+  >
     {children}
   </div>
 ));

@@ -15,13 +15,11 @@ export default function PortfolioLayout({
     <>
       <Header className="border-none text-lg shadow-none">
         <HeaderLeft>
-          <Icon id="back-icon" size={24} />
+          <Icon id="back-icon" size={32} className="text-gray-40" />
         </HeaderLeft>
-        <HeaderCenter className="font-semibold text-gray-10">
-          포트폴리오 등록
-        </HeaderCenter>
+        <HeaderCenter>포트폴리오 등록</HeaderCenter>
         <HeaderRight>
-          <Icon id="share-icon" size={26} />
+          <div className="size-[32px]"></div>
         </HeaderRight>
       </Header>
       <main className="mb-[16px] mt-[56px]">{children}</main>
