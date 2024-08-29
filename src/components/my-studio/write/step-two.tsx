@@ -138,7 +138,7 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = () => {
           name="tagList"
           render={({ field }) => (
             <FormItem>
-              <div>
+              <div className="space-y-[2px]">
                 <FormLabel>해시태그</FormLabel>
                 <FormDescription>최대 5개까지 입력 가능해요</FormDescription>
               </div>
@@ -199,7 +199,7 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = () => {
           name="togather"
           render={() => (
             <FormItem>
-              <div>
+              <div className="space-y-[2px]">
                 <FormLabel>함께한 사람</FormLabel>
                 <FormDescription>
                   프레이밋에서 함께한 유저 닉네임을 입력해 주세요
@@ -251,7 +251,7 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = () => {
           )}
         />
 
-        <div className="fixed inset-x-0 bottom-0 mx-auto w-full max-w-[640px] bg-white px-[16px] py-[9px]">
+        <div className="fixed inset-x-0 bottom-0 mx-auto w-full max-w-[360px] bg-white px-[16px] py-[9px]">
           <Button type="submit" className="w-full" disabled={!isFormValid}>
             다음
           </Button>
