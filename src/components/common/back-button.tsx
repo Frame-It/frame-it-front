@@ -9,7 +9,7 @@ function BackButton({
 }>) {
   const router = useRouter();
   return (
-    <button className={className} onClick={() => router.back()}>
+    <button className={className} onClick={() => router.back()} type="button">
       {children}
     </button>
   );
