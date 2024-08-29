@@ -1,3 +1,4 @@
+import BackButton from '@/components/common/back-button';
 import {
   Header,
   HeaderCenter,
@@ -15,7 +16,9 @@ export default function PortfolioLayout({
     <>
       <Header className="border-none text-lg shadow-none">
         <HeaderLeft>
-          <Icon id="back-icon" size={32} className="text-gray-40" />
+          <BackButton className="flex items-center justify-center">
+            <Icon id="back-icon" className="size-[32px] text-gray-40" />
+          </BackButton>
         </HeaderLeft>
         <HeaderCenter>포트폴리오 등록</HeaderCenter>
         <HeaderRight>

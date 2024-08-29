@@ -7,10 +7,10 @@ export default function PortfolioLayout({
 }) {
   return (
     <>
-      <Header className="border-none text-lg shadow-none">
+      <Header className="border-gray-80 text-lg shadow-none">
         <HeaderCenter className="font-semibold text-gray-10">쪽지</HeaderCenter>
       </Header>
-      <main className="mb-[16px] mt-[56px]">{children}</main>
+      <div className="pb-[64px]">{children}</div>
     </>
   );
 }

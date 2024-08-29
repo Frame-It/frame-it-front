@@ -21,6 +21,11 @@ const nextConfig = {
         hostname: 'picsum.photos',
         pathname: '/*/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'avatars.githubusercontent.com',
+        pathname: '/u/**',
+      },
     ],
   },
 };
