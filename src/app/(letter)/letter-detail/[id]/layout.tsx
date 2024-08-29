@@ -1,7 +1,12 @@
 import BackButton from '@/components/common/back-button';
-import { Header, HeaderLeft, HeaderRight } from '@/components/common/header';
+import {
+  Header,
+  HeaderCenter,
+  HeaderLeft,
+  HeaderRight,
+} from '@/components/common/header';
 import Icon from '@/components/common/icon';
-import ShareButton from '@/components/common/share-button';
+
 import React from 'react';
 
 export default function PortfolioLayout({
@@ -9,21 +14,21 @@ export default function PortfolioLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // id로 닉네임 받아오기
   return (
     <>
       <Header className="border-none shadow-none">
         <HeaderLeft>
           <BackButton>
-            <Icon id="back-icon" size={32} className="text-gray-40" />
+            <Icon id="back-icon" className="size-[32px] text-gray-40" />
           </BackButton>
         </HeaderLeft>
+        <HeaderCenter>닉네임원 닉네임원</HeaderCenter>
         <HeaderRight>
-          <ShareButton>
-            <Icon id="share-icon" size={32} className="text-gray-40" />
-          </ShareButton>
+          <div className="size-[32px]"></div>
         </HeaderRight>
       </Header>
-      <main className="mb-[16px] mt-[56px] px-[16px]">{children}</main>
+      <main className="relative px-[16px] pb-[79px]">{children}</main>
     </>
   );
 }

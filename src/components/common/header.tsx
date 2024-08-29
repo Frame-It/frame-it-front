@@ -43,7 +43,7 @@ const Header = forwardRef<
         className,
       )}
     >
-      <div className="flex items-center justify-start">{leftContent}</div>
+      <div className="flex items-center justify-center">{leftContent}</div>
       <div className="flex-grow text-center">{centerContent}</div>
       <div className="flex items-center justify-end">{rightContent}</div>
     </header>
@@ -55,7 +55,11 @@ const HeaderLeft = forwardRef<
   HTMLDivElement,
   { className?: string; children: React.ReactNode }
 >(({ className = '', children, ...props }, ref) => (
-  <div ref={ref} className={cn('', className)} {...props}>
+  <div
+    ref={ref}
+    className={cn('flex items-center justify-center', className)}
+    {...props}
+  >
     {children}
   </div>
 ));
