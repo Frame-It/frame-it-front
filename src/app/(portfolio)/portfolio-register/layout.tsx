@@ -5,7 +5,6 @@ import {
   HeaderRight,
 } from '@/components/common/header';
 import Icon from '@/components/common/icon';
-import React from 'react';
 
 export default function PortfolioLayout({
   children,
