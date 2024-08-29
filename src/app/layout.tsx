@@ -31,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn(pretendard.className)}>
-        <div className="mx-auto max-w-[640px] overflow-x-hidden">
+        <div className="mx-auto max-w-[360px] overflow-x-hidden">
           {children}
         </div>
         <Toaster />
