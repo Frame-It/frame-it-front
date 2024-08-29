@@ -25,8 +25,9 @@ const config = {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         primary: {
-          DEFAULT: 'hsl(var(--primary))',
+          DEFAULT: '#E45E25',
           foreground: 'hsl(var(--primary-foreground))',
+          dark: '#D15772',
         },
         secondary: {
           DEFAULT: 'hsl(var(--secondary))',
@@ -52,6 +53,31 @@ const config = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
+        gray: {
+          10: '#201A17',
+          20: '#4D4744',
+          40: '#7E7774',
+          60: '#B4ADA9',
+          70: '#cdc8c6',
+          80: '#ece9e7',
+          90: '#f5f3f2',
+          100: '#ffffff',
+        },
+        sub: {
+          pink: '#e846c5',
+          blue: '#3366e9',
+          green: '#299a27',
+        },
+        error: '#FF5449',
+      },
+      fontSize: {
+        '2xs': '10px',
+        xs: '12px',
+        sm: '14px',
+        base: '16px',
+        lg: '18px',
+        xl: '24px',
+        '2xl': '28px',
       },
       borderRadius: {
         lg: 'var(--radius)',

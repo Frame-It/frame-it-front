@@ -13,6 +13,7 @@ interface IBottombarPaths {
   path: string;
   name: string;
   iconId: IconIDTypes;
+  isRegist?: boolean;
 }
 interface INavLinkProps extends IBottombarPaths {
   children?: React.ReactNode;
@@ -31,12 +32,18 @@ const bottombarPaths: IBottombarPaths[] = [
     iconId: 'feed-icon',
   },
   {
+    path: '',
+    name: '',
+    iconId: 'add-icon',
+    isRegist: true,
+  },
+  {
     path: '/letter',
     name: '쪽지',
     iconId: 'talk-icon',
   },
   {
-    path: '/my',
+    path: '/my-studio',
     name: '마이',
     iconId: 'profile-icon',
   },
@@ -70,11 +77,23 @@ const BottomNavbar: React.FunctionComponent<IBottomBarProps> = () => {
   const pathName = usePathname();
 
   return (
-    <nav className="fixed bottom-0 z-30 flex w-full max-w-[640px] border-t-[1px] border-t-[#ECE9E7] bg-white px-[32px] py-[13px]">
+    <nav className="fixed bottom-0 z-30 flex h-[64px] w-full max-w-[640px] border-t-[1px] border-t-[#ECE9E7] bg-white px-[32px]">
       <ul className="flex w-full items-center justify-between">
-        {bottombarPaths.map((nav) => (
-          <NavLink key={nav.path} active={nav.path === pathName} {...nav} />
-        ))}
+        {bottombarPaths.map((nav) => {
+          if (nav.isRegist) {
+            return (
+              <div key={nav.iconId}>
+                <Icon
+                  id={nav.iconId}
+                  className={cn('h-[32px] w-[32px] text-[#B4ADA9]')}
+                />
+              </div>
+            );
+          }
+          return (
+            <NavLink key={nav.path} active={nav.path === pathName} {...nav} />
+          );
+        })}
       </ul>
     </nav>
   );
