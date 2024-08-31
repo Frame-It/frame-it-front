@@ -15,7 +15,7 @@ export default function MyStudioWritePage() {
     <>
       <Progress
         value={(currentStep / maxStep) * 100}
-        className="fixed z-20 max-w-[640px]"
+        className="fixed z-20 mx-auto max-w-[360px]"
       />
       <div className="px-[16px] pt-[38px]">
         {currentStep === 1 && <StepOne />}

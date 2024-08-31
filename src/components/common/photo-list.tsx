@@ -59,7 +59,7 @@ const PhotoList: React.FunctionComponent<IPhotoListProps> = ({
                 <Badge
                   variant="feed"
                   className={cn(
-                    '',
+                    'px-[12px]',
                     image.role === 'model'
                       ? 'bg-white bg-opacity-70 text-[#201A17]'
                       : 'bg-[#201A17B2] bg-opacity-70 text-white',
