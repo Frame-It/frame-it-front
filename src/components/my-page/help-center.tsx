@@ -4,7 +4,7 @@ import Icon from '@/components/common/icon';
 interface IHelpCenterProps {}
 
 const helpCenterLink =
-  'w-full flex items-center justify-between py-[10px] pl-2 text-base font-semibold leading-[135%]';
+  'w-full flex items-center justify-between py-[10px] pl-2 text-base font-semibold leading-[135%] text-gray-20';
 const helpCenterIcon = 'text-gray-40';
 
 const HelpCenter: React.FunctionComponent<IHelpCenterProps> = () => {
