@@ -31,6 +31,8 @@ const PortfolioDetailMenu: React.FunctionComponent<
     navigator.clipboard.writeText(window.location.href);
     toast({
       title: '공유 링크가 복사되었어요!',
+      duration: 1000,
+      className: 'w-[196px]',
     });
   };
   const handleEdit = () => {
