@@ -1,19 +1,12 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
+import LogoutDialog from '@/components/setting/logout-dialog';
 import { Switch } from '@/components/ui/switch';
-import { cn } from '@/lib/utils';
 
 const settingLI = 'space-y-1 px-4 py-[12px]';
 const settingDT = 'text-sm font-medium leading-[150%] text-gray-10';
 const settingDD = 'text-sm leading-[150%] text-gray-10';
 
-const basicText = 'flex-1 text-sm font-medium leading-[150%] text-gray-10';
+const basicText =
+  'flex-1 w-full text-sm font-medium leading-[150%] text-gray-10';
 
 export default function SettingPage() {
   // 서버로부터 개인정보 가져옴
@@ -45,19 +38,8 @@ export default function SettingPage() {
             <div className={basicText}>마케팅 수신/홍보 동의 여부</div>
             <Switch />
           </li>
-          <li>
-            <Dialog>
-              <DialogTrigger className={cn('', basicText)}>Open</DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Are you absolutely sure?</DialogTitle>
-                  <DialogDescription>
-                    This action cannot be undone. This will permanently delete
-                    your account and remove your data from our servers.
-                  </DialogDescription>
-                </DialogHeader>
-              </DialogContent>
-            </Dialog>
+          <li className={basicText}>
+            <LogoutDialog>로그아웃</LogoutDialog>
           </li>
           <li className={basicText}>회원탈퇴</li>
         </ul>
