@@ -1,4 +1,13 @@
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 import { Switch } from '@/components/ui/switch';
+import { cn } from '@/lib/utils';
 
 const settingLI = 'space-y-1 px-4 py-[12px]';
 const settingDT = 'text-sm font-medium leading-[150%] text-gray-10';
@@ -30,13 +39,29 @@ export default function SettingPage() {
           </li>
         </ul>
       </section>
-      <div className="mt-[24.5px] flex items-center justify-between">
-        <div className={basicText}>마케팅 수신/홍보 동의 여부</div>
-        <Switch />
-      </div>
-      <div className={basicText}>로그아웃</div>
-      <div className={basicText}>회원탈퇴</div>
-      {/* logout dialog */}
+      <section className="mt-[24.5px]">
+        <ul className="space-y-[18px]">
+          <li className="flex items-center justify-between">
+            <div className={basicText}>마케팅 수신/홍보 동의 여부</div>
+            <Switch />
+          </li>
+          <li>
+            <Dialog>
+              <DialogTrigger className={cn('', basicText)}>Open</DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Are you absolutely sure?</DialogTitle>
+                  <DialogDescription>
+                    This action cannot be undone. This will permanently delete
+                    your account and remove your data from our servers.
+                  </DialogDescription>
+                </DialogHeader>
+              </DialogContent>
+            </Dialog>
+          </li>
+          <li className={basicText}>회원탈퇴</li>
+        </ul>
+      </section>
     </main>
   );
 }

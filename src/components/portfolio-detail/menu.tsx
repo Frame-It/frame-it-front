@@ -9,9 +9,8 @@ import {
 } from '../ui/drawer';
 import { toast } from '../ui/use-toast';
 import { usePathname, useRouter } from 'next/navigation';
-import { Dialog, DialogContent } from '../ui/dialog';
-import { useState } from 'react';
-import { Button } from '../ui/button';
+import AlertDialog from '../common/alert-dialog';
+import useDisclosure from '@/hooks/useDisclosure';
 // import Drawer from '@/components/common/drawer';
 
 interface IPortfolioDetailMenuProps {}
@@ -25,7 +24,7 @@ const PortfolioDetailMenu: React.FunctionComponent<
     .filter((el) => !!el);
   const portfolioId = pathnameArr[1];
 
-  const [open, setOpen] = useState(false);
+  const { isOpen, close, open } = useDisclosure(false);
 
   const handleShare = () => {
     navigator.clipboard.writeText(window.location.href);
@@ -35,15 +34,16 @@ const PortfolioDetailMenu: React.FunctionComponent<
       className: 'w-[196px]',
     });
   };
+
   const handleEdit = () => {
     router.push(`/portfolio-register?id=${portfolioId}`);
   };
   const handleDelete = () => {
-    setOpen(true);
+    open();
   };
 
   const onClose = () => {
-    setOpen(false);
+    close();
   };
 
   return (
@@ -92,42 +92,19 @@ const PortfolioDetailMenu: React.FunctionComponent<
       </Drawer>
 
       {/* 삭제 dialog */}
-      <Dialog
-        open={open}
-        onOpenChange={() => {
+      <AlertDialog
+        title="삭제하시겠습니까?"
+        desc="삭제하면 게시글을 되돌릴 수 없습니다. \n 신중히 생각하세요"
+        cancleTitle="취소"
+        confirmTitle="삭제"
+        open={isOpen}
+        onConfirm={() => {
           onClose();
+          router.back();
         }}
-      >
-        <DialogContent className="max-w-[280px] rounded-[16px] px-[12px] py-[32px]">
-          <div className="text-center">
-            <div className="font-semibold leading-[135%] text-gray-10">
-              삭제하시겠습니까?
-            </div>
-            <div className="text-sm leading-[150%]">
-              삭제하면 게시글을 되돌릴 수 없습니다.
-            </div>
-            <div className="text-sm leading-[150%]">신중히 생각하세요</div>
-          </div>
-          <div className="flex w-full gap-x-2">
-            <Button
-              variant="ghost"
-              className="flex-1 bg-gray-70 font-normal text-white"
-              onClick={onClose}
-            >
-              취소
-            </Button>
-            <Button
-              onClick={async () => {
-                onClose();
-                router.back();
-              }}
-              className="flex-1 font-normal"
-            >
-              삭제
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
+        onCancle={() => onClose()}
+        onOpenChange={() => onClose()}
+      />
     </>
   );
 };
