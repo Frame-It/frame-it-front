@@ -1,6 +1,10 @@
+import { Switch } from '@/components/ui/switch';
+
 const settingLI = 'space-y-1 px-4 py-[12px]';
 const settingDT = 'text-sm font-medium leading-[150%] text-gray-10';
 const settingDD = 'text-sm leading-[150%] text-gray-10';
+
+const basicText = 'flex-1 text-sm font-medium leading-[150%] text-gray-10';
 
 export default function SettingPage() {
   // 서버로부터 개인정보 가져옴
@@ -26,13 +30,13 @@ export default function SettingPage() {
           </li>
         </ul>
       </section>
-      <div className="flex items-center justify-between">
-        <dir className="flex-1"></dir>
+      <div className="mt-[24.5px] flex items-center justify-between">
+        <div className={basicText}>마케팅 수신/홍보 동의 여부</div>
+        <Switch />
       </div>
-      <div></div>
-      <div></div>
-
-      {/* dialug */}
+      <div className={basicText}>로그아웃</div>
+      <div className={basicText}>회원탈퇴</div>
+      {/* logout dialog */}
     </main>
   );
 }
