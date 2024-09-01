@@ -17,7 +17,9 @@ const LogoutDialog: React.FunctionComponent<ILogoutDialogProps> = ({
   };
   return (
     <>
-      <button onClick={open}>{children}</button>
+      <button onClick={open} className="w-full text-left">
+        {children}
+      </button>
       <AlertDialog
         title="로그아웃 하시겠습니까?"
         desc="동일한 소셜 로그인 방법으로 \n 다시 접속할 수 있어요!"
