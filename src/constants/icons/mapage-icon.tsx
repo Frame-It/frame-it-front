@@ -2,7 +2,8 @@ export type MypageIconID =
   | 'home-icon'
   | 'project-icon'
   | 'bookmark-icon'
-  | 'setting-icon';
+  | 'setting-icon'
+  | 'right-arrow-icon';
 
 export const mypageSVG = (
   <>
@@ -74,6 +75,24 @@ export const mypageSVG = (
         stroke="currentColor"
         strokeWidth="2"
       />
+    </symbol>
+
+    {/* right-arrow-icon */}
+    <symbol
+      id="right-arrow-icon"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 18 18"
+      fill="none"
+    >
+      <g clipPath="url(#clip0_2801_21881)">
+        <path
+          d="M7 4L12 9L7 14"
+          stroke="#7E7774"
+          strokeWidth="1.2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </g>
     </symbol>
   </>
 );
