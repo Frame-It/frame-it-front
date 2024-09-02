@@ -11,6 +11,7 @@ import { cn } from '@/lib/utils';
 import { USER_TYPE, UserValue } from '@/types/filter';
 import { faker } from '@faker-js/faker/locale/ko';
 import { useEffect, useState } from 'react';
+
 interface ITabData {
   value: UserValue;
   label: string;

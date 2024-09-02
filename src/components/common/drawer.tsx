@@ -29,7 +29,10 @@ const Drawer = ({
   return (
     <UiDrawer open={open}>
       <DrawerTrigger asChild>
-        <button className="btn-primary" onClick={toggleOpen}>
+        <button
+          className="btn-primary flex items-center justify-center"
+          onClick={toggleOpen}
+        >
           {trigger}
         </button>
       </DrawerTrigger>
