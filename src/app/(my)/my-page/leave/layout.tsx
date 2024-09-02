@@ -22,7 +22,7 @@ export default function MyStudioLayout({
         </HeaderLeft>
         <HeaderCenter>계정 정보</HeaderCenter>
         <HeaderRight>
-          <div className="h-6 w-6 text-gray-40" />
+          <div className="size-[32px] text-gray-40" />
         </HeaderRight>
       </Header>
       {children}

@@ -1,5 +1,4 @@
 import BackButton from '@/components/common/back-button';
-import BottomNavbar from '@/components/common/bottom-navbar';
 import {
   Header,
   HeaderCenter,
@@ -8,26 +7,25 @@ import {
 } from '@/components/common/header';
 import Icon from '@/components/common/icon';
 
-export default function MyStudioLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function page() {
   return (
-    <div className="pb-[66px] pt-[58px]">
+    <main>
       <Header>
         <HeaderLeft>
           <BackButton>
             <Icon id="back-icon" className="size-[32px] text-gray-40" />
           </BackButton>
         </HeaderLeft>
-        <HeaderCenter>계정 정보</HeaderCenter>
+        <HeaderCenter>프로필 편집</HeaderCenter>
         <HeaderRight>
-          <div className="size-[32px] text-gray-40" />
+          <button
+            disabled
+            className="size-[32px] text-primary disabled:text-gray-70"
+          >
+            완료
+          </button>
         </HeaderRight>
       </Header>
-      {children}
-      <BottomNavbar />
-    </div>
+    </main>
   );
 }

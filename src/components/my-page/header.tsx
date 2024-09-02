@@ -1,10 +1,15 @@
+'use client';
+
 import { faker } from '@faker-js/faker';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import * as React from 'react';
 
 interface IMyPageHeaderProps {}
 
 const MyPageHeader: React.FunctionComponent<IMyPageHeaderProps> = () => {
+  const router = useRouter();
+
   return (
     <section className="mt-[20px] flex items-center gap-x-4">
       <Image
@@ -14,7 +19,8 @@ const MyPageHeader: React.FunctionComponent<IMyPageHeaderProps> = () => {
         height={100}
         sizes="100px"
         priority
-        className="aspect-square rounded-[16px]"
+        className="aspect-square cursor-pointer rounded-[16px]"
+        onClick={() => router.push('/my-page/profile')}
       />
       <div className="space-y-1">
         <div className="text-lg font-semibold leading-[135%] text-gray-10">
