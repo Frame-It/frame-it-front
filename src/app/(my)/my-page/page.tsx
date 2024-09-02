@@ -1,15 +1,15 @@
+import Image from 'next/image';
+import Icon from '@/components/common/icon';
+import MyPageMenu from '@/components/my-page/menu';
+import { Separator } from '@/components/ui/separator';
+import MyPageHeader from '@/components/my-page/header';
+import HelpCenter from '@/components/my-page/help-center';
 import BottomNavbar from '@/components/common/bottom-navbar';
 import { Header, HeaderLeft, HeaderRight } from '@/components/common/header';
-import Icon from '@/components/common/icon';
-import Image from 'next/image';
 
-export default function Layout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function MyPage() {
   return (
-    <div className="pb-[66px] pt-[58px]">
+    <main className="pb-[66px] pt-[58px]">
       <Header>
         <HeaderLeft>
           <div className="relative h-[23px] w-[65px]">
@@ -26,8 +26,15 @@ export default function Layout({
           <Icon id="notification-icon" className="h-6 w-6" />
         </HeaderRight>
       </Header>
-      {children}
+
+      {/* --- */}
+      <MyPageHeader />
+      <MyPageMenu />
+      <Separator className="my-6" />
+      <HelpCenter />
+      {/* --- */}
+
       <BottomNavbar />
-    </div>
+    </main>
   );
 }

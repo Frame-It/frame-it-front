@@ -18,7 +18,7 @@ export default function LeavePage() {
   };
 
   return (
-    <main className="relative h-[calc(100vh-78px-64px)] px-4">
+    <main className="relative h-[calc(100dvh-78px)] px-4">
       <section className="mt-[20px]">
         <ul className="left-[150%] list-disc space-y-[2px] rounded-[8px] bg-caution px-[12px] py-[10px] text-xs text-gray-20">
           <li className="ml-[12px]">
@@ -61,7 +61,7 @@ export default function LeavePage() {
       </section>
       <Button
         disabled={!isChecked}
-        className="absolute bottom-0 left-0 mx-auto w-full"
+        className="absolute bottom-0 left-0 mx-auto mb-[9px] w-full"
         size="lg"
         onClick={() => {}}
       >

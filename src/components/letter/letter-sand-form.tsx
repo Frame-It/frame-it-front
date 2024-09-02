@@ -46,7 +46,7 @@ const LetterSandForm: React.FunctionComponent<ILetterSandFormProps> = () => {
               <FormControl>
                 <div className="relative flex h-[45px] items-center rounded-[12px] bg-gray-80 px-[12px]">
                   <Input
-                    placeholder="shadcn"
+                    placeholder="메세지를 적어보세요."
                     {...field}
                     className="ax-w-[270px] border-none bg-transparent p-0 text-sm focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                   />

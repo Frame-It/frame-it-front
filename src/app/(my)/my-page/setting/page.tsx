@@ -44,7 +44,7 @@ export default function SettingPage() {
           </li>
           <li className={basicText}>
             <Link href="/my-page/leave">
-              <div className="h-full w-full">회원가입</div>
+              <div className="h-full w-full">회원탈퇴</div>
             </Link>
           </li>
         </ul>

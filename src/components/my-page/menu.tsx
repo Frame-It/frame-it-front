@@ -45,7 +45,7 @@ const MyPageMenu: React.FunctionComponent<IMyPageMenuProps> = () => {
             <li
               key={path.icon}
               onClick={() => router.push(path.path)}
-              className="flex w-full items-center gap-x-4 py-[10px] pl-1"
+              className="flex w-full cursor-pointer items-center gap-x-4 py-[10px] pl-1"
             >
               <Icon size={24} id={path.icon} />
               {path.label}
