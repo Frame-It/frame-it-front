@@ -53,6 +53,7 @@ const config = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
+        caution: '#FFE3E1',
         gray: {
           10: '#201A17',
           20: '#4D4744',

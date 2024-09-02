@@ -1,12 +1,13 @@
 import LogoutDialog from '@/components/setting/logout-dialog';
 import { Switch } from '@/components/ui/switch';
+import Link from 'next/link';
 
 const settingLI = 'space-y-1 px-4 py-[12px]';
 const settingDT = 'text-sm font-medium leading-[150%] text-gray-10';
 const settingDD = 'text-sm leading-[150%] text-gray-10';
 
 const basicText =
-  'flex-1 w-full text-sm font-medium leading-[150%] text-gray-10';
+  'relative flex-1 w-full text-sm font-medium leading-[150%] text-gray-10';
 
 export default function SettingPage() {
   // 서버로부터 개인정보 가져옴
@@ -41,7 +42,11 @@ export default function SettingPage() {
           <li className={basicText}>
             <LogoutDialog>로그아웃</LogoutDialog>
           </li>
-          <li className={basicText}>회원탈퇴</li>
+          <li className={basicText}>
+            <Link href="/my-page/leave">
+              <div className="h-full w-full">회원가입</div>
+            </Link>
+          </li>
         </ul>
       </section>
     </main>
