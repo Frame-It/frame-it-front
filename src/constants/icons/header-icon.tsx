@@ -1,4 +1,8 @@
-export type HeaderIconID = 'notification-icon' | 'back-icon' | 'share-icon';
+export type HeaderIconID =
+  | 'notification-icon'
+  | 'back-icon'
+  | 'share-icon'
+  | 'more-icon';
 
 export const headerSVG = (
   <>
@@ -89,6 +93,20 @@ export const headerSVG = (
           strokeLinecap="round"
           strokeLinejoin="round"
         />
+      </g>
+    </symbol>
+
+    {/* more */}
+    <symbol
+      id="more-icon"
+      viewBox="0 0 32 32"
+      fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g clipPath="url(#clip0_2802_2779)">
+        <circle cx="16" cy="9" r="2" fill="currentColor" />
+        <circle cx="16" cy="16" r="2" fill="currentColor" />
+        <circle cx="16" cy="23" r="2" fill="currentColor" />
       </g>
     </symbol>
   </>

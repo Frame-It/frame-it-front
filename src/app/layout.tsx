@@ -29,9 +29,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ko">
       <body className={cn(pretendard.className)}>
-        <div className="mx-auto max-w-[640px] overflow-x-hidden">
+        <div className="mx-auto max-w-[360px] overflow-x-hidden">
           {children}
         </div>
         <Toaster />

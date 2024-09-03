@@ -45,8 +45,7 @@ const StepOne: React.FunctionComponent<IStepOneProps> = () => {
 
     if (previews.length + displayUrls.length > 10) {
       toast({
-        title: '이미지는 최대 10장까지 등록할 수 있어요!',
-        className: 'bg-error text-white',
+        title: '사진은 최대 10장까지 등록 가능해요!',
       });
       return;
     }
@@ -76,7 +75,7 @@ const StepOne: React.FunctionComponent<IStepOneProps> = () => {
       </p>
 
       {/* 미리보기 섹션 */}
-      <div className="mt-[16px] columns-1 space-y-[8px]">
+      <div className="columns-1 space-y-[8px]">
         {previews.map((preview, index) => (
           <div key={index} className="relative w-full">
             <Image
@@ -141,7 +140,7 @@ const StepOne: React.FunctionComponent<IStepOneProps> = () => {
               )}
             />
           )}
-          <div className="fixed inset-x-0 bottom-0 mx-auto w-full max-w-[640px] bg-white px-[16px] py-[9px]">
+          <div className="fixed inset-x-0 bottom-0 mx-auto w-full max-w-[360px] bg-white px-[16px] py-[9px]">
             <Button
               type="submit"
               disabled={previews.length <= 0}

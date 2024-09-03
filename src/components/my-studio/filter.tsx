@@ -13,14 +13,14 @@ const MySturioFilter: React.FunctionComponent<IMySturioFilterProps> = () => {
   const filter = searchParams.get('type') || 'portfolio';
 
   return (
-    <section className="mt-[12px] flex items-center gap-x-[16px] px-[16px] py-[8px]">
+    <section className="mt-[12px] flex items-center gap-x-[16px] py-[8px]">
       <Link
         href={`${pathName}?type=portfolio`}
         className={cn(
-          '',
+          'text-base',
           filter === 'portfolio' || filter === ''
-            ? 'font-[500] text-[#201A17]'
-            : 'text-[#B4ADA9]',
+            ? 'font-[600] text-gray-10'
+            : 'text-gray-60',
         )}
       >
         포트폴리오
@@ -28,8 +28,8 @@ const MySturioFilter: React.FunctionComponent<IMySturioFilterProps> = () => {
       <Link
         href={`${pathName}?type=project`}
         className={cn(
-          '',
-          filter === 'project' ? 'font-[500] text-[#201A17]' : 'text-[#B4ADA9]',
+          'text-base',
+          filter === 'project' ? 'font-[600] text-gray-10' : 'text-gray-60',
         )}
       >
         프로젝트
@@ -37,8 +37,8 @@ const MySturioFilter: React.FunctionComponent<IMySturioFilterProps> = () => {
       <Link
         href={`${pathName}?type=review`}
         className={cn(
-          '',
-          filter === 'review' ? 'font-[500] text-[#201A17]' : 'text-[#B4ADA9]',
+          'text-base',
+          filter === 'review' ? 'font-[600] text-gray-10' : 'text-gray-60',
         )}
       >
         리뷰

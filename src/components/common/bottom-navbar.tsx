@@ -77,17 +77,17 @@ const BottomNavbar: React.FunctionComponent<IBottomBarProps> = () => {
   const pathName = usePathname();
 
   return (
-    <nav className="fixed bottom-0 z-30 flex h-[64px] w-full max-w-[640px] border-t-[1px] border-t-[#ECE9E7] bg-white px-[32px]">
+    <nav className="fixed bottom-0 z-30 mx-auto flex h-[64px] w-full max-w-[360px] border-t-[1px] border-t-[#ECE9E7] bg-white px-[32px]">
       <ul className="flex w-full items-center justify-between">
         {bottombarPaths.map((nav) => {
           if (nav.isRegist) {
             return (
-              <div key={nav.iconId}>
+              <li key={nav.iconId}>
                 <Icon
                   id={nav.iconId}
                   className={cn('h-[32px] w-[32px] text-[#B4ADA9]')}
                 />
-              </div>
+              </li>
             );
           }
           return (
