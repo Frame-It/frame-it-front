@@ -36,7 +36,7 @@ const ProfilSetting: React.FunctionComponent<IProfilSettingProps> = ({
           >
             사진마스터
             <button
-              onClick={() => router.push('/')}
+              onClick={() => router.push('/my-page/nickname')}
               className="flex items-center justify-center rounded-[8px] bg-gray-80 px-[12px] py-2 text-xs text-gray-20"
             >
               닉네임 변경

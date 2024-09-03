@@ -31,7 +31,6 @@ export default function ProfilePage() {
 
   const introduce = form.watch('introduce');
   const concepts = form.watch('concepts');
-
   const isDisabled = introduce || concepts.length > 0;
 
   return (
