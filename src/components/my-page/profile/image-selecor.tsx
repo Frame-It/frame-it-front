@@ -1,27 +1,23 @@
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
-import { ProfileFormType } from '@/lib/schema/profile-schema';
 import Image from 'next/image';
-import { UseFormReturn } from 'react-hook-form';
 import { Drawer, DrawerContent } from '@/components/ui/drawer';
 import Icon from '@/components/common/icon';
 import { Label } from '@/components/ui/label';
 import useDisclosure from '@/hooks/useDisclosure';
 
 interface IProfileImageSelectorProps {
-  form: UseFormReturn<ProfileFormType>;
   prevImageUrl?: string; // 이전에 업로드된 이미지 URL (있다면)
 }
 
 const ProfileImageSelector: React.FC<IProfileImageSelectorProps> = ({
-  form,
   prevImageUrl,
 }) => {
   const [previewImage, setPreviewImage] = useState<string | null>(
     prevImageUrl || null,
   );
 
-  const { isOpen, close, open } = useDisclosure();
+  const { isOpen, close, open, setIsOpen } = useDisclosure();
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -29,7 +25,6 @@ const ProfileImageSelector: React.FC<IProfileImageSelectorProps> = ({
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreviewImage(reader.result as string);
-        form.setValue('profileImage', file);
       };
       reader.readAsDataURL(file);
     }
@@ -40,8 +35,8 @@ const ProfileImageSelector: React.FC<IProfileImageSelectorProps> = ({
   const handleDelete = async () => {};
 
   return (
-    <Drawer open={isOpen}>
-      <div className="relative mx-auto h-[114px] w-[114px]">
+    <Drawer open={isOpen} onOpenChange={setIsOpen}>
+      <div className="relative mx-auto mt-4 h-[114px] w-[114px]">
         <Image
           src={previewImage || '/png/profile.png'}
           alt="프로필 이미지"

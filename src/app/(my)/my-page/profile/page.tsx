@@ -9,6 +9,7 @@ import {
 } from '@/components/common/header';
 import Icon from '@/components/common/icon';
 import ProfileImageSelector from '@/components/my-page/profile/image-selecor';
+import ProfilSetting from '@/components/my-page/profile/profile-setting';
 import { Form } from '@/components/ui/form';
 import { ProfileFormType, profileSchema } from '@/lib/schema/profile-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -17,6 +18,9 @@ import { useForm } from 'react-hook-form';
 export default function ProfilePage() {
   const form = useForm<ProfileFormType>({
     resolver: zodResolver(profileSchema),
+    defaultValues: {
+      concepts: [],
+    },
   });
 
   const onSubmit = (values: ProfileFormType) => {
@@ -24,6 +28,11 @@ export default function ProfilePage() {
     // ✅ This will be type-safe and validated.
     console.log(values);
   };
+
+  const introduce = form.watch('introduce');
+  const concepts = form.watch('concepts');
+
+  const isDisabled = introduce || concepts.length > 0;
 
   return (
     <main>
@@ -38,7 +47,7 @@ export default function ProfilePage() {
             <HeaderCenter>프로필 편집</HeaderCenter>
             <HeaderRight>
               <button
-                disabled
+                disabled={!isDisabled}
                 type="submit"
                 className="size-[32px] text-primary disabled:text-gray-70"
               >
@@ -46,7 +55,8 @@ export default function ProfilePage() {
               </button>
             </HeaderRight>
           </Header>
-          <ProfileImageSelector form={form} />
+          <ProfileImageSelector />
+          <ProfilSetting form={form} />
         </form>
       </Form>
     </main>

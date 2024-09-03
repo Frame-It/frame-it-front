@@ -27,4 +27,21 @@ const Checkbox = React.forwardRef<
 ));
 Checkbox.displayName = CheckboxPrimitive.Root.displayName;
 
-export { Checkbox };
+const CustomCheckbox = React.forwardRef<
+  React.ElementRef<typeof CheckboxPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>
+>(({ className, ...props }, ref) => (
+  <CheckboxPrimitive.Root
+    ref={ref}
+    className={cn(
+      'flex items-center justify-center rounded-[8px] border border-gray-60 p-2 text-sm text-gray-60 data-[state=checked]:bg-gray-20 data-[state=checked]:text-white',
+      className,
+    )}
+    {...props}
+  >
+    {props.children}
+  </CheckboxPrimitive.Root>
+));
+CustomCheckbox.displayName = CheckboxPrimitive.Root.displayName;
+
+export { Checkbox, CustomCheckbox };
