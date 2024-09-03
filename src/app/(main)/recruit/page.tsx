@@ -5,7 +5,6 @@ import FilterDrawers from '@/components/recruit/filter-drawers';
 import RecruitCard, {
   IRecruitCardProps,
 } from '@/components/recruit/recruit-card';
-import useDisclosure from '@/hooks/useDisclosure';
 import { generateRandomImageList } from '@/lib/faker';
 import { cn } from '@/lib/utils';
 import { USER_TYPE, UserValue } from '@/types/filter';
@@ -29,8 +28,6 @@ const RecruitPage = () => {
   const [tempRecruitList, setTempRecruitList] = useState<IRecruitCardProps[]>(
     [],
   );
-
-  const { isOpen, toggle } = useDisclosure();
 
   const handleChange = (value: string) => {
     console.log('handleChange', value);

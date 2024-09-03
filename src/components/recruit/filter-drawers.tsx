@@ -4,13 +4,31 @@ import { cn } from '@/lib/utils';
 import { useState } from 'react';
 import Drawer from '../common/drawer';
 import Icon from '../common/icon';
+import {
+  ConceptDrawerContent,
+  DateDrawerContent,
+  LocationDrawerContent,
+  PlaceDrawerContent,
+} from './drawer-content';
 import DropdownButton from './dropdown-button';
 
 const filterOptions = {
-  concept: '촬영컨셉',
-  location: '지역',
-  date: '촬영일시',
-  place: '촬영장소',
+  concept: {
+    label: '촬영컨셉',
+    component: ConceptDrawerContent,
+  },
+  location: {
+    label: '지역',
+    component: LocationDrawerContent,
+  },
+  date: {
+    label: '촬영일시',
+    component: DateDrawerContent,
+  },
+  place: {
+    label: '촬영장소',
+    component: PlaceDrawerContent,
+  },
 } as const;
 
 type FilterType = keyof typeof filterOptions;
@@ -42,18 +60,20 @@ const FilterDrawers = () => {
           className={cn('flex-shrink-0')}
         />
       </button>
-      {Object.entries(filterOptions).map(([key, label]) => (
-        <Drawer
-          key={key}
-          title={label}
-          open={openFilter === key}
-          toggleOpen={() => toggleDrawer(key as FilterType)}
-          onClose={() => setOpenFilter(null)}
-          trigger={<DropdownButton key={key} label={label} />}
-        >
-          <div>{/* 각 필터링 Drawer의 내용 */}</div>
-        </Drawer>
-      ))}
+      {Object.entries(filterOptions).map(
+        ([key, { label, component: Component }]) => (
+          <Drawer
+            key={key}
+            title={label}
+            open={openFilter === key}
+            toggleOpen={() => toggleDrawer(key as FilterType)}
+            onClose={() => setOpenFilter(null)}
+            trigger={<DropdownButton key={key} label={label} />}
+          >
+            <Component />
+          </Drawer>
+        ),
+      )}
     </div>
   );
 };
