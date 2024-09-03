@@ -9,7 +9,7 @@ export const drawerSVG = (
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0_225_8684)">
+      <g clipPath="url(#clip0_225_8684)">
         <path
           d="M19 6L6 19"
           stroke="#4D4744"

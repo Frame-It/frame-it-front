@@ -1,7 +1,7 @@
 'use client';
 
-import Drawer from '@/components/common/drawer';
 import { FilterTabs } from '@/components/common/filter-tabs';
+import FilterDrawers from '@/components/recruit/filter-drawers';
 import RecruitCard, {
   IRecruitCardProps,
 } from '@/components/recruit/recruit-card';
@@ -61,15 +61,7 @@ const RecruitPage = () => {
           tabsData={tabsData}
         />
         <div className={cn('h-[46px]')}>
-          <Drawer
-            title={'title'}
-            open={isOpen}
-            onClose={toggle}
-            toggleOpen={toggle}
-            trigger={'기타 필터'}
-          >
-            filter drawer
-          </Drawer>
+          <FilterDrawers />
         </div>
       </div>
       <div className={cn('h-[calc(100%-94px)] overflow-auto py-[19px]')}>
