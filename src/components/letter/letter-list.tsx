@@ -26,7 +26,7 @@ const LetterList: React.FunctionComponent<ILetterListProps> = ({
   const dates = Object.keys(groupedMessages);
 
   return (
-    <div className="mx-auto mt-[120px] w-full">
+    <div className="mx-auto mt-4 w-full">
       <div className="space-y-[20px]">
         {dates.map((date) => (
           <div key={date}>

@@ -26,10 +26,10 @@ ToastViewport.displayName = ToastPrimitives.Viewport.displayName;
 
 const toastVariants = cva(
   `
-  group pointer-events-auto relative w-fit max-w-[260px] mx-auto flex w-full items-center justify-center space-x-4 overflow-hidden rounded-md border py-[12px] px-[26px] shadow-lg transition-all 
+  group pointer-events-auto relative w-full mx-auto flex w-full items-center justify-center space-x-4 overflow-hidden rounded-md border py-[12px] px-[26px] shadow-lg transition-all 
   data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-[var(--radix-toast-swipe-end-x)] data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] 
-  data-[swipe=move]:transition-none data-[state=open]:animate-in 
-  data-[state=closed]:animate-out data-[swipe=end]:animate-out 
+  data-[swipe=move]:transition-none data-[state=open]:animate-slide-down
+  data-[state=closed]:animate-slide-up data-[swipe=end]:animate-out 
   data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-right-full 
   data-[state=open]:slide-in-from-top-full data-[state=open]:sm:slide-in-from-bottom-full
   `,
@@ -102,7 +102,7 @@ const ToastTitle = React.forwardRef<
   <ToastPrimitives.Title
     ref={ref}
     className={cn(
-      'text-nowrap text-[14px] font-[500] leading-[150%] text-gray-10',
+      'text-nowrap text-[14px] font-[500] leading-[150%]',
       className,
     )}
     {...props}

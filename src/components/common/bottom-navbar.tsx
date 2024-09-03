@@ -43,7 +43,7 @@ const bottombarPaths: IBottombarPaths[] = [
     iconId: 'talk-icon',
   },
   {
-    path: '/my-studio',
+    path: '/my-page',
     name: '마이',
     iconId: 'profile-icon',
   },
@@ -74,7 +74,7 @@ const NavLink: React.FunctionComponent<INavLinkProps> = ({
 };
 
 const BottomNavbar: React.FunctionComponent<IBottomBarProps> = () => {
-  const pathName = usePathname();
+  const pathName = usePathname().split('/')[1];
 
   return (
     <nav className="fixed bottom-0 z-30 mx-auto flex h-[64px] w-full max-w-[360px] border-t-[1px] border-t-[#ECE9E7] bg-white px-[32px]">
@@ -91,7 +91,11 @@ const BottomNavbar: React.FunctionComponent<IBottomBarProps> = () => {
             );
           }
           return (
-            <NavLink key={nav.path} active={nav.path === pathName} {...nav} />
+            <NavLink
+              key={nav.path}
+              active={nav.path === `/${pathName}`}
+              {...nav}
+            />
           );
         })}
       </ul>

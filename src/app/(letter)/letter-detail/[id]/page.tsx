@@ -14,7 +14,7 @@ export default function LetterDetailPage() {
       <Accordion
         type="single"
         collapsible
-        className="fixed left-1/2 top-[58px] z-10 w-full max-w-[328px] -translate-x-1/2"
+        className="z-50 mx-auto w-full max-w-[328px]"
       >
         <AccordionItem value="item-1" className="overflow-hidden bg-white">
           <AccordionTrigger className="">

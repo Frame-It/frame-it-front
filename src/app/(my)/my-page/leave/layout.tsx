@@ -7,28 +7,25 @@ import {
 } from '@/components/common/header';
 import Icon from '@/components/common/icon';
 
-import React from 'react';
-
-export default function PortfolioLayout({
+export default function MyStudioLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
-  // id로 닉네임 받아오기
+}>) {
   return (
-    <div className="pb-[66px] pt-[58px]">
-      <Header className="border-none shadow-none">
+    <div className="pt-[58px]">
+      <Header>
         <HeaderLeft>
           <BackButton>
             <Icon id="back-icon" className="size-[32px] text-gray-40" />
           </BackButton>
         </HeaderLeft>
-        <HeaderCenter>닉네임원 닉네임원</HeaderCenter>
+        <HeaderCenter>계정 정보</HeaderCenter>
         <HeaderRight>
-          <div className="size-[32px]"></div>
+          <div className="size-[32px] text-gray-40" />
         </HeaderRight>
       </Header>
-      <main className="relative px-[16px] pb-[79px]">{children}</main>
+      {children}
     </div>
   );
 }
