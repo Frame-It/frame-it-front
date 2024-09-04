@@ -1,9 +1,6 @@
 'use client';
 
 import { FilterTabs } from '@/components/common/filter-tabs';
-('use client');
-
-import { FilterTabs } from '@/components/common/filter-tabs';
 import FeedList from '@/components/feed/feed-list';
 import { USER_TYPE, UserValue } from '@/types/filter';
 import { useEffect, useState } from 'react';
@@ -39,11 +36,7 @@ export default function FeedPage() {
         onValueChange={handleChange}
         tabsData={tabsData}
       />
-      <FilterTabs
-        defaultValue="ALL"
-        onValueChange={handleChange}
-        tabsData={tabsData}
-      />
+
       <FeedList />
     </div>
   );

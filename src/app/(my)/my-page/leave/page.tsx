@@ -4,8 +4,20 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Textarea } from '@/components/ui/textarea';
+import { toast } from '@/components/ui/use-toast';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { useRouter } from 'next/navigation';
 
 export default function LeavePage() {
+  const router = useRouter();
+
   const [isChecked, setIsChecked] = useState(false);
   const [textareaValue, setTextareaValue] = useState('');
 
@@ -63,10 +75,39 @@ export default function LeavePage() {
         disabled={!isChecked}
         className="absolute bottom-0 left-0 mx-auto mb-[9px] w-full"
         size="lg"
-        onClick={() => {}}
+        onClick={() => {
+          toast({
+            title: '회원 탈퇴가 불가합니다',
+            description: '아직 진행중인 프로젝트가 있어요.',
+            className: 'bg-error text-white max-w-[250px] text-center',
+            duration: 1500,
+          });
+        }}
       >
         회원탈퇴
       </Button>
+
+      <Dialog>
+        {/* <DialogTrigger>Open</DialogTrigger> */}
+        <DialogContent className="flex max-w-[280px] flex-col items-center justify-center pb-[24px] pt-[32px]">
+          <DialogHeader>
+            <DialogTitle className="text-center text-lg">
+              회원 탈퇴 완료
+            </DialogTitle>
+            <DialogDescription className="break-keep text-center text-sm">
+              그동안 프레이밋을 이용해주셔서 감사합니다.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="w-full">
+            <Button
+              className="w-full bg-gray-20 font-normal"
+              onClick={() => router.push('/')}
+            >
+              홈으로 가기
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </main>
   );
 }

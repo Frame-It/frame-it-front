@@ -1,7 +1,7 @@
 import Image from 'next/image';
-import { letterList } from '@/constants/data';
 import RoleBadge from '@/components/common/role-badge';
 import Link from 'next/link';
+import { letterList } from '@/constants/chat';
 
 export default function LetterPage() {
   return (

@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { Badge } from '@/components/ui/badge';
+import RoleBadge from '../common/role-badge';
 
 interface IMyStudioHeaderProps {
   profileUrl: string;
@@ -8,6 +8,7 @@ interface IMyStudioHeaderProps {
 
 const MyStudioHeader: React.FunctionComponent<IMyStudioHeaderProps> = ({
   profileUrl,
+  role,
 }) => {
   return (
     <section className="">
@@ -33,12 +34,10 @@ const MyStudioHeader: React.FunctionComponent<IMyStudioHeaderProps> = ({
       </div>
       <div className="mt-[16px] flex items-center gap-x-1">
         <div className="text-[18px] font-semibold">유저 닉네임</div>
-        <Badge
-          type="author"
+        <RoleBadge
+          role={role}
           className="flex h-[24px] w-[37px] items-center justify-center whitespace-nowrap rounded-[6px] py-[6px] text-[#4D474]"
-        >
-          작가
-        </Badge>
+        />
       </div>
     </section>
   );
