@@ -1,10 +1,12 @@
 'use client';
 
-import Link from 'next/link';
-import Icon from './icon';
+import useDisclosure from '@/hooks/useDisclosure';
 import { cn } from '@/lib/utils';
-import { usePathname } from 'next/navigation';
 import IconIDTypes from '@/types/icon';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import Drawer from './drawer';
+import Icon from './icon';
 
 // 원하면 path를 props로
 interface IBottomBarProps {}
@@ -75,6 +77,9 @@ const NavLink: React.FunctionComponent<INavLinkProps> = ({
 
 const BottomNavbar: React.FunctionComponent<IBottomBarProps> = () => {
   const pathName = usePathname().split('/')[1];
+  const { isOpen, toggle } = useDisclosure();
+
+  const handleRegist = () => {};
 
   return (
     <nav className="fixed bottom-0 z-30 mx-auto flex h-[64px] w-full max-w-[360px] border-t-[1px] border-t-[#ECE9E7] bg-white px-[32px]">
@@ -82,12 +87,21 @@ const BottomNavbar: React.FunctionComponent<IBottomBarProps> = () => {
         {bottombarPaths.map((nav) => {
           if (nav.isRegist) {
             return (
-              <li key={nav.iconId}>
-                <Icon
-                  id={nav.iconId}
-                  className={cn('h-[32px] w-[32px] text-[#B4ADA9]')}
-                />
-              </li>
+              <Drawer
+                title={''}
+                open={isOpen}
+                toggleOpen={toggle}
+                trigger={
+                  <li key={nav.iconId} onClick={handleRegist}>
+                    <Icon
+                      id={nav.iconId}
+                      className={cn('h-[32px] w-[32px] text-[#B4ADA9]')}
+                    />
+                  </li>
+                }
+              >
+                <RegistDrawerContent />
+              </Drawer>
             );
           }
           return (
@@ -100,6 +114,44 @@ const BottomNavbar: React.FunctionComponent<IBottomBarProps> = () => {
         })}
       </ul>
     </nav>
+  );
+};
+
+const RegistDrawerContent = () => {
+  const menus: {
+    iconId: IconIDTypes;
+    title: string;
+    path: string;
+  }[] = [
+    {
+      iconId: 'search-icon',
+      title: '모집글 업로드',
+      path: 'project-register',
+    },
+    {
+      iconId: 'feed-icon',
+      title: '포트폴리오 업로드',
+      path: 'portfolio-register',
+    },
+  ];
+  return (
+    <>
+      {menus.map((menu) => (
+        <Link
+          className={cn('flex h-10 items-center gap-[13px] self-stretch')}
+          href={menu.path}
+        >
+          <Icon id={menu.iconId} size={24} className={cn('text-[#7E7774]')} />
+          <span
+            className={cn(
+              'font-pretendard text-[16px] font-semibold leading-[135%] text-[#4D4744]',
+            )}
+          >
+            {menu.title}
+          </span>
+        </Link>
+      ))}
+    </>
   );
 };
 
