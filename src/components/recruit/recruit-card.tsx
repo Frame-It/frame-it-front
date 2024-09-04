@@ -84,7 +84,7 @@ const TagList = ({ tags }: { tags: string[] }) => {
   return (
     <div
       className={cn(
-        'scrollbar-hide flex flex-[1_1_0] gap-[4px] overflow-x-auto whitespace-nowrap',
+        'flex flex-[1_1_0] gap-[4px] overflow-x-auto whitespace-nowrap scrollbar-hide',
       )}
     >
       {tags.map((tag: string, index: number) => (
@@ -98,7 +98,7 @@ const Tag = ({ label }: { label: string }) => {
   return (
     <div
       className={cn(
-        'flex items-center justify-center gap-[8px] rounded-[40px] border border-[#B4ADA9] px-[7px] py-[3px] text-[12px] font-normal leading-normal text-[#B4ADA9]',
+        'flex h-[20px] items-center justify-center gap-[8px] rounded-[40px] border border-[#B4ADA9] px-[7px] py-[3px] text-[12px] font-normal leading-normal text-[#B4ADA9]',
       )}
     >
       {label}

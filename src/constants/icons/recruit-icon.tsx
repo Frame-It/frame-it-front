@@ -1,4 +1,9 @@
-export type RecruitIconID = 'location-icon' | 'time-icon' | 'bookmark-icon';
+export type RecruitIconID =
+  | 'location-icon'
+  | 'time-icon'
+  | 'bookmark-icon'
+  | 'arrow-down-icon'
+  | 'reload-icon';
 
 export const recruitSVG = (
   <>
@@ -73,6 +78,52 @@ export const recruitSVG = (
       <defs>
         <clipPath id="clip0_2195_8160">
           <rect width="24" height="24" fill="white" />
+        </clipPath>
+      </defs>
+    </symbol>
+
+    {/* arrow-down */}
+    <symbol
+      id="arrow-down-icon"
+      viewBox="0 0 18 18"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g clipPath="url(#clip0_2941_14655)">
+        <path
+          d="M4 7L9 12L14 7"
+          stroke="#4D4744"
+          strokeWidth="1.2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_2941_14655">
+          <rect width="18" height="18" fill="white" />
+        </clipPath>
+      </defs>
+    </symbol>
+
+    {/* reload */}
+    <symbol
+      id="reload-icon"
+      viewBox="0 0 18 18"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g clipPath="url(#clip0_2941_14650)">
+        <path
+          d="M12.6739 13.094C11.6712 13.9944 10.3725 14.4949 9.02484 14.5002C7.67718 14.5056 6.37456 14.0154 5.36472 13.123C4.35488 12.2306 3.70826 10.9981 3.54784 9.66002C3.38741 8.32194 3.72437 6.97156 4.49463 5.86571C5.26489 4.75986 6.41472 3.97567 7.72545 3.66229C9.03617 3.34891 10.4164 3.52819 11.6035 4.16604C12.7907 4.8039 13.702 5.85582 14.1642 7.12176M14.5 4.123L14.5 7.17539L11.4476 7.17539"
+          stroke="#4D4744"
+          strokeWidth="1.2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_2941_14650">
+          <rect width="18" height="18" fill="white" />
         </clipPath>
       </defs>
     </symbol>
