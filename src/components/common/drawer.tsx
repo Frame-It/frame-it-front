@@ -11,10 +11,10 @@ import { PropsWithChildren, ReactNode } from 'react';
 import Icon from './icon';
 
 interface IDrawerProps {
-  title: string;
+  title?: string;
   open: boolean;
   toggleOpen: () => void;
-  onClose: () => void;
+  onClose?: () => void;
   trigger: ReactNode;
 }
 
@@ -37,14 +37,18 @@ const Drawer = ({
         </button>
       </DrawerTrigger>
       <DrawerContent>
-        <DrawerHeader className={cn('flex items-center justify-between')}>
-          <DrawerTitle className={cn('text-[#4D4744]')}>{title}</DrawerTitle>
-          <DrawerClose asChild>
-            <button className="btn-primary" onClick={onClose}>
-              <Icon id="close-icon" size={24} />
-            </button>
-          </DrawerClose>
-        </DrawerHeader>
+        {title && (
+          <DrawerHeader className={cn('flex items-center justify-between')}>
+            <DrawerTitle className={cn('text-[#4D4744]')}>{title}</DrawerTitle>
+            {onClose && (
+              <DrawerClose asChild>
+                <button className="btn-primary" onClick={onClose}>
+                  <Icon id="close-icon" size={24} />
+                </button>
+              </DrawerClose>
+            )}
+          </DrawerHeader>
+        )}
         <div className="p-4">{children}</div>
       </DrawerContent>
     </UiDrawer>
