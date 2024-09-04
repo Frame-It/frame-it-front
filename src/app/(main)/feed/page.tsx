@@ -36,11 +36,7 @@ export default function FeedPage() {
         onValueChange={handleChange}
         tabsData={tabsData}
       />
-      <FilterTabs
-        defaultValue="ALL"
-        onValueChange={handleChange}
-        tabsData={tabsData}
-      />
+
       <FeedList />
     </div>
   );
