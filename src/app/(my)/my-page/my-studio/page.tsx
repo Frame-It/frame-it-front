@@ -3,6 +3,7 @@ import MyStudioHeader from '@/components/my-studio/header';
 import MyStudioIntroduce from '@/components/my-studio/introduce';
 import MyStudioPortfolioGallery from '@/components/my-studio/portfolio-gallery';
 import ProjectList from '@/components/my-studio/project-list';
+import ReviewList from '@/components/my-studio/review-list';
 
 import { generateRandomImageList } from '@/lib/faker';
 import { faker } from '@faker-js/faker';
@@ -77,7 +78,41 @@ export default function MyStudioPage(params: {
       )}
 
       {/* 리뷰 */}
-      {queryString === 'review' && <div>리뷰</div>}
+      {queryString === 'review' && (
+        <ReviewList
+          reviewList={[
+            {
+              nickname: '아키나86',
+              tagList: [
+                '약속시간을 잘 지켜요',
+                '매너가 좋아요',
+                '친절해요',
+                '사진을 잘 찍어요',
+              ],
+              constents: '즐거웠습니다.',
+            },
+            {
+              nickname: '아키나86',
+              tagList: [
+                '약속시간을 잘 지켜요',
+                '매너가 좋아요',
+                '친절해요',
+                '사진을 잘 찍어요',
+              ],
+              constents: '즐거웠습니다.',
+            },
+            {
+              nickname: '아키나86',
+              tagList: [
+                '컨셉이 좋아요',
+                '매너가 좋아요',
+                '친절해요',
+                '사진을 잘 찍어요',
+              ],
+            },
+          ]}
+        />
+      )}
     </main>
   );
 }

@@ -39,11 +39,16 @@ const ProjectList: React.FunctionComponent<IProjectListProps> = ({
         </div>
       )}
       <ul className="flex flex-col gap-y-[18px]">
-        {projectList.map((project) => (
+        {projectList.map((project, i) => (
           <li
             onClick={() => router.push('/')}
             key={project.title + project.time}
-            className="flex justify-between gap-x-[13px] border border-l-0 border-r-0 border-t-0 border-b-gray-80 pb-[18px]"
+            className={cn(
+              'flex justify-between gap-x-[13px] pb-[18px]',
+              i === projectList.length - 1
+                ? ''
+                : 'border border-l-0 border-r-0 border-t-0 border-b-gray-80',
+            )}
           >
             <div className="space-y-[12px]">
               <div className="font-semibold leading-[135%] text-gray-20">
@@ -61,7 +66,7 @@ const ProjectList: React.FunctionComponent<IProjectListProps> = ({
             </div>
             <Badge
               className={cn(
-                'h-[22px] bg-white px-[9px] text-xs leading-[150%]',
+                'h-[22px] bg-white px-[9px] text-xs leading-[150%] hover:bg-white',
                 project.stste === 'recruiting' &&
                   'border-sub-green text-sub-green',
                 project.stste === 'inProgress' &&
