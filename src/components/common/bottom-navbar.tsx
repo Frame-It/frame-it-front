@@ -22,7 +22,7 @@ interface INavLinkProps extends IBottombarPaths {
 
 const bottombarPaths: IBottombarPaths[] = [
   {
-    path: '/',
+    path: '/recruit',
     name: '모집',
     iconId: 'search-icon',
   },
