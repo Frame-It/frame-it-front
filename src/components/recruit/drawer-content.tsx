@@ -67,6 +67,34 @@ export const LocationDrawerContent = () => (
 export const DateDrawerContent = () => (
   <DrawerContentLayout></DrawerContentLayout>
 );
-export const PlaceDrawerContent = () => (
-  <DrawerContentLayout></DrawerContentLayout>
-);
+
+export const PlaceDrawerContent = () => {
+  const [selectedPlace, setSelectedPlace] = useState<
+    'outdoor' | 'studio' | null
+  >(null);
+
+  const handleSelectPlace = (place: 'outdoor' | 'studio') => {
+    setSelectedPlace(place);
+  };
+
+  return (
+    <DrawerContentLayout>
+      <div
+        className={cn('flex h-[290px] flex-col items-start gap-2 self-stretch')}
+      >
+        <BottomButton
+          variant={selectedPlace === 'outdoor' ? 'secondary' : 'stroke'}
+          size={'large'}
+          label={'야외'}
+          onClick={() => handleSelectPlace('outdoor')}
+        />
+        <BottomButton
+          variant={selectedPlace === 'studio' ? 'secondary' : 'stroke'}
+          size={'large'}
+          label={'스튜디오'}
+          onClick={() => handleSelectPlace('studio')}
+        />
+      </div>
+    </DrawerContentLayout>
+  );
+};
