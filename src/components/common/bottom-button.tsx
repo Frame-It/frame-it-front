@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import React from 'react';
+import React, { ButtonHTMLAttributes } from 'react';
 
 interface ButtonProps {
   variant: 'primary' | 'secondary' | 'stroke';
@@ -8,12 +8,9 @@ interface ButtonProps {
   disabled?: boolean;
 }
 
-const BottomButton: React.FC<ButtonProps> = ({
-  variant,
-  size,
-  label,
-  disabled = false,
-}) => {
+const BottomButton: React.FC<
+  ButtonProps & ButtonHTMLAttributes<HTMLButtonElement>
+> = ({ variant, size, label, disabled = false, ...props }) => {
   const sizeStyles = {
     large: 'w-[328px] h-[46px]',
     middle: 'w-[220px] h-[40px]',
@@ -47,7 +44,7 @@ const BottomButton: React.FC<ButtonProps> = ({
   );
 
   return (
-    <button className={classes} disabled={disabled}>
+    <button className={classes} disabled={disabled} {...props}>
       {label}
     </button>
   );
