@@ -1,5 +1,8 @@
-import { FC, PropsWithChildren } from 'react';
+import { cn } from '@/lib/utils';
+import { faker } from '@faker-js/faker/locale/ko';
+import { FC, PropsWithChildren, useState } from 'react';
 import BottomButton from '../common/bottom-button';
+import ConceptTag from '../common/concept-tag';
 
 const DrawerContentLayout: FC<PropsWithChildren> = ({ children }) => {
   return (
@@ -13,9 +16,49 @@ const DrawerContentLayout: FC<PropsWithChildren> = ({ children }) => {
     </div>
   );
 };
+const generateTags = () => {
+  return Array.from({ length: 10 }, (_, index) => ({
+    id: index,
+    label: faker.lorem.word(),
+  }));
+};
+
+interface ITag {
+  id: number;
+  label: string;
+}
 
 export const ConceptDrawerContent = () => {
-  return <DrawerContentLayout></DrawerContentLayout>;
+  const [tags] = useState<ITag[]>(generateTags);
+  const [selectedTags, setSelectedTags] = useState<number[]>([]);
+
+  const toggleTag = (id: number) => {
+    setSelectedTags((prevSelectedTags) =>
+      prevSelectedTags.includes(id)
+        ? prevSelectedTags.filter((tagId) => tagId !== id)
+        : [...prevSelectedTags, id],
+    );
+  };
+
+  return (
+    <DrawerContentLayout>
+      <div
+        className={cn(
+          'flex h-[275px] flex-wrap content-start items-start gap-2 self-stretch',
+        )}
+      >
+        {tags.map((tag) => (
+          <ConceptTag
+            key={tag.id}
+            id={tag.id}
+            label={tag.label}
+            isSelected={selectedTags.includes(tag.id)}
+            onToggle={toggleTag}
+          />
+        ))}
+      </div>
+    </DrawerContentLayout>
+  );
 };
 
 export const LocationDrawerContent = () => (
