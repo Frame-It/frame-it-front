@@ -84,7 +84,7 @@ const TagList = ({ tags }: { tags: string[] }) => {
   return (
     <div
       className={cn(
-        'flex flex-[1_1_0] gap-[4px] overflow-x-auto whitespace-nowrap scrollbar-hide',
+        'flex flex-1 gap-[4px] overflow-x-auto whitespace-nowrap scrollbar-hide',
       )}
     >
       {tags.map((tag: string, index: number) => (

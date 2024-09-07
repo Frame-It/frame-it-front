@@ -6,7 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import { talkList } from '@/constants/data';
+import { talkList } from '@/constants/chat';
 
 export default function LetterDetailPage() {
   return (

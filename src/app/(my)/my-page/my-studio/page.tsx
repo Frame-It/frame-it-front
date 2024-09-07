@@ -2,6 +2,8 @@ import MySturioFilter from '@/components/my-studio/filter';
 import MyStudioHeader from '@/components/my-studio/header';
 import MyStudioIntroduce from '@/components/my-studio/introduce';
 import MyStudioPortfolioGallery from '@/components/my-studio/portfolio-gallery';
+import ProjectList from '@/components/my-studio/project-list';
+import ReviewList from '@/components/my-studio/review-list';
 
 import { generateRandomImageList } from '@/lib/faker';
 import { faker } from '@faker-js/faker';
@@ -36,8 +38,81 @@ export default function MyStudioPage(params: {
       )}
 
       {/* 프로젝트 */}
+      {queryString === 'project' && (
+        <ProjectList
+          projectList={[
+            {
+              id: faker.string.uuid(),
+              date: '7/31',
+              time: '12:00~14:00',
+              location: '서울시 종로구',
+              stste: 'recruiting',
+              title: '노들섬에서 촬용해 주세요',
+            },
+            {
+              id: faker.string.uuid(),
+              date: '7/31',
+              time: '12:00~14:00',
+              location: '서울시 종로구',
+              stste: 'inProgress',
+              title: '노들섬에서 촬용해 주세요',
+            },
+            {
+              id: faker.string.uuid(),
+              date: '7/31',
+              time: '12:00~14:00',
+              location: '서울시 종로구',
+              stste: 'inProgress',
+              title: '노들섬에서 촬용해 주세요',
+            },
+            {
+              id: faker.string.uuid(),
+              date: '7/31',
+              time: '12:00~14:00',
+              location: '서울시 종로구',
+              stste: 'complete',
+              title: '노들섬에서 촬용해 주세요',
+            },
+          ]}
+        />
+      )}
 
       {/* 리뷰 */}
+      {queryString === 'review' && (
+        <ReviewList
+          reviewList={[
+            {
+              nickname: '아키나86',
+              tagList: [
+                '약속시간을 잘 지켜요',
+                '매너가 좋아요',
+                '친절해요',
+                '사진을 잘 찍어요',
+              ],
+              constents: '즐거웠습니다.',
+            },
+            {
+              nickname: '아키나86',
+              tagList: [
+                '약속시간을 잘 지켜요',
+                '매너가 좋아요',
+                '친절해요',
+                '사진을 잘 찍어요',
+              ],
+              constents: '즐거웠습니다.',
+            },
+            {
+              nickname: '아키나86',
+              tagList: [
+                '컨셉이 좋아요',
+                '매너가 좋아요',
+                '친절해요',
+                '사진을 잘 찍어요',
+              ],
+            },
+          ]}
+        />
+      )}
     </main>
   );
 }
