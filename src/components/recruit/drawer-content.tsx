@@ -4,6 +4,8 @@ import { FC, PropsWithChildren, useState } from 'react';
 import BottomButton from '../common/bottom-button';
 import ConceptTag from '../common/concept-tag';
 import DatePicker from '../common/date-picker';
+import Icon from '../common/icon';
+import { Input } from '../ui/input';
 
 const DrawerContentLayout: FC<PropsWithChildren> = ({ children }) => {
   return (
@@ -63,7 +65,17 @@ export const ConceptDrawerContent = () => {
 };
 
 export const LocationDrawerContent = () => (
-  <DrawerContentLayout></DrawerContentLayout>
+  <DrawerContentLayout>
+    <div className={cn('relative h-[345px]')}>
+      <Input className={cn('h-[46px]')} placeholder="Place holder" />
+      <Icon
+        id={'search-icon'}
+        size={24}
+        className={cn('absolute right-[15px] top-[11px] text-[#7E7774]')}
+        onClick={() => console.log('search location')}
+      />
+    </div>
+  </DrawerContentLayout>
 );
 
 export const DateDrawerContent = () => {
