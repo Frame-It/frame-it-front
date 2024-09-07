@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import React from 'react';
+import React, { ButtonHTMLAttributes } from 'react';
 
 interface ButtonProps {
   variant: 'primary' | 'secondary' | 'stroke';
@@ -8,16 +8,13 @@ interface ButtonProps {
   disabled?: boolean;
 }
 
-const BottomButton: React.FC<ButtonProps> = ({
-  variant,
-  size,
-  label,
-  disabled = false,
-}) => {
+const BottomButton: React.FC<
+  ButtonProps & ButtonHTMLAttributes<HTMLButtonElement>
+> = ({ variant, size, label, disabled = false, ...props }) => {
   const sizeStyles = {
-    large: 'w-[328px] h-[46px]',
-    middle: 'w-[220px] h-[40px]',
-    small: 'w-[104px] h-[32px]',
+    large: 'max-w-[328px] h-[46px]',
+    middle: 'max-w-[220px] h-[40px]',
+    small: 'max-w-[104px] h-[32px]',
   };
 
   const variantStyles = {
@@ -31,7 +28,7 @@ const BottomButton: React.FC<ButtonProps> = ({
       disabled: 'bg-[#CDC8C6] text-[#B4ADA9] cursor-not-allowed',
     },
     stroke: {
-      default: 'bg-white border-[1.314px] border-[#7E7774] text-[#7E7774]',
+      default: 'bg-white border-[#7E7774] text-[#7E7774]',
       disabled: 'bg-[#CDC8C6] border-none text-[#B4ADA9] cursor-not-allowed',
     },
   };
@@ -41,13 +38,13 @@ const BottomButton: React.FC<ButtonProps> = ({
     : `${variantStyles[variant].default} ${variant === 'primary' ? variantStyles.primary.pressed : ''}`;
 
   const classes = cn(
-    'flex flex-col justify-center items-center flex-shrink-0 rounded-lg text-center',
+    'flex flex-col w-full justify-center items-center rounded-lg text-center border-[1.314px] border-solid border-transparent',
     sizeStyles[size],
     style,
   );
 
   return (
-    <button className={classes} disabled={disabled}>
+    <button className={classes} disabled={disabled} {...props}>
       {label}
     </button>
   );
