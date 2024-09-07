@@ -64,9 +64,62 @@ export const ConceptDrawerContent = () => {
 export const LocationDrawerContent = () => (
   <DrawerContentLayout></DrawerContentLayout>
 );
-export const DateDrawerContent = () => (
-  <DrawerContentLayout></DrawerContentLayout>
-);
+
+export const DateDrawerContent = () => {
+  const [selectedTime, setSelectedTime] = useState<string | null>(null);
+
+  const handleTimeSelection = (time: string) => {
+    setSelectedTime(time);
+  };
+
+  return (
+    <DrawerContentLayout>
+      <div
+        className={cn('flex flex-col items-start gap-4 self-stretch pb-[40px]')}
+      >
+        <div className={cn('flex flex-col items-start gap-3 self-stretch')}>
+          <div
+            className={cn(
+              'text-[18px] font-semibold leading-[24.3px] text-[#4D4744]',
+            )}
+          >
+            날짜
+          </div>
+          <div>날짜 선택</div>
+        </div>
+        <div className={cn('flex flex-col items-start gap-3 self-stretch')}>
+          <div
+            className={cn(
+              'text-[18px] font-semibold leading-[24.3px] text-[#4D4744]',
+            )}
+          >
+            시간
+          </div>
+          <div className={cn('flex items-start gap-2 self-stretch')}>
+            <BottomButton
+              variant={selectedTime === '오전' ? 'secondary' : 'stroke'}
+              size={'middle'}
+              label={'오전'}
+              onClick={() => handleTimeSelection('오전')}
+            />
+            <BottomButton
+              variant={selectedTime === '오후' ? 'secondary' : 'stroke'}
+              size={'middle'}
+              label={'오후'}
+              onClick={() => handleTimeSelection('오후')}
+            />
+            <BottomButton
+              variant={selectedTime === '시간협의' ? 'secondary' : 'stroke'}
+              size={'middle'}
+              label={'시간협의'}
+              onClick={() => handleTimeSelection('시간협의')}
+            />
+          </div>
+        </div>
+      </div>
+    </DrawerContentLayout>
+  );
+};
 
 export const PlaceDrawerContent = () => {
   const [selectedPlace, setSelectedPlace] = useState<
