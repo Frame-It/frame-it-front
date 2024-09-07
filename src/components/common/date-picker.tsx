@@ -31,7 +31,7 @@ const DatePickerComponent: React.FC = () => {
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
           'text-[#4D4744]',
-          'flex h-[46px] w-[328px] flex-shrink-0 items-center justify-between p-[16px]',
+          'box-border flex h-[46px] w-[327px] flex-shrink-0 items-center justify-between p-[16px]',
           'border-[1.314px] border-[#B4ADA9]',
           isOpen ? 'rounded-t-lg border-b' : 'rounded-lg border',
         )}

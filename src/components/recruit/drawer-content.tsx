@@ -76,7 +76,9 @@ export const DateDrawerContent = () => {
   return (
     <DrawerContentLayout>
       <div
-        className={cn('flex flex-col items-start gap-4 self-stretch pb-[40px]')}
+        className={cn(
+          'flex min-h-[352px] flex-col items-start gap-4 self-stretch pb-[40px]',
+        )}
       >
         <div className={cn('flex flex-col items-start gap-3 self-stretch')}>
           <div
