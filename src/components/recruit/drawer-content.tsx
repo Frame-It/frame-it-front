@@ -3,6 +3,7 @@ import { faker } from '@faker-js/faker/locale/ko';
 import { FC, PropsWithChildren, useState } from 'react';
 import BottomButton from '../common/bottom-button';
 import ConceptTag from '../common/concept-tag';
+import DatePicker from '../common/date-picker';
 
 const DrawerContentLayout: FC<PropsWithChildren> = ({ children }) => {
   return (
@@ -85,7 +86,9 @@ export const DateDrawerContent = () => {
           >
             날짜
           </div>
-          <div>날짜 선택</div>
+          <div>
+            <DatePicker />
+          </div>
         </div>
         <div className={cn('flex flex-col items-start gap-3 self-stretch')}>
           <div
