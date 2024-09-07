@@ -45,7 +45,7 @@ const DatePickerComponent: React.FC = () => {
             )}
           >
             날짜를 선택해주세요
-            <Icon id={'search-icon'} size={24} />
+            <Icon id={isOpen ? 'arrow-up-icon' : 'search-icon'} size={24} />
           </span>
         )}
       </button>
