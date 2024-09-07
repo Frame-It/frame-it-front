@@ -30,10 +30,12 @@ const RecruitCard = (props: IRecruitCardProps) => {
           <p
             className={cn(
               'flex self-stretch text-[16px] font-semibold leading-[1.35] text-[#201A17]',
+              'line-clamp-2 overflow-hidden',
             )}
           >
             {props.title}
           </p>
+
           <Icon
             id="bookmark-icon"
             className="h-[24px] w-[24px] flex-shrink-0"
