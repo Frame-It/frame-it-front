@@ -49,7 +49,7 @@ const Drawer = ({
             )}
           </DrawerHeader>
         )}
-        <div className="p-4">{children}</div>
+        <div className={cn('px-4 pb-4', !title && 'pt-4')}>{children}</div>
       </DrawerContent>
     </UiDrawer>
   );
