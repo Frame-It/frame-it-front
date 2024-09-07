@@ -1,10 +1,10 @@
+import { cn } from '@/lib/utils';
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
-import { cn } from '@/lib/utils';
 
-import localFont from 'next/font/local';
 import SvgSymbols from '@/components/common/svg-symbols';
 import { Toaster } from '@/components/ui/toaster';
+import localFont from 'next/font/local';
 
 export const metadata: Metadata = {
   manifest: '/manifest.json',
@@ -30,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={cn(pretendard.className)}>
+      <body className={cn(pretendard.className, 'overflow-hidden')}>
         <div className="mx-auto max-w-[360px] overflow-x-hidden">
           {children}
         </div>
