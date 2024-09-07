@@ -7,6 +7,7 @@ import HelpCenter from '@/components/my-page/help-center';
 import BottomNavbar from '@/components/common/bottom-navbar';
 import { Header, HeaderLeft, HeaderRight } from '@/components/common/header';
 import Link from 'next/link';
+import NotificationButton from '@/components/common/notification-button';
 
 export default function MyPage() {
   return (
@@ -26,7 +27,9 @@ export default function MyPage() {
           </Link>
         </HeaderLeft>
         <HeaderRight>
-          <Icon id="notification-icon" className="h-6 w-6" />
+          <NotificationButton>
+            <Icon id="notification-icon" className="h-6 w-6" />
+          </NotificationButton>
         </HeaderRight>
       </Header>
 
