@@ -88,6 +88,7 @@ const BottomNavbar: React.FunctionComponent<IBottomBarProps> = () => {
           if (nav.isRegist) {
             return (
               <Drawer
+                key={nav.name}
                 title={''}
                 open={isOpen}
                 toggleOpen={toggle}
