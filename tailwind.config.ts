@@ -62,6 +62,7 @@ const config = {
           70: '#cdc8c6',
           80: '#ece9e7',
           90: '#f5f3f2',
+          95: '#FFFBFA',
           100: '#ffffff',
         },
         sub: {

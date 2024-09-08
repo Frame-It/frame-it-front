@@ -137,8 +137,9 @@ const RegistDrawerContent = () => {
   ];
   return (
     <>
-      {menus.map((menu) => (
+      {menus.map((menu, i) => (
         <Link
+          key={i}
           className={cn('flex h-10 items-center gap-[13px] self-stretch')}
           href={menu.path}
         >

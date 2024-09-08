@@ -1,6 +1,7 @@
 import BottomNavbar from '@/components/common/bottom-navbar';
 import { Header, HeaderLeft, HeaderRight } from '@/components/common/header';
 import Icon from '@/components/common/icon';
+import NotificationButton from '@/components/common/notification-button';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -26,7 +27,9 @@ export default function Layout({
           </Link>
         </HeaderLeft>
         <HeaderRight>
-          <Icon id="notification-icon" className="h-6 w-6" />
+          <NotificationButton>
+            <Icon id="notification-icon" className="h-6 w-6" />
+          </NotificationButton>
         </HeaderRight>
       </Header>
       {children}
