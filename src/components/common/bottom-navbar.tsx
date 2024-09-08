@@ -142,6 +142,7 @@ const RegistDrawerContent = () => {
           key={i}
           className={cn('flex h-10 items-center gap-[13px] self-stretch')}
           href={menu.path}
+          key={menu.title}
         >
           <Icon id={menu.iconId} size={24} className={cn('text-[#7E7774]')} />
           <span
