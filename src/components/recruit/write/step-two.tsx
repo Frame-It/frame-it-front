@@ -31,14 +31,17 @@ const StepTwo: React.FC = () => {
     );
   };
 
+  const isNextEnabled = selectedTags.length && description && retouchingDetails;
+
   const handleNext = () => {
-    if (selectedTags.length && description) {
+    if (isNextEnabled) {
       setProjectInfo({
         ...projectInfo,
         conceptTags: selectedTags.map((v, i) => conceptTags[i].label),
         description,
+        retouchingDetails,
       });
-      nextStep();
+      // nextStep();
     } else {
       alert('컨셉 태그와 프로젝트 설명을 입력해주세요.');
     }
@@ -61,6 +64,7 @@ const StepTwo: React.FC = () => {
             ))}
           </div>
         </div>
+        <ApplyGuide />
         <input type="file" />
 
         <div className={cn('flex flex-col gap-2')}>
@@ -91,7 +95,32 @@ const StepTwo: React.FC = () => {
         variant={'primary'}
         size={'large'}
         label={'다음'}
+        disabled={!isNextEnabled}
       />
+    </div>
+  );
+};
+
+const ApplyGuide = () => {
+  const guides = [
+    '컨셉과 관련된 사진을 업로드해주세요.',
+    '타인의 초상권, 지식 재산권 등을 침해하는 사진은 게시하지 마세요.',
+  ];
+  return (
+    <div
+      className={cn(
+        'flex flex-col items-start gap-[5px] self-stretch rounded-[8px] bg-gray-90 p-[10px_12px]',
+      )}
+    >
+      <div className="font-body-14 text-gray-40">지원 안내</div>
+      <div>
+        {guides.map((guide) => (
+          <div key={guide} className="flex items-start gap-2">
+            <span className="mt-[7px] h-[3px] w-[3px] rounded-full bg-gray-40" />
+            <div className="font-caption-12 text-gray-40">{guide}</div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

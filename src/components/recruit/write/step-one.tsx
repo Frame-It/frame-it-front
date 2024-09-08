@@ -22,16 +22,18 @@ const StepOne: React.FC = () => {
   const [address, setAddress] = useState<string>('');
   const [detail, setDetail] = useState<string>('');
 
+  const isNextEnabled =
+    type &&
+    projectName &&
+    date &&
+    time &&
+    period &&
+    locationType &&
+    address &&
+    detail;
+
   const handleNext = () => {
-    if (
-      type &&
-      projectName &&
-      date &&
-      time &&
-      period &&
-      locationType &&
-      address
-    ) {
+    if (isNextEnabled) {
       setProjectInfo({
         type,
         projectName,
@@ -65,7 +67,12 @@ const StepOne: React.FC = () => {
           </div>
         </div>
         <div className={cn('flex flex-col gap-2')}>
-          <label className={cn('font-title-16')}>프로젝트명</label>
+          <label className={cn('font-title-16')}>
+            프로젝트명
+            <div className={cn('font-body-14 mt-[2px] text-gray-60')}>
+              최대 24자까지 가능합니다.
+            </div>
+          </label>
           <Textarea
             value={projectName}
             onChange={(e) => setProjectName(e.target.value)}
@@ -75,7 +82,12 @@ const StepOne: React.FC = () => {
           />
         </div>
         <div className={cn('flex flex-col gap-2')}>
-          <label className={cn('font-title-16')}>촬영일시</label>
+          <label className={cn('font-title-16')}>
+            촬영일시
+            <div className={cn('font-body-14 mt-[2px] text-gray-40')}>
+              촬영날짜와 시각을 입력해주세요.
+            </div>
+          </label>
           <div className={cn('flex flex-col gap-2')}>
             <Input
               value={date}
@@ -110,7 +122,12 @@ const StepOne: React.FC = () => {
           </div>
         </div>
         <div className={cn('flex flex-col gap-2')}>
-          <label className={cn('font-title-16')}>촬영장소</label>
+          <label className={cn('font-title-16')}>
+            촬영장소
+            <div className={cn('font-body-14 mt-[2px] text-gray-40')}>
+              매칭 페이지에서는 시/군/구 까지만 공개됩니다.
+            </div>
+          </label>
           <div className={cn('flex flex-col gap-2')}>
             <div className={cn('flex gap-2')}>
               <BottomButton
@@ -147,6 +164,7 @@ const StepOne: React.FC = () => {
         variant={'primary'}
         size={'large'}
         label={'다음'}
+        disabled={!isNextEnabled}
       />
     </div>
   );
