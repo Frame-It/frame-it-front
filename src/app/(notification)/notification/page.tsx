@@ -28,7 +28,7 @@ export default function NotificationPage() {
   );
 
   return (
-    <main>
+    <main className="h-[calc(100dvh-58px-64px)] overflow-y-auto">
       <NotificationList notificationList={notificationList} />
     </main>
   );
