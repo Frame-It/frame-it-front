@@ -12,7 +12,7 @@ const MyStudioHeader: React.FunctionComponent<IMyStudioHeaderProps> = ({
 }) => {
   return (
     <section className="">
-      <div className="mt-[27px] flex items-center gap-x-[45px]">
+      <div className="flex items-center gap-x-[45px]">
         <div className="relative h-[114px] w-[116px] overflow-hidden">
           <Image
             alt="profile-image"

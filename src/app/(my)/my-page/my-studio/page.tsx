@@ -21,7 +21,7 @@ export default function MyStudioPage(params: {
   const imageArr = Array.from({ length: 10 }, () => generateRandomImageList());
 
   return (
-    <main className="px-[16px] py-[1px]">
+    <main className="h-[calc(100dvh-58px-63px)] overflow-y-auto px-[16px] py-[14px]">
       <MyStudioHeader profileUrl={faker.image.urlPicsumPhotos()} role="model" />
       {/* 소개 글 */}
       <MyStudioIntroduce
