@@ -6,6 +6,7 @@ import {
   HeaderRight,
 } from '@/components/common/header';
 import Icon from '@/components/common/icon';
+import { cn } from '@/lib/utils';
 
 export default function ProjectLayout({
   children,
@@ -13,11 +14,11 @@ export default function ProjectLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
+    <div className={cn('flex h-screen flex-col')}>
       <Header className="border-none text-lg shadow-none">
         <HeaderLeft>
           <BackButton className="flex items-center justify-center">
-            <Icon id="back-icon" className="text-gray-40 size-[32px]" />
+            <Icon id="back-icon" className="size-[32px] text-gray-40" />
           </BackButton>
         </HeaderLeft>
         <HeaderCenter>프로젝트 등록</HeaderCenter>
@@ -25,7 +26,7 @@ export default function ProjectLayout({
           <div className="size-[32px]"></div>
         </HeaderRight>
       </Header>
-      <main className="mb-[16px] mt-[56px]">{children}</main>
-    </>
+      <main className="mb-[16px] mt-[56px] h-full flex-1">{children}</main>
+    </div>
   );
 }
