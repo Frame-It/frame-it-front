@@ -16,11 +16,11 @@ export const FONT_SYSTEM = {
     lineHeight: '135%',
   },
   '.font-body-16': {
-    '@apply text-base': {},
+    '@apply text-base font-normal': {},
     lineHeight: '150%',
   },
   '.font-body-14': {
-    '@apply text-sm': {},
+    '@apply text-sm font-normal': {},
     lineHeight: '150%',
   },
   '.font-body-14m': {
@@ -32,31 +32,31 @@ export const FONT_SYSTEM = {
     lineHeight: '100%',
   },
   '.font-button-16': {
-    '@apply text-base': {},
+    '@apply text-base font-normal': {},
     lineHeight: '100%',
   },
   '.font-button-14': {
-    '@apply text-sm': {},
+    '@apply text-sm font-normal': {},
     lineHeight: '100%',
   },
   '.font-caption-12': {
-    '@apply text-xs': {},
+    '@apply text-xs font-normal': {},
     lineHeight: '150%',
   },
   '.font-tag-14': {
-    '@apply text-sm': {},
+    '@apply text-sm font-normal': {},
     lineHeight: '100%',
   },
   '.font-tag-12': {
-    '@apply text-xs': {},
+    '@apply text-xs font-normal': {},
     lineHeight: '100%',
   },
   '.font-tiny-body': {
-    '@apply text-2xs': {},
+    '@apply text-2xs font-normal': {},
     lineHeight: '140%',
   },
   '.font-tiny': {
-    '@apply text-2xs': {},
+    '@apply text-2xs font-normal': {},
     lineHeight: '100%',
   },
 };
