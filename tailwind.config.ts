@@ -1,4 +1,6 @@
 import type { Config } from 'tailwindcss';
+import type { PluginAPI } from 'tailwindcss/types/config';
+import { FONT_SYSTEM } from './src/styles/font-system';
 
 const config = {
   darkMode: ['class'],
@@ -112,7 +114,13 @@ const config = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate'), require('tailwind-scrollbar-hide')],
+  plugins: [
+    require('tailwindcss-animate'),
+    require('tailwind-scrollbar-hide'),
+    function ({ addComponents }: PluginAPI) {
+      addComponents(FONT_SYSTEM);
+    },
+  ],
 } satisfies Config;
 
 export default config;
