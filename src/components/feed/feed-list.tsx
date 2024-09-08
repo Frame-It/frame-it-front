@@ -4,7 +4,7 @@ import PhotoList from '../common/photo-list';
 interface IFeedListProps {}
 
 const FeedList: React.FunctionComponent<IFeedListProps> = () => {
-  const imageArr = Array.from({ length: 3 }, () => generateRandomImageList());
+  const imageArr = Array.from({ length: 10 }, () => generateRandomImageList());
 
   return (
     <section className="mx-auto w-full">
