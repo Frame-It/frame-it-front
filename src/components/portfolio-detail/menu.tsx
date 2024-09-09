@@ -24,7 +24,7 @@ const PortfolioDetailMenu: React.FunctionComponent<
     .filter((el) => !!el);
   const portfolioId = pathnameArr[1];
 
-  const { isOpen, close, open } = useDisclosure(false);
+  const { isOpen, onClose, onOpen } = useDisclosure(false);
 
   const handleShare = () => {
     navigator.clipboard.writeText(window.location.href);
@@ -39,11 +39,7 @@ const PortfolioDetailMenu: React.FunctionComponent<
     router.push(`/portfolio-register?id=${portfolioId}`);
   };
   const handleDelete = () => {
-    open();
-  };
-
-  const onClose = () => {
-    close();
+    onOpen();
   };
 
   return (
