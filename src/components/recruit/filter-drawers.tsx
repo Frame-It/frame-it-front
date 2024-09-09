@@ -36,10 +36,12 @@ type FilterType = keyof typeof filterOptions;
 const FilterDrawers = () => {
   const [openFilter, setOpenFilter] = useState<FilterType | null>(null);
 
-  const toggleDrawer = (filter: FilterType) => {
-    setOpenFilter((prev) => {
-      return prev === filter ? null : filter;
-    });
+  const openDrawer = (filter: FilterType) => {
+    setOpenFilter(filter);
+  };
+
+  const onOpenChange = (open: boolean, filter: FilterType) => {
+    setOpenFilter(open ? filter : null);
   };
 
   return (
@@ -66,7 +68,7 @@ const FilterDrawers = () => {
             key={key}
             title={label}
             open={openFilter === key}
-            toggleOpen={() => toggleDrawer(key as FilterType)}
+            onOpenChange={(open) => onOpenChange(open, key as FilterType)}
             onClose={() => setOpenFilter(null)}
             trigger={<DropdownButton key={key} label={label} />}
           >

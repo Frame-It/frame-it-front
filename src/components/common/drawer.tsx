@@ -13,31 +13,28 @@ import Icon from './icon';
 interface IDrawerProps {
   title?: string;
   open: boolean;
-  toggleOpen: () => void;
   onClose?: () => void;
   trigger: ReactNode;
+  onOpenChange?: (open: boolean) => void;
 }
 
 const Drawer = ({
   title,
   open,
-  toggleOpen,
   onClose,
   trigger,
+  onOpenChange,
   children,
 }: IDrawerProps & PropsWithChildren) => {
   return (
-    <UiDrawer open={open}>
+    <UiDrawer open={open} onOpenChange={onOpenChange}>
       <DrawerTrigger asChild>
-        <button
-          className="btn-primary flex items-center justify-center"
-          onClick={toggleOpen}
-        >
+        <button className="btn-primary flex items-center justify-center">
           {trigger}
         </button>
       </DrawerTrigger>
       <DrawerContent>
-        {title && (
+        {title ? (
           <DrawerHeader className={cn('flex items-center justify-between')}>
             <DrawerTitle className={cn('text-[#4D4744]')}>{title}</DrawerTitle>
             {onClose && (
@@ -48,6 +45,8 @@ const Drawer = ({
               </DrawerClose>
             )}
           </DrawerHeader>
+        ) : (
+          <DrawerTitle />
         )}
         <div className={cn('px-4 pb-4', !title && 'pt-4')}>{children}</div>
       </DrawerContent>
