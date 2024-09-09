@@ -77,7 +77,7 @@ const NavLink: React.FunctionComponent<INavLinkProps> = ({
 
 const BottomNavbar: React.FunctionComponent<IBottomBarProps> = () => {
   const pathName = usePathname().split('/')[1];
-  const { isOpen, toggle } = useDisclosure();
+  const { isOpen, onOpenChange, onOpen } = useDisclosure();
 
   const handleRegist = () => {};
 
@@ -91,7 +91,7 @@ const BottomNavbar: React.FunctionComponent<IBottomBarProps> = () => {
                 key={nav.name}
                 title={''}
                 open={isOpen}
-                toggleOpen={toggle}
+                onOpenChange={onOpenChange}
                 trigger={
                   <li key={nav.iconId} onClick={handleRegist}>
                     <Icon
@@ -142,7 +142,6 @@ const RegistDrawerContent = () => {
           key={i}
           className={cn('flex h-10 items-center gap-[13px] self-stretch')}
           href={menu.path}
-          key={menu.title}
         >
           <Icon id={menu.iconId} size={24} className={cn('text-[#7E7774]')} />
           <span
