@@ -7,7 +7,6 @@ import {
   HeaderRight,
 } from '@/components/common/header';
 import Icon from '@/components/common/icon';
-import NotificationButton from '@/components/common/notification-button';
 
 export default function MyStudioLayout({
   children,
@@ -22,14 +21,12 @@ export default function MyStudioLayout({
             <Icon id="back-icon" className="size-[32px] text-gray-40" />
           </BackButton>
         </HeaderLeft>
-        <HeaderCenter>마이 스튜디오</HeaderCenter>
+        <HeaderCenter>알림</HeaderCenter>
         <HeaderRight>
-          <NotificationButton>
-            <Icon id="notification-icon" className="h-6 w-6 text-gray-40" />
-          </NotificationButton>
+          <div className="h-6 w-6" />
         </HeaderRight>
       </Header>
-      {children}
+      <div className="px-[16px]">{children}</div>
       <BottomNavbar />
     </div>
   );

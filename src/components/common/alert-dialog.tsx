@@ -7,7 +7,7 @@ import { DialogDescription, DialogTitle } from '@radix-ui/react-dialog';
 
 interface IAlertDialogProps {
   title: string;
-  desc: string;
+  desc?: string;
   cancleTitle: string;
   confirmTitle: string;
   open: boolean;
@@ -34,7 +34,7 @@ const AlertDialog: React.FunctionComponent<IAlertDialogProps> = ({
             {title}
           </DialogTitle>
           <DialogDescription className="text-sm leading-[150%]">
-            {desc.split('\\n').map((line, index) => (
+            {desc?.split('\\n').map((line, index) => (
               <React.Fragment key={index}>
                 {line}
                 <br />
