@@ -21,6 +21,7 @@ const StepTwo: React.FC = () => {
   const [selectedTags, setSelectedTags] = useState<number[]>([]);
 
   const [photoFiles, setPhotoFiles] = useState<File[] | null>([]);
+
   const [description, setDescription] = useState<string>('');
   const [retouchingDetails, setRetouchingDetails] = useState('');
   const handleTagToggle = (id: number) => {

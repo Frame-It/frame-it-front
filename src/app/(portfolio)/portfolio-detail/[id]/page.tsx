@@ -5,11 +5,11 @@ import PortfolioProfile from '@/components/portfolio-detail/profile';
 
 export default function PortfolioDetailPage() {
   return (
-    <>
+    <div className="h-[calc(100dvh-58px)] overflow-y-auto py-2">
       <PortfolioProfile />
       <PortfolioContents />
       <PortfolioDetailGallery />
       <PortfolioDetailFooter />
-    </>
+    </div>
   );
 }
