@@ -15,7 +15,7 @@ export default function MyStudioLayout({
 }>) {
   return (
     <>
-      <Header className="bg-red-300 p-0">
+      <Header className="p-0">
         <HeaderLeft>
           <BackButton>
             <Icon id="back-icon" className="size-[32px] text-gray-40" />

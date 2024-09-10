@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Icon from '@/components/common/icon';
 import MyPageMenu from '@/components/my-page/menu';
 import { Separator } from '@/components/ui/separator';
@@ -11,7 +10,6 @@ import {
   HeaderLeft,
   HeaderRight,
 } from '@/components/common/header';
-import Link from 'next/link';
 import NotificationButton from '@/components/common/notification-button';
 
 export default function MyPage() {
