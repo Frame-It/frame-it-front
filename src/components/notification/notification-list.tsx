@@ -70,7 +70,7 @@ const NotificationList: React.FunctionComponent<INotificationListProps> = ({
                 </button>
               </div>
             </div>
-            <p className="overflow-hidden text-ellipsis whitespace-nowrap text-xs leading-[150%]">
+            <p className="mt-[8px] overflow-hidden text-ellipsis whitespace-nowrap text-xs leading-[150%]">
               {noti.message}
             </p>
           </li>

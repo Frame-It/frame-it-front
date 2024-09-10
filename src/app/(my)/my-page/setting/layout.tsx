@@ -14,8 +14,8 @@ export default function MyStudioLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="pb-[66px] pt-[58px]">
-      <Header>
+    <>
+      <Header className="bg-red-300 p-0">
         <HeaderLeft>
           <BackButton>
             <Icon id="back-icon" className="size-[32px] text-gray-40" />
@@ -26,8 +26,8 @@ export default function MyStudioLayout({
           <div className="size-[32px] text-gray-40" />
         </HeaderRight>
       </Header>
-      {children}
+      <div className="px-[12px] pb-[66px] pt-[58px]">{children}</div>
       <BottomNavbar />
-    </div>
+    </>
   );
 }
