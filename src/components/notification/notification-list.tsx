@@ -52,11 +52,9 @@ const NotificationList: React.FunctionComponent<INotificationListProps> = ({
                     )}
                   />
                 </span>
-                <div className="ml-[16px] mr-[12px] flex-grow">
-                  <div className="text-sm font-medium leading-[150%] text-gray-10">
-                    {noti.title}
-                  </div>
-                  <time className="text-xs text-gray-10">
+                <div className="ml-[16px] mr-[12px] flex flex-grow flex-col gap-y-[2px]">
+                  <div className="font-body-16 text-gray-10">{noti.title}</div>
+                  <time className="font-tag-12 text-gray-10">
                     {format(noti.date, 'yyyy.MM.dd')}
                   </time>
                 </div>
