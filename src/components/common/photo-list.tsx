@@ -14,11 +14,13 @@ interface IPhotoListProps {
     height: number;
   }[];
   isNavigate?: boolean;
+  isFeed?: boolean;
 }
 
 const PhotoList: React.FunctionComponent<IPhotoListProps> = ({
   imageList,
   isNavigate,
+  isFeed,
 }) => {
   const router = useRouter();
 
@@ -47,29 +49,31 @@ const PhotoList: React.FunctionComponent<IPhotoListProps> = ({
               className="rounded-[8px]"
               style={{ width: '100%', height: 'auto' }}
             />
-            <div className="absolute bottom-[12px] flex w-full items-end justify-between px-[12px]">
-              <Badge
-                variant="feed"
-                className={cn(
-                  'px-[12px]',
-                  image.role === 'model'
-                    ? 'border border-white bg-[#201A17B2]/70 text-white'
-                    : 'border border-[#201A17]/20 bg-[#ffffff]/70 text-gray-10',
-                )}
-              >
-                {image.role === 'model' ? '모델' : '작가'}
-              </Badge>
+            {isFeed ? (
+              <div className="absolute bottom-[12px] flex w-full items-end justify-between px-[12px]">
+                <Badge
+                  variant="feed"
+                  className={cn(
+                    'px-[12px]',
+                    image.role === 'model'
+                      ? 'border border-white bg-[#201A17B2]/70 text-white'
+                      : 'border border-[#201A17]/20 bg-[#ffffff]/70 text-gray-10',
+                  )}
+                >
+                  {image.role === 'model' ? '모델' : '작가'}
+                </Badge>
 
-              {image.isPremium ? (
-                <Image
-                  src="/png/certification-mark.png"
-                  alt="활동마크"
-                  width={33}
-                  height={33}
-                  className="aspect-square"
-                />
-              ) : null}
-            </div>
+                {image.isPremium ? (
+                  <Image
+                    src="/png/certification-mark.png"
+                    alt="활동마크"
+                    width={33}
+                    height={33}
+                    className="aspect-square"
+                  />
+                ) : null}
+              </div>
+            ) : null}
           </li>
         );
       })}
