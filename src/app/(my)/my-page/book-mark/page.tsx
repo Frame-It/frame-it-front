@@ -10,7 +10,7 @@ interface IBookMarkPageProps {}
 const BookMarkPage: React.FunctionComponent<IBookMarkPageProps> = () => {
   const bookMarkList: IRecruitCardProps[] = Array.from({ length: 10 }, () => {
     return {
-      imageUrl: faker.image.urlPicsumPhotos(),
+      imageUrl: '/test-image.webp',
       type: '모델구인',
       title: faker.music.songName(),
       location: faker.location.city(),

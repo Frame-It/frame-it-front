@@ -47,14 +47,14 @@ const PhotoList: React.FunctionComponent<IPhotoListProps> = ({
               className="rounded-[8px]"
               style={{ width: '100%', height: 'auto' }}
             />
-            <div className="absolute bottom-2 flex w-full items-center justify-between px-[12px]">
+            <div className="absolute bottom-[12px] flex w-full items-end justify-between px-[12px]">
               <Badge
                 variant="feed"
                 className={cn(
                   'px-[12px]',
                   image.role === 'model'
-                    ? 'bg-white bg-opacity-70 text-[#201A17]'
-                    : 'bg-[#201A17B2] bg-opacity-70 text-white',
+                    ? 'border border-white bg-[#201A17B2]/70 text-white'
+                    : 'border border-[#201A17]/20 bg-[#ffffff]/70 text-gray-10',
                 )}
               >
                 {image.role === 'model' ? '모델' : '작가'}

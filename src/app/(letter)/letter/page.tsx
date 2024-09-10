@@ -10,31 +10,31 @@ export default function LetterPage() {
       messages: [
         {
           sender: '닉네임 원',
-          profileUrl: faker.image.avatarGitHub(),
+          profileUrl: '/test-image.webp',
           role: 'model',
           value: '안녕하세요',
         },
         {
           sender: '닉네임 투',
-          profileUrl: faker.image.avatarGitHub(),
+          profileUrl: '/test-image.webp',
           role: 'author',
           value: '쪽지 테스트 입니다.',
         },
         {
           sender: '닉네임 투',
-          profileUrl: faker.image.avatarGitHub(),
+          profileUrl: '/test-image.webp',
           role: 'author',
           value: '안녕히 계세요',
         },
         {
           sender: '닉네임 원',
-          profileUrl: faker.image.avatarGitHub(),
+          profileUrl: '/test-image.webp',
           role: 'model',
           value: '잘자요',
         },
         {
           sender: '닉네임 원',
-          profileUrl: faker.image.avatarGitHub(),
+          profileUrl: '/test-image.webp',
           role: 'model',
           value: '굿 나잇',
         },

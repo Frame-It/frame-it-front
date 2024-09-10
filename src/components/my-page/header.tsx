@@ -13,7 +13,7 @@ const MyPageHeader: React.FunctionComponent<IMyPageHeaderProps> = () => {
   return (
     <section className="mt-[20px] flex items-center gap-x-4">
       <Image
-        src={faker.image.urlPicsumPhotos()}
+        src={'/test-image.webp'}
         alt="프로필 이미지"
         width={100}
         height={100}
