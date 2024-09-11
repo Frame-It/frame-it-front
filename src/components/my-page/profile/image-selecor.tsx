@@ -17,7 +17,7 @@ const ProfileImageSelector: React.FC<IProfileImageSelectorProps> = ({
     prevImageUrl || null,
   );
 
-  const { isOpen, close, open, setIsOpen } = useDisclosure();
+  const { isOpen, onClose, onOpen, onOpenChange } = useDisclosure();
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -29,13 +29,13 @@ const ProfileImageSelector: React.FC<IProfileImageSelectorProps> = ({
       reader.readAsDataURL(file);
     }
 
-    close();
+    onClose();
   };
 
   const handleDelete = async () => {};
 
   return (
-    <Drawer open={isOpen} onOpenChange={setIsOpen}>
+    <Drawer open={isOpen} onOpenChange={onOpenChange}>
       <div className="relative mx-auto mt-4 h-[114px] w-[114px]">
         <Image
           src={previewImage || '/png/profile.png'}
@@ -45,7 +45,7 @@ const ProfileImageSelector: React.FC<IProfileImageSelectorProps> = ({
         />
         <button
           type="button"
-          onClick={open}
+          onClick={onOpen}
           className="absolute -right-2 bottom-0 flex h-7 w-7 items-center justify-center rounded-full bg-gray-90 p-1"
         >
           <svg

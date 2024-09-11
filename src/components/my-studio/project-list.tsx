@@ -50,7 +50,7 @@ const ProjectList: React.FunctionComponent<IProjectListProps> = ({
                 : 'border border-l-0 border-r-0 border-t-0 border-b-gray-80',
             )}
           >
-            <div className="space-y-[12px]">
+            <div className="space-y-[12px whitespace-nowrap">
               <div className="font-semibold leading-[135%] text-gray-20">
                 {project.title}
               </div>
@@ -66,7 +66,7 @@ const ProjectList: React.FunctionComponent<IProjectListProps> = ({
             </div>
             <Badge
               className={cn(
-                'h-[22px] bg-white px-[9px] text-xs leading-[150%] hover:bg-white',
+                'h-[22px] whitespace-nowrap bg-white px-[9px] text-xs leading-[150%] hover:bg-white',
                 project.stste === 'recruiting' &&
                   'border-sub-green text-sub-green',
                 project.stste === 'inProgress' &&

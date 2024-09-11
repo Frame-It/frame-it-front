@@ -8,10 +8,7 @@ export const generateRandomImageList = () => {
 
   return {
     id: faker.string.uuid(),
-    url: faker.image.urlPicsumPhotos({
-      width,
-      height,
-    }),
+    url: '/test-image.webp',
     role: roles[Math.floor(Math.random() * roles.length)] as 'author' | 'model',
     isPremium: Math.random() < 0.5,
     height,

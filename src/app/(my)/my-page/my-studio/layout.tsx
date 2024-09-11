@@ -29,7 +29,9 @@ export default function MyStudioLayout({
           </NotificationButton>
         </HeaderRight>
       </Header>
+
       {children}
+
       <BottomNavbar />
     </div>
   );

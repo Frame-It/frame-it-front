@@ -1,13 +1,50 @@
-import Image from 'next/image';
-import RoleBadge from '@/components/common/role-badge';
 import Link from 'next/link';
-import { letterList } from '@/constants/chat';
+import Image from 'next/image';
+import { faker } from '@faker-js/faker';
+import RoleBadge from '@/components/common/role-badge';
 
 export default function LetterPage() {
+  const lettarArr = Array.from({ length: 20 }, () => {
+    return {
+      id: faker.string.uuid(),
+      messages: [
+        {
+          sender: '닉네임 원',
+          profileUrl: '/test-image.webp',
+          role: 'model',
+          value: '안녕하세요',
+        },
+        {
+          sender: '닉네임 투',
+          profileUrl: '/test-image.webp',
+          role: 'author',
+          value: '쪽지 테스트 입니다.',
+        },
+        {
+          sender: '닉네임 투',
+          profileUrl: '/test-image.webp',
+          role: 'author',
+          value: '안녕히 계세요',
+        },
+        {
+          sender: '닉네임 원',
+          profileUrl: '/test-image.webp',
+          role: 'model',
+          value: '잘자요',
+        },
+        {
+          sender: '닉네임 원',
+          profileUrl: '/test-image.webp',
+          role: 'model',
+          value: '굿 나잇',
+        },
+      ],
+    };
+  });
   return (
-    <main className="px-4">
-      <ul className="mt-6 flex flex-col gap-y-6">
-        {letterList.map((letter) => {
+    <main className="h-[calc(100dvh-58px-63px)] overflow-y-auto px-4">
+      <ul className="my-6 flex flex-col gap-y-6">
+        {lettarArr.map((letter) => {
           const lastMessage = letter.messages.at(-1);
 
           return (
@@ -25,7 +62,11 @@ export default function LetterPage() {
                 <div className="ml-2 flex-1 space-y-[4px]">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-x-[9px]">
-                      <RoleBadge role={lastMessage?.role || 'author'} />
+                      <RoleBadge
+                        role={
+                          (lastMessage?.role as 'author' | 'model') || 'author'
+                        }
+                      />
                       <div>{lastMessage?.sender}</div>
                     </div>
 

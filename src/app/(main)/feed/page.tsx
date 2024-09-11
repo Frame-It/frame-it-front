@@ -30,14 +30,15 @@ export default function FeedPage() {
   if (!isMounted) return null;
 
   return (
-    <div className="px-[16px] py-[1px]">
+    <>
       <FilterTabs
         defaultValue="ALL"
         onValueChange={handleChange}
         tabsData={tabsData}
       />
-
-      <FeedList />
-    </div>
+      <div className="h-[calc(100dvh-58px-63px-48px)] overflow-y-auto px-[16px] pb-2">
+        <FeedList />
+      </div>
+    </>
   );
 }
