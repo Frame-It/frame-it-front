@@ -1,11 +1,13 @@
 'use client';
 
 import BottomButton from '@/components/common/bottom-button';
+import Icon from '@/components/common/icon';
+import IconButton from '@/components/common/icon-button';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
 import { useProjectRegisterStore } from '@/store/project-regist-store';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
+import '../../../styles/input.css';
 
 const StepOne: React.FC = () => {
   const { setProjectInfo, nextStep } = useProjectRegisterStore();
@@ -45,9 +47,22 @@ const StepOne: React.FC = () => {
       alert('모든 필드를 입력해주세요.');
     }
   };
+  const dateInputRef = useRef<HTMLInputElement>(null);
+  const timeInputRef = useRef<HTMLInputElement>(null);
+
+  const handleDateClick = () => {
+    if (dateInputRef.current) {
+      dateInputRef.current.showPicker(); // 시간을 선택하는 창을 띄움
+    }
+  };
+  const handleTimeClick = () => {
+    if (timeInputRef.current) {
+      timeInputRef.current.showPicker(); // 시간을 선택하는 창을 띄움
+    }
+  };
 
   return (
-    <div className={cn('flex h-full flex-1 flex-col justify-between')}>
+    <div className={cn('flex h-full flex-1 flex-col justify-between pb-4')}>
       <div className={cn('flex flex-col gap-4')}>
         <div className={cn('flex flex-col gap-2')}>
           <label className={cn('font-title-16')}>구인</label>
@@ -57,12 +72,14 @@ const StepOne: React.FC = () => {
               size={'middle'}
               label={'모델'}
               onClick={() => setType('모델')}
+              className="border-gray-60"
             />
             <BottomButton
               variant={type === '작가' ? 'secondary' : 'stroke'}
               size={'middle'}
               label={'작가'}
               onClick={() => setType('작가')}
+              className="border-gray-60"
             />
           </div>
         </div>
@@ -73,12 +90,11 @@ const StepOne: React.FC = () => {
               최대 24자까지 가능합니다.
             </div>
           </label>
-          <Textarea
+          <Input
             value={projectName}
             onChange={(e) => setProjectName(e.target.value)}
             maxLength={24}
             placeholder="ex) 함께 촬영하실 모델분 구해요!"
-            rows={2}
           />
         </div>
         <div className={cn('flex flex-col gap-2')}>
@@ -89,34 +105,65 @@ const StepOne: React.FC = () => {
             </div>
           </label>
           <div className={cn('flex flex-col gap-2')}>
-            <Input
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              placeholder="YYYY/MM/DD"
-            />
-            <Input
-              value={time}
-              onChange={(e) => setTime(e.target.value)}
-              placeholder="00:00"
-            />
+            <div className="flex gap-[6px]">
+              <Input
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                placeholder="YYYY/MM/DD"
+                ref={dateInputRef}
+                onClick={handleDateClick}
+                className="font-body-14 flex h-[40px] w-full flex-1 flex-col items-center justify-center rounded-[8px] border bg-transparent p-[10.514px] text-center text-gray-20 placeholder-gray-60 focus:ring-0"
+              />
+              <IconButton
+                icon={
+                  <Icon
+                    id={'calendar-icon'}
+                    size={24}
+                    className="text-gray-40"
+                  />
+                }
+                onClick={handleDateClick}
+              />
+            </div>
+            <div className="flex gap-[6px]">
+              <Input
+                type="time"
+                placeholder="00:00"
+                onChange={(e) => setTime(e.target.value)}
+                ref={timeInputRef}
+                onClick={handleTimeClick}
+                className="font-body-14 flex h-[40px] w-full flex-1 flex-col items-center justify-center rounded-[8px] bg-transparent p-[10.514px] text-center text-gray-20 placeholder-gray-60 focus:ring-0"
+              />
+
+              <IconButton
+                icon={
+                  <Icon id={'time-icon'} size={24} className="text-gray-40" />
+                }
+                onClick={handleTimeClick}
+              />
+            </div>
             <div className={cn('flex gap-2')}>
               <BottomButton
                 variant={period === '오전' ? 'secondary' : 'stroke'}
                 size={'middle'}
                 label={'오전'}
                 onClick={() => setPeriod('오전')}
+                className="border-gray-60"
               />
               <BottomButton
                 variant={period === '오후' ? 'secondary' : 'stroke'}
                 size={'middle'}
                 label={'오후'}
                 onClick={() => setPeriod('오후')}
+                className="border-gray-60"
               />
               <BottomButton
                 variant={period === '시간협의' ? 'secondary' : 'stroke'}
                 size={'middle'}
                 label={'시간협의'}
                 onClick={() => setPeriod('시간협의')}
+                className="border-gray-60"
               />
             </div>
           </div>
@@ -135,20 +182,30 @@ const StepOne: React.FC = () => {
                 size={'middle'}
                 label={'실내'}
                 onClick={() => setLocationType('실내')}
+                className="border-gray-60"
               />
               <BottomButton
                 variant={locationType === '야외' ? 'secondary' : 'stroke'}
                 size={'middle'}
                 label={'야외'}
                 onClick={() => setLocationType('야외')}
+                className="border-gray-60"
               />
             </div>
-            <Input
-              type="text"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              placeholder="주소"
-            />
+            <div className="flex gap-[6px]">
+              <Input
+                type="text"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                placeholder="주소"
+              />
+              <IconButton
+                icon={
+                  <Icon id={'search-icon'} size={24} className="text-gray-40" />
+                }
+              />
+            </div>
+
             <Input
               type="text"
               value={detail}
@@ -165,6 +222,7 @@ const StepOne: React.FC = () => {
         size={'large'}
         label={'다음'}
         disabled={!isNextEnabled}
+        className={cn('mt-5')}
       />
     </div>
   );
