@@ -3,15 +3,18 @@ import { cn } from '@/lib/utils';
 export const TagList = ({
   tags,
   size,
+  className,
 }: {
   tags: string[];
   size: 'medium' | 'small';
+  className?: string;
 }) => {
   return (
     <div
       className={cn(
         'flex flex-1 overflow-x-auto whitespace-nowrap scrollbar-hide',
         size === 'medium' ? 'gap-[6px]' : 'gap-[4px]',
+        className,
       )}
     >
       {tags.map((tag: string, index: number) => (
