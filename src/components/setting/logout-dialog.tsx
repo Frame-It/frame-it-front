@@ -10,14 +10,11 @@ interface ILogoutDialogProps {
 const LogoutDialog: React.FunctionComponent<ILogoutDialogProps> = ({
   children,
 }) => {
-  const { isOpen, open, close } = useDisclosure(false);
+  const { isOpen, onOpen, onClose } = useDisclosure(false);
 
-  const onClose = () => {
-    close();
-  };
   return (
     <>
-      <button onClick={open} className="w-full text-left">
+      <button onClick={onOpen} className="w-full text-left">
         {children}
       </button>
       <AlertDialog

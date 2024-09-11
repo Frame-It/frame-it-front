@@ -22,7 +22,7 @@ const NotificationList: React.FunctionComponent<INotificationListProps> = ({
   notificationList,
 }) => {
   const router = useRouter();
-  const { open, close, isOpen } = useDisclosure();
+  const { onOpen, onClose, isOpen } = useDisclosure();
 
   return (
     <>
@@ -65,7 +65,7 @@ const NotificationList: React.FunctionComponent<INotificationListProps> = ({
                   className="self-start text-xs leading-[150%]"
                   onClick={(e) => {
                     e.stopPropagation();
-                    open();
+                    onOpen();
                   }}
                 >
                   삭제
@@ -85,10 +85,10 @@ const NotificationList: React.FunctionComponent<INotificationListProps> = ({
         confirmTitle="삭제"
         open={isOpen}
         onConfirm={() => {
-          close();
+          onClose();
         }}
-        onCancle={() => close()}
-        onOpenChange={() => close()}
+        onCancle={() => onClose()}
+        onOpenChange={() => onClose()}
       />
     </>
   );

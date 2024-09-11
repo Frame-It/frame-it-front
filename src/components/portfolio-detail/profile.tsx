@@ -10,7 +10,7 @@ const PortfolioProfile: React.FunctionComponent<
 > = () => {
   // props로 데이터를 받아올 수 있음
   const temp = {
-    imageUrl: faker.image.avatarLegacy(),
+    imageUrl: '/test-image.webp',
     nickName: faker.person.fullName(),
     role: '작가',
   };

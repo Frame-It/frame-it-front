@@ -11,7 +11,7 @@ const PortfolioDetailFooter: React.FunctionComponent<
     <section className="mt-[16px] space-y-[8px] text-[12px] font-[400] leading-[18px] text-[#4D4744]">
       <div className="flex items-center gap-x-[8px]">
         <Avatar className="h-6 w-6 rounded-[4px]">
-          <AvatarImage src={faker.image.avatarLegacy()} />
+          <AvatarImage src={'/test-image.webp'} />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
         <span>곱슬머리님과 작업했습니다.</span>

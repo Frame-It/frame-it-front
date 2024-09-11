@@ -8,9 +8,9 @@ import { faker } from '@faker-js/faker';
 interface IBookMarkPageProps {}
 
 const BookMarkPage: React.FunctionComponent<IBookMarkPageProps> = () => {
-  const bookMarkList: IRecruitCardProps[] = Array.from({ length: 5 }, () => {
+  const bookMarkList: IRecruitCardProps[] = Array.from({ length: 10 }, () => {
     return {
-      imageUrl: faker.image.urlPicsumPhotos(),
+      imageUrl: '/test-image.webp',
       type: '모델구인',
       title: faker.music.songName(),
       location: faker.location.city(),
@@ -21,10 +21,8 @@ const BookMarkPage: React.FunctionComponent<IBookMarkPageProps> = () => {
   return (
     <main
       className={cn(
-        'h-full w-full',
-        bookMarkList.length <= 0
-          ? 'flex h-[calc(100dvh-60px)] items-center justify-center'
-          : '',
+        'h-[calc(100dvh-58px)] w-full overflow-y-auto px-4',
+        bookMarkList.length <= 0 ? 'flex items-center justify-center' : '',
       )}
     >
       {bookMarkList.length <= 0 ? (
@@ -40,7 +38,7 @@ const BookMarkPage: React.FunctionComponent<IBookMarkPageProps> = () => {
           </Button>
         </section>
       ) : (
-        <ul className="mt-4 space-y-4">
+        <ul className="my-4 space-y-4">
           {bookMarkList.map((recruitInfo) => (
             <RecruitCard key={recruitInfo.imageUrl} {...recruitInfo} />
           ))}
