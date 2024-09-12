@@ -18,7 +18,7 @@ export default function SettingPage() {
         <div className="font-semibold leading-[135%] text-gray-10">
           개인정보
         </div>
-        <ul className="mt-[12px] bg-gray-90">
+        <ul className="mt-[12px] rounded-[8px] bg-gray-90">
           <li className={settingLI}>
             <dt className={settingDT}>이름</dt>
             <dd className={settingDD}>박소은</dd>
@@ -37,7 +37,7 @@ export default function SettingPage() {
         <ul className="space-y-[18px]">
           <li className="flex items-center justify-between">
             <div className={basicText}>마케팅 수신/홍보 동의 여부</div>
-            <Switch />
+            <Switch className="h-[24px]" />
           </li>
           <li className={basicText}>
             <LogoutDialog>로그아웃</LogoutDialog>

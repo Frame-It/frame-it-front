@@ -1,5 +1,6 @@
 'use client';
 
+import { AutosizeTextarea } from '@/components/ui/auto-size-textarea';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -11,12 +12,10 @@ import {
   FormLabel,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import {
   PortfolioDetailFormValues,
   portfolioInfoSchema,
 } from '@/lib/schema/portfolio-regist-schema';
-import { calInputRows, calTextAreaRows } from '@/lib/utils';
 import { usePortfolioRegisterStore } from '@/store/portfolio-regist-store';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { XIcon } from 'lucide-react';
@@ -75,19 +74,20 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = () => {
 
   const [isFormValid, setIsFormValid] = useState(false);
 
-  // 폼 필드 값이 변경될 때마다 모든 필드의 유효성을 검사하는 useEffect
   useEffect(() => {
     const subscription = form.watch(() => {
       const values = form.getValues();
+
+      console.log('value', values);
+
       const result = portfolioInfoSchema.safeParse(values);
+      console.log('result', result);
+
       setIsFormValid(result.success);
     });
 
-    return () => subscription.unsubscribe(); // 컴포넌트 언마운트 시 구독 해제
-  }, [form.watch, form.getValues]);
-
-  console.log(isFormValid);
-  // console.log(form.getValues());
+    return () => subscription.unsubscribe();
+  }, [form]);
 
   return (
     <Form {...form}>
@@ -102,11 +102,9 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = () => {
             <FormItem>
               <FormLabel>제목</FormLabel>
               <FormControl>
-                <Textarea
+                <Input
                   placeholder="제목을 입력해 주세요"
                   {...field}
-                  rows={calInputRows(field?.value?.length || 0)}
-                  maxLength={101}
                   className="min-h-[40px]"
                 />
               </FormControl>
@@ -121,10 +119,11 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = () => {
             <FormItem>
               <FormLabel>상세 내용</FormLabel>
               <FormControl>
-                <Textarea
+                <AutosizeTextarea
+                  maxHeight={209}
+                  minHeight={87}
                   placeholder="포트폴리오 설명을 작성해 주세요"
-                  className="max-h-[209px] resize-none"
-                  rows={calTextAreaRows(field?.value?.length || 0)}
+                  className="resize-none p-[10px]"
                   maxLength={500}
                   {...field}
                 />

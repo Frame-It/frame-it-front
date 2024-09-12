@@ -15,8 +15,8 @@ const RoleBadge: React.FunctionComponent<IRoleBadgeProps> = ({
       className={cn(
         'pointer-events-none flex h-[16px] w-[28px] items-center justify-center whitespace-nowrap rounded-[4px] text-[10px]',
         role === 'model'
-          ? 'border border-gray-10 bg-white text-gray-20'
-          : 'bg-gray-20 text-white',
+          ? 'bg-gray-20 text-white'
+          : 'border border-gray-10 bg-white text-gray-20',
         className,
       )}
     >

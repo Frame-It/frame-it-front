@@ -2,6 +2,7 @@
 
 import { cn } from '@/lib/utils';
 import Icon from '../common/icon';
+import { TagList } from '../common/tag-list';
 
 export interface IRecruitCardProps {
   type: '모델구인' | '작가구인';
@@ -53,7 +54,7 @@ const RecruitCard = (props: IRecruitCardProps) => {
             <Icon id="time-icon" className="h-[18px] w-[18px]" />
             <span>{props.date}</span>
           </div>
-          <TagList tags={props.tagList} />
+          <TagList tags={props.tagList} size={'small'} />
         </div>
       </div>
     </div>
@@ -77,32 +78,6 @@ const Thumbnail = ({ imageUrl }: { imageUrl: string }) => {
       >
         모델구인
       </div>
-    </div>
-  );
-};
-
-export const TagList = ({ tags }: { tags: string[] }) => {
-  return (
-    <div
-      className={cn(
-        'flex flex-1 gap-[4px] overflow-x-auto whitespace-nowrap scrollbar-hide',
-      )}
-    >
-      {tags.map((tag: string, index: number) => (
-        <Tag key={index} label={tag} />
-      ))}
-    </div>
-  );
-};
-
-const Tag = ({ label }: { label: string }) => {
-  return (
-    <div
-      className={cn(
-        'flex h-[20px] items-center justify-center gap-[8px] rounded-[40px] border border-[#B4ADA9] px-[7px] py-[3px] text-[12px] font-normal leading-normal text-[#B4ADA9]',
-      )}
-    >
-      {label}
     </div>
   );
 };

@@ -15,9 +15,9 @@ export const portfolioImageSchema = z.object({
 
 export const portfolioInfoSchema = z.object({
   title: z.string().min(10).max(100),
-  detail: z.string().min(20).max(500),
+  detail: z.string().min(10).max(500),
   tagList: z.array(z.string()).min(1).max(5),
-  togather: z.string().min(3),
+  togather: z.string(),
 });
 
 export type PortfolioImageFormValues = z.infer<typeof portfolioImageSchema>;

@@ -8,7 +8,7 @@ const FeedList: React.FunctionComponent<IFeedListProps> = () => {
 
   return (
     <section className="mx-auto w-full">
-      <PhotoList imageList={imageArr} isNavigate />
+      <PhotoList imageList={imageArr} isNavigate isFeed />
     </section>
   );
 };

@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker/locale/af_ZA';
+import { fakerKO as faker } from '@faker-js/faker';
 import NotificationList from '@/components/notification/notification-list';
 
 export default function NotificationPage() {
@@ -20,7 +20,7 @@ export default function NotificationPage() {
         id: faker.string.uuid(),
         path: '/my-page/my-studio',
         date: faker.date.anytime(),
-        title: faker.commerce.product(),
+        title: '한글',
         message: faker.lorem.sentences(),
         isRead: false,
       };
