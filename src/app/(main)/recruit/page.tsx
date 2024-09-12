@@ -1,10 +1,10 @@
 'use client';
 
 import { FilterTabs } from '@/components/common/filter-tabs';
-import FilterDrawers from '@/components/recruit/filter-drawers';
+import FilterDrawers from '@/components/project/filter-drawers';
 import RecruitCard, {
   IRecruitCardProps,
-} from '@/components/recruit/recruit-card';
+} from '@/components/project/recruit-card';
 import { generateRandomImageList } from '@/lib/faker';
 import { cn } from '@/lib/utils';
 import { USER_TYPE, UserValue } from '@/types/filter';
