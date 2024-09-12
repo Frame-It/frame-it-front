@@ -1,0 +1,7 @@
+input[type='time']::-webkit-calendar-picker-indicator,
+input[type='time']::-webkit-inner-spin-button,
+input[type='date']::-webkit-calendar-picker-indicator,
+input[type='date']::-webkit-inner-spin-button {
+  display: none;
+  appearance: none;
+}

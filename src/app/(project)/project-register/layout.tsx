@@ -26,7 +26,7 @@ export default function ProjectLayout({
           <div className="size-[32px]"></div>
         </HeaderRight>
       </Header>
-      <main className="mb-[16px] mt-[56px] h-full flex-1">{children}</main>
+      <main className="mb-[16px] mt-[56px] flex-1">{children}</main>
     </div>
   );
 }

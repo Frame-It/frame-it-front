@@ -12,9 +12,9 @@ const BottomButton: React.FC<
   ButtonProps & ButtonHTMLAttributes<HTMLButtonElement>
 > = ({ variant, size, label, disabled = false, ...props }) => {
   const sizeStyles = {
-    large: 'max-w-[328px] h-[46px]',
-    middle: 'max-w-[220px] h-[40px]',
-    small: 'max-w-[104px] h-[32px]',
+    large: 'max-w-[328px] min-h-[46px] h-[46px]',
+    middle: 'max-w-[220px] min-h-[40px] h-[40px]',
+    small: 'max-w-[104px] min-h-[32px] h-[32px]',
   };
 
   const variantStyles = {
@@ -44,7 +44,11 @@ const BottomButton: React.FC<
   );
 
   return (
-    <button className={classes} disabled={disabled} {...props}>
+    <button
+      disabled={disabled}
+      {...props}
+      className={cn(classes, props.className)}
+    >
       {label}
     </button>
   );

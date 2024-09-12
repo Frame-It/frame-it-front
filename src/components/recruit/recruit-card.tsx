@@ -1,7 +1,6 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import Image from 'next/image';
 import Icon from '../common/icon';
 import { TagList } from '../common/tag-list';
 
@@ -65,10 +64,10 @@ const RecruitCard = (props: IRecruitCardProps) => {
 const Thumbnail = ({ imageUrl }: { imageUrl: string }) => {
   return (
     <div className={cn('relative h-[120px] w-[120px] flex-shrink-0')}>
-      <Image
+      <img
         src={imageUrl}
         alt={'recruit image'}
-        fill
+        // fill
         sizes="120px"
         className={cn('rounded-[5.565px] object-cover')}
       />
