@@ -3,19 +3,19 @@ import { Header, HeaderLeft } from '@/components/common/header';
 import Icon from '@/components/common/icon';
 import { cn } from '@/lib/utils';
 
-const ProjectDetailLayout = ({ children }: { children: React.ReactNode }) => {
+const LoginLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className={cn('flex h-screen flex-col')}>
-      <Header>
+    <div className={cn('flex h-screen flex-col bg-gray-10')}>
+      <Header className="border-none bg-transparent">
         <HeaderLeft>
           <BackButton>
-            <Icon id={'back-icon'} size={32} className="text-gray-40" />
+            <Icon id={'back-icon'} size={32} className="text-white" />
           </BackButton>
         </HeaderLeft>
       </Header>
-      <div className="mb-[16px] mt-[56px] h-full flex-1">{children}</div>
+      {children}
     </div>
   );
 };
 
-export default ProjectDetailLayout;
+export default LoginLayout;
