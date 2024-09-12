@@ -1,7 +1,7 @@
 import { SocialButton } from '@/components/common/social-button';
 import Link from 'next/link';
 
-export default function ProjectWritePage() {
+export default function LoginPage() {
   return (
     <main className="mb-[16px] mt-[56px] flex h-full flex-1 flex-col items-stretch justify-center space-y-[217px] px-[45px]">
       <section className="flex max-w-[270px] flex-col items-center justify-center space-y-6">

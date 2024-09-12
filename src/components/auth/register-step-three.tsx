@@ -1,7 +1,9 @@
-interface IRegisterStepOneProps {}
+interface IRegisterStepThreeProps {}
 
-const RegisterStepOne: React.FunctionComponent<IRegisterStepOneProps> = () => {
-  return <></>;
+const RegisterStepThree: React.FunctionComponent<
+  IRegisterStepThreeProps
+> = () => {
+  return <>Three</>;
 };
 
-export default RegisterStepOne;
+export default RegisterStepThree;
