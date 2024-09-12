@@ -38,7 +38,7 @@ const ProjectList: React.FunctionComponent<IProjectListProps> = ({
           </Button>
         </div>
       )}
-      <ul className="flex flex-col gap-y-[18px]">
+      <ul className="mt-[8px] flex flex-col gap-y-[18px]">
         {projectList.map((project, i) => (
           <li
             onClick={() => router.push('/')}

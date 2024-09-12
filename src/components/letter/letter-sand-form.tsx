@@ -1,13 +1,13 @@
 'use client';
 
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from '@/components/ui/use-toast';
 import { ArrowUp } from 'lucide-react';
+import { AutosizeTextarea } from '@/components/ui/auto-size-textarea';
 
 interface ILetterSandFormProps {}
 
@@ -44,15 +44,16 @@ const LetterSandForm: React.FunctionComponent<ILetterSandFormProps> = () => {
           render={({ field }) => (
             <FormItem className="flex-1">
               <FormControl>
-                <div className="relative flex h-[45px] items-center rounded-[12px] bg-gray-80 px-[12px]">
-                  <Input
+                <div className="relative flex h-fit items-center rounded-[12px] bg-gray-80 px-[12px] py-[12px]">
+                  <AutosizeTextarea
                     placeholder="메세지를 적어보세요."
                     {...field}
-                    className="ax-w-[270px] border-none bg-transparent p-0 text-sm focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                    minHeight={21}
+                    className="font-body-14 max-w-[270px] border-none bg-transparent p-0 text-gray-10 focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                   />
                   <Button
                     type="submit"
-                    className="absolute right-[12px] size-[30px] rounded-full"
+                    className="absolute bottom-[7.5px] right-[12px] size-[30px] rounded-full"
                   >
                     <ArrowUp strokeWidth={2.5} className="size-[24px]" />
                   </Button>

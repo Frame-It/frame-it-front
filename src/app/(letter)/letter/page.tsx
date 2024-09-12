@@ -4,6 +4,7 @@ import { faker } from '@faker-js/faker';
 import RoleBadge from '@/components/common/role-badge';
 
 export default function LetterPage() {
+  const roleArr = ['model', 'author'];
   const lettarArr = Array.from({ length: 20 }, () => {
     return {
       id: faker.string.uuid(),
@@ -29,13 +30,13 @@ export default function LetterPage() {
         {
           sender: '닉네임 원',
           profileUrl: '/test-image.webp',
-          role: 'model',
+          role: 'author',
           value: '잘자요',
         },
         {
           sender: '닉네임 원',
           profileUrl: '/test-image.webp',
-          role: 'model',
+          role: roleArr[Math.floor(Math.random() * 2)],
           value: '굿 나잇',
         },
       ],
@@ -46,6 +47,8 @@ export default function LetterPage() {
       <ul className="my-6 flex flex-col gap-y-6">
         {lettarArr.map((letter) => {
           const lastMessage = letter.messages.at(-1);
+
+          console.log(lastMessage?.role);
 
           return (
             <Link href={`/letter-detail/${letter.id}`} key={letter.id}>
@@ -60,20 +63,18 @@ export default function LetterPage() {
                   className="rounded-[8px]"
                 />
                 <div className="ml-2 flex-1 space-y-[4px]">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-x-[9px]">
+                  <div className="flex items-center justify-between py-[2.5px]">
+                    <div className="flex items-center gap-x-[4px]">
                       <RoleBadge
-                        role={
-                          (lastMessage?.role as 'author' | 'model') || 'author'
-                        }
+                        role={lastMessage?.role as 'author' | 'model'}
                       />
-                      <div>{lastMessage?.sender}</div>
+                      <div className="font-body-14m">{lastMessage?.sender}</div>
                     </div>
 
-                    <time>방금</time>
+                    <time className="font-tag-12 text-gray-20">방금</time>
                   </div>
                   <div className="flex items-center justify-between">
-                    <p className="text-[12px] leading-[150%]">
+                    <p className="text-xs leading-[150%]">
                       {lastMessage?.value}
                     </p>
                     <div className="flex size-5 items-center justify-center rounded-full bg-primary text-[12px] text-white">

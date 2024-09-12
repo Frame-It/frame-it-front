@@ -36,7 +36,7 @@ const MyStudioHeader: React.FunctionComponent<IMyStudioHeaderProps> = ({
         <div className="text-[18px] font-semibold">유저 닉네임</div>
         <RoleBadge
           role={role}
-          className="flex h-[24px] w-[37px] items-center justify-center whitespace-nowrap rounded-[6px] py-[6px] text-[#4D474]"
+          className="flex h-[24px] w-[37px] items-center justify-center whitespace-nowrap rounded-[6px] py-[6px] text-[12px] font-normal"
         />
       </div>
     </section>

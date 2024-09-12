@@ -23,7 +23,7 @@ const MyStudioIntroduce: React.FunctionComponent<IMyStudioIntroduceProps> = ({
           <Badge
             key={el}
             variant="feed"
-            className="h-[24px] text-[12px] font-normal"
+            className="h-[24px] px-[8px] text-[12px] font-normal"
           >
             {el}
           </Badge>
