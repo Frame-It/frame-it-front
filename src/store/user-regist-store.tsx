@@ -1,12 +1,12 @@
 import { create } from 'zustand';
 
-interface IUserCheckList {
+export interface IUserCheckList {
   age: boolean;
   use: boolean;
   info: boolean;
   marketing: boolean;
 }
-type TCheckListKeys = keyof IUserCheckList;
+export type TCheckListKeys = keyof IUserCheckList;
 
 export interface IUserRegistInfo {
   agreeList: IUserCheckList;
@@ -22,8 +22,8 @@ interface UserRegisterState {
   nextStep: () => void;
   prevStep: () => void;
 
-  setAllCheck: () => void;
-  setItemCheck: (item: TCheckListKeys) => void;
+  toggleAllCheck: (checked: boolean) => void;
+  toggleItemCheck: (item: TCheckListKeys, checked: boolean) => void;
 }
 
 export const useUserRegisterStore = create<UserRegisterState>((set) => ({
@@ -59,26 +59,26 @@ export const useUserRegisterStore = create<UserRegisterState>((set) => ({
     });
   },
 
-  setAllCheck: () =>
+  toggleAllCheck: (checked) =>
     set((state) => ({
       userInfo: {
         ...state.userInfo,
         agreeList: {
-          age: true,
-          info: true,
-          marketing: true,
-          use: true,
+          age: checked,
+          info: checked,
+          marketing: checked,
+          use: checked,
         },
       },
     })),
 
-  setItemCheck: (item) =>
+  toggleItemCheck: (item, checked) =>
     set((state) => ({
       userInfo: {
         ...state.userInfo,
         agreeList: {
           ...state.userInfo.agreeList,
-          item,
+          [item]: checked,
         },
       },
     })),
@@ -93,7 +93,7 @@ export const useUserRegisterPrevStep = () =>
   useUserRegisterStore((state) => state.prevStep);
 export const useUserRegisterNextStep = () =>
   useUserRegisterStore((state) => state.nextStep);
-export const useUserRegisterSetAllCheck = () =>
-  useUserRegisterStore((state) => state.setAllCheck);
-export const useUserRegisterSetItemCheck = () =>
-  useUserRegisterStore((state) => state.setItemCheck);
+export const useUserRegisterToggleAllCheck = () =>
+  useUserRegisterStore((state) => state.toggleAllCheck);
+export const useUserRegisterToggleItemCheck = () =>
+  useUserRegisterStore((state) => state.toggleItemCheck);

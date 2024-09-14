@@ -1,4 +1,8 @@
-export type CommonIconID = 'arrow-up-icon' | 'prev-icon' | 'next-icon';
+export type CommonIconID =
+  | 'arrow-up-icon'
+  | 'prev-icon'
+  | 'next-icon'
+  | 'check-icon';
 
 export const commonSVG = (
   <>
@@ -83,6 +87,24 @@ export const commonSVG = (
           />
         </clipPath>
       </defs>
+    </symbol>
+
+    {/* check-icon */}
+    <symbol
+      id="check-icon"
+      viewBox="0 0 18 18"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g id="check">
+        <path
+          id="Vector 123"
+          d="M4 9L7.55466 13.4433C7.77125 13.7141 8.19094 13.6875 8.37174 13.3917L13.5 5"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+        />
+      </g>
     </symbol>
   </>
 );

@@ -9,7 +9,7 @@ const RegisterLayout = ({ children }: { children: React.ReactNode }) => {
       <Header>
         <HeaderLeft>
           <BackButton>
-            <Icon id={'back-icon'} size={32} />
+            <Icon id={'back-icon'} size={32} className="text-gray-20" />
           </BackButton>
         </HeaderLeft>
       </Header>
