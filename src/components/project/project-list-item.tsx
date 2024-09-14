@@ -7,18 +7,20 @@ import { useRouter } from 'next/navigation';
 
 interface ProjectItemProps {
   project: IProject;
+  routePath?: string;
   isMine?: boolean;
 }
 
 const ProjectListItem: React.FC<ProjectItemProps> = ({
   project,
+  routePath = 'project',
   isMine = false,
 }) => {
   const router = useRouter();
 
   return (
     <li
-      onClick={() => router.push(`/project/${project.id}`)}
+      onClick={() => router.push(`/${routePath}/${project.id}`)}
       className="flex justify-between gap-x-[13px] border-b border-gray-80 pb-[18px]"
     >
       <div className="space-y-[12px]">
