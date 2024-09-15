@@ -2,6 +2,7 @@
 
 import BottomButton from '@/components/common/bottom-button';
 import ConceptTag from '@/components/common/concept-tag';
+import Guide from '@/components/common/guide';
 import {
   Form,
   FormControl,
@@ -124,23 +125,7 @@ const ApplyGuide = () => {
     '컨셉과 관련된 사진을 업로드해주세요.',
     '타인의 초상권, 지식 재산권 등을 침해하는 사진은 게시하지 마세요.',
   ];
-  return (
-    <div
-      className={cn(
-        'flex flex-col items-start gap-[5px] self-stretch rounded-[8px] bg-gray-90 p-[10px_12px]',
-      )}
-    >
-      <div className="font-body-14 text-gray-40">지원 안내</div>
-      <div>
-        {guides.map((guide) => (
-          <div key={guide} className="flex items-start gap-2">
-            <span className="mt-[7px] h-[3px] w-[3px] rounded-full bg-gray-40" />
-            <div className="font-caption-12 text-gray-40">{guide}</div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+  return <Guide guides={guides} title="지원 안내" />;
 };
 
 const Images = () => {
