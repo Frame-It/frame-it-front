@@ -57,8 +57,11 @@ const RegisterStepThree: React.FunctionComponent<
       </div>
       <div className="mt-[40px] space-y-8">
         <div>
-          <Label className={StepThreeLabel}>이름</Label>
+          <Label htmlFor="name" className={StepThreeLabel}>
+            이름
+          </Label>
           <Input
+            id="name"
             placeholder="이름(실명)을 입력해 주세요"
             className="border-b-1 rounded-none border-l-0 border-r-0 border-t-0 pb-1 pl-1"
             value={name}
@@ -77,7 +80,7 @@ const RegisterStepThree: React.FunctionComponent<
       </div>
       <Button
         size="lg"
-        className="absolute bottom-0 w-full"
+        className="absolute bottom-0 left-0 w-full"
         disabled={!isRequired}
         onClick={nextStep}
       >

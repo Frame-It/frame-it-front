@@ -30,6 +30,7 @@ interface UserRegisterState {
   setRole: (role: string) => void;
   setName: (name: string) => void;
   setBirth: (birth: Date) => void;
+  setNickName: (nickname: string) => void;
 }
 
 export const useUserRegisterStore = create<UserRegisterState>((set) => ({
@@ -106,6 +107,10 @@ export const useUserRegisterStore = create<UserRegisterState>((set) => ({
     set((state) => ({
       userInfo: { ...state.userInfo, birth },
     })),
+  setNickName: (nickname) =>
+    set((state) => ({
+      userInfo: { ...state.userInfo, nickname },
+    })),
 }));
 
 export const useUserRegisterPrevStep = () =>
@@ -122,3 +127,5 @@ export const useUserRegisterSetBirth = () =>
   useUserRegisterStore((state) => state.setBirth);
 export const useUserRegisterSetName = () =>
   useUserRegisterStore((state) => state.setName);
+export const useUserRegisterSetNickName = () =>
+  useUserRegisterStore((state) => state.setNickName);

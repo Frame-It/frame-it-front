@@ -24,7 +24,7 @@ const RegisterStepTwo: React.FunctionComponent<IRegisterStepTwoProps> = () => {
   };
 
   return (
-    <section className="">
+    <section>
       <div className="font-title-18 ml-2 mt-[42px] max-w-[200px] break-keep">
         <div>프레이밋에서</div>
         <div>어떤 활동을 원하시나요?</div>
