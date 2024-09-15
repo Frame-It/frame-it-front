@@ -12,15 +12,24 @@ import { IProject } from '@/types/project';
 import { faker } from '@faker-js/faker/locale/ko';
 
 const ProjectManagementDetailPage = () => {
-  // TODO: query string으로 state 받아서 처리
+  faker.seed(123);
+
   // TODO: host, guest 구분
   const project: IProject = {
     id: '1',
     date: '7/31',
     time: '12:00~14:00',
     location: '서울시 종로구',
-    state: 'recruiting',
+    state: 'inProgress',
     title: '노들섬에서 촬용해 주세요',
+  };
+
+  const guest: IGuest & Pick<IProject, 'state'> = {
+    profileImage: faker.image.avatar(),
+    name: faker.name.fullName(),
+    applicationDate: faker.date.recent().toISOString().split('T')[0],
+    content: faker.lorem.sentence(),
+    state: 'inProgress',
   };
 
   return (
@@ -30,7 +39,25 @@ const ProjectManagementDetailPage = () => {
         <h1 className={cn('font-title-18 text-gray-20')}>진행상황</h1>
         <ProgressBox state={project.state} />
       </div>
-      <ApplicantList />
+      {project.state === 'inProgress' && (
+        <BottomButton
+          variant={'secondary'}
+          size={'large'}
+          label={'프로젝트 완료하기'}
+        />
+      )}
+      {project.state === 'complete' && (
+        <BottomButton
+          variant={'secondary'}
+          size={'large'}
+          label={'리뷰 작성하기'}
+        />
+      )}
+      {project.state === 'recruiting' ? (
+        <ApplicantList />
+      ) : (
+        <ProjectGuest {...guest} />
+      )}
       <div className="flex flex-col gap-2">
         <h1 className={cn('font-title-18 text-gray-20')}>프로젝트 조정</h1>
         <Guide
@@ -82,12 +109,13 @@ const ApplicantList = () => {
       {isOpen && (
         <div className="mt-4 flex-1 space-y-4">
           {applicants.map((applicant, index) => (
-            <ApplicantListItem
+            <GuestItem
               key={index}
               profileImage={applicant.profileImage}
               name={applicant.name}
               applicationDate={applicant.applicationDate}
               content={applicant.content}
+              state={'recruiting'}
             />
           ))}
         </div>
@@ -96,21 +124,32 @@ const ApplicantList = () => {
   );
 };
 
-interface ApplicantListItemProps {
+interface IGuest {
   profileImage: string;
   name: string;
   applicationDate: string;
   content: string;
 }
+type GuestProps = IGuest & Pick<IProject, 'state'>;
 
-const ApplicantListItem: React.FunctionComponent<ApplicantListItemProps> = ({
+const ProjectGuest = (guest: GuestProps) => {
+  return (
+    <div className={cn('flex w-full flex-col gap-3')}>
+      <h1 className={cn('font-title-18 text-gray-20')}>프로젝트 게스트</h1>
+      <GuestItem {...guest} />
+    </div>
+  );
+};
+
+const GuestItem: React.FunctionComponent<GuestProps> = ({
   profileImage,
   name,
   applicationDate,
   content,
+  state,
 }) => {
   return (
-    <div className="flex gap-4 rounded-[8px] border border-gray-80 p-4">
+    <div className="flex gap-[10px] rounded-[8px] border border-gray-80 p-4">
       <div className="flex-shrink-0">
         <img
           src={profileImage}
@@ -134,12 +173,14 @@ const ApplicantListItem: React.FunctionComponent<ApplicantListItemProps> = ({
             label={'DM'}
             className="font-tag-12 max-w-none flex-1"
           />
-          <BottomButton
-            variant="secondary"
-            size="small"
-            label={'프로젝트 시작하기'}
-            className="font-tag-12 max-w-none flex-1"
-          />
+          {state === 'recruiting' && (
+            <BottomButton
+              variant="secondary"
+              size="small"
+              label={'프로젝트 시작하기'}
+              className="font-tag-12 max-w-none flex-1"
+            />
+          )}
         </div>
       </div>
     </div>
