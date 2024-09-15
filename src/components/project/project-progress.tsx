@@ -20,7 +20,7 @@ const ProjectProgress: React.FunctionComponent<IProjectProgressProps> = ({
   const { value } = stateMap[state];
 
   return (
-    <div className="flex flex-col items-center gap-2">
+    <div className="flex flex-col items-center gap-[6px]">
       <div className="relative w-[243px]">
         <Progress value={value} className="h-[3px] w-full bg-gray-80" />
 
@@ -48,7 +48,7 @@ const ProjectProgress: React.FunctionComponent<IProjectProgressProps> = ({
         <span
           className={cn(
             value >= stateMap.recruiting.value ? 'text-primary' : '',
-            'font-body-16 flex w-[45px] justify-center',
+            'font-body-16 flex h-[24px] w-[45px] justify-center text-center',
           )}
         >
           {stateMap.recruiting.label}
@@ -56,7 +56,7 @@ const ProjectProgress: React.FunctionComponent<IProjectProgressProps> = ({
         <span
           className={cn(
             value >= stateMap.inProgress.value ? 'text-primary' : '',
-            'font-body-16 flex w-[45px] justify-center',
+            'font-body-16 flex h-[24px] w-[45px] justify-center text-center',
           )}
         >
           {stateMap.inProgress.label}
@@ -64,7 +64,7 @@ const ProjectProgress: React.FunctionComponent<IProjectProgressProps> = ({
         <span
           className={cn(
             value >= stateMap.complete.value ? 'text-primary' : '',
-            'font-body-16 flex w-[45px] justify-center',
+            'font-body-16 flex h-[24px] w-[45px] justify-center text-center',
           )}
         >
           {stateMap.complete.label}
