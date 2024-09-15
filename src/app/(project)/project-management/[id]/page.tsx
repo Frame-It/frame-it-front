@@ -12,7 +12,7 @@ import { faker } from '@faker-js/faker/locale/ko';
 const ProjectManagementDetailPage = () => {
   // TODO: query string으로 state 받아서 처리
   // TODO: host, guest 구분
-  const project = {
+  const project: IProject = {
     id: '1',
     date: '7/31',
     time: '12:00~14:00',
@@ -26,7 +26,7 @@ const ProjectManagementDetailPage = () => {
       <ProjectInfo project={project} />
       <div className={cn('flex flex-col gap-2')}>
         <h1 className={cn('font-title-18 text-gray-20')}>진행상황</h1>
-        <ProgressBox state={'inProgress'} />
+        <ProgressBox state={project.state} />
       </div>
       <ApplicantList />
       <div className="flex flex-col gap-2">
