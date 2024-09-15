@@ -24,6 +24,8 @@ interface UserRegisterState {
 
   toggleAllCheck: (checked: boolean) => void;
   toggleItemCheck: (item: TCheckListKeys, checked: boolean) => void;
+
+  setRole: (role: string) => void;
 }
 
 export const useUserRegisterStore = create<UserRegisterState>((set) => ({
@@ -83,10 +85,10 @@ export const useUserRegisterStore = create<UserRegisterState>((set) => ({
       },
     })),
 
-  // setUserInfo: (info) =>
-  //   set((state) => ({
-  //     portfolioInfo: { ...state.portfolioInfo, ...info },
-  //   })),
+  setRole: (role) =>
+    set((state) => ({
+      userInfo: { ...state.userInfo, role },
+    })),
 }));
 
 export const useUserRegisterPrevStep = () =>
@@ -97,3 +99,5 @@ export const useUserRegisterToggleAllCheck = () =>
   useUserRegisterStore((state) => state.toggleAllCheck);
 export const useUserRegisterToggleItemCheck = () =>
   useUserRegisterStore((state) => state.toggleItemCheck);
+export const useUserRegisterSetRole = () =>
+  useUserRegisterStore((state) => state.setRole);

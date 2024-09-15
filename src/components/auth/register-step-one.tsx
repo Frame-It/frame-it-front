@@ -6,9 +6,9 @@ import {
   useUserRegisterToggleAllCheck,
   useUserRegisterToggleItemCheck,
 } from '@/store/user-regist-store';
-import { UserRegisterCheckbox } from '../ui/checkbox';
+import { UserRegisterCheckbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
-import Icon from '../common/icon';
+import Icon from '@/components/common/icon';
 
 interface IRegisterStepOneProps {}
 
@@ -30,10 +30,10 @@ const RegisterStepOne: React.FunctionComponent<IRegisterStepOneProps> = () => {
 
   const nextStep = useUserRegisterNextStep();
   const toggleAllcheck = useUserRegisterToggleAllCheck();
-  const setItemCheck = useUserRegisterToggleItemCheck();
+  const toggleItemCheck = useUserRegisterToggleItemCheck();
 
   const handleCheckedChange = (item: TCheckListKeys, checked: boolean) => {
-    setItemCheck(item, checked);
+    toggleItemCheck(item, checked);
   };
 
   return (
