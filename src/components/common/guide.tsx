@@ -49,7 +49,9 @@ const Guide: React.FunctionComponent<IGuideProps> = ({
           {guides.map((guide) => (
             <div key={guide} className="flex items-start gap-2">
               <span className="mt-[7px] h-[3px] w-[3px] flex-shrink-0 rounded-full bg-gray-40" />
-              <div className="font-caption-12 text-gray-40">{guide}</div>
+              <p className="font-caption-12 whitespace-pre-wrap text-gray-40">
+                {guide}
+              </p>
             </div>
           ))}
         </div>
