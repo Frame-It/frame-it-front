@@ -4,6 +4,7 @@ import BottomButton from '@/components/common/bottom-button';
 import Guide from '@/components/common/guide';
 import Icon from '@/components/common/icon';
 import ProjectProgress from '@/components/project/project-progress';
+import { HostProjectGuide } from '@/constants/guide';
 import useDisclosure from '@/hooks/useDisclosure';
 import { cn } from '@/lib/utils';
 import { IProject } from '@/types/project';
@@ -33,21 +34,12 @@ const ProjectManagementDetailPage = () => {
         <h1 className={cn('font-title-18 text-gray-20')}>프로젝트 조정</h1>
         <Guide
           title="프로젝트 안내"
-          guides={[
-            `프레이밋의 모든 프로젝트는 ‘상호무페이’입니다. 호스트가 돈을 요구하는 등 정책에 위반하는 행위를 하는 경우, 프레이밋 이메일(2024.frameit@gmail.com)로 신고해 주세요.`,
-            `프로젝트는 [모집 중 - 진행 중 - 완료] 로 진행됩니다.`,
-            `프로젝트를 완료 즉시, 상대방에게 리뷰를 남길 수 있습니다.`,
-          ]}
+          guides={HostProjectGuide.general}
           collapsible
         />
         <Guide
           title="프로젝트 취소 안내"
-          guides={[
-            `모집 중인 프로젝트는 신청을 취소할 수 있습니다.`,
-            `진행 중인 프로젝트를 취소하고 싶은 경우, 취소하고 싶은 프로젝트의 제목, 호스트 닉네임, 게스트 닉네임과 취소사유를 적어 프레이밋 이메일(2024.frameit@gmail.com)로 접수해주세요.`,
-            `취소 접수 동안은 ‘진행 중’ 상태를 유지합니다.`,
-            `취소된 프로젝트는 ‘취소’ 상태로 변경됩니다.`,
-          ]}
+          guides={HostProjectGuide.cancellation}
           collapsible
         />
       </div>
