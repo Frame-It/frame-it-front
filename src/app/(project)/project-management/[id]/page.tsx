@@ -20,7 +20,7 @@ const ProjectManagementDetailPage = () => {
     date: '7/31',
     time: '12:00~14:00',
     location: '서울시 종로구',
-    state: 'inProgress',
+    state: 'complete',
     title: '노들섬에서 촬용해 주세요',
   };
 
@@ -29,7 +29,7 @@ const ProjectManagementDetailPage = () => {
     name: faker.name.fullName(),
     applicationDate: faker.date.recent().toISOString().split('T')[0],
     content: faker.lorem.sentence(),
-    state: 'inProgress',
+    state: project.state,
   };
 
   return (
@@ -167,12 +167,22 @@ const GuestItem: React.FunctionComponent<GuestProps> = ({
         </div>
         <p className="font-body-14 mb-2 mt-1 text-gray-40">{content}</p>
         <div className="flex gap-[6px]">
-          <BottomButton
-            variant="stroke"
-            size="small"
-            label={'DM'}
-            className="font-tag-12 max-w-none flex-1"
-          />
+          {state === 'complete' ? (
+            <BottomButton
+              variant={'stroke'}
+              disabled
+              size={'small'}
+              label={'리뷰 확인하기'}
+              className="font-tag-12 max-w-none flex-1"
+            />
+          ) : (
+            <BottomButton
+              variant="stroke"
+              size="small"
+              label={'DM'}
+              className="font-tag-12 max-w-none flex-1"
+            />
+          )}
           {state === 'recruiting' && (
             <BottomButton
               variant="secondary"
