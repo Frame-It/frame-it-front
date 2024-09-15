@@ -31,7 +31,12 @@ const ProjectList: React.FC<ProjectListProps> = ({ projectList }) => {
       ) : (
         <ul className="flex h-full flex-auto flex-col gap-[18px] overflow-y-auto scrollbar-hide">
           {projectList.map((project) => (
-            <ProjectListItem key={project.id} project={project} isMine />
+            <ProjectListItem
+              key={project.id}
+              project={project}
+              isMine
+              routePath="project-management"
+            />
           ))}
         </ul>
       )}

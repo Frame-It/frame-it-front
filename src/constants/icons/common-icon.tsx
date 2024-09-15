@@ -12,7 +12,7 @@ export const commonSVG = (
       <g clipPath="url(#clip0_2801_22274)">
         <path
           d="M5.33398 14.7432L12.0007 8.0765L18.6673 14.7432"
-          stroke="#B4ADA9"
+          stroke="currentColor"
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -40,7 +40,7 @@ export const commonSVG = (
       <g clipPath="url(#clip0_2801_22189)">
         <path
           d="M11.5 4.74316L6.5 9.74316L11.5 14.7432"
-          stroke="#7E7774"
+          stroke="currentColor"
           strokeWidth="1.2"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -67,7 +67,7 @@ export const commonSVG = (
       <g clipPath="url(#clip0_2801_22191)">
         <path
           d="M7 4.74316L12 9.74316L7 14.7432"
-          stroke="#7E7774"
+          stroke="currentColor"
           strokeWidth="1.2"
           strokeLinecap="round"
           strokeLinejoin="round"
