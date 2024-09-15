@@ -11,6 +11,8 @@ export type TCheckListKeys = keyof IUserCheckList;
 export interface IUserRegistInfo {
   agreeList: IUserCheckList;
   nickname: null | string;
+  name: null | string;
+  birth: Date | null;
   role: null | string;
 }
 
@@ -26,12 +28,15 @@ interface UserRegisterState {
   toggleItemCheck: (item: TCheckListKeys, checked: boolean) => void;
 
   setRole: (role: string) => void;
+  setName: (name: string) => void;
+  setBirth: (birth: Date) => void;
 }
 
 export const useUserRegisterStore = create<UserRegisterState>((set) => ({
   currentStep: 1,
   minStep: 1,
-  maxStep: 3,
+  maxStep: 4,
+
   userInfo: {
     agreeList: {
       age: false,
@@ -39,8 +44,10 @@ export const useUserRegisterStore = create<UserRegisterState>((set) => ({
       use: false,
       marketing: false,
     },
+    name: null,
     nickname: null,
     role: null,
+    birth: null,
   },
 
   prevStep() {
@@ -89,6 +96,16 @@ export const useUserRegisterStore = create<UserRegisterState>((set) => ({
     set((state) => ({
       userInfo: { ...state.userInfo, role },
     })),
+
+  setName: (name) =>
+    set((state) => ({
+      userInfo: { ...state.userInfo, name },
+    })),
+
+  setBirth: (birth) =>
+    set((state) => ({
+      userInfo: { ...state.userInfo, birth },
+    })),
 }));
 
 export const useUserRegisterPrevStep = () =>
@@ -101,3 +118,7 @@ export const useUserRegisterToggleItemCheck = () =>
   useUserRegisterStore((state) => state.toggleItemCheck);
 export const useUserRegisterSetRole = () =>
   useUserRegisterStore((state) => state.setRole);
+export const useUserRegisterSetBirth = () =>
+  useUserRegisterStore((state) => state.setBirth);
+export const useUserRegisterSetName = () =>
+  useUserRegisterStore((state) => state.setName);

@@ -24,8 +24,12 @@ const RegisterStepTwo: React.FunctionComponent<IRegisterStepTwoProps> = () => {
   };
 
   return (
-    <section className="mt-[32px]">
-      <div className="flex w-full items-center justify-center gap-x-6 px-[32px]">
+    <section className="">
+      <div className="font-title-18 ml-2 mt-[42px] max-w-[200px] break-keep">
+        <div>프레이밋에서</div>
+        <div>어떤 활동을 원하시나요?</div>
+      </div>
+      <div className="mt-[32px] flex w-full items-center justify-center gap-x-6 px-[32px]">
         <button
           className={cn(
             RoleCommonDiv,

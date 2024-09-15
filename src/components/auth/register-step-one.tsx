@@ -37,8 +37,13 @@ const RegisterStepOne: React.FunctionComponent<IRegisterStepOneProps> = () => {
   };
 
   return (
-    <section className="mt-[32px]">
-      <div className="font-body-14m flex items-center gap-x-[12px] rounded-[8px] border px-[12px] py-[13px] text-gray-10">
+    <section>
+      <div className="font-title-18 ml-2 mt-[42px] max-w-[200px] break-keep">
+        <div>안녕하세요!</div>
+        <div>프레이밋 서비스 이용을 위해</div>
+        <div>동의해 주세요.</div>
+      </div>
+      <div className="font-body-14m mt-[32px] flex items-center gap-x-[12px] rounded-[8px] border px-[12px] py-[13px] text-gray-10">
         <UserRegisterCheckbox
           id="allCheck"
           checked={AllChecked}
