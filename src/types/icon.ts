@@ -4,14 +4,14 @@ import { DrawerIconID } from '@/constants/icons/drawer-icon';
 import { HeaderIconID } from '@/constants/icons/header-icon';
 import { MypageIconID } from '@/constants/icons/mapage-icon';
 import { PortfolioIconID } from '@/constants/icons/portfolio-icon';
-import { RecruitIconID } from '@/constants/icons/recruit-icon';
+import { ProjectIconID } from '@/constants/icons/project-icon';
 
 type IconIDTypes =
   | CommonIconID
   | HeaderIconID
   | BottomNavIconID
   | PortfolioIconID
-  | RecruitIconID
+  | ProjectIconID
   | DrawerIconID
   | MypageIconID;
 
