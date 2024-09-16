@@ -9,7 +9,7 @@ import { generateRandomImageList } from '@/lib/faker';
 import { cn } from '@/lib/utils';
 import { faker } from '@faker-js/faker/locale/ko';
 
-const ProjectDetailPage = () => {
+const ProjectRecruitmentDetailPage = () => {
   const imageArr = Array.from({ length: 3 }, () => generateRandomImageList());
 
   const title = faker.music.songName();
@@ -100,4 +100,4 @@ const WriterInfo = () => {
   );
 };
 
-export default ProjectDetailPage;
+export default ProjectRecruitmentDetailPage;

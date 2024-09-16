@@ -3,7 +3,11 @@ import { Header, HeaderLeft } from '@/components/common/header';
 import Icon from '@/components/common/icon';
 import { cn } from '@/lib/utils';
 
-const ProjectDetailLayout = ({ children }: { children: React.ReactNode }) => {
+const ProjectRecruitmentDetailLayout = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   return (
     <div className={cn('flex h-screen flex-col')}>
       <Header>
@@ -18,4 +22,4 @@ const ProjectDetailLayout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default ProjectDetailLayout;
+export default ProjectRecruitmentDetailLayout;
