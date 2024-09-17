@@ -1,7 +1,7 @@
 'use client';
 
-import StepOne from '@/components/recruit/write/step-one';
-import StepTwo from '@/components/recruit/write/step-two';
+import StepOne from '@/components/project/write/step-one';
+import StepTwo from '@/components/project/write/step-two';
 import { Progress } from '@/components/ui/progress';
 import { useProjectRegisterStore } from '@/store/project-regist-store';
 

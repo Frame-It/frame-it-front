@@ -1,6 +1,6 @@
 import RecruitCard, {
   IRecruitCardProps,
-} from '@/components/recruit/recruit-card';
+} from '@/components/project/recruit-card';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { faker } from '@faker-js/faker';
