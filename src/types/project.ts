@@ -6,3 +6,13 @@ export interface IProject {
   date: string;
   time: string;
 }
+
+type UserRole = 'HOST' | 'GUEST';
+
+export interface IApplyInfo {
+  profileImage: string;
+  name: string;
+  applicationDate: string;
+  content: string;
+  partnerRole: UserRole;
+}
