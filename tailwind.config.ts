@@ -56,6 +56,7 @@ const config = {
           foreground: 'hsl(var(--card-foreground))',
         },
         caution: '#FFE3E1',
+        kakao: '#FEE500',
         gray: {
           10: '#201A17',
           20: '#4D4744',
