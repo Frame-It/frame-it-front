@@ -12,24 +12,31 @@ import { IProject } from '@/types/project';
 import { faker } from '@faker-js/faker/locale/ko';
 
 const ProjectManagementDetailPage = () => {
+  const userRole: 'HOST' | 'GUEST' = 'GUEST';
+
+  // return <HostContent />;
+  return <GuestContent />;
+};
+
+const HostContent = () => {
   faker.seed(123);
 
-  // TODO: host, guest 구분
   const project: IProject = {
     id: '1',
     date: '7/31',
     time: '12:00~14:00',
     location: '서울시 종로구',
-    state: 'complete',
+    state: 'recruiting',
     title: '노들섬에서 촬용해 주세요',
   };
 
-  const guest: IGuest & Pick<IProject, 'state'> = {
+  const guest: IApplyInfo & Pick<IProject, 'state'> = {
     profileImage: faker.image.avatar(),
     name: faker.name.fullName(),
     applicationDate: faker.date.recent().toISOString().split('T')[0],
     content: faker.lorem.sentence(),
     state: project.state,
+    partnerRole: 'GUEST',
   };
 
   return (
@@ -56,7 +63,111 @@ const ProjectManagementDetailPage = () => {
       {project.state === 'recruiting' ? (
         <ApplicantList />
       ) : (
-        <ProjectGuest {...guest} />
+        <ApplyInfo {...guest} />
+      )}
+      <div className="flex flex-col gap-2">
+        <h1 className={cn('font-title-18 text-gray-20')}>프로젝트 조정</h1>
+        <Guide
+          title="프로젝트 안내"
+          guides={HostProjectGuide.general}
+          collapsible
+        />
+        <Guide
+          title="프로젝트 취소 안내"
+          guides={HostProjectGuide.cancellation}
+          collapsible
+        />
+      </div>
+    </div>
+  );
+};
+
+const GuestContent = () => {
+  faker.seed(234);
+
+  const project: IProject = {
+    id: '1',
+    date: '7/31',
+    time: '12:00~14:00',
+    location: '서울시 종로구',
+    state: 'complete',
+    title: '노들섬에서 촬용해 주세요',
+  };
+
+  const host: IApplyInfo & Pick<IProject, 'state'> = {
+    profileImage: faker.image.avatar(),
+    name: faker.name.fullName(),
+    applicationDate: faker.date.recent().toISOString().split('T')[0],
+    content: faker.lorem.sentence(),
+    state: project.state,
+    partnerRole: 'HOST',
+  };
+
+  return (
+    <div className="flex h-full flex-col gap-4 overflow-auto p-4">
+      <ProjectInfo project={project} />
+      {project.state === 'recruiting' && (
+        <BottomButton
+          variant={'secondary'}
+          size={'middle'}
+          label={'호스트에게 DM'}
+          className="max-w-none"
+        />
+      )}
+
+      {project.state !== 'recruiting' && (
+        <div className={cn('flex flex-col gap-2')}>
+          <h1 className={cn('font-title-18 text-gray-20')}>진행상황</h1>
+          <ProgressBox state={project.state} />
+        </div>
+      )}
+
+      {project.state === 'inProgress' && (
+        <div className={cn('flex flex-col gap-2')}>
+          <BottomButton
+            variant={'secondary'}
+            size={'large'}
+            label={'프로젝트 완료하기'}
+          />
+          <Guide
+            guides={[
+              '호스트와 게스트 모두가 ‘프로젝트 완료’를 눌러야 프로젝트가 정상 완료됩니다.',
+              '프로젝트를 완료하면 변경할 수 없습니다.',
+            ]}
+          />
+        </div>
+      )}
+      {project.state === 'complete' && (
+        <BottomButton
+          variant={'secondary'}
+          size={'large'}
+          label={'리뷰 작성하기'}
+        />
+      )}
+      {project.state === 'recruiting' ? (
+        <ApplyInfo {...host} />
+      ) : (
+        <div className="flex flex-col gap-3">
+          <h1 className={cn('font-title-18 text-gray-20')}>프로젝트 호스트</h1>
+          <div className="flex items-center justify-between">
+            <div className="flex gap-[10px] pb-2">
+              <div className="flex-shrink-0">
+                <img
+                  src={host.profileImage}
+                  alt={`${host.name}'s profile`}
+                  className="h-[46px] w-[46px] rounded-[8px] object-cover"
+                />
+              </div>
+              <div className="font-body-14m flex items-center">{host.name}</div>
+            </div>
+            <BottomButton
+              variant={'stroke'}
+              size={'small'}
+              label={'호스트에게 DM하기'}
+              className="font-tag-12 max-w-[126px]"
+            />
+          </div>
+        </div>
       )}
       <div className="flex flex-col gap-2">
         <h1 className={cn('font-title-18 text-gray-20')}>프로젝트 조정</h1>
@@ -107,15 +218,16 @@ const ApplicantList = () => {
         />
       </div>
       {isOpen && (
-        <div className="mt-4 flex-1 space-y-4">
+        <div className="mt-4 flex-1 divide-y divide-gray-80">
           {applicants.map((applicant, index) => (
-            <GuestItem
+            <PartnerItem
               key={index}
               profileImage={applicant.profileImage}
               name={applicant.name}
               applicationDate={applicant.applicationDate}
               content={applicant.content}
               state={'recruiting'}
+              partnerRole="GUEST"
             />
           ))}
         </div>
@@ -124,32 +236,39 @@ const ApplicantList = () => {
   );
 };
 
-interface IGuest {
+type UserRole = 'HOST' | 'GUEST';
+
+interface IApplyInfo {
   profileImage: string;
   name: string;
   applicationDate: string;
   content: string;
+  partnerRole: UserRole;
 }
-type GuestProps = IGuest & Pick<IProject, 'state'>;
 
-const ProjectGuest = (guest: GuestProps) => {
+type ApplyInfoProps = IApplyInfo & Pick<IProject, 'state'>;
+
+const ApplyInfo = (partner: ApplyInfoProps) => {
   return (
     <div className={cn('flex w-full flex-col gap-3')}>
-      <h1 className={cn('font-title-18 text-gray-20')}>프로젝트 게스트</h1>
-      <GuestItem {...guest} />
+      <h1 className={cn('font-title-18 text-gray-20')}>
+        {partner.partnerRole === 'HOST' ? '신청정보' : '프로젝트 게스트'}
+      </h1>
+      <PartnerItem {...partner} />
     </div>
   );
 };
 
-const GuestItem: React.FunctionComponent<GuestProps> = ({
+const PartnerItem: React.FunctionComponent<ApplyInfoProps> = ({
   profileImage,
   name,
   applicationDate,
   content,
   state,
+  partnerRole,
 }) => {
   return (
-    <div className="flex gap-[10px] rounded-[8px] border border-gray-80 p-4">
+    <div className="flex gap-[10px] py-4">
       <div className="flex-shrink-0">
         <img
           src={profileImage}
@@ -166,33 +285,56 @@ const GuestItem: React.FunctionComponent<GuestProps> = ({
           </span>
         </div>
         <p className="font-body-14 mb-2 mt-1 text-gray-40">{content}</p>
-        <div className="flex gap-[6px]">
-          {state === 'complete' ? (
-            <BottomButton
-              variant={'stroke'}
-              disabled
-              size={'small'}
-              label={'리뷰 확인하기'}
-              className="font-tag-12 max-w-none flex-1"
-            />
-          ) : (
-            <BottomButton
-              variant="stroke"
-              size="small"
-              label={'DM'}
-              className="font-tag-12 max-w-none flex-1"
-            />
-          )}
-          {state === 'recruiting' && (
-            <BottomButton
-              variant="secondary"
-              size="small"
-              label={'프로젝트 시작하기'}
-              className="font-tag-12 max-w-none flex-1"
-            />
-          )}
-        </div>
+        {partnerRole === 'HOST' ? (
+          <GuestPartnerButtons />
+        ) : (
+          <HostPartnerButtons state={state} />
+        )}
       </div>
+    </div>
+  );
+};
+
+const HostPartnerButtons = ({ state }: { state: IProject['state'] }) => {
+  return (
+    <div className="flex gap-[6px]">
+      {state === 'complete' ? (
+        <BottomButton
+          variant={'stroke'}
+          disabled
+          size={'small'}
+          label={'리뷰 확인하기'}
+          className="font-tag-12 max-w-none flex-1"
+        />
+      ) : (
+        <BottomButton
+          variant="stroke"
+          size="small"
+          label={'DM'}
+          className="font-tag-12 max-w-none flex-1"
+        />
+      )}
+      {state === 'recruiting' && (
+        <BottomButton
+          variant="secondary"
+          size="small"
+          label={'프로젝트 시작하기'}
+          className="font-tag-12 max-w-none flex-1"
+        />
+      )}
+    </div>
+  );
+};
+
+const GuestPartnerButtons = () => {
+  return (
+    <div className="flex gap-[6px]">
+      <BottomButton
+        variant="stroke"
+        size="small"
+        label={'신청 취소하기'}
+        className="font-tag-12 max-w-none flex-1"
+      />
     </div>
   );
 };
