@@ -76,6 +76,10 @@
   height: 10px;
 }
 
+.react-datepicker__day--today {
+  background: none;
+}
+
 .react-datepicker__day {
   color: #201a17;
   text-align: center;
