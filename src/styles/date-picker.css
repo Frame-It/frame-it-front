@@ -64,6 +64,7 @@
     'liga' off,
     'clig' off;
   height: fit-content;
+  gap: 20px;
 }
 
 .react-datepicker__day-name {
@@ -74,9 +75,18 @@
     'liga' off,
     'clig' off;
   height: 10px;
+  width: fit-content;
+  margin: 0;
 }
 
-.react-datepicker__day--today {
+.react-datepicker__day--today,
+.react-datepicker__day--keyboard-selected,
+.react-datepicker__day--in-selecting-range:not(
+    .react-datepicker__day--in-range,
+    .react-datepicker__month-text--in-range,
+    .react-datepicker__quarter-text--in-range,
+    .react-datepicker__year-text--in-range
+  ) {
   background: none;
 }
 
