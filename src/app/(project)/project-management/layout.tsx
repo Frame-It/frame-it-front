@@ -9,6 +9,7 @@ import {
   HeaderRight,
 } from '@/components/common/header';
 import Icon from '@/components/common/icon';
+import Link from 'next/link';
 import { useParams } from 'next/navigation';
 
 export default function ProjectManagementLayout({
@@ -30,7 +31,11 @@ export default function ProjectManagementLayout({
         </HeaderLeft>
         <HeaderCenter>프로젝트 관리</HeaderCenter>
         <HeaderRight>
-          {isList && <button className="font-gnb text-gray-20">등록</button>}
+          {isList && (
+            <Link className="font-gnb text-gray-20" href={'/project-register'}>
+              등록
+            </Link>
+          )}
         </HeaderRight>
       </Header>
       {children}
