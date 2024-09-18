@@ -1,6 +1,9 @@
 'use client';
 
 import Icon from '@/components/common/icon';
+import useDisclosure from '@/hooks/useDisclosure';
+import { usePathname, useRouter } from 'next/navigation';
+import AlertDialog from '../common/alert-dialog';
 import {
   Drawer,
   DrawerClose,
@@ -8,9 +11,6 @@ import {
   DrawerTrigger,
 } from '../ui/drawer';
 import { toast } from '../ui/use-toast';
-import { usePathname, useRouter } from 'next/navigation';
-import AlertDialog from '../common/alert-dialog';
-import useDisclosure from '@/hooks/useDisclosure';
 // import Drawer from '@/components/common/drawer';
 
 interface IPortfolioDetailMenuProps {}
@@ -78,7 +78,7 @@ const PortfolioDetailMenu: React.FunctionComponent<
                   onClick={handleDelete}
                   className="flex w-full items-center gap-x-[13px] px-[18px] py-2 text-base font-semibold leading-[135%] text-gray-20"
                 >
-                  <Icon id="close-icon" size={24} />
+                  <Icon id="close-icon" size={24} className="text-gray-40" />
                   포트폴리오 삭제하기
                 </button>
               </DrawerClose>

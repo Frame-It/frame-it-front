@@ -13,7 +13,7 @@ interface ProjectItemProps {
 
 const ProjectListItem: React.FC<ProjectItemProps> = ({
   project,
-  routePath = 'project',
+  routePath = 'project-recruitment',
   isMine = false,
 }) => {
   const router = useRouter();

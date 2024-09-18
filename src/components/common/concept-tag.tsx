@@ -4,7 +4,7 @@ interface ConceptTagProps {
   id: number;
   label: string;
   isSelected: boolean;
-  onToggle: (id: number) => void;
+  onToggle?: (id: number) => void;
 }
 
 const ConceptTag: React.FC<ConceptTagProps> = ({
@@ -15,7 +15,7 @@ const ConceptTag: React.FC<ConceptTagProps> = ({
 }) => {
   return (
     <div
-      onClick={() => onToggle(id)}
+      onClick={() => onToggle && onToggle(id)}
       className={cn(
         'inline-flex items-center justify-center gap-2 rounded-md p-[8px] text-base',
         'box-border border-[1px] border-solid',
