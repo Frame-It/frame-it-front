@@ -9,9 +9,17 @@ import { cn } from '@/lib/utils';
 import { IProject } from '@/types/project';
 import { faker } from '@faker-js/faker/locale/ko';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 
 const ReviewRegisterPage = () => {
+  const searchParams = useSearchParams();
+  const isComplete = searchParams.get('complete') === 'true';
+
+  return isComplete ? <Complete /> : <Register />;
+};
+
+const Register = () => {
   faker.seed(111);
   const project: IProject = {
     id: '1',
@@ -85,10 +93,42 @@ const ReviewRegisterPage = () => {
 
       <Link
         className="absolute bottom-0 left-0 flex h-[64px] w-full items-center px-4"
-        href={'/'} // TODO: 작성 완료 페이지로
+        href={'?complete=true'}
       >
         <BottomButton variant={'primary'} size={'large'} label={'작성완료'} />
       </Link>
+    </div>
+  );
+};
+
+const Complete = () => {
+  return (
+    <div className="flex h-full flex-col items-center justify-center gap-[9px]">
+      <div className="flex flex-col items-center gap-1">
+        <h1 className="font-title-16 text-gray-20">리뷰작성 완료</h1>
+        <p className="font-body-14 text-gray-60">
+          프로젝트를 통해 한 단계 성장했어요!
+        </p>
+      </div>
+      {/* TODO: 프로젝트 id로 이동 */}
+      <Link href={'/project-management/1'} className="w-[217px]">
+        <BottomButton
+          variant={'secondary'}
+          size={'middle'}
+          label={'프로젝트 리뷰 보러가기'}
+          className="font-button-14"
+        />
+      </Link>
+      <Link href={'/'} className="w-[217px]">
+        <BottomButton
+          variant={'stroke'}
+          size={'middle'}
+          label={'홈으로'}
+          className="font-button-14"
+        />
+      </Link>
+
+      <div className="h-[58px]" />
     </div>
   );
 };
