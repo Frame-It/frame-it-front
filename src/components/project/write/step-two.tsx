@@ -67,8 +67,12 @@ const StepTwo: React.FC = () => {
   };
 
   return (
-    <div className={cn('flex h-full flex-1 flex-col justify-between pb-4')}>
-      <div className={cn('flex flex-col gap-4')}>
+    <div className={cn('relative flex h-full flex-col justify-between')}>
+      <div
+        className={cn(
+          'flex h-[calc(100%-64px)] flex-col gap-4 overflow-auto scrollbar-hide',
+        )}
+      >
         <div className={cn('flex flex-col gap-2')}>
           <label className={cn('font-title-16')}>컨셉</label>
           <div className={cn('flex flex-wrap gap-2')}>
@@ -108,14 +112,19 @@ const StepTwo: React.FC = () => {
         </div>
       </div>
 
-      <BottomButton
-        onClick={handleNext}
-        variant={'primary'}
-        size={'large'}
-        label={'다음'}
-        disabled={!isNextEnabled}
-        className={cn('mt-5')}
-      />
+      <div
+        className={cn(
+          'absolute bottom-0 left-0 flex h-[64px] w-full items-center',
+        )}
+      >
+        <BottomButton
+          onClick={handleNext}
+          variant={'primary'}
+          size={'large'}
+          label={'다음'}
+          disabled={!isNextEnabled}
+        />
+      </div>
     </div>
   );
 };
@@ -160,7 +169,7 @@ const Images = () => {
   // };
 
   return (
-    <section className="flex items-center gap-2 overflow-x-auto scrollbar-hide">
+    <section className="flex h-fit flex-shrink-0 items-center gap-2 overflow-x-auto scrollbar-hide">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(() => console.log(form.getValues()))}
