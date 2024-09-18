@@ -1,7 +1,9 @@
+import useDisclosure from '@/hooks/useDisclosure';
 import { IApplyInfo, IProject } from '@/types/project';
 import BottomButton from '../common/bottom-button';
+import ReviewDialog from './review-dialog';
 
-type PartnerProps = IApplyInfo & Pick<IProject, 'state'>;
+type PartnerProps = IApplyInfo & Pick<IProject, 'state' | 'id'>;
 
 export const PartnerItem: React.FunctionComponent<PartnerProps> = ({
   profileImage,
@@ -10,6 +12,7 @@ export const PartnerItem: React.FunctionComponent<PartnerProps> = ({
   content,
   state,
   partnerRole,
+  id,
 }) => {
   return (
     <div className="flex gap-[10px] py-4">
@@ -32,24 +35,34 @@ export const PartnerItem: React.FunctionComponent<PartnerProps> = ({
         {partnerRole === 'HOST' ? (
           <GuestPartnerButton />
         ) : (
-          <HostPartnerButtons state={state} />
+          <HostPartnerButtons state={state} name={name} id={id} />
         )}
       </div>
     </div>
   );
 };
 
-const HostPartnerButtons = ({ state }: { state: IProject['state'] }) => {
+const HostPartnerButtons = ({
+  state,
+  id: projectId,
+  name,
+}: Partial<PartnerProps>) => {
+  const { isOpen, onToggle } = useDisclosure(false);
+
   return (
     <div className="flex gap-[6px]">
       {state === 'complete' ? (
-        <BottomButton
-          variant={'stroke'}
-          disabled
-          size={'small'}
-          label={'리뷰 확인하기'}
-          className="font-tag-12 max-w-none flex-1"
-        />
+        <>
+          <BottomButton
+            variant={'stroke'}
+            // disabled
+            size={'small'}
+            label={'리뷰 확인하기'}
+            className="font-tag-12 max-w-none flex-1"
+            onClick={onToggle}
+          />
+          <ReviewDialog name={name} isOpen={isOpen} onOpenChange={onToggle} />
+        </>
       ) : (
         <BottomButton
           variant="stroke"
