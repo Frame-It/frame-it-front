@@ -19,9 +19,14 @@ const DatePickerComponent: React.FC = () => {
 
   const displayDate = () => {
     if (startDate && endDate) {
+      const options: Intl.DateTimeFormatOptions = {
+        month: 'numeric',
+        day: 'numeric',
+      };
+
       return startDate.getTime() === endDate.getTime()
-        ? startDate.toLocaleDateString()
-        : `${startDate.toLocaleDateString()} ~ ${endDate.toLocaleDateString()}`;
+        ? startDate.toLocaleDateString('en-US', options)
+        : `${startDate.toLocaleDateString('en-US', options)} ~ ${endDate.toLocaleDateString('en-US', options)}`;
     }
   };
 
