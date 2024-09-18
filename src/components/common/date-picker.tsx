@@ -85,7 +85,7 @@ const DatePickerComponent: React.FC = () => {
                     'text-center text-[16px] font-normal leading-[16px] text-[#7E7774]',
                   )}
                 >
-                  {props.date.getFullYear()}년 {props.date.getMonth()}월
+                  {props.date.getFullYear()}년 {props.date.getMonth() + 1}월
                 </span>
                 <Icon
                   id={'next-icon'}
