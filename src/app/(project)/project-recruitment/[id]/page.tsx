@@ -17,11 +17,15 @@ import { GuestProjectGuide } from '@/constants/guide';
 import useDisclosure from '@/hooks/useDisclosure';
 import { generateRandomImageList } from '@/lib/faker';
 import { cn } from '@/lib/utils';
+import { UserRole } from '@/types/project';
 import { faker } from '@faker-js/faker/locale/ko';
+import { useRouter } from 'next/navigation';
 
 const ProjectRecruitmentDetailPage = () => {
   faker.seed(101);
   const imageArr = Array.from({ length: 3 }, () => generateRandomImageList());
+
+  const userRole: UserRole = 'HOST';
 
   const projectId = 1;
   const title = faker.music.songName();
@@ -80,7 +84,7 @@ const ProjectRecruitmentDetailPage = () => {
         보정 내용
         <div className={cn('font-body-14 pt-2')}>{retouchingDetails}</div>
       </div>
-      <div className={cn('font-title-18')}>
+      <div className={cn('font-title-18 flex flex-col gap-2')}>
         작가
         <WriterInfo />
       </div>
@@ -89,17 +93,55 @@ const ProjectRecruitmentDetailPage = () => {
           'absolute bottom-0 left-0 flex h-[64px] w-full items-center justify-center gap-[8px] px-4',
         )}
       >
-        <IconButton
-          icon={
-            <Icon id={'bookmark-icon'} size={24} className="text-gray-40" />
-          }
-        />
-        <IconButton
-          icon={<Icon id={'share-icon'} size={24} className="text-gray-40" />}
-        />
-        <ApplyDrawer title={title} projectId={projectId} />
+        {userRole === 'HOST' ? (
+          <HostBottom projectId={projectId} />
+        ) : (
+          <GuestBottom title={title} projectId={projectId} />
+        )}
       </div>
     </main>
+  );
+};
+
+const HostBottom = ({ projectId }: { projectId: number }) => {
+  const router = useRouter();
+  return (
+    <>
+      <IconButton
+        icon={<Icon id={'bookmark-icon'} size={24} className="text-gray-40" />}
+      />
+      <IconButton
+        icon={<Icon id={'edit-icon'} size={24} className="text-gray-40" />}
+      />
+      <BottomButton
+        variant={'secondary'}
+        size={'large'}
+        label={'신청자 리스트'}
+        className="w-[222px]"
+        onClick={() => router.push(`/project-management/${projectId}`)}
+        // disabled={}
+      />
+    </>
+  );
+};
+
+const GuestBottom = ({
+  title,
+  projectId,
+}: {
+  title: string;
+  projectId: number;
+}) => {
+  return (
+    <>
+      <IconButton
+        icon={<Icon id={'bookmark-icon'} size={24} className="text-gray-40" />}
+      />
+      <IconButton
+        icon={<Icon id={'share-icon'} size={24} className="text-gray-40" />}
+      />
+      <ApplyDrawer title={title} projectId={projectId} />
+    </>
   );
 };
 
