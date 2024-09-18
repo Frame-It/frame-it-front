@@ -3,23 +3,19 @@ import { Header, HeaderLeft } from '@/components/common/header';
 import Icon from '@/components/common/icon';
 import { cn } from '@/lib/utils';
 
-const ProjectRecruitmentDetailLayout = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+const RegisterLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className={cn('flex h-screen flex-col')}>
       <Header>
         <HeaderLeft>
           <BackButton>
-            <Icon id={'back-icon'} size={32} className="text-gray-40" />
+            <Icon id={'back-icon'} size={32} className="text-gray-20" />
           </BackButton>
         </HeaderLeft>
       </Header>
-      <div className="mb-[16px] mt-[56px] h-full flex-1">{children}</div>
+      {children}
     </div>
   );
 };
 
-export default ProjectRecruitmentDetailLayout;
+export default RegisterLayout;

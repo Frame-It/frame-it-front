@@ -20,7 +20,7 @@ const ProjectRecruitmentDetailPage = () => {
   const retouchingDetails = faker.lorem.paragraph();
 
   return (
-    <div
+    <main
       className={cn(
         'flex flex-col gap-6 overflow-y-scroll px-4 pb-[29px] pt-4 text-gray-10',
       )}
@@ -72,7 +72,7 @@ const ProjectRecruitmentDetailPage = () => {
         작가
         <WriterInfo />
       </div>
-    </div>
+    </main>
   );
 };
 
