@@ -6,28 +6,33 @@ import { ApplicantList } from '@/components/project/applicant-list';
 import { PartnerItem } from '@/components/project/partner-item';
 import ProjectInfo from '@/components/project/project-info';
 import ProjectProgress from '@/components/project/project-progress';
+import ReviewDialog from '@/components/project/review-dialog';
 import { GuestProjectGuide, HostProjectGuide } from '@/constants/guide';
+import useDisclosure from '@/hooks/useDisclosure';
 import { cn } from '@/lib/utils';
 import { IApplyInfo, IProject } from '@/types/project';
 import { faker } from '@faker-js/faker/locale/ko';
+import { useRouter } from 'next/navigation';
 
 const ProjectManagementDetailPage = () => {
   const userRole: 'HOST' | 'GUEST' = 'GUEST';
 
-  // return <HostContent />;
+  return <HostContent />;
   return <GuestContent />;
 };
-
 const HostContent = () => {
-  faker.seed(123);
+  const router = useRouter();
+  const { isOpen: isReviewDialogOpen, setIsOpen: setIsReviewDialogOpen } =
+    useDisclosure(false);
 
+  faker.seed(123);
   const project: IProject = {
     id: '1',
     date: '7/31',
     time: '12:00~14:00',
     location: '서울시 종로구',
-    state: 'recruiting',
-    title: '노들섬에서 촬용해 주세요',
+    state: 'complete',
+    title: '노들섬에서 촬영해 주세요',
   };
 
   const guest: IApplyInfo & Pick<IProject, 'state'> = {
@@ -37,6 +42,16 @@ const HostContent = () => {
     content: faker.lorem.sentence(),
     state: project.state,
     partnerRole: 'GUEST',
+  };
+
+  const isReviewed = true;
+
+  const handleClickReview = () => {
+    if (isReviewed) {
+      setIsReviewDialogOpen(true); // Open the review dialog
+    } else {
+      router.push('/review-register'); // Redirect to review register page
+    }
   };
 
   return (
@@ -54,11 +69,18 @@ const HostContent = () => {
         />
       )}
       {project.state === 'complete' && (
-        <BottomButton
-          variant={'secondary'}
-          size={'large'}
-          label={'리뷰 작성하기'}
-        />
+        <>
+          <BottomButton
+            variant={'secondary'}
+            size={'large'}
+            label={'리뷰 작성하기'}
+            onClick={handleClickReview}
+          />
+          <ReviewDialog
+            isOpen={isReviewDialogOpen}
+            onOpenChange={setIsReviewDialogOpen}
+          />
+        </>
       )}
       {project.state === 'recruiting' ? (
         <ApplicantList />
