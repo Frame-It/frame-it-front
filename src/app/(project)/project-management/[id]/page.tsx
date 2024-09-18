@@ -49,9 +49,9 @@ const HostContent = () => {
 
   const handleClickReview = () => {
     if (isReviewed) {
-      setIsReviewDialogOpen(true); // Open the review dialog
+      setIsReviewDialogOpen(true);
     } else {
-      router.push('/review-register'); // Redirect to review register page
+      router.push('/review-register');
     }
   };
 
