@@ -1,10 +1,13 @@
+import useDisclosure from '@/hooks/useDisclosure';
 import { cn } from '@/lib/utils';
 import { faker } from '@faker-js/faker/locale/ko';
 import { FC, PropsWithChildren, useState } from 'react';
+import DaumPostcodeEmbed from 'react-daum-postcode';
 import BottomButton from '../common/bottom-button';
 import ConceptTag from '../common/concept-tag';
 import DatePicker from '../common/date-picker';
 import Icon from '../common/icon';
+import { Dialog, DialogContent } from '../ui/dialog';
 import { Input } from '../ui/input';
 
 const DrawerContentLayout: FC<PropsWithChildren> = ({ children }) => {
@@ -64,19 +67,46 @@ export const ConceptDrawerContent = () => {
   );
 };
 
-export const LocationDrawerContent = () => (
-  <DrawerContentLayout>
-    <div className={cn('relative h-[345px]')}>
-      <Input className={cn('h-[46px]')} placeholder="Place holder" />
-      <Icon
-        id={'search-icon'}
-        size={24}
-        className={cn('absolute right-[15px] top-[11px] text-[#7E7774]')}
-        onClick={() => console.log('search location')}
-      />
-    </div>
-  </DrawerContentLayout>
-);
+export const LocationDrawerContent = () => {
+  const { isOpen, onToggle } = useDisclosure(false);
+  const [location, setLocation] = useState();
+  const handleClickSearch = () => {
+    onToggle();
+  };
+
+  const handleComplete = (location: any) => {
+    setLocation(location.address);
+    onToggle();
+  };
+
+  return (
+    <>
+      <DrawerContentLayout>
+        <Dialog open={isOpen}>
+          <DialogContent className="h-full">
+            <DaumPostcodeEmbed
+              onComplete={handleComplete}
+              style={{ height: '100%' }}
+            />
+          </DialogContent>
+        </Dialog>
+        <div className={cn('relative h-[345px]')} onClick={handleClickSearch}>
+          <Input
+            className={cn('h-[46px]')}
+            placeholder="주소를 검색해주세요"
+            value={location}
+          />
+          <Icon
+            id={'search-icon'}
+            size={24}
+            className={cn('absolute right-[15px] top-[11px] text-[#7E7774]')}
+            onClick={() => console.log('search location')}
+          />
+        </div>
+      </DrawerContentLayout>
+    </>
+  );
+};
 
 export const DateDrawerContent = () => {
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
