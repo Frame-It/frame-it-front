@@ -12,13 +12,13 @@ export const drawerSVG = (
       <g clipPath="url(#clip0_225_8684)">
         <path
           d="M19 6L6 19"
-          stroke="#4D4744"
+          stroke="currentColor"
           strokeWidth="2"
           strokeLinecap="round"
         />
         <path
           d="M6 6L19 19"
-          stroke="#4D4744"
+          stroke="currentColor"
           strokeWidth="2"
           strokeLinecap="round"
         />

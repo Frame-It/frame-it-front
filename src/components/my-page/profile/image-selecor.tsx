@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { Input } from '@/components/ui/input';
-import Image from 'next/image';
-import { Drawer, DrawerContent } from '@/components/ui/drawer';
 import Icon from '@/components/common/icon';
+import { Drawer, DrawerContent } from '@/components/ui/drawer';
+import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import useDisclosure from '@/hooks/useDisclosure';
+import Image from 'next/image';
+import { useState } from 'react';
 
 interface IProfileImageSelectorProps {
   prevImageUrl?: string; // 이전에 업로드된 이미지 URL (있다면)
@@ -92,7 +92,7 @@ const ProfileImageSelector: React.FC<IProfileImageSelectorProps> = ({
               onClick={handleDelete}
               className="flex w-full items-center gap-x-[13px] px-[18px] py-2 text-base font-semibold leading-[135%] text-gray-20"
             >
-              <Icon id="close-icon" size={24} />
+              <Icon id="close-icon" size={24} className="text-gray-40" />
               프로필 사진 삭제하기
             </button>
           </li>

@@ -40,7 +40,7 @@ const Drawer = ({
             {onClose && (
               <DrawerClose asChild>
                 <button className="btn-primary" onClick={onClose}>
-                  <Icon id="close-icon" size={24} />
+                  <Icon id="close-icon" size={24} className="text-gray-40" />
                 </button>
               </DrawerClose>
             )}
