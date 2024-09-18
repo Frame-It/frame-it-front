@@ -17,7 +17,7 @@ import { useRouter } from 'next/navigation';
 const ProjectManagementDetailPage = () => {
   const userRole: 'HOST' | 'GUEST' = 'GUEST';
 
-  return <HostContent />;
+  // return <HostContent />;
   return <GuestContent />;
 };
 const HostContent = () => {
@@ -35,13 +35,14 @@ const HostContent = () => {
     title: '노들섬에서 촬영해 주세요',
   };
 
-  const guest: IApplyInfo & Pick<IProject, 'state'> = {
+  const guest: IApplyInfo & Pick<IProject, 'state' | 'id'> = {
     profileImage: faker.image.avatar(),
     name: faker.name.fullName(),
     applicationDate: faker.date.recent().toISOString().split('T')[0],
     content: faker.lorem.sentence(),
     state: project.state,
     partnerRole: 'GUEST',
+    id: project.id,
   };
 
   const isReviewed = true;
@@ -116,13 +117,26 @@ const GuestContent = () => {
     title: '노들섬에서 촬용해 주세요',
   };
 
-  const host: IApplyInfo & Pick<IProject, 'state'> = {
+  const host: IApplyInfo & Pick<IProject, 'state' | 'id'> = {
     profileImage: faker.image.avatar(),
     name: faker.name.fullName(),
     applicationDate: faker.date.recent().toISOString().split('T')[0],
     content: faker.lorem.sentence(),
     state: project.state,
     partnerRole: 'HOST',
+    id: project.id,
+  };
+
+  const isReviewed = true;
+  const { isOpen: isReviewDialogOpen, onToggle: toggleReviewDialog } =
+    useDisclosure(false);
+
+  const handleClickHost = () => {
+    if (isReviewed) {
+      toggleReviewDialog();
+    } else {
+      // TODO: 호스트에게 dm
+    }
   };
 
   return (
@@ -180,8 +194,14 @@ const GuestContent = () => {
             <BottomButton
               variant={'stroke'}
               size={'small'}
-              label={'호스트에게 DM하기'}
+              label={isReviewed ? '리뷰 확인하기' : '호스트에게 DM하기'}
               className="font-tag-12 max-w-[126px]"
+              onClick={handleClickHost}
+            />
+            <ReviewDialog
+              isOpen={isReviewDialogOpen}
+              onOpenChange={toggleReviewDialog}
+              name={host.name}
             />
           </div>
         </div>
@@ -215,7 +235,7 @@ const ProgressBox = ({ state }: { state: IProject['state'] }) => {
   );
 };
 
-type ApplyInfoProps = IApplyInfo & Pick<IProject, 'state'>;
+type ApplyInfoProps = IApplyInfo & Pick<IProject, 'state' | 'id'>;
 
 const ApplyInfo = (partner: ApplyInfoProps) => {
   return (

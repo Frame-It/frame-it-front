@@ -14,9 +14,15 @@ interface ReviewDialogProps {
   trigger?: React.ReactNode;
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
+  name?: string;
 }
 
-const ReviewDialog = ({ trigger, isOpen, onOpenChange }: ReviewDialogProps) => {
+const ReviewDialog = ({
+  trigger,
+  isOpen,
+  onOpenChange,
+  name,
+}: ReviewDialogProps) => {
   const tags = [
     {
       id: 1,
@@ -40,7 +46,7 @@ const ReviewDialog = ({ trigger, isOpen, onOpenChange }: ReviewDialogProps) => {
       <DialogContent className="w-[312px] gap-3 p-[18px]">
         <DialogHeader className="flex flex-row items-center justify-between space-y-0">
           <DialogTitle className="font-title-18 text-gray-20">
-            나의 리뷰
+            {name ? <span className="text-primary">{name}</span> : '나'}의 리뷰
           </DialogTitle>
           <DialogClose asChild>
             <Icon className="h-6 w-6 text-gray-40" id={'close-icon'} />
