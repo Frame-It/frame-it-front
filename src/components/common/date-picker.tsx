@@ -61,6 +61,9 @@ const DatePickerComponent: React.FC = () => {
             fixedHeight
             locale={enGB}
             renderYearContent={(year) => `${year}년`}
+            renderDayContents={(day, date) =>
+              renderDay(day, date, startDate, endDate)
+            }
             renderCustomHeader={(props) => (
               <div
                 className={cn(
@@ -90,6 +93,59 @@ const DatePickerComponent: React.FC = () => {
           />
         </div>
       )}
+    </div>
+  );
+};
+
+const renderDay = (
+  day: number,
+  date: Date,
+  startDate: Date | null,
+  endDate: Date | null,
+) => {
+  const dateStr = date.toDateString();
+  const startStr = startDate?.toDateString();
+  const endStr = endDate?.toDateString();
+  const isStart = dateStr === startStr;
+  const isEnd = dateStr === endStr;
+  const isMiddle = startDate && endDate && date < endDate && date > startDate;
+  const isOneDay = startDate && endDate && startStr === endStr;
+  return (
+    <div
+      className={cn(
+        isStart && endDate && 'pl-[3px]',
+        isEnd && startDate && 'pr-[3px]',
+        'flex-1',
+      )}
+    >
+      <div
+        className={cn(
+          !isOneDay &&
+            isStart &&
+            endDate &&
+            '-ml-[11px] -mr-[11px] rounded-l-[48px] pr-[3px]',
+          !isOneDay &&
+            isEnd &&
+            startDate &&
+            '-ml-[11px] -mr-[11px] rounded-r-[48px] pl-[3px]',
+          !isOneDay &&
+            startDate &&
+            endDate &&
+            (isStart || isMiddle || isEnd) &&
+            'flex h-[27px] flex-1 items-center justify-center bg-gray-80',
+          isMiddle && '-mx-[11px]',
+        )}
+      >
+        <span
+          className={cn(
+            'flex items-center justify-center',
+            (isEnd || (isStart && !endDate)) &&
+              'h-[23px] w-[23px] rounded-[48px] bg-gray-20 text-white',
+          )}
+        >
+          {day}
+        </span>
+      </div>
     </div>
   );
 };

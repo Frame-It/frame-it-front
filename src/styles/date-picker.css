@@ -110,45 +110,19 @@
 }
 
 .react-datepicker__day:hover {
-  /* background-color: transparent; */
+  background-color: transparent;
 }
 
-/* TODO: 날짜 선택 배경색 커스터마이즈 */
 /* 시작 날짜 스타일 */
 .react-datepicker__day--range-start {
-  border-radius: 48px 0 0 48px;
-  /* background-color: #ece9e7; */
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 /* 중간 날짜 스타일 */
 .react-datepicker__day--in-range:not(.react-datepicker__day--range-start):not(
     .react-datepicker__day--range-end
   ) {
-  /* background-color: #ece9e7; */
-  border-radius: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 /* 마지막 날짜 스타일 */
 .react-datepicker__day--range-end {
-  border-radius: 0 48px 48px 0;
-  /* background-color: #ece9e7; */
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
-
-/* 마지막 날짜 덧칠 스타일 (작은 원) */
-/* .react-datepicker__day--range-end::after {
-  content: '';
-  width: 23px;
-  height: 23px;
-  border-radius: 48px;
-  background-color: #4d4744;
-  position: absolute;
-} */
