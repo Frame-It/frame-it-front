@@ -1,3 +1,10 @@
+'use client';
+
+import BottomButton from '@/components/common/bottom-button';
+import Drawer from '@/components/common/drawer';
+import Guide from '@/components/common/guide';
+import Icon from '@/components/common/icon';
+import IconButton from '@/components/common/icon-button';
 import { TagList } from '@/components/common/tag-list';
 import {
   Carousel,
@@ -5,13 +12,18 @@ import {
   CarouselDots,
   CarouselItem,
 } from '@/components/ui/carousel';
+import { Textarea } from '@/components/ui/textarea';
+import { GuestProjectGuide } from '@/constants/guide';
+import useDisclosure from '@/hooks/useDisclosure';
 import { generateRandomImageList } from '@/lib/faker';
 import { cn } from '@/lib/utils';
 import { faker } from '@faker-js/faker/locale/ko';
 
 const ProjectRecruitmentDetailPage = () => {
+  faker.seed(101);
   const imageArr = Array.from({ length: 3 }, () => generateRandomImageList());
 
+  const projectId = 1;
   const title = faker.music.songName();
   const body = faker.lorem.sentence();
   const time = faker.date.anytime();
@@ -22,7 +34,7 @@ const ProjectRecruitmentDetailPage = () => {
   return (
     <main
       className={cn(
-        'flex flex-col gap-6 overflow-y-scroll px-4 pb-[29px] pt-4 text-gray-10',
+        'flex h-[calc(100%-64px)] flex-col gap-6 overflow-y-scroll px-4 pb-[29px] pt-4 text-gray-10',
       )}
     >
       <div className={cn('font-title-18')}>
@@ -72,7 +84,75 @@ const ProjectRecruitmentDetailPage = () => {
         작가
         <WriterInfo />
       </div>
+      <div
+        className={cn(
+          'absolute bottom-0 left-0 flex h-[64px] w-full items-center justify-center gap-[8px] px-4',
+        )}
+      >
+        <IconButton
+          icon={
+            <Icon id={'bookmark-icon'} size={24} className="text-gray-40" />
+          }
+        />
+        <IconButton
+          icon={<Icon id={'share-icon'} size={24} className="text-gray-40" />}
+        />
+        <ApplyDrawer title={title} projectId={projectId} />
+      </div>
     </main>
+  );
+};
+
+const ApplyDrawer = ({
+  title,
+  projectId,
+}: {
+  title: string;
+  projectId: number;
+}) => {
+  const { isOpen, onOpenChange, onClose } = useDisclosure(false);
+
+  return (
+    <Drawer
+      title={'지원하기'}
+      open={isOpen}
+      onOpenChange={onOpenChange}
+      onClose={onClose}
+      trigger={
+        <BottomButton
+          variant={'primary'}
+          size={'large'}
+          label={'프로젝트 신청하기'}
+          className="w-[222px]"
+          // disabled={!isNextEnabled}
+        />
+      }
+      className="pb-0"
+    >
+      <div className={cn('relative flex flex-col gap-3 pb-[74px]')}>
+        <div className="font-body-14 flex items-center gap-2 self-stretch rounded-[8px] border-[1px] border-primary p-2 px-3 text-primary">
+          {title}
+        </div>
+        <div className="flex flex-col gap-2">
+          <h1 className={cn('font-title-16 text-gray-10')}>
+            작가님께 하고싶은 말
+          </h1>
+          <Textarea placeholder="자유롭게 적어주세요." />
+        </div>
+        <Guide title="지원 안내" guides={GuestProjectGuide.general} />
+        <div
+          className={cn(
+            'absolute bottom-0 left-0 flex h-[64px] w-full items-center',
+          )}
+        >
+          <BottomButton
+            variant={'primary'}
+            size={'large'}
+            label={'신청 하기'}
+          />
+        </div>
+      </div>
+    </Drawer>
   );
 };
 

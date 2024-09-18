@@ -17,7 +17,7 @@ const ProjectRecruitmentDetailLayout = ({
           </BackButton>
         </HeaderLeft>
       </Header>
-      <div className="mb-[16px] mt-[56px] h-full flex-1">{children}</div>
+      <div className="mt-[56px] h-[calc(100%-58px)]">{children}</div>
     </div>
   );
 };
