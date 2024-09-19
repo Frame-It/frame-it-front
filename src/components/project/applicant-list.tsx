@@ -27,6 +27,7 @@ export const ApplicantList = () => {
         <div className="mt-4 flex-1 divide-y divide-gray-80">
           {applicants.map((applicant, index) => (
             <PartnerItem
+              id={applicant.name}
               key={index}
               profileImage={applicant.profileImage}
               name={applicant.name}
