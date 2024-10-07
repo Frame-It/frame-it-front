@@ -1,6 +1,7 @@
 import { cn } from '@/lib/utils';
 import { cva, VariantProps } from 'class-variance-authority';
-import * as React from 'react';
+import Link from 'next/link';
+import React from 'react';
 
 const socialButtonVariants = cva(
   `w-full h-[45px] px-[14px] flex items-center justify-center text-gray-10 text-[14px] leading-[150%] font-bold gap-x-[8px] rounded-[6px]`,
@@ -17,33 +18,33 @@ const socialButtonVariants = cva(
   },
 );
 
-export interface SocialButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof socialButtonVariants> {
-  asChild?: boolean;
+export interface ISocialButtonProps
+  extends VariantProps<typeof socialButtonVariants> {
+  href: string;
+  children: React.ReactNode;
+  className?: string;
 }
 
-const SocialButton = React.forwardRef<HTMLButtonElement, SocialButtonProps>(
-  ({ className, variant, ...props }, ref) => {
-    console.log(variant);
+const SocialButton: React.FunctionComponent<ISocialButtonProps> = ({
+  href,
+  className,
+  variant,
+  children,
+}) => {
+  return (
+    <Link
+      href={href}
+      className={cn(socialButtonVariants({ variant, className }))}
+    >
+      {variant === 'kakao' && (
+        <img src="/icon/kakao-icon.svg" alt="카카오 로고" />
+      )}
+      {variant === 'google' && (
+        <img src="/icon/google-icon.svg" alt="구글 로고" />
+      )}
+      {children}
+    </Link>
+  );
+};
 
-    return (
-      <button
-        className={cn(socialButtonVariants({ variant, className }))}
-        ref={ref}
-        {...props}
-      >
-        {variant === 'kakao' && (
-          <img src="/icon/kakao-icon.svg" alt="카카오 로고" />
-        )}
-        {variant === 'google' && (
-          <img src="/icon/google-icon.svg" alt="구글 로고" />
-        )}
-        {props.children}
-      </button>
-    );
-  },
-);
-SocialButton.displayName = 'SocialButton';
-
-export { SocialButton, socialButtonVariants };
+export default SocialButton;

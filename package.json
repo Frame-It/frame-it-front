@@ -34,6 +34,7 @@
     "@typescript-eslint/parser": "^7.16.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "cookies-next": "^4.2.1",
     "date-fns": "^3.6.0",
     "embla-carousel-react": "^8.1.7",
     "eslint-config-prettier": "^9.1.0",
