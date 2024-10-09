@@ -9,30 +9,31 @@ import {
   TabsTrigger,
   TabsTriggerProps,
 } from '@radix-ui/react-tabs';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
 type TabItem = {
   label: string;
   value: string;
+  link: string;
 };
 
 interface IFilterTabsProps {
   defaultValue: string;
-  onValueChange: (value: string) => void;
   tabsData: TabItem[];
 }
 
-const FilterTabs = ({
-  defaultValue,
-  onValueChange,
-  tabsData,
-}: IFilterTabsProps) => {
+const FilterTabs = ({ defaultValue, tabsData }: IFilterTabsProps) => {
+  const searchParams = useSearchParams();
+  const currentTab = searchParams.get('tab') || defaultValue;
+
   return (
-    <CustomTabs defaultValue={defaultValue} onValueChange={onValueChange}>
+    <CustomTabs defaultValue={currentTab as string}>
       <CustomTabsList>
         {tabsData.map((tab) => (
-          <CustomTabsTrigger key={tab.value} value={tab.value}>
-            {tab.label}
-          </CustomTabsTrigger>
+          <Link key={tab.value} href={tab.link} passHref>
+            <CustomTabsTrigger value={tab.value}>{tab.label}</CustomTabsTrigger>
+          </Link>
         ))}
       </CustomTabsList>
     </CustomTabs>
