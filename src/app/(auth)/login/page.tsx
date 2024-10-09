@@ -1,7 +1,45 @@
-import { SocialButton } from '@/components/common/social-button';
-import Link from 'next/link';
+'use client';
 
-export default function LoginPage() {
+import { useEffect } from 'react';
+import SocialButton from '@/components/common/social-button';
+import Link from 'next/link';
+import { sendCodeToBackend } from '@/service/auth-service';
+import { useRouter } from 'next/navigation';
+import { setCookie } from 'cookies-next';
+
+const KAKAO_HREF = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}&response_type=code&state=kakao`;
+const GOOGLE_HREF = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URL}&response_type=code&scope=profile email&state=google`;
+
+export default function LoginPage({
+  searchParams: { code, state },
+}: {
+  searchParams: { code: string; state: string };
+}) {
+  const router = useRouter();
+
+  useEffect(() => {
+    const authenticate = async () => {
+      if (code && state) {
+        try {
+          const data = await sendCodeToBackend(code, state);
+
+          if (!data?.signUpCompleted) {
+            setCookie('accessToken', data.accessToken);
+            router.push('/register');
+          } else {
+            setCookie('accessToken', data.accessToken);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error('Error during authentication:', error);
+          // 오류 시 에러 페이지로 이동하거나 에러 처리 가능
+        }
+      }
+    };
+
+    authenticate();
+  }, [code, router, state]);
+
   return (
     <main className="mb-[16px] mt-[56px] flex h-full flex-1 flex-col items-stretch justify-center space-y-[217px] px-[45px]">
       <section className="flex max-w-[270px] flex-col items-center justify-center space-y-6">
@@ -12,8 +50,10 @@ export default function LoginPage() {
         </p>
       </section>
       <section className="w-full">
-        <SocialButton variant="kakao">카카오 로그인</SocialButton>
-        <SocialButton variant="google" className="mt-[12px]">
+        <SocialButton href={KAKAO_HREF} variant="kakao">
+          카카오 로그인
+        </SocialButton>
+        <SocialButton href={GOOGLE_HREF} variant="google" className="mt-[12px]">
           구글 로그인
         </SocialButton>
         <Link href="/">

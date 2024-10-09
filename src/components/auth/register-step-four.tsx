@@ -8,49 +8,90 @@ import { useEffect, useState } from 'react';
 import { Button } from '../ui/button';
 import { z } from 'zod';
 import { stepFourSchema } from '@/lib/schema/user-regist-schema';
+import { checkDuplicateId, registUser } from '@/service/auth-service';
+import { useRouter } from 'next/navigation';
+import { useToast } from '@/components/ui/use-toast';
 
 interface IRegisterStepFourProps {}
 
-const RegisterStepFour: React.FunctionComponent<IRegisterStepFourProps> = (
-  props,
-) => {
+const RegisterStepFour: React.FunctionComponent<
+  IRegisterStepFourProps
+> = () => {
+  const userInfo = useUserRegisterStore((state) => state.userInfo);
   const nickname =
     useUserRegisterStore((state) => state.userInfo.nickname) ?? '';
-
   const setNickname = useUserRegisterSetNickName();
+
+  const router = useRouter();
+  const { toast } = useToast();
+
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [isDuplicate, setIsDuplicate] = useState<boolean | null>(null);
 
+  const isDisabled = isDuplicate !== false || errorMessage !== null;
+
+  // 닉네임 중복 확인 핸들러
   const handleButtonClick = async () => {
-    // 중복 확인 로직
+    if (nickname) {
+      const duplicate = await checkDuplicateId(nickname);
+      setIsDuplicate(duplicate);
+    } else {
+      setErrorMessage('닉네임을 입력해 주세요.');
+    }
   };
 
-  const handleSubmit = async () => {
-    // 가입 로직
-  };
-
+  // 닉네임 변경 핸들러
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNickname(e.target.value);
+    setIsDuplicate(null);
   };
 
-  const isDuplicate = false;
-
+  // 스킴 검증 및 에러 메시지 처리
   useEffect(() => {
     if (nickname) {
       try {
-        stepFourSchema.parse({
-          nickname,
-        });
+        stepFourSchema.parse({ nickname });
         setErrorMessage(null);
       } catch (e) {
         if (e instanceof z.ZodError) {
-          e.errors.forEach((err) => {
-            setErrorMessage(err.message);
-          });
+          setErrorMessage(e.errors[0]?.message || '잘못된 입력입니다.');
         }
       }
     }
   }, [nickname]);
+
+  // 중복 확인 결과에 따른 메시지 처리
+  useEffect(() => {
+    if (isDuplicate === true) {
+      setErrorMessage('중복된 닉네임 입니다.');
+      setSuccessMessage(null);
+    } else if (isDuplicate === false) {
+      setErrorMessage(null);
+      setSuccessMessage('사용할 수 있는 닉네임 입니다.');
+    } else {
+      setSuccessMessage(null);
+    }
+  }, [isDuplicate]);
+
+  // 가입 버튼 클릭 핸들러
+  const handleSubmit = async () => {
+    const isCompleted = await registUser(userInfo);
+
+    if (isCompleted) {
+      toast({
+        title: '환영합니다!',
+        variant: 'default',
+      });
+      router.push('/');
+    } else {
+      toast({
+        title: '일시적인 오류로 가입이 실패하였습니다!',
+        variant: 'destructive',
+      });
+      router.push('/login');
+    }
+  };
 
   return (
     <section className="px-6">
@@ -73,7 +114,11 @@ const RegisterStepFour: React.FunctionComponent<IRegisterStepFourProps> = (
             value={nickname}
             onChange={handleChange}
           />
-          <Button size="sm" className="font-tag-12 px-[12px] py-2 font-[400]">
+          <Button
+            size="sm"
+            className="font-tag-12 px-[12px] py-2 font-[400]"
+            onClick={handleButtonClick}
+          >
             중복 확인
           </Button>
         </div>
@@ -84,7 +129,12 @@ const RegisterStepFour: React.FunctionComponent<IRegisterStepFourProps> = (
           <p className="font-tag-12 mt-2 text-sub-green">{successMessage}</p>
         )}
       </div>
-      <Button size="lg" className="absolute bottom-0 left-0 w-full">
+      <Button
+        size="lg"
+        className="absolute bottom-0 left-0 w-full"
+        disabled={isDisabled}
+        onClick={handleSubmit}
+      >
         가입
       </Button>
     </section>
