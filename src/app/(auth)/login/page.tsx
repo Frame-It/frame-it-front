@@ -27,6 +27,7 @@ export default function LoginPage({
             setCookie('accessToken', data.accessToken);
             router.push('/register');
           } else {
+            setCookie('accessToken', data.accessToken);
             router.push('/');
           }
         } catch (error) {

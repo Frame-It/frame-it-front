@@ -9,6 +9,8 @@ import { Button } from '../ui/button';
 import { z } from 'zod';
 import { stepFourSchema } from '@/lib/schema/user-regist-schema';
 import { checkDuplicateId, registUser } from '@/service/auth-service';
+import { useRouter } from 'next/navigation';
+import { useToast } from '@/components/ui/use-toast';
 
 interface IRegisterStepFourProps {}
 
@@ -19,6 +21,9 @@ const RegisterStepFour: React.FunctionComponent<
   const nickname =
     useUserRegisterStore((state) => state.userInfo.nickname) ?? '';
   const setNickname = useUserRegisterSetNickName();
+
+  const router = useRouter();
+  const { toast } = useToast();
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -71,7 +76,21 @@ const RegisterStepFour: React.FunctionComponent<
 
   // 가입 버튼 클릭 핸들러
   const handleSubmit = async () => {
-    const res = await registUser(userInfo);
+    const isCompleted = await registUser(userInfo);
+
+    if (isCompleted) {
+      toast({
+        title: '환영합니다!',
+        variant: 'default',
+      });
+      router.push('/');
+    } else {
+      toast({
+        title: '일시적인 오류로 가입이 실패하였습니다!',
+        variant: 'destructive',
+      });
+      router.push('/login');
+    }
   };
 
   return (

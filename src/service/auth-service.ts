@@ -39,15 +39,13 @@ export const checkDuplicateId = async (nickname: string) => {
 export const registUser = async (userInfo: IUserRegistInfo) => {
   if (userInfo) {
     const token = getCookie('accessToken');
-
-    console.log(token);
-
     const response = await fetch(`${SERVER_URL}/users`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
+      credentials: 'include',
       body: JSON.stringify({
         identity: userInfo.role,
         name: userInfo.name,
@@ -57,6 +55,6 @@ export const registUser = async (userInfo: IUserRegistInfo) => {
       }),
     });
 
-    console.log(response);
+    return response.ok;
   }
 };
