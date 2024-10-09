@@ -1,5 +1,3 @@
-'use client';
-
 import { cn } from '@/lib/utils';
 import {
   Tabs,
@@ -10,7 +8,6 @@ import {
   TabsTriggerProps,
 } from '@radix-ui/react-tabs';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
 
 type TabItem = {
   label: string;
@@ -19,20 +16,22 @@ type TabItem = {
 };
 
 interface IFilterTabsProps {
-  defaultValue: string;
   tabsData: TabItem[];
+  currentTab: string;
 }
 
-const FilterTabs = ({ defaultValue, tabsData }: IFilterTabsProps) => {
-  const searchParams = useSearchParams();
-  const currentTab = searchParams.get('tab') || defaultValue;
-
+const FilterTabs = ({ tabsData, currentTab }: IFilterTabsProps) => {
   return (
     <CustomTabs defaultValue={currentTab as string}>
       <CustomTabsList>
         {tabsData.map((tab) => (
           <Link key={tab.value} href={tab.link} passHref>
-            <CustomTabsTrigger value={tab.value}>{tab.label}</CustomTabsTrigger>
+            <CustomTabsTrigger
+              value={tab.value}
+              data-active={currentTab === tab.value}
+            >
+              {tab.label}
+            </CustomTabsTrigger>
           </Link>
         ))}
       </CustomTabsList>

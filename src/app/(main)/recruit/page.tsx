@@ -60,7 +60,10 @@ const RecruitPage = async ({
   return (
     <div className={cn('relative h-[calc(100vh-122px)] overflow-hidden')}>
       <div className={cn('sticky z-10 bg-white')}>
-        <FilterTabs defaultValue="ALL" tabsData={tabsData} />
+        <FilterTabs
+          tabsData={tabsData}
+          currentTab={searchParams.tab ?? 'all'}
+        />
         <div className={cn('h-[46px]')}>
           <FilterDrawers />
         </div>
