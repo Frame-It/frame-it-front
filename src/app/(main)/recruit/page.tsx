@@ -1,16 +1,11 @@
-'use client';
-
 import { FilterTabs } from '@/components/common/filter-tabs';
 import FilterDrawers from '@/components/project/filter-drawers';
 import RecruitCard, {
   IRecruitCardProps,
 } from '@/components/project/recruit-card';
-import { generateRandomImageList } from '@/lib/faker';
+import { IRecruitResponse, getRecruitAnnouncements } from '@/lib/api/project';
 import { cn } from '@/lib/utils';
 import { USER_TYPE, UserValue } from '@/types/filter';
-import { faker } from '@faker-js/faker/locale/ko';
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
 
 interface ITabData {
   value: UserValue;
@@ -38,27 +33,29 @@ const tabsData: ITabData[] = [
   },
 ];
 
-const RecruitPage = () => {
-  const [tempRecruitList, setTempRecruitList] = useState<IRecruitCardProps[]>(
-    [],
-  );
-  const router = useRouter();
+const RecruitPage = async ({
+  searchParams,
+}: {
+  searchParams: { tab?: string };
+}) => {
+  const query =
+    searchParams.tab && searchParams.tab !== 'all' ? searchParams.tab : '';
 
-  useEffect(() => {
-    const imageArr = Array.from({ length: 10 }, () =>
-      generateRandomImageList(),
-    );
-    setTempRecruitList(
-      imageArr.map((img) => ({
-        imageUrl: img.url,
-        type: '모델구인',
-        title: faker.music.songName(),
-        location: faker.location.city(),
-        date: faker.date.anytime().toDateString(),
-        tagList: Array.from({ length: 3 }, () => faker.music.genre()),
-      })),
-    );
-  }, []);
+  const fetchedData = await getRecruitAnnouncements(
+    query as IRecruitResponse['recruitmentRole'],
+  );
+
+  const recruitList: IRecruitCardProps[] = fetchedData.map(
+    (item: IRecruitResponse) => ({
+      imageUrl: item.previewImageUrl,
+      type: item.recruitmentRole,
+      title: item.title,
+      location: item.spot,
+      date: new Date(item.shootingAt).toDateString(),
+      tagList: item.concepts,
+      isBookmarked: item.isBookmarked,
+    }),
+  );
 
   return (
     <div className={cn('relative h-[calc(100vh-122px)] overflow-hidden')}>
@@ -70,7 +67,7 @@ const RecruitPage = () => {
       </div>
       <div className={cn('h-[calc(100%-94px)] overflow-auto py-[19px]')}>
         <div className={cn('flex flex-col gap-[16px] px-[16px]')}>
-          {tempRecruitList.map((recruit) => (
+          {recruitList.map((recruit) => (
             <RecruitCard key={recruit.title} {...recruit} />
           ))}
         </div>

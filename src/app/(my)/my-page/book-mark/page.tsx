@@ -11,7 +11,7 @@ const BookMarkPage: React.FunctionComponent<IBookMarkPageProps> = () => {
   const bookMarkList: IRecruitCardProps[] = Array.from({ length: 10 }, () => {
     return {
       imageUrl: '/test-image.webp',
-      type: '모델구인',
+      type: 'MODEL',
       title: faker.music.songName(),
       location: faker.location.city(),
       date: faker.date.anytime().toDateString(),

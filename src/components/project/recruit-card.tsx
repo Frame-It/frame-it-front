@@ -1,11 +1,9 @@
-'use client';
-
 import { cn } from '@/lib/utils';
 import Icon from '../common/icon';
 import { TagList } from '../common/tag-list';
 
 export interface IRecruitCardProps {
-  type: '모델구인' | '작가구인';
+  type: 'MODEL' | 'PHOTOGRAPHER';
   imageUrl: string;
   title: string;
   location: string;
@@ -16,7 +14,7 @@ export interface IRecruitCardProps {
 const RecruitCard = (props: IRecruitCardProps) => {
   return (
     <div className={cn('flex h-full w-full gap-[12px]')}>
-      <Thumbnail imageUrl={props.imageUrl} />
+      <Thumbnail imageUrl={props.imageUrl} type={props.type} />
       <div
         className={cn(
           'flex w-[calc(100%-160px)] flex-[1_1_0] flex-col justify-between gap-[5px]',
@@ -61,22 +59,27 @@ const RecruitCard = (props: IRecruitCardProps) => {
   );
 };
 
-const Thumbnail = ({ imageUrl }: { imageUrl: string }) => {
+const Thumbnail = ({
+  imageUrl,
+  type,
+}: {
+  imageUrl: string;
+  type: 'MODEL' | 'PHOTOGRAPHER';
+}) => {
   return (
     <div className={cn('relative h-[120px] w-[120px] flex-shrink-0')}>
       <img
         src={imageUrl}
         alt={'recruit image'}
-        // fill
         sizes="120px"
-        className={cn('rounded-[5.565px] object-cover')}
+        className={cn('h-full w-full rounded-[5.565px] object-cover')}
       />
       <div
         className={cn(
           'absolute left-[6px] top-[6px] inline-flex items-center justify-center gap-[8px] rounded-[4px] border border-[#FFF] bg-[rgba(32,26,23,0.70)] px-[7px] py-[5px] text-[10px] leading-normal text-[#FFF]',
         )}
       >
-        모델구인
+        {type === 'MODEL' ? '모델' : '작가'}구인
       </div>
     </div>
   );
