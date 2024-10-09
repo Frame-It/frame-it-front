@@ -7,7 +7,7 @@ export interface IProject {
   time: string;
 }
 
-type UserRole = 'HOST' | 'GUEST';
+export type UserRole = 'HOST' | 'GUEST';
 
 export interface IApplyInfo {
   profileImage: string;

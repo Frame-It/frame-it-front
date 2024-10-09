@@ -16,6 +16,7 @@ interface IDrawerProps {
   onClose?: () => void;
   trigger: ReactNode;
   onOpenChange?: (open: boolean) => void;
+  className?: string;
 }
 
 const Drawer = ({
@@ -25,6 +26,7 @@ const Drawer = ({
   trigger,
   onOpenChange,
   children,
+  className,
 }: IDrawerProps & PropsWithChildren) => {
   return (
     <UiDrawer open={open} onOpenChange={onOpenChange}>
@@ -48,7 +50,9 @@ const Drawer = ({
         ) : (
           <DrawerTitle />
         )}
-        <div className={cn('px-4 pb-4', !title && 'pt-4')}>{children}</div>
+        <div className={cn('px-4 pb-4', !title && 'pt-4', className)}>
+          {children}
+        </div>
       </DrawerContent>
     </UiDrawer>
   );
