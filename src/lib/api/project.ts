@@ -22,6 +22,7 @@ export const getRecruitAnnouncements = async (
     headers: {
       Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`, // TODO: accessToken 처리
     },
+    cache: 'no-store',
   });
   const data = await res.json();
   if (res.status !== 200) {
@@ -36,6 +37,7 @@ export const getRecruitAnnouncement = async (id: number) => {
     headers: {
       Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`, // TODO: accessToken 처리
     },
+    cache: 'no-store',
   });
   const data = await res.json();
   if (res.status !== 200) {

@@ -10,46 +10,18 @@ import { GuestProjectGuide } from '@/constants/guide';
 import useDisclosure from '@/hooks/useDisclosure';
 import { deleteRecruitBookmark, postRecruitBookmark } from '@/lib/api/project';
 import { cn } from '@/lib/utils';
+import { useRecruitStore } from '@/store/recruit-store';
 import Link from 'next/link';
-import { FC, useState } from 'react';
+import { FC } from 'react';
 
 interface HostBottomProps {
   projectId: number;
-  isBookmarked: boolean;
 }
 
-export const HostBottom: FC<HostBottomProps> = ({
-  projectId,
-  isBookmarked,
-}) => {
-  const [bookmarked, setBookmarked] = useState(isBookmarked);
-
-  const handleBookmarkToggle = async () => {
-    try {
-      if (bookmarked) {
-        await deleteRecruitBookmark(projectId);
-      } else {
-        await postRecruitBookmark(projectId);
-      }
-      setBookmarked(!bookmarked);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+export const HostBottom: FC<HostBottomProps> = ({ projectId }) => {
   return (
     <>
-      <IconButton
-        icon={
-          <Icon
-            id={'bookmark-icon'}
-            size={24}
-            className="text-gray-40"
-            stroke={'#7E7774'}
-            fill={bookmarked ? '#7E7774' : 'white'}
-            onClick={handleBookmarkToggle}
-          />
-        }
-      />
+      <BookmarkButton projectId={projectId} />
       <IconButton
         icon={<Icon id={'edit-icon'} size={24} className="text-gray-40" />}
       />
@@ -74,9 +46,7 @@ export const GuestBottom = ({
 }) => {
   return (
     <>
-      <IconButton
-        icon={<Icon id={'bookmark-icon'} size={24} className="text-gray-40" />}
-      />
+      <BookmarkButton projectId={projectId} />
       <IconButton
         icon={<Icon id={'share-icon'} size={24} className="text-gray-40" />}
       />
@@ -135,5 +105,44 @@ const ApplyDrawer = ({
         </div>
       </div>
     </Drawer>
+  );
+};
+
+interface BookmarkButtonProps {
+  projectId: number;
+}
+
+const BookmarkButton: FC<BookmarkButtonProps> = ({ projectId }) => {
+  const { recruits, toggleBookmark } = useRecruitStore();
+  const isBookmarked = recruits.find(
+    (recruit) => recruit.id === projectId,
+  )?.isBookmarked;
+
+  const handleBookmarkToggle = async () => {
+    try {
+      if (isBookmarked) {
+        await deleteRecruitBookmark(projectId);
+      } else {
+        await postRecruitBookmark(projectId);
+      }
+      toggleBookmark(projectId);
+    } catch (error) {
+      console.error('Failed to toggle bookmark:', error);
+    }
+  };
+
+  return (
+    <IconButton
+      icon={
+        <Icon
+          id={'bookmark-icon'}
+          size={24}
+          className="text-gray-40"
+          stroke={'#7E7774'}
+          fill={isBookmarked ? '#7E7774' : 'white'}
+          onClick={handleBookmarkToggle}
+        />
+      }
+    />
   );
 };

@@ -2,8 +2,8 @@
 
 import { deleteRecruitBookmark, postRecruitBookmark } from '@/lib/api/project';
 import { cn } from '@/lib/utils';
+import { useRecruitStore } from '@/store/recruit-store';
 import Link from 'next/link';
-import { useState } from 'react';
 import Icon from '../common/icon';
 import { TagList } from '../common/tag-list';
 
@@ -19,9 +19,17 @@ export interface IRecruitCardProps {
 }
 
 const RecruitCard = (props: IRecruitCardProps) => {
-  const [isBookmarked, setIsBookmarked] = useState(props.isBookmarked);
+  const { recruits, toggleBookmark } = useRecruitStore((state) => ({
+    recruits: state.recruits,
+    toggleBookmark: state.toggleBookmark,
+  }));
 
-  const handleBookmarkToggle = async () => {
+  const isBookmarked = recruits.find(
+    (recruit) => recruit.id === props.id,
+  )?.isBookmarked;
+
+  const handleBookmarkToggle = async (event: React.MouseEvent) => {
+    event.preventDefault();
     try {
       const projectId = props.id;
       if (isBookmarked) {
@@ -29,7 +37,7 @@ const RecruitCard = (props: IRecruitCardProps) => {
       } else {
         await postRecruitBookmark(projectId);
       }
-      setIsBookmarked(!isBookmarked);
+      toggleBookmark(projectId);
     } catch (error) {
       console.error('Failed to toggle bookmark:', error);
     }

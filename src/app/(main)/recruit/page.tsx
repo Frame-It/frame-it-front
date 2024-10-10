@@ -1,17 +1,7 @@
-import { FilterTabs } from '@/components/common/filter-tabs';
-import FilterDrawers from '@/components/project/filter-drawers';
-import RecruitCard, {
-  IRecruitCardProps,
-} from '@/components/project/recruit-card';
+import { IRecruitCardProps } from '@/components/project/recruit-card';
+import RecruitClient from '@/components/project/recruitment/recruit-client';
 import { IRecruitResponse, getRecruitAnnouncements } from '@/lib/api/project';
-import { cn } from '@/lib/utils';
-import { USER_TYPE, UserValue } from '@/types/filter';
-
-interface ITabData {
-  value: UserValue;
-  label: string;
-  link: string;
-}
+import { ITabData, USER_TYPE } from '@/types/filter';
 
 const RECRUIT = '구인';
 
@@ -59,24 +49,11 @@ const RecruitPage = async ({
   );
 
   return (
-    <div className={cn('relative h-[calc(100vh-122px)] overflow-hidden')}>
-      <div className={cn('sticky z-10 bg-white')}>
-        <FilterTabs
-          tabsData={tabsData}
-          currentTab={searchParams.tab ?? 'all'}
-        />
-        <div className={cn('h-[46px]')}>
-          <FilterDrawers />
-        </div>
-      </div>
-      <div className={cn('h-[calc(100%-94px)] overflow-auto py-[19px]')}>
-        <div className={cn('flex flex-col gap-[16px] px-[16px]')}>
-          {recruitList.map((recruit) => (
-            <RecruitCard key={recruit.title} {...recruit} />
-          ))}
-        </div>
-      </div>
-    </div>
+    <RecruitClient
+      recruitList={recruitList}
+      currentTab={searchParams.tab ?? 'all'}
+      tabsData={tabsData}
+    />
   );
 };
 

@@ -103,7 +103,7 @@ const ProjectRecruitmentDetailPage: FC<
         )}
       >
         {userRole === 'HOST' ? (
-          <HostBottom projectId={projectId} isBookmarked={isBookmarked} />
+          <HostBottom projectId={projectId} />
         ) : (
           <GuestBottom title={title} projectId={projectId} />
         )}

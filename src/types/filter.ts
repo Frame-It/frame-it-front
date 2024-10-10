@@ -6,3 +6,9 @@ export const USER_TYPE: Record<UserValue, UserLabel> = {
   MODEL: '모델',
   PHOTOGRAPHER: '작가',
 };
+
+export interface ITabData {
+  value: UserValue;
+  label: string;
+  link: string;
+}
