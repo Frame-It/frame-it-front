@@ -24,9 +24,13 @@ const RecruitClient = ({
   const { recruits, setRecruits } = useRecruitStore();
 
   useEffect(() => {
-    if (recruits.length > 0) return;
-    setRecruits(recruitList);
-  }, [recruitList, setRecruits]);
+    setRecruits(
+      recruitList.map((recruit) => {
+        const existingRecruit = recruits.find((r) => r.id === recruit.id);
+        return existingRecruit ? existingRecruit : recruit;
+      }),
+    );
+  }, [recruitList, setRecruits, currentTab]);
 
   return (
     <div className={cn('relative h-[calc(100vh-122px)] overflow-hidden')}>
