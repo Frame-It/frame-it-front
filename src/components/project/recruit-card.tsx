@@ -2,6 +2,7 @@
 
 import { deleteRecruitBookmark, postRecruitBookmark } from '@/lib/api/project';
 import { cn } from '@/lib/utils';
+import Link from 'next/link';
 import { useState } from 'react';
 import Icon from '../common/icon';
 import { TagList } from '../common/tag-list';
@@ -35,7 +36,10 @@ const RecruitCard = (props: IRecruitCardProps) => {
   };
 
   return (
-    <div className={cn('flex h-full w-full gap-[12px]')}>
+    <Link
+      className={cn('flex h-full w-full gap-[12px]')}
+      href={`/project-recruitment/${props.id}`}
+    >
       <Thumbnail imageUrl={props.imageUrl} type={props.type} />
       <div
         className={cn(
@@ -80,7 +84,7 @@ const RecruitCard = (props: IRecruitCardProps) => {
           <TagList tags={props.tagList} size={'small'} />
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

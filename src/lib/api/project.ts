@@ -31,6 +31,19 @@ export const getRecruitAnnouncements = async (
   return data;
 };
 
+export const getRecruitAnnouncement = async (id: number) => {
+  const res = await fetch(`${API_URL}/projects/${id}/announcement`, {
+    headers: {
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`, // TODO: accessToken 처리
+    },
+  });
+  const data = await res.json();
+  if (res.status !== 200) {
+    console.error(data.message);
+  }
+  return data;
+};
+
 export const postRecruitBookmark = async (id: number) => {
   try {
     await fetch(`${API_URL}/projects/${id}/bookmarks`, {
