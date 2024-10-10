@@ -1,17 +1,39 @@
+'use client';
+
+import { deleteRecruitBookmark, postRecruitBookmark } from '@/lib/api/project';
 import { cn } from '@/lib/utils';
+import { useState } from 'react';
 import Icon from '../common/icon';
 import { TagList } from '../common/tag-list';
 
 export interface IRecruitCardProps {
+  id: number;
   type: 'MODEL' | 'PHOTOGRAPHER';
   imageUrl: string;
   title: string;
   location: string;
   date: string;
   tagList: string[];
+  isBookmarked: boolean;
 }
 
 const RecruitCard = (props: IRecruitCardProps) => {
+  const [isBookmarked, setIsBookmarked] = useState(props.isBookmarked);
+
+  const handleBookmarkToggle = async () => {
+    try {
+      const projectId = props.id;
+      if (isBookmarked) {
+        await deleteRecruitBookmark(projectId);
+      } else {
+        await postRecruitBookmark(projectId);
+      }
+      setIsBookmarked(!isBookmarked);
+    } catch (error) {
+      console.error('Failed to toggle bookmark:', error);
+    }
+  };
+
   return (
     <div className={cn('flex h-full w-full gap-[12px]')}>
       <Thumbnail imageUrl={props.imageUrl} type={props.type} />
@@ -36,7 +58,10 @@ const RecruitCard = (props: IRecruitCardProps) => {
 
           <Icon
             id="bookmark-icon"
-            className="h-[24px] w-[24px] flex-shrink-0"
+            className={`h-[24px] w-[24px] flex-shrink-0`}
+            fill={isBookmarked ? '#7e7774' : '#ffffff'}
+            stroke="#7e7774"
+            onClick={handleBookmarkToggle} // Attach click handler
           />
         </div>
         <div

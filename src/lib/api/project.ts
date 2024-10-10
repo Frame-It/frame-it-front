@@ -18,7 +18,43 @@ export const getRecruitAnnouncements = async (
   const queryParam = recruitmentRole
     ? `?recruitmentRole=${recruitmentRole}`
     : '';
-  const res = await fetch(`${API_URL}/projects/announcement${queryParam}`);
-  const data: IRecruitResponse[] = await res.json();
+  const res = await fetch(`${API_URL}/projects/announcement${queryParam}`, {
+    headers: {
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`, // TODO: accessToken 처리
+    },
+  });
+  const data = await res.json();
+  if (res.status !== 200) {
+    console.error(data.message);
+    return []; // TODO: error handling
+  }
   return data;
+};
+
+export const postRecruitBookmark = async (id: number) => {
+  try {
+    await fetch(`${API_URL}/projects/${id}/bookmarks`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`, // TODO: accessToken 처리
+        'Content-Type': 'application/json',
+      },
+    });
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const deleteRecruitBookmark = async (id: number) => {
+  try {
+    await fetch(`${API_URL}/projects/${id}/bookmarks`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`, // TODO: accessToken 처리
+        'Content-Type': 'application/json',
+      },
+    });
+  } catch (e) {
+    console.error(e);
+  }
 };

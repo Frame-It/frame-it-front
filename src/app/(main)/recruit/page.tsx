@@ -47,6 +47,7 @@ const RecruitPage = async ({
 
   const recruitList: IRecruitCardProps[] = fetchedData.map(
     (item: IRecruitResponse) => ({
+      id: item.id,
       imageUrl: item.previewImageUrl,
       type: item.recruitmentRole,
       title: item.title,

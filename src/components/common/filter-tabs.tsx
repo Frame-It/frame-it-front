@@ -22,14 +22,11 @@ interface IFilterTabsProps {
 
 const FilterTabs = ({ tabsData, currentTab }: IFilterTabsProps) => {
   return (
-    <CustomTabs defaultValue={currentTab as string}>
+    <CustomTabs value={currentTab}>
       <CustomTabsList>
         {tabsData.map((tab) => (
           <Link key={tab.value} href={tab.link} passHref>
-            <CustomTabsTrigger
-              value={tab.value}
-              data-active={currentTab === tab.value}
-            >
+            <CustomTabsTrigger value={tab.value.toLowerCase()}>
               {tab.label}
             </CustomTabsTrigger>
           </Link>

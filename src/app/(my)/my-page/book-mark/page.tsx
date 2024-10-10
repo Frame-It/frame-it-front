@@ -8,16 +8,21 @@ import { faker } from '@faker-js/faker';
 interface IBookMarkPageProps {}
 
 const BookMarkPage: React.FunctionComponent<IBookMarkPageProps> = () => {
-  const bookMarkList: IRecruitCardProps[] = Array.from({ length: 10 }, () => {
-    return {
-      imageUrl: '/test-image.webp',
-      type: 'MODEL',
-      title: faker.music.songName(),
-      location: faker.location.city(),
-      date: faker.date.anytime().toDateString(),
-      tagList: Array.from({ length: 3 }, () => faker.music.genre()),
-    };
-  });
+  const bookMarkList: IRecruitCardProps[] = Array.from(
+    { length: 10 },
+    (_, i) => {
+      return {
+        id: i,
+        imageUrl: '/test-image.webp',
+        type: 'MODEL',
+        title: faker.music.songName(),
+        location: faker.location.city(),
+        date: faker.date.anytime().toDateString(),
+        tagList: Array.from({ length: 3 }, () => faker.music.genre()),
+        isBookmarked: true,
+      };
+    },
+  );
   return (
     <main
       className={cn(
