@@ -2,6 +2,8 @@ import BottomNavbar from '@/components/common/bottom-navbar';
 import { Header, HeaderLeft, HeaderRight } from '@/components/common/header';
 import Icon from '@/components/common/icon';
 import NotificationButton from '@/components/common/notification-button';
+import { Button } from '@/components/ui/button';
+import { cookies } from 'next/headers';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -10,6 +12,9 @@ export default function Layout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = cookies();
+  const token = cookieStore.get('accessToken');
+
   return (
     <div className="pb-[66px] pt-[58px]">
       <Header>
@@ -27,9 +32,18 @@ export default function Layout({
           </Link>
         </HeaderLeft>
         <HeaderRight>
-          <NotificationButton>
-            <Icon id="notification-icon" className="h-6 w-6" />
-          </NotificationButton>
+          {token ? (
+            <NotificationButton>
+              <Icon id="notification-icon" className="h-6 w-6" />
+            </NotificationButton>
+          ) : (
+            <Link
+              href="/login"
+              className="rounded-full bg-gray-20 px-[10px] py-[6px] text-[14px] text-white"
+            >
+              로그인
+            </Link>
+          )}
         </HeaderRight>
       </Header>
       {children}

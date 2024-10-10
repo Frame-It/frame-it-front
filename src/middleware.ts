@@ -1,6 +1,6 @@
 // middleware.ts
+import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
-// import { getCookie } from 'cookies-next';
 
 export function middleware(request: NextRequest) {
   const requestHeaders = new Headers(request.headers);
@@ -19,6 +19,15 @@ export function middleware(request: NextRequest) {
   //     ? NextResponse.next()
   //     : NextResponse.redirect(new URL('/', request.url));
   // }
+
+  if (url.pathname === '/my-page') {
+    const cookieStore = cookies();
+    const token = cookieStore.get('accessToken');
+
+    return token?.value
+      ? NextResponse.next()
+      : NextResponse.redirect(new URL('/login', request.url));
+  }
 
   return NextResponse.next({
     request: {

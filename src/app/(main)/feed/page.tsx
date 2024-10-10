@@ -4,6 +4,8 @@ import { getFeeds } from '@/lib/api/portfolio';
 export default async function FeedPage() {
   const feeds = await getFeeds();
 
+  console.log(feeds);
+
   return (
     <>
       <div className="h-[calc(100dvh-58px-63px-48px)] overflow-y-auto px-[16px] pb-2">
