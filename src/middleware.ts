@@ -13,13 +13,6 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  // if (url.pathname === '/login') {
-  //   const token = getCookie('accessToken');
-  //   return !token
-  //     ? NextResponse.next()
-  //     : NextResponse.redirect(new URL('/', request.url));
-  // }
-
   if (url.pathname === '/my-page') {
     const cookieStore = cookies();
     const token = cookieStore.get('accessToken');
