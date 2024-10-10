@@ -3,9 +3,9 @@
 import BottomButton from '@/components/common/bottom-button';
 import Guide from '@/components/common/guide';
 import { ApplicantList } from '@/components/project/applicant-list';
-import { PartnerItem } from '@/components/project/partner-item';
+import ApplyInfo from '@/components/project/management/apply-info';
+import ProgressBox from '@/components/project/management/progress-box';
 import ProjectInfo from '@/components/project/project-info';
-import ProjectProgress from '@/components/project/project-progress';
 import ReviewDialog from '@/components/project/review-dialog';
 import { GuestProjectGuide, HostProjectGuide } from '@/constants/guide';
 import useDisclosure from '@/hooks/useDisclosure';
@@ -17,8 +17,8 @@ import { useRouter } from 'next/navigation';
 const ProjectManagementDetailPage = () => {
   const userRole: 'HOST' | 'GUEST' = 'GUEST';
 
-  // return <HostContent />;
-  return <GuestContent />;
+  return <HostContent />;
+  // return <GuestContent />;
 };
 const HostContent = () => {
   const router = useRouter();
@@ -219,31 +219,6 @@ const GuestContent = () => {
           collapsible
         />
       </div>
-    </div>
-  );
-};
-
-const ProgressBox = ({ state }: { state: IProject['state'] }) => {
-  return (
-    <div
-      className={cn(
-        'flex h-[80px] justify-center rounded-[8px] border border-gray-80 pt-[26px]',
-      )}
-    >
-      <ProjectProgress state={state} />
-    </div>
-  );
-};
-
-type ApplyInfoProps = IApplyInfo & Pick<IProject, 'state' | 'id'>;
-
-const ApplyInfo = (partner: ApplyInfoProps) => {
-  return (
-    <div className={cn('flex w-full flex-col gap-3')}>
-      <h1 className={cn('font-title-18 text-gray-20')}>
-        {partner.partnerRole === 'HOST' ? '신청정보' : '프로젝트 게스트'}
-      </h1>
-      <PartnerItem {...partner} />
     </div>
   );
 };
