@@ -39,14 +39,7 @@ export const getRecruitAnnouncements = async (
     ? `?recruitmentRole=${recruitmentRole}`
     : '';
 
-  const accessToken = await getAuthorization();
-
-  let headers: HeadersInit = {};
-  if (accessToken) {
-    headers = {
-      Authorization: accessToken,
-    };
-  }
+  const headers = await getAuthHeader();
 
   const res = await fetch(`${API_URL}/projects/announcement${queryParam}`, {
     headers,
@@ -61,14 +54,7 @@ export const getRecruitAnnouncements = async (
 };
 
 export const getRecruitAnnouncement = async (id: number) => {
-  const accessToken = await getAuthorization();
-
-  let headers: HeadersInit = {};
-  if (accessToken) {
-    headers = {
-      Authorization: accessToken,
-    };
-  }
+  const headers = await getAuthHeader();
 
   const res = await fetch(`${API_URL}/projects/${id}/announcement`, {
     headers,
@@ -82,14 +68,7 @@ export const getRecruitAnnouncement = async (id: number) => {
 };
 
 export const postAnnouncement = async (formData: FormData) => {
-  const accessToken = await getAuthorization();
-
-  let headers: HeadersInit = {};
-  if (accessToken) {
-    headers = {
-      Authorization: accessToken,
-    };
-  }
+  const headers = await getAuthHeader();
 
   try {
     const response = await fetch(`${API_URL}/projects`, {
@@ -111,14 +90,7 @@ export const postAnnouncement = async (formData: FormData) => {
 };
 
 export const postRecruitBookmark = async (id: number) => {
-  const accessToken = await getAuthorization();
-
-  let headers: HeadersInit = {};
-  if (accessToken) {
-    headers = {
-      Authorization: accessToken,
-    };
-  }
+  const headers = await getAuthHeader();
 
   try {
     await fetch(`${API_URL}/projects/${id}/bookmarks`, {
@@ -134,14 +106,7 @@ export const postRecruitBookmark = async (id: number) => {
 };
 
 export const deleteRecruitBookmark = async (id: number) => {
-  const accessToken = await getAuthorization();
-
-  let headers: HeadersInit = {};
-  if (accessToken) {
-    headers = {
-      Authorization: accessToken,
-    };
-  }
+  const headers = await getAuthHeader();
 
   try {
     await fetch(`${API_URL}/projects/${id}/bookmarks`, {
