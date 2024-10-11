@@ -1,8 +1,8 @@
 import useDisclosure from '@/hooks/useDisclosure';
 import { cn } from '@/lib/utils';
 import { faker } from '@faker-js/faker/locale/ko';
-import Icon from '../common/icon';
-import { PartnerItem } from './partner-item';
+import Icon from '../../common/icon';
+import { PartnerItem } from '../partner-item';
 
 export const ApplicantList = () => {
   const { isOpen, onToggle } = useDisclosure(false);

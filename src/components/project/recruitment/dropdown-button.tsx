@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import Icon from '../common/icon';
+import Icon from '../../common/icon';
 
 interface IDropdownButtonProps {
   label: string;
