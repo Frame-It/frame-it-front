@@ -1,5 +1,6 @@
 'use client';
 
+import { IProjectConcept } from '@/constants/project';
 import { deleteRecruitBookmark, postRecruitBookmark } from '@/lib/api/project';
 import { cn } from '@/lib/utils';
 import { useRecruitStore } from '@/store/recruit-store';
@@ -14,7 +15,7 @@ export interface IRecruitCardProps {
   title: string;
   location: string;
   date: string;
-  tagList: string[];
+  tagList: IProjectConcept[];
   isBookmarked: boolean;
 }
 

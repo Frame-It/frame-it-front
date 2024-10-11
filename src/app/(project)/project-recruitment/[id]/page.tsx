@@ -9,6 +9,7 @@ import {
   CarouselDots,
   CarouselItem,
 } from '@/components/ui/carousel';
+import { IProjectConcept, PROJECT_CONCEPTS } from '@/constants/project';
 import { getRecruitAnnouncement } from '@/lib/api/project';
 import { cn } from '@/lib/utils';
 import { FC } from 'react';
@@ -35,7 +36,6 @@ const ProjectRecruitmentDetailPage: FC<
     retouchingDescription,
     host,
     conceptPhotoUrls,
-    isBookmarked,
   } = projectData;
 
   return (
@@ -61,7 +61,14 @@ const ProjectRecruitmentDetailPage: FC<
       <div className={cn('font-title-18')}>
         촬영 컨셉
         <div className={cn('py-2')}>
-          {<TagList tags={concepts} size={'medium'} />}
+          {
+            <TagList
+              tags={concepts.map((conceptId: string) =>
+                PROJECT_CONCEPTS.find((v) => v.id === conceptId),
+              )}
+              size={'medium'}
+            />
+          }
         </div>
         <Carousel>
           <CarouselContent>
@@ -94,7 +101,8 @@ const ProjectRecruitmentDetailPage: FC<
           nickname={host.nickname}
           profileImageUrl={host.profileImageUrl}
           description={host.description}
-          concepts={concepts}
+          // TODO: host의 concepts 필요
+          concepts={[]}
         />
       </div>
       <div
@@ -117,7 +125,7 @@ interface WriterInfoProps {
   nickname: string;
   profileImageUrl: string | null;
   description: string;
-  concepts: string[];
+  concepts: IProjectConcept[];
 }
 
 const WriterInfo: FC<WriterInfoProps> = ({
@@ -140,7 +148,7 @@ const WriterInfo: FC<WriterInfoProps> = ({
       <div className="flex flex-col items-center justify-center gap-[10px] self-stretch">
         <div className="font-body-14">{description}</div>
         <div>
-          <TagList tags={concepts} size={'medium'} className="gap-[4px]" />
+          <TagList tags={[]} size={'medium'} className="gap-[4px]" />
         </div>
       </div>
     </section>

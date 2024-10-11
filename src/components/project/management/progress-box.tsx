@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils';
 import { IProject } from '@/types/project';
-import ProjectProgress from '../project-progress';
+import ProjectProgress from './project-progress';
 
 const ProgressBox = ({ state }: { state: IProject['state'] }) => {
   return (

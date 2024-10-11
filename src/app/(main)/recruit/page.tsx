@@ -1,5 +1,6 @@
 import { IRecruitCardProps } from '@/components/project/recruit-card';
 import RecruitClient from '@/components/project/recruitment/recruit-client';
+import { PROJECT_CONCEPTS } from '@/constants/project';
 import { IRecruitResponse, getRecruitAnnouncements } from '@/lib/api/project';
 import { ITabData, USER_TYPE } from '@/types/filter';
 
@@ -43,7 +44,9 @@ const RecruitPage = async ({
       title: item.title,
       location: item.spot,
       date: new Date(item.shootingAt).toDateString(),
-      tagList: item.concepts,
+      tagList: item.concepts.map((v) =>
+        PROJECT_CONCEPTS.find((concept) => concept.id === v),
+      ),
       isBookmarked: item.isBookmarked,
     }),
   );

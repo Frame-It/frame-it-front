@@ -1,3 +1,4 @@
+import { IProjectConcept } from '@/constants/project';
 import { cn } from '@/lib/utils';
 
 export const TagList = ({
@@ -5,7 +6,7 @@ export const TagList = ({
   size,
   className,
 }: {
-  tags: string[];
+  tags: IProjectConcept[];
   size: 'medium' | 'small';
   className?: string;
 }) => {
@@ -17,8 +18,8 @@ export const TagList = ({
         className,
       )}
     >
-      {tags.map((tag: string, index: number) => (
-        <Tag key={index} label={tag} size={size} />
+      {tags.map((tag: IProjectConcept) => (
+        <Tag key={tag.id} label={tag.label} size={size} />
       ))}
     </div>
   );

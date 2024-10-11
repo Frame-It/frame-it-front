@@ -1,10 +1,10 @@
 'use client';
 
 import { FilterTabs } from '@/components/common/filter-tabs';
-import FilterDrawers from '@/components/project/filter-drawers';
 import RecruitCard, {
   IRecruitCardProps,
 } from '@/components/project/recruit-card';
+import FilterDrawers from '@/components/project/recruitment/filter-drawers';
 import { cn } from '@/lib/utils';
 import { useRecruitStore } from '@/store/recruit-store';
 import { ITabData } from '@/types/filter';

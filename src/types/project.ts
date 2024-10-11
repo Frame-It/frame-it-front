@@ -8,6 +8,9 @@ export interface IProject {
 }
 
 export type UserRole = 'HOST' | 'GUEST';
+export type ProfessionRole = 'MODEL' | 'PHOTOGRAPHER';
+export type TimeOption = 'MORNING' | 'AFTERNOON' | 'TO_BE_DISCUSSED';
+export type LocationType = 'INDOOR' | 'OUTDOOR';
 
 export interface IApplyInfo {
   profileImage: string;

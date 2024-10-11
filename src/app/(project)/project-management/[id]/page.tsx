@@ -2,7 +2,7 @@
 
 import BottomButton from '@/components/common/bottom-button';
 import Guide from '@/components/common/guide';
-import { ApplicantList } from '@/components/project/applicant-list';
+import { ApplicantList } from '@/components/project/management/applicant-list';
 import ApplyInfo from '@/components/project/management/apply-info';
 import ProgressBox from '@/components/project/management/progress-box';
 import ProjectInfo from '@/components/project/project-info';

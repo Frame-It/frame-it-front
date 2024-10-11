@@ -6,21 +6,18 @@ import IconButton from '@/components/common/icon-button';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { useProjectRegisterStore } from '@/store/project-regist-store';
+import { LocationType, ProfessionRole, TimeOption } from '@/types/project';
 import React, { useRef, useState } from 'react';
 import '../../../styles/input.css';
 
 const StepOne: React.FC = () => {
   const { setProjectInfo, nextStep } = useProjectRegisterStore();
-  const [type, setType] = useState<'모델' | '작가' | null>(null);
+  const [type] = useState<ProfessionRole | null>('PHOTOGRAPHER'); // TODO: 본인 타입으로 고정
   const [projectName, setProjectName] = useState<string>('');
   const [date, setDate] = useState<string>('');
   const [time, setTime] = useState<string>('');
-  const [period, setPeriod] = useState<'오전' | '오후' | '시간협의' | null>(
-    null,
-  );
-  const [locationType, setLocationType] = useState<'실내' | '야외' | null>(
-    null,
-  );
+  const [period, setPeriod] = useState<TimeOption | null>(null);
+  const [locationType, setLocationType] = useState<LocationType | null>(null);
   const [address, setAddress] = useState<string>('');
   const [detail, setDetail] = useState<string>('');
 
@@ -52,12 +49,12 @@ const StepOne: React.FC = () => {
 
   const handleDateClick = () => {
     if (dateInputRef.current) {
-      dateInputRef.current.showPicker(); // 시간을 선택하는 창을 띄움
+      dateInputRef.current.showPicker();
     }
   };
   const handleTimeClick = () => {
     if (timeInputRef.current) {
-      timeInputRef.current.showPicker(); // 시간을 선택하는 창을 띄움
+      timeInputRef.current.showPicker();
     }
   };
 
@@ -72,17 +69,15 @@ const StepOne: React.FC = () => {
           <label className={cn('font-title-16')}>구인</label>
           <div className={cn('flex gap-2')}>
             <BottomButton
-              variant={type === '모델' ? 'secondary' : 'stroke'}
+              variant={type === 'MODEL' ? 'secondary' : 'stroke'}
               size={'middle'}
               label={'모델'}
-              onClick={() => setType('모델')}
               className="border-gray-60"
             />
             <BottomButton
-              variant={type === '작가' ? 'secondary' : 'stroke'}
+              variant={type === 'PHOTOGRAPHER' ? 'secondary' : 'stroke'}
               size={'middle'}
               label={'작가'}
-              onClick={() => setType('작가')}
               className="border-gray-60"
             />
           </div>
@@ -149,24 +144,24 @@ const StepOne: React.FC = () => {
             </div>
             <div className={cn('flex gap-2')}>
               <BottomButton
-                variant={period === '오전' ? 'secondary' : 'stroke'}
+                variant={period === 'MORNING' ? 'secondary' : 'stroke'}
                 size={'middle'}
                 label={'오전'}
-                onClick={() => setPeriod('오전')}
+                onClick={() => setPeriod('MORNING')}
                 className="border-gray-60"
               />
               <BottomButton
-                variant={period === '오후' ? 'secondary' : 'stroke'}
+                variant={period === 'AFTERNOON' ? 'secondary' : 'stroke'}
                 size={'middle'}
                 label={'오후'}
-                onClick={() => setPeriod('오후')}
+                onClick={() => setPeriod('AFTERNOON')}
                 className="border-gray-60"
               />
               <BottomButton
-                variant={period === '시간협의' ? 'secondary' : 'stroke'}
+                variant={period === 'TO_BE_DISCUSSED' ? 'secondary' : 'stroke'}
                 size={'middle'}
                 label={'시간협의'}
-                onClick={() => setPeriod('시간협의')}
+                onClick={() => setPeriod('TO_BE_DISCUSSED')}
                 className="border-gray-60"
               />
             </div>
@@ -182,17 +177,17 @@ const StepOne: React.FC = () => {
           <div className={cn('flex flex-col gap-2')}>
             <div className={cn('flex gap-2')}>
               <BottomButton
-                variant={locationType === '실내' ? 'secondary' : 'stroke'}
+                variant={locationType === 'INDOOR' ? 'secondary' : 'stroke'}
                 size={'middle'}
                 label={'실내'}
-                onClick={() => setLocationType('실내')}
+                onClick={() => setLocationType('INDOOR')}
                 className="border-gray-60"
               />
               <BottomButton
-                variant={locationType === '야외' ? 'secondary' : 'stroke'}
+                variant={locationType === 'OUTDOOR' ? 'secondary' : 'stroke'}
                 size={'middle'}
                 label={'야외'}
-                onClick={() => setLocationType('야외')}
+                onClick={() => setLocationType('OUTDOOR')}
                 className="border-gray-60"
               />
             </div>

@@ -13,3 +13,8 @@ export const PROJECT_CONCEPTS = [
   { label: '케이팝', id: 'PC-012' },
   { label: '코스프레', id: 'PC-013' },
 ];
+
+export type IProjectConcept = {
+  label: string;
+  id: string;
+};

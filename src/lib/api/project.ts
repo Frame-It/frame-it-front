@@ -1,5 +1,12 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
+const getAuthorization = async () => {
+  const { cookies } = await import('next/headers');
+  const accessToken = cookies().get('accessToken')?.value;
+  if (accessToken) return `Bearer ${accessToken}`;
+  return null;
+};
+
 export interface IRecruitResponse {
   id: number;
   previewImageUrl: string;
@@ -18,10 +25,18 @@ export const getRecruitAnnouncements = async (
   const queryParam = recruitmentRole
     ? `?recruitmentRole=${recruitmentRole}`
     : '';
+
+  const accessToken = await getAuthorization();
+
+  let headers: HeadersInit = {};
+  if (accessToken) {
+    headers = {
+      Authorization: accessToken,
+    };
+  }
+
   const res = await fetch(`${API_URL}/projects/announcement${queryParam}`, {
-    headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`, // TODO: accessToken 처리
-    },
+    headers,
     cache: 'no-store',
   });
   const data = await res.json();
@@ -33,10 +48,17 @@ export const getRecruitAnnouncements = async (
 };
 
 export const getRecruitAnnouncement = async (id: number) => {
+  const accessToken = await getAuthorization();
+
+  let headers: HeadersInit = {};
+  if (accessToken) {
+    headers = {
+      Authorization: accessToken,
+    };
+  }
+
   const res = await fetch(`${API_URL}/projects/${id}/announcement`, {
-    headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`, // TODO: accessToken 처리
-    },
+    headers,
     cache: 'no-store',
   });
   const data = await res.json();
@@ -46,13 +68,51 @@ export const getRecruitAnnouncement = async (id: number) => {
   return data;
 };
 
+export const postAnnouncement = async (formData: FormData) => {
+  const accessToken = await getAuthorization();
+
+  let headers: HeadersInit = {};
+  if (accessToken) {
+    headers = {
+      Authorization: accessToken,
+    };
+  }
+
+  try {
+    const response = await fetch(`${API_URL}/projects`, {
+      method: 'POST',
+      body: formData,
+      headers,
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const result = await response.json();
+    return result;
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
+};
+
 export const postRecruitBookmark = async (id: number) => {
+  const accessToken = await getAuthorization();
+
+  let headers: HeadersInit = {};
+  if (accessToken) {
+    headers = {
+      Authorization: accessToken,
+    };
+  }
+
   try {
     await fetch(`${API_URL}/projects/${id}/bookmarks`, {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`, // TODO: accessToken 처리
         'Content-Type': 'application/json',
+        ...headers,
       },
     });
   } catch (e) {
@@ -61,12 +121,21 @@ export const postRecruitBookmark = async (id: number) => {
 };
 
 export const deleteRecruitBookmark = async (id: number) => {
+  const accessToken = await getAuthorization();
+
+  let headers: HeadersInit = {};
+  if (accessToken) {
+    headers = {
+      Authorization: accessToken,
+    };
+  }
+
   try {
     await fetch(`${API_URL}/projects/${id}/bookmarks`, {
       method: 'DELETE',
       headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`, // TODO: accessToken 처리
         'Content-Type': 'application/json',
+        ...headers,
       },
     });
   } catch (e) {

@@ -6,7 +6,13 @@ import 'react-datepicker/dist/react-datepicker.css';
 import '../../styles/date-picker.css';
 import Icon from './icon';
 
-const DatePickerComponent: React.FC = () => {
+interface DatePickerComponentProps {
+  onDateChange: (startDate: Date | null, endDate: Date | null) => void;
+}
+
+const DatePickerComponent: React.FC<DatePickerComponentProps> = ({
+  onDateChange,
+}) => {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -15,6 +21,7 @@ const DatePickerComponent: React.FC = () => {
     const [start, end] = dates;
     setStartDate(start);
     setEndDate(end);
+    onDateChange(start, end);
   };
 
   const displayDate = () => {
