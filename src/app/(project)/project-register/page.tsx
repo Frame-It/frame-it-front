@@ -1,7 +1,9 @@
 'use client';
 
+import Complete from '@/components/project/write/complete';
 import { Progress } from '@/components/ui/progress';
 import { useProjectRegisterStore } from '@/store/project-regist-store';
+import { useSearchParams } from 'next/navigation';
 import { Suspense, lazy } from 'react';
 
 const StepOne = lazy(() => import('@/components/project/write/step-one'));
@@ -10,6 +12,16 @@ const StepTwo = lazy(() => import('@/components/project/write/step-two'));
 export default function ProjectWritePage() {
   const currentStep = useProjectRegisterStore((state) => state.currentStep);
   const maxStep = useProjectRegisterStore((state) => state.maxStep);
+  const projectName = useProjectRegisterStore(
+    (state) => state.projectInfo.projectName,
+  );
+
+  const searchParams = useSearchParams();
+  const isComplete = searchParams.get('complete') === 'true';
+
+  if (isComplete) {
+    return <Complete title={projectName} />;
+  }
 
   return (
     <>
