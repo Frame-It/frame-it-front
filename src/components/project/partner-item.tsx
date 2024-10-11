@@ -1,16 +1,16 @@
 import useDisclosure from '@/hooks/useDisclosure';
-import { IApplyInfo, IProject } from '@/types/project';
+import { IApplyInfo, IProject } from '@/types/project.type';
 import BottomButton from '../common/bottom-button';
 import ReviewDialog from './review-dialog';
 
-type PartnerProps = IApplyInfo & Pick<IProject, 'state' | 'id'>;
+type PartnerProps = IApplyInfo & Pick<IProject, 'status' | 'id'>;
 
 export const PartnerItem: React.FunctionComponent<PartnerProps> = ({
   profileImage,
   name,
   applicationDate,
   content,
-  state,
+  status,
   partnerRole,
   id,
 }) => {
@@ -35,7 +35,7 @@ export const PartnerItem: React.FunctionComponent<PartnerProps> = ({
         {partnerRole === 'HOST' ? (
           <GuestPartnerButton />
         ) : (
-          <HostPartnerButtons state={state} name={name} id={id} />
+          <HostPartnerButtons status={status} name={name} id={id} />
         )}
       </div>
     </div>
@@ -43,7 +43,7 @@ export const PartnerItem: React.FunctionComponent<PartnerProps> = ({
 };
 
 const HostPartnerButtons = ({
-  state,
+  status,
   id: projectId,
   name,
 }: Partial<PartnerProps>) => {
@@ -51,7 +51,7 @@ const HostPartnerButtons = ({
 
   return (
     <div className="flex gap-[6px]">
-      {state === 'complete' ? (
+      {status === 'COMPLETED' ? (
         <>
           <BottomButton
             variant={'stroke'}
@@ -71,7 +71,7 @@ const HostPartnerButtons = ({
           className="font-tag-12 max-w-none flex-1"
         />
       )}
-      {state === 'recruiting' && (
+      {status === 'RECRUITING' && (
         <BottomButton
           variant="secondary"
           size="small"

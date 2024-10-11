@@ -2,7 +2,7 @@
 
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
-import { IProject } from '@/types/project'; // Importing the Project type
+import { IProject } from '@/types/project.type';
 import { useRouter } from 'next/navigation';
 
 interface ProjectItemProps {
@@ -31,26 +31,26 @@ const ProjectListItem: React.FC<ProjectItemProps> = ({
           {isMine && <MyBadge />}
           <div className="font-body-14 flex items-center leading-[150%] text-gray-40">
             <span className='after:mx-2 after:content-["|"]'>
-              {project.location}
+              {project.spot}
             </span>
             <span className='after:mx-2 after:content-["|"]'>
-              {project.date}
+              {project.shootingAt.split('T')[0]}
             </span>
-            <span>{project.time}</span>
+            <span>{project.shootingAt.split('T')[1].slice(0, -3)}</span>
           </div>
         </div>
       </div>
       <Badge
         className={cn(
           'h-[22px] whitespace-nowrap bg-white px-[9px] text-xs leading-[150%] hover:bg-white',
-          project.state === 'recruiting' && 'border-sub-green text-sub-green',
-          project.state === 'inProgress' && 'border-sub-blue text-sub-blue',
-          project.state === 'complete' && 'border-primary text-primary',
+          project.status === 'RECRUITING' && 'border-sub-green text-sub-green',
+          project.status === 'IN_PROGRESS' && 'border-sub-blue text-sub-blue',
+          project.status === 'COMPLETED' && 'border-primary text-primary',
         )}
       >
-        {project.state === 'recruiting' && '모집중'}
-        {project.state === 'inProgress' && '진행중'}
-        {project.state === 'complete' && '완료'}
+        {project.status === 'RECRUITING' && '모집중'}
+        {project.status === 'IN_PROGRESS' && '진행중'}
+        {project.status === 'COMPLETED' && '완료'}
       </Badge>
     </li>
   );

@@ -1,82 +1,20 @@
-import ManagementTabs from '@/components/project/management-tabs';
+import ManagementTabs from '@/components/project/management/management-tabs';
 import ProjectList from '@/components/project/project-list';
+import { getUserProjects } from '@/lib/api/project';
 import { cn } from '@/lib/utils';
-import { faker } from '@faker-js/faker';
+import { IProject } from '@/types/project.type';
 
-const ProjectManagementListPage = () => {
+const ProjectManagementListPage = async () => {
+  const { nickname, projects }: { nickname: string; projects: IProject[] } =
+    await getUserProjects();
+
+  console.log(projects);
+
   return (
     <div className="flex h-full flex-col overflow-hidden">
       <ManagementTabs />
       <div className={cn('flex h-[calc(100%-37px)] flex-1 flex-col p-4')}>
-        <ProjectList
-          // projectList={[]}
-          projectList={[
-            {
-              id: faker.string.uuid(),
-              date: '7/31',
-              time: '12:00~14:00',
-              location: '서울시 종로구',
-              state: 'recruiting',
-              title: '노들섬에서 촬용해 주세요',
-            },
-            {
-              id: faker.string.uuid(),
-              date: '7/31',
-              time: '12:00~14:00',
-              location: '서울시 종로구',
-              state: 'recruiting',
-              title: '노들섬에서 촬용해 주세요',
-            },
-            {
-              id: faker.string.uuid(),
-              date: '7/31',
-              time: '12:00~14:00',
-              location: '서울시 종로구',
-              state: 'recruiting',
-              title: '노들섬에서 촬용해 주세요',
-            },
-            {
-              id: faker.string.uuid(),
-              date: '7/31',
-              time: '12:00~14:00',
-              location: '서울시 종로구',
-              state: 'recruiting',
-              title: '노들섬에서 촬용해 주세요',
-            },
-            {
-              id: faker.string.uuid(),
-              date: '7/31',
-              time: '12:00~14:00',
-              location: '서울시 종로구',
-              state: 'recruiting',
-              title: '노들섬에서 촬용해 주세요',
-            },
-            {
-              id: faker.string.uuid(),
-              date: '7/31',
-              time: '12:00~14:00',
-              location: '서울시 종로구',
-              state: 'inProgress',
-              title: '노들섬에서 촬용해 주세요',
-            },
-            {
-              id: faker.string.uuid(),
-              date: '7/31',
-              time: '12:00~14:00',
-              location: '서울시 종로구',
-              state: 'inProgress',
-              title: '노들섬에서 촬용해 주세요',
-            },
-            {
-              id: faker.string.uuid(),
-              date: '7/31',
-              time: '12:00~14:00',
-              location: '서울시 종로구',
-              state: 'complete',
-              title: '노들섬에서 촬용해 주세요',
-            },
-          ]}
-        />
+        <ProjectList projectList={projects} />
       </div>
     </div>
   );

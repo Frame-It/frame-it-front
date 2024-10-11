@@ -1,7 +1,7 @@
 import { PROJECT_CONCEPTS } from '@/constants/project';
 import useDisclosure from '@/hooks/useDisclosure';
 import { cn } from '@/lib/utils';
-import { LocationType, TimeOption } from '@/types/project';
+import { LocationType, TimeOption } from '@/types/project.type';
 import { useRouter } from 'next/navigation';
 import { FC, useState } from 'react';
 import BottomButton from '../../common/bottom-button';

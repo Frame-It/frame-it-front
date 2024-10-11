@@ -6,7 +6,7 @@ import IconButton from '@/components/common/icon-button';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { useProjectRegisterStore } from '@/store/project-regist-store';
-import { LocationType, ProfessionRole, TimeOption } from '@/types/project';
+import { LocationType, ProfessionRole, TimeOption } from '@/types/project.type';
 import React, { useRef, useState } from 'react';
 import '../../../styles/input.css';
 

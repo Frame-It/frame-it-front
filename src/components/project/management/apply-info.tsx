@@ -1,8 +1,8 @@
 import { PartnerItem } from '@/components/project/partner-item';
 import { cn } from '@/lib/utils';
-import { IApplyInfo, IProject } from '@/types/project';
+import { IActiveProject, IApplyInfo } from '@/types/project.type';
 
-type ApplyInfoProps = IApplyInfo & Pick<IProject, 'state' | 'id'>;
+type ApplyInfoProps = IApplyInfo & Pick<IActiveProject, 'status' | 'id'>;
 
 const ApplyInfo = (partner: ApplyInfoProps) => {
   return (

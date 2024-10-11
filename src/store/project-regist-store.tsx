@@ -1,4 +1,4 @@
-import { LocationType, ProfessionRole, TimeOption } from '@/types/project';
+import { LocationType, ProfessionRole, TimeOption } from '@/types/project.type';
 import { create } from 'zustand';
 
 interface IProjectRegistInfo {

@@ -7,6 +7,19 @@ const getAuthorization = async () => {
   return null;
 };
 
+const getAuthHeader = async () => {
+  const accessToken = await getAuthorization();
+
+  let headers: HeadersInit = {};
+  if (accessToken) {
+    headers = {
+      Authorization: accessToken,
+    };
+  }
+
+  return headers;
+};
+
 export interface IRecruitResponse {
   id: number;
   previewImageUrl: string;
@@ -141,4 +154,19 @@ export const deleteRecruitBookmark = async (id: number) => {
   } catch (e) {
     console.error(e);
   }
+};
+
+export const getUserProjects = async () => {
+  const headers = await getAuthHeader();
+
+  const res = await fetch(`${API_URL}/users/projects`, {
+    headers,
+    cache: 'no-store',
+  });
+  const data = await res.json();
+  if (res.status !== 200) {
+    console.error(data.message);
+  }
+  console.log(data);
+  return data;
 };

@@ -5,9 +5,9 @@ import ConceptTag from '@/components/common/concept-tag';
 import Guide from '@/components/common/guide';
 import ProjectInfo from '@/components/project/project-info';
 import { AutosizeTextarea } from '@/components/ui/auto-size-textarea';
+import { PROJECT_CONCEPTS } from '@/constants/project';
 import { cn } from '@/lib/utils';
-import { IProject } from '@/types/project';
-import { faker } from '@faker-js/faker/locale/ko';
+import { IProject } from '@/types/project.type';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
@@ -20,28 +20,24 @@ const ReviewRegisterPage = () => {
 };
 
 const Register = () => {
-  faker.seed(111);
-  const project: IProject = {
-    id: '1',
-    date: '7/31',
-    time: '12:00~14:00',
-    location: '서울시 종로구',
-    state: 'recruiting',
+  const project: Omit<IProject, 'timeOption' | 'isHost' | 'status'> = {
+    id: 1,
+    shootingAt: '7/31T12:00:00',
+    // time: '12:00~14:00',
+    spot: '서울시 종로구',
     title: '노들섬에서 촬용해 주세요',
   };
-  const tags = Array.from({ length: 8 }, (_, index) => ({
-    id: index,
-    label: faker.lorem.sentence().slice(0, 8),
-  }));
-  const [selectedTags, setSelectedTags] = useState<number[]>([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
-  const toggleTag = (id: number) => {
+  const toggleTag = (id: string) => {
     setSelectedTags((prevSelectedTags) =>
       prevSelectedTags.includes(id)
         ? prevSelectedTags.filter((tagId) => tagId !== id)
         : [...prevSelectedTags, id],
     );
   };
+
+  const handleComplete = () => {};
 
   return (
     <div className="relative flex h-full flex-col p-4">
@@ -57,7 +53,7 @@ const Register = () => {
               'flex flex-wrap content-start items-start gap-2 self-stretch',
             )}
           >
-            {tags.map((tag) => (
+            {PROJECT_CONCEPTS.map((tag) => (
               <ConceptTag
                 key={tag.id}
                 id={tag.id}
@@ -95,7 +91,12 @@ const Register = () => {
         className="absolute bottom-0 left-0 flex h-[64px] w-full items-center px-4"
         href={'?complete=true'}
       >
-        <BottomButton variant={'primary'} size={'large'} label={'작성완료'} />
+        <BottomButton
+          variant={'primary'}
+          size={'large'}
+          label={'작성완료'}
+          onClick={handleComplete}
+        />
       </Link>
     </div>
   );
