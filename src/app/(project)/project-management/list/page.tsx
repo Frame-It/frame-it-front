@@ -8,8 +8,6 @@ const ProjectManagementListPage = async () => {
   const { nickname, projects }: { nickname: string; projects: IProject[] } =
     await getUserProjects();
 
-  console.log(projects);
-
   return (
     <div className="flex h-full flex-col overflow-hidden">
       <ManagementTabs />
