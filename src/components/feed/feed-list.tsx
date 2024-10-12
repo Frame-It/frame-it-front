@@ -37,8 +37,6 @@ const FeedList: React.FunctionComponent<IFeedListProps> = ({ role }) => {
     }
   }, [inView, fetchNextPage, hasNextPage]);
 
-  console.log(feedData);
-
   return (
     <section ref={ref} className="mx-auto h-full w-full">
       {feedData ? (

@@ -41,7 +41,6 @@ export const postPortfolio = async (data: any) => {
   if (res.ok) {
     return true;
   }
-  const result = await res.json();
 
   return false;
 };
