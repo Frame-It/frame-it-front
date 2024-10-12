@@ -1,4 +1,4 @@
-import { IProject } from '@/types/project';
+import { IProject } from '@/types/project.type';
 import BottomButton from '../common/bottom-button';
 import Icon from '../common/icon';
 import ProjectListItem from './project-list-item';

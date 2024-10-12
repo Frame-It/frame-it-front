@@ -1,14 +1,15 @@
+import { LocationType, ProfessionRole, TimeOption } from '@/types/project.type';
 import { create } from 'zustand';
 
 interface IProjectRegistInfo {
-  type: '모델' | '작가';
+  type: ProfessionRole;
   projectName: string;
   shootingDate: {
     date: string;
     time: string;
-    period: '오전' | '오후' | '시간협의';
+    period: TimeOption;
   };
-  location: { type: '실내' | '야외'; address: string; detail: string };
+  location: { type: LocationType; address: string; detail: string };
   conceptTags: string[];
   photos: File[] | null;
   description: string;
@@ -31,10 +32,10 @@ export const useProjectRegisterStore = create<ProjectRegisterState>((set) => ({
   currentStep: 1,
   maxStep: 2,
   projectInfo: {
-    type: '모델',
+    type: 'PHOTOGRAPHER',
     projectName: '',
-    shootingDate: { date: '', time: '', period: '오전' },
-    location: { type: '실내', address: '', detail: '' },
+    shootingDate: { date: '', time: '', period: 'MORNING' },
+    location: { type: 'INDOOR', address: '', detail: '' },
     conceptTags: [],
     photos: null,
     description: '',

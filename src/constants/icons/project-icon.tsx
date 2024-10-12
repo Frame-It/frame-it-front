@@ -99,19 +99,19 @@ export const projectSVG = (
     <symbol
       id="bookmark-icon"
       viewBox="0 0 24 24"
-      fill="none"
+      fill="currentFill"
       xmlns="http://www.w3.org/2000/svg"
     >
       <g clipPath="url(#clip0_2195_8160)">
         <path
           d="M12 4H8.22222C6.99492 4 6 4.99492 6 6.22222V17.7556C6 18.6753 7.05346 19.1968 7.7848 18.6392L11.3263 15.9389C11.7242 15.6355 12.2758 15.6355 12.6737 15.9389L16.2152 18.6392C16.9465 19.1968 18 18.6753 18 17.7556V6.22222C18 4.99492 17.0051 4 15.7778 4H12Z"
-          stroke="currentColor"
+          stroke="currentStroke"
           strokeWidth="2"
         />
       </g>
       <defs>
         <clipPath id="clip0_2195_8160">
-          <rect width="24" height="24" fill="white" />
+          <rect width="24" height="24" fill="currentFill" />
         </clipPath>
       </defs>
     </symbol>

@@ -9,30 +9,29 @@ import {
   TabsTrigger,
   TabsTriggerProps,
 } from '@radix-ui/react-tabs';
+import Link from 'next/link';
 
 type TabItem = {
   label: string;
   value: string;
+  link: string;
 };
 
 interface IFilterTabsProps {
-  defaultValue: string;
-  onValueChange: (value: string) => void;
   tabsData: TabItem[];
+  currentTab: string;
 }
 
-const FilterTabs = ({
-  defaultValue,
-  onValueChange,
-  tabsData,
-}: IFilterTabsProps) => {
+const FilterTabs = ({ tabsData, currentTab }: IFilterTabsProps) => {
   return (
-    <CustomTabs defaultValue={defaultValue} onValueChange={onValueChange}>
+    <CustomTabs value={currentTab}>
       <CustomTabsList>
         {tabsData.map((tab) => (
-          <CustomTabsTrigger key={tab.value} value={tab.value}>
-            {tab.label}
-          </CustomTabsTrigger>
+          <Link key={tab.value} href={tab.link} passHref>
+            <CustomTabsTrigger value={tab.value.toLowerCase()}>
+              {tab.label}
+            </CustomTabsTrigger>
+          </Link>
         ))}
       </CustomTabsList>
     </CustomTabs>

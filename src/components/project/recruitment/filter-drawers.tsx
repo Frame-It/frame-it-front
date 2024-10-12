@@ -2,13 +2,13 @@
 
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
-import Drawer from '../common/drawer';
-import Icon from '../common/icon';
+import Drawer from '../../common/drawer';
+import Icon from '../../common/icon';
 import {
+  AddressDrawerContent,
   ConceptDrawerContent,
   DateDrawerContent,
   LocationDrawerContent,
-  PlaceDrawerContent,
 } from './drawer-content';
 import DropdownButton from './dropdown-button';
 
@@ -19,7 +19,7 @@ const filterOptions = {
   },
   location: {
     label: '지역',
-    component: LocationDrawerContent,
+    component: AddressDrawerContent,
   },
   date: {
     label: '촬영일시',
@@ -27,18 +27,15 @@ const filterOptions = {
   },
   place: {
     label: '촬영장소',
-    component: PlaceDrawerContent,
+    component: LocationDrawerContent,
   },
 } as const;
 
 type FilterType = keyof typeof filterOptions;
 
 const FilterDrawers = () => {
+  // TODO: 필터 초기화
   const [openFilter, setOpenFilter] = useState<FilterType | null>(null);
-
-  const openDrawer = (filter: FilterType) => {
-    setOpenFilter(filter);
-  };
 
   const onOpenChange = (open: boolean, filter: FilterType) => {
     setOpenFilter(open ? filter : null);
@@ -72,7 +69,7 @@ const FilterDrawers = () => {
             onClose={() => setOpenFilter(null)}
             trigger={<DropdownButton key={key} label={label} />}
           >
-            <Component />
+            <Component onClose={() => setOpenFilter(null)} />
           </Drawer>
         ),
       )}
