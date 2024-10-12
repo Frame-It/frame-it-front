@@ -42,7 +42,59 @@ export const postPortfolio = async (data: any) => {
     return true;
   }
   const result = await res.json();
-  console.log('Result', result);
 
   return false;
+};
+
+export const getFeeds = async ({
+  pageParam = 0,
+  role,
+}: {
+  pageParam: number;
+  role: string;
+}) => {
+  if (role === 'all') {
+    const res = await fetch(`${API_URL}/portfolios?page=${pageParam}&size=10`, {
+      method: 'GET',
+      cache: 'no-store',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const data = await res.json();
+    return data;
+  }
+
+  if (role === 'model') {
+    const res = await fetch(
+      `${API_URL}/model/portfolios?page=${pageParam}&size=10`,
+      {
+        method: 'GET',
+        cache: 'no-store',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+
+    const data = await res.json();
+    return data;
+  }
+
+  if (role === 'author') {
+    const res = await fetch(
+      `${API_URL}/author/portfolios?page=${pageParam}&size=10`,
+      {
+        method: 'GET',
+        cache: 'no-store',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+
+    const data = await res.json();
+    return data;
+  }
 };

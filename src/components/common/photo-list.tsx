@@ -1,14 +1,12 @@
 'use client';
 
-import Image from 'next/image';
 import { Badge } from '../ui/badge';
 import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
-import { Feed } from '@/types/portfolio';
-import FeedList from '../feed/feed-list';
+import { IFeed } from '@/types/portfolio';
 
 interface IPhotoListProps {
-  imageList: Feed[];
+  imageList: IFeed[];
   isNavigate?: boolean;
   isFeed?: boolean;
 }
@@ -54,7 +52,6 @@ const PhotoList: React.FunctionComponent<IPhotoListProps> = ({
                 >
                   {feed.identity === 'MODEL' ? '모델' : '작가'}
                 </Badge>
-
                 {/* {feed.title ? (
                   <img
                     src="/png/certification-mark.png"

@@ -1,4 +1,4 @@
-export interface Feed {
+export interface IFeed {
   id: number;
   title: string;
   userId: number;
@@ -8,7 +8,7 @@ export interface Feed {
   userName: string;
 }
 
-interface Pageable {
+interface IPageable {
   pageNumber: number;
   pageSize: number;
   sort: {
@@ -21,11 +21,11 @@ interface Pageable {
   unpaged: boolean;
 }
 
-export interface PortfolioResponse {
+export interface IPortfolioResponse {
   totalPages: number;
   totalElements: number;
   size: number;
-  content: Feed[];
+  content: IFeed[];
   number: number;
   sort: {
     empty: boolean;
@@ -35,6 +35,6 @@ export interface PortfolioResponse {
   first: boolean;
   last: boolean;
   numberOfElements: number;
-  pageable: Pageable;
+  pageable: IPageable;
   empty: boolean;
 }
