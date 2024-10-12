@@ -1,0 +1,142 @@
+.react-datepicker {
+  width: 100%;
+  height: 100%;
+  padding-top: 22px;
+  padding-bottom: 22px;
+  border: 1.314px solid #b4ada9;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+}
+
+.react-datepicker__header {
+  display: flex;
+  flex-direction: column;
+  background: none;
+  border: none;
+  height: 51.79px;
+  padding: 0;
+  gap: 23.79px;
+}
+
+.react-datepicker__navigation {
+}
+
+.react-datepicker__navigation--previous {
+}
+
+.react-datepicker__navigation--next {
+}
+
+.react-datepicker__month-container {
+  font-family: Roboto;
+
+  width: 100%;
+  height: 260px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 27.589px;
+}
+
+.react-datepicker__month {
+  display: grid;
+  row-gap: 18px;
+}
+
+.react-datepicker__week {
+  width: 100%;
+  display: flex;
+  gap: 22px;
+  /* justify-content: space-between; */
+}
+
+.react-datepicker__day-names {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 10px; /* 100% of 10px */
+  color: rgba(60, 60, 67, 0.6);
+  text-align: center;
+  font-feature-settings:
+    'liga' off,
+    'clig' off;
+  height: fit-content;
+  gap: 20px;
+}
+
+.react-datepicker__day-name {
+  text-align: center;
+  line-height: 10px; /* 100% of 10px */
+  color: rgba(60, 60, 67, 0.6);
+  font-feature-settings:
+    'liga' off,
+    'clig' off;
+  height: 10px;
+  width: fit-content;
+  margin: 0;
+}
+
+.react-datepicker__day--today,
+.react-datepicker__day--keyboard-selected,
+.react-datepicker__day--in-selecting-range:not(
+    .react-datepicker__day--in-range,
+    .react-datepicker__month-text--in-range,
+    .react-datepicker__quarter-text--in-range,
+    .react-datepicker__year-text--in-range
+  ) {
+  background: none;
+}
+
+.react-datepicker__day {
+  color: #201a17;
+  text-align: center;
+  font-feature-settings:
+    'liga' off,
+    'clig' off;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 12px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 14px;
+  height: 12px;
+
+  margin: 0;
+}
+
+.react-datepicker__day--outside-month {
+  color: var(--Gray-70, #cdc8c6);
+  text-align: center;
+  font-feature-settings:
+    'liga' off,
+    'clig' off;
+
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 100%;
+}
+
+.react-datepicker__day:hover {
+  background-color: transparent;
+}
+
+/* 시작 날짜 스타일 */
+.react-datepicker__day--range-start {
+}
+
+/* 중간 날짜 스타일 */
+.react-datepicker__day--in-range:not(.react-datepicker__day--range-start):not(
+    .react-datepicker__day--range-end
+  ) {
+}
+
+/* 마지막 날짜 스타일 */
+.react-datepicker__day--range-end {
+}
