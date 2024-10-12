@@ -5,6 +5,8 @@ import './globals.css';
 import SvgSymbols from '@/components/common/svg-symbols';
 import { Toaster } from '@/components/ui/toaster';
 import localFont from 'next/font/local';
+import ReactQueryProvider from '@/providers/react-query-provider';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 export const metadata: Metadata = {
   manifest: '/manifest.json',
@@ -32,8 +34,12 @@ export default function RootLayout({
     <html lang="ko">
       <body className={cn(pretendard.className, 'overflow-hidden')}>
         <div className="mx-auto max-w-[360px] overflow-x-hidden">
-          {children}
+          <ReactQueryProvider>
+            {children}
+            <ReactQueryDevtools />
+          </ReactQueryProvider>
         </div>
+
         <Toaster />
         <SvgSymbols />
       </body>
