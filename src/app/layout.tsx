@@ -1,12 +1,8 @@
-import { cn } from '@/lib/utils';
 import type { Metadata, Viewport } from 'next';
+import { Inter } from 'next/font/google';
 import './globals.css';
 
-import SvgSymbols from '@/components/common/svg-symbols';
-import { Toaster } from '@/components/ui/toaster';
-import localFont from 'next/font/local';
-import ReactQueryProvider from '@/providers/react-query-provider';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   manifest: '/manifest.json',
@@ -18,31 +14,14 @@ export const viewport: Viewport = {
   themeColor: '#FFFFFF',
 };
 
-const pretendard = localFont({
-  src: '../fonts/PretendardVariable.woff2',
-  display: 'swap',
-  weight: '45 920',
-  variable: '--font-pretendard',
-});
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
-      <body className={cn(pretendard.className, 'overflow-hidden')}>
-        <div className="mx-auto max-w-[360px] overflow-x-hidden">
-          <ReactQueryProvider>
-            {children}
-            <ReactQueryDevtools />
-          </ReactQueryProvider>
-        </div>
-
-        <Toaster />
-        <SvgSymbols />
-      </body>
+    <html lang="en">
+      <body className={inter.className}>{children}</body>
     </html>
   );
 }

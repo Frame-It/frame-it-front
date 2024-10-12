@@ -13,21 +13,6 @@ const withPWA = withPWAInit({
   },
 });
 
-const nextConfig = {
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'picsum.photos',
-        pathname: '/*/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'avatars.githubusercontent.com',
-        pathname: '/u/**',
-      },
-    ],
-  },
-};
+const nextConfig = {};
 
 export default withPWA(nextConfig);

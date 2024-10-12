@@ -40,7 +40,3 @@ next-env.d.ts
 /public/sw.js
 /public/workbox-7144475a.js
 /public/workbox-7144475a.js.map
-
-#env
-.env
-.env.local
