@@ -1,7 +1,10 @@
 import { IRecruitCardProps } from '@/components/project/recruit-card';
 import RecruitClient from '@/components/project/recruitment/recruit-client';
 import { PROJECT_CONCEPTS } from '@/constants/project';
-import { IRecruitResponse, getRecruitAnnouncements } from '@/lib/api/project';
+import {
+  IRecruitResponse,
+  getRecruitAnnouncements,
+} from '@/lib/api/project/project-recruitment';
 import { ITabData, USER_TYPE } from '@/types/filter';
 
 const RECRUIT = '구인';

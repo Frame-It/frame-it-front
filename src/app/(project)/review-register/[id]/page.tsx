@@ -9,21 +9,29 @@ import { PROJECT_CONCEPTS } from '@/constants/project';
 import { cn } from '@/lib/utils';
 import { IProject } from '@/types/project.type';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { redirect, useParams, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 
 const ReviewRegisterPage = () => {
+  const { id } = useParams();
   const searchParams = useSearchParams();
   const isComplete = searchParams.get('complete') === 'true';
 
-  return isComplete ? <Complete /> : <Register />;
+  if (!id) {
+    redirect('/404');
+  }
+
+  return isComplete ? (
+    <Complete projectId={Number(id)} />
+  ) : (
+    <Register projectId={Number(id)} />
+  );
 };
 
-const Register = () => {
+const Register = ({ projectId }: { projectId: number }) => {
   const project: Omit<IProject, 'timeOption' | 'isHost' | 'status'> = {
     id: 1,
     shootingAt: '7/31T12:00:00',
-    // time: '12:00~14:00',
     spot: '서울시 종로구',
     title: '노들섬에서 촬용해 주세요',
   };
@@ -102,7 +110,7 @@ const Register = () => {
   );
 };
 
-const Complete = () => {
+const Complete = ({ projectId }: { projectId: number }) => {
   return (
     <div className="flex h-full flex-col items-center justify-center gap-[9px]">
       <div className="flex flex-col items-center gap-1">
@@ -111,8 +119,8 @@ const Complete = () => {
           프로젝트를 통해 한 단계 성장했어요!
         </p>
       </div>
-      {/* TODO: 프로젝트 id로 이동 */}
-      <Link href={'/project-management/1'} className="w-[217px]">
+
+      <Link href={`/project-management/${projectId}`} className="w-[217px]">
         <BottomButton
           variant={'secondary'}
           size={'middle'}

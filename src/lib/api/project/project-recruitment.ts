@@ -1,24 +1,6 @@
+import { getAuthHeader } from './header';
+
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
-const getAuthorization = async () => {
-  const { cookies } = await import('next/headers');
-  const accessToken = cookies().get('accessToken')?.value;
-  if (accessToken) return `Bearer ${accessToken}`;
-  return null;
-};
-
-const getAuthHeader = async () => {
-  const accessToken = await getAuthorization();
-
-  let headers: HeadersInit = {};
-  if (accessToken) {
-    headers = {
-      Authorization: accessToken,
-    };
-  }
-
-  return headers;
-};
 
 export interface IRecruitResponse {
   id: number;
@@ -78,7 +60,7 @@ export const postAnnouncement = async (formData: FormData) => {
     });
 
     if (!response.ok) {
-      throw new Error('Network response was not ok');
+      // throw new Error('Network response was not ok');
     }
 
     const result = await response.json();
@@ -119,19 +101,4 @@ export const deleteRecruitBookmark = async (id: number) => {
   } catch (e) {
     console.error(e);
   }
-};
-
-export const getUserProjects = async () => {
-  const headers = await getAuthHeader();
-
-  const res = await fetch(`${API_URL}/users/projects`, {
-    headers,
-    cache: 'no-store',
-  });
-  const data = await res.json();
-  if (res.status !== 200) {
-    console.error(data.message);
-  }
-  console.log(data);
-  return data;
 };

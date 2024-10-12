@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils';
-import ConceptTag from '../common/concept-tag';
-import Icon from '../common/icon';
+import ConceptTag from '../../common/concept-tag';
+import Icon from '../../common/icon';
 import {
   Dialog,
   DialogClose,
@@ -8,13 +8,14 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '../ui/dialog';
+} from '../../ui/dialog';
 
 interface ReviewDialogProps {
   trigger?: React.ReactNode;
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
   name?: string;
+  reviewId: number;
 }
 
 const ReviewDialog = ({
@@ -22,18 +23,19 @@ const ReviewDialog = ({
   isOpen,
   onOpenChange,
   name,
+  reviewId,
 }: ReviewDialogProps) => {
   const tags = [
     {
-      id: 1,
+      id: '1',
       label: '약속시간을 잘 지켜요',
     },
     {
-      id: 2,
+      id: '2',
       label: '매너가 좋아요',
     },
     {
-      id: 3,
+      id: '3',
       label: '커뮤니케이션이 잘 돼요',
     },
   ];

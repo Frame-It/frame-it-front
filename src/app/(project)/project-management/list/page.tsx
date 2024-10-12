@@ -1,6 +1,7 @@
 import ManagementTabs from '@/components/project/management/management-tabs';
 import ProjectList from '@/components/project/project-list';
-import { getUserProjects } from '@/lib/api/project';
+import { getUserProjects } from '@/lib/api/project/project-management';
+
 import { cn } from '@/lib/utils';
 import { IProject } from '@/types/project.type';
 

@@ -10,7 +10,7 @@ import {
   CarouselItem,
 } from '@/components/ui/carousel';
 import { IProjectConcept, PROJECT_CONCEPTS } from '@/constants/project';
-import { getRecruitAnnouncement } from '@/lib/api/project';
+import { getRecruitAnnouncement } from '@/lib/api/project/project-recruitment';
 import { cn } from '@/lib/utils';
 import { FC } from 'react';
 
@@ -32,7 +32,8 @@ const ProjectRecruitmentDetailPage: FC<
     description,
     shootingAt,
     spot,
-    concepts,
+    hostConcepts,
+    projectConcepts,
     retouchingDescription,
     host,
     conceptPhotoUrls,
@@ -63,7 +64,7 @@ const ProjectRecruitmentDetailPage: FC<
         <div className={cn('py-2')}>
           {
             <TagList
-              tags={concepts.map((conceptId: string) =>
+              tags={projectConcepts.map((conceptId: string) =>
                 PROJECT_CONCEPTS.find((v) => v.id === conceptId),
               )}
               size={'medium'}
@@ -101,8 +102,7 @@ const ProjectRecruitmentDetailPage: FC<
           nickname={host.nickname}
           profileImageUrl={host.profileImageUrl}
           description={host.description}
-          // TODO: host의 concepts 필요
-          concepts={[]}
+          concepts={hostConcepts}
         />
       </div>
       <div
@@ -148,7 +148,7 @@ const WriterInfo: FC<WriterInfoProps> = ({
       <div className="flex flex-col items-center justify-center gap-[10px] self-stretch">
         <div className="font-body-14">{description}</div>
         <div>
-          <TagList tags={[]} size={'medium'} className="gap-[4px]" />
+          <TagList tags={concepts} size={'medium'} className="gap-[4px]" />
         </div>
       </div>
     </section>

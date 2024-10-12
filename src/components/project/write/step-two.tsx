@@ -15,7 +15,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from '@/components/ui/use-toast';
 import { PROJECT_CONCEPTS } from '@/constants/project';
-import { postAnnouncement } from '@/lib/api/project';
+import { postAnnouncement } from '@/lib/api/project/project-recruitment';
 import {
   ProjectImageFormValues,
   projectImageSchema,

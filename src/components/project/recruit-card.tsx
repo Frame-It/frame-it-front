@@ -1,7 +1,10 @@
 'use client';
 
 import { IProjectConcept } from '@/constants/project';
-import { deleteRecruitBookmark, postRecruitBookmark } from '@/lib/api/project';
+import {
+  deleteRecruitBookmark,
+  postRecruitBookmark,
+} from '@/lib/api/project/project-recruitment';
 import { cn } from '@/lib/utils';
 import { useRecruitStore } from '@/store/recruit-store';
 import Link from 'next/link';

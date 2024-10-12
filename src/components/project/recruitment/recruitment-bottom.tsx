@@ -8,7 +8,10 @@ import IconButton from '@/components/common/icon-button';
 import { Textarea } from '@/components/ui/textarea';
 import { GuestProjectGuide } from '@/constants/guide';
 import useDisclosure from '@/hooks/useDisclosure';
-import { deleteRecruitBookmark, postRecruitBookmark } from '@/lib/api/project';
+import {
+  deleteRecruitBookmark,
+  postRecruitBookmark,
+} from '@/lib/api/project/project-recruitment';
 import { cn } from '@/lib/utils';
 import { useRecruitStore } from '@/store/recruit-store';
 import Link from 'next/link';
