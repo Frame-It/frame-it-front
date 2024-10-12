@@ -2,23 +2,23 @@
 
 import BottomButton from '@/components/common/bottom-button';
 import Guide from '@/components/common/guide';
-import { ApplicantList } from '@/components/project/applicant-list';
-import { PartnerItem } from '@/components/project/partner-item';
+import { ApplicantList } from '@/components/project/management/applicant-list';
+import ApplyInfo from '@/components/project/management/apply-info';
+import ProgressBox from '@/components/project/management/progress-box';
 import ProjectInfo from '@/components/project/project-info';
-import ProjectProgress from '@/components/project/project-progress';
 import ReviewDialog from '@/components/project/review-dialog';
 import { GuestProjectGuide, HostProjectGuide } from '@/constants/guide';
 import useDisclosure from '@/hooks/useDisclosure';
 import { cn } from '@/lib/utils';
-import { IApplyInfo, IProject } from '@/types/project';
+import { IActiveProject, IApplyInfo } from '@/types/project.type';
 import { faker } from '@faker-js/faker/locale/ko';
 import { useRouter } from 'next/navigation';
 
 const ProjectManagementDetailPage = () => {
   const userRole: 'HOST' | 'GUEST' = 'GUEST';
 
-  // return <HostContent />;
-  return <GuestContent />;
+  return <HostContent />;
+  // return <GuestContent />;
 };
 const HostContent = () => {
   const router = useRouter();
@@ -26,21 +26,23 @@ const HostContent = () => {
     useDisclosure(false);
 
   faker.seed(123);
-  const project: IProject = {
-    id: '1',
-    date: '7/31',
-    time: '12:00~14:00',
-    location: '서울시 종로구',
-    state: 'complete',
+  const project: IActiveProject = {
+    id: 1,
+    shootingAt: '7/31T12:00:00',
+    // time: '12:00~14:00',
+    spot: '서울시 종로구',
+    status: 'COMPLETED',
     title: '노들섬에서 촬영해 주세요',
+    timeOption: 'MORNING',
+    isHost: false,
   };
 
-  const guest: IApplyInfo & Pick<IProject, 'state' | 'id'> = {
+  const guest: IApplyInfo & Pick<IActiveProject, 'status' | 'id'> = {
     profileImage: faker.image.avatar(),
     name: faker.name.fullName(),
-    applicationDate: faker.date.recent().toISOString().split('T')[0],
+    applicationDate: '',
     content: faker.lorem.sentence(),
-    state: project.state,
+    status: project.status,
     partnerRole: 'GUEST',
     id: project.id,
   };
@@ -60,16 +62,16 @@ const HostContent = () => {
       <ProjectInfo project={project} />
       <div className={cn('flex flex-col gap-2')}>
         <h1 className={cn('font-title-18 text-gray-20')}>진행상황</h1>
-        <ProgressBox state={project.state} />
+        <ProgressBox status={project.status} />
       </div>
-      {project.state === 'inProgress' && (
+      {project.status === 'IN_PROGRESS' && (
         <BottomButton
           variant={'secondary'}
           size={'large'}
           label={'프로젝트 완료하기'}
         />
       )}
-      {project.state === 'complete' && (
+      {project.status === 'COMPLETED' && (
         <>
           <BottomButton
             variant={'secondary'}
@@ -83,7 +85,7 @@ const HostContent = () => {
           />
         </>
       )}
-      {project.state === 'recruiting' ? (
+      {project.status === 'RECRUITING' ? (
         <ApplicantList />
       ) : (
         <ApplyInfo {...guest} />
@@ -108,21 +110,23 @@ const HostContent = () => {
 const GuestContent = () => {
   faker.seed(234);
 
-  const project: IProject = {
-    id: '1',
-    date: '7/31',
-    time: '12:00~14:00',
-    location: '서울시 종로구',
-    state: 'complete',
+  const project: IActiveProject = {
+    id: 1,
+    shootingAt: '7/31',
+    // time: '12:00~14:00',
+    spot: '서울시 종로구',
+    status: 'COMPLETED',
     title: '노들섬에서 촬용해 주세요',
+    timeOption: 'MORNING',
+    isHost: false,
   };
 
-  const host: IApplyInfo & Pick<IProject, 'state' | 'id'> = {
+  const host: IApplyInfo & Pick<IActiveProject, 'status' | 'id'> = {
     profileImage: faker.image.avatar(),
     name: faker.name.fullName(),
-    applicationDate: faker.date.recent().toISOString().split('T')[0],
+    applicationDate: '',
     content: faker.lorem.sentence(),
-    state: project.state,
+    status: project.status,
     partnerRole: 'HOST',
     id: project.id,
   };
@@ -142,7 +146,7 @@ const GuestContent = () => {
   return (
     <div className="flex h-full flex-col gap-4 overflow-auto p-4">
       <ProjectInfo project={project} />
-      {project.state === 'recruiting' && (
+      {project.status === 'RECRUITING' && (
         <BottomButton
           variant={'secondary'}
           size={'middle'}
@@ -151,14 +155,14 @@ const GuestContent = () => {
         />
       )}
 
-      {project.state !== 'recruiting' && (
+      {project.status !== 'RECRUITING' && (
         <div className={cn('flex flex-col gap-2')}>
           <h1 className={cn('font-title-18 text-gray-20')}>진행상황</h1>
-          <ProgressBox state={project.state} />
+          <ProgressBox status={project.status} />
         </div>
       )}
 
-      {project.state === 'inProgress' && (
+      {project.status === 'IN_PROGRESS' && (
         <div className={cn('flex flex-col gap-2')}>
           <BottomButton
             variant={'secondary'}
@@ -168,14 +172,14 @@ const GuestContent = () => {
           <Guide guides={GuestProjectGuide.inProgress} />
         </div>
       )}
-      {project.state === 'complete' && (
+      {project.status === 'COMPLETED' && (
         <BottomButton
           variant={'secondary'}
           size={'large'}
           label={'리뷰 작성하기'}
         />
       )}
-      {project.state === 'recruiting' ? (
+      {project.status === 'RECRUITING' ? (
         <ApplyInfo {...host} />
       ) : (
         <div className="flex flex-col gap-3">
@@ -219,31 +223,6 @@ const GuestContent = () => {
           collapsible
         />
       </div>
-    </div>
-  );
-};
-
-const ProgressBox = ({ state }: { state: IProject['state'] }) => {
-  return (
-    <div
-      className={cn(
-        'flex h-[80px] justify-center rounded-[8px] border border-gray-80 pt-[26px]',
-      )}
-    >
-      <ProjectProgress state={state} />
-    </div>
-  );
-};
-
-type ApplyInfoProps = IApplyInfo & Pick<IProject, 'state' | 'id'>;
-
-const ApplyInfo = (partner: ApplyInfoProps) => {
-  return (
-    <div className={cn('flex w-full flex-col gap-3')}>
-      <h1 className={cn('font-title-18 text-gray-20')}>
-        {partner.partnerRole === 'HOST' ? '신청정보' : '프로젝트 게스트'}
-      </h1>
-      <PartnerItem {...partner} />
     </div>
   );
 };

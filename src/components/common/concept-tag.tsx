@@ -1,10 +1,10 @@
 import { cn } from '@/lib/utils';
 import React from 'react';
 interface ConceptTagProps {
-  id: number;
+  id: string;
   label: string;
   isSelected: boolean;
-  onToggle?: (id: number) => void;
+  onToggle?: (id: string) => void;
 }
 
 const ConceptTag: React.FC<ConceptTagProps> = ({

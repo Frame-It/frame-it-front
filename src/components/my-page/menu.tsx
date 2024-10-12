@@ -1,8 +1,8 @@
 'use client';
 
+import IconIDTypes from '@/types/icon';
 import { useRouter } from 'next/navigation';
 import Icon from '../common/icon';
-import IconIDTypes from '@/types/icon';
 
 interface IMyPageMenuProps {}
 
@@ -19,7 +19,7 @@ const paths: {
   {
     label: '프로젝트 관리',
     icon: 'project-icon',
-    path: '/',
+    path: '/project-management/list',
   },
   {
     label: '북마크',

@@ -14,35 +14,29 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from '@/components/ui/use-toast';
+import { PROJECT_CONCEPTS } from '@/constants/project';
+import { postAnnouncement } from '@/lib/api/project';
 import {
   ProjectImageFormValues,
   projectImageSchema,
 } from '@/lib/schema/project-regist-schema';
 import { cn } from '@/lib/utils';
 import { useProjectRegisterStore } from '@/store/project-regist-store';
-import { faker } from '@faker-js/faker/locale/ko';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { PlusIcon } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { ChangeEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-const generateTags = () => {
-  return Array.from({ length: 10 }, (_, index) => ({
-    id: index,
-    label: faker.lorem.word(),
-  }));
-};
-
 const StepTwo: React.FC = () => {
-  const [conceptTags] = useState(generateTags);
-  const { setProjectInfo, projectInfo, nextStep } = useProjectRegisterStore();
-  const [selectedTags, setSelectedTags] = useState<number[]>([]);
+  const { projectInfo } = useProjectRegisterStore();
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
-  const [photoFiles, setPhotoFiles] = useState<File[] | null>([]);
+  const router = useRouter();
 
   const [description, setDescription] = useState<string>('');
   const [retouchingDetails, setRetouchingDetails] = useState('');
-  const handleTagToggle = (id: number) => {
+  const handleTagToggle = (id: string) => {
     setSelectedTags((prevSelectedTags) =>
       prevSelectedTags.includes(id)
         ? prevSelectedTags.filter((tagId) => tagId !== id)
@@ -50,17 +44,44 @@ const StepTwo: React.FC = () => {
     );
   };
 
-  const isNextEnabled = selectedTags.length && description && retouchingDetails;
+  const isNextEnabled = Boolean(
+    selectedTags.length &&
+      description &&
+      retouchingDetails &&
+      projectInfo.photos?.length,
+  );
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (isNextEnabled) {
-      setProjectInfo({
-        ...projectInfo,
-        conceptTags: selectedTags.map((v, i) => conceptTags[i].label),
-        description,
-        retouchingDetails,
+      const formData = new FormData();
+      formData.append('title', projectInfo.projectName);
+      formData.append('recruitmentRole', projectInfo.type || 'MODEL');
+      formData.append(
+        'shootingAt',
+        `${projectInfo.shootingDate.date}T${projectInfo.shootingDate.time}:00`,
+      );
+      formData.append('timeOption', projectInfo.shootingDate.period);
+      formData.append('locationType', projectInfo.location.type);
+      formData.append('spot', projectInfo.location.address);
+      formData.append('description', description);
+      formData.append('retouchingDescription', retouchingDetails);
+
+      selectedTags.forEach((tag) => {
+        formData.append('concepts', tag);
       });
-      // nextStep();
+
+      projectInfo.photos?.forEach((file) => {
+        formData.append('conceptPhotos', file, file.name);
+      });
+
+      try {
+        const result = await postAnnouncement(formData);
+
+        router.push('?complete=true');
+      } catch (error) {
+        console.error(error);
+        // TODO: error handling
+      }
     } else {
       alert('컨셉 태그와 프로젝트 설명을 입력해주세요.');
     }
@@ -76,7 +97,7 @@ const StepTwo: React.FC = () => {
         <div className={cn('flex flex-col gap-2')}>
           <label className={cn('font-title-16')}>컨셉</label>
           <div className={cn('flex flex-wrap gap-2')}>
-            {conceptTags.map((tag) => (
+            {PROJECT_CONCEPTS.map((tag) => (
               <ConceptTag
                 key={tag.id}
                 id={tag.id}
@@ -138,6 +159,8 @@ const ApplyGuide = () => {
 };
 
 const Images = () => {
+  const { setProjectInfo, projectInfo } = useProjectRegisterStore();
+
   const form = useForm<ProjectImageFormValues>({
     resolver: zodResolver(projectImageSchema),
   });
@@ -156,9 +179,17 @@ const Images = () => {
     }
 
     const newFilesArray = Array.from(newFiles) as File[];
-    setPreviews((prev) => [...prev, ...displayUrls]);
-    setFiles((prev) => [...prev, ...newFilesArray]);
-    form.setValue('images', [...files, ...newFilesArray]);
+    const updatedPreviews = [...previews, ...displayUrls];
+    const updatedFiles = [...files, ...newFilesArray];
+
+    setPreviews(updatedPreviews);
+    setFiles(updatedFiles);
+    form.setValue('images', updatedFiles);
+
+    setProjectInfo({
+      ...projectInfo, // 기존 projectInfo 복사
+      photos: updatedFiles, // photos 필드 업데이트
+    });
   };
 
   // const handleRemoveImage = (index: number) => {
