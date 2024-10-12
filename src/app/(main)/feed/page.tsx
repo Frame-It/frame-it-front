@@ -1,10 +1,8 @@
 import FeedList from '@/components/feed/feed-list';
-import { getFeeds } from '@/lib/api/portfolio';
+import { getFeeds } from '@/service/server-actions/portfolio';
 
 export default async function FeedPage() {
   const feeds = await getFeeds();
-
-  console.log(feeds);
 
   return (
     <>

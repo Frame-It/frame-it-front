@@ -7,7 +7,6 @@ import { usePortfolioRegisterStore } from '@/store/portfolio-regist-store';
 
 export default function MyStudioWritePage() {
   // Search Params로 데이터 불러오기
-
   const currentStep = usePortfolioRegisterStore((state) => state.currentStep);
   const maxStep = usePortfolioRegisterStore((state) => state.maxStep);
 

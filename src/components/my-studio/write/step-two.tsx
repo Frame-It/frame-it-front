@@ -16,6 +16,7 @@ import {
   PortfolioDetailFormValues,
   portfolioInfoSchema,
 } from '@/lib/schema/portfolio-regist-schema';
+import { postPortfolio } from '@/service/client-actions/portfolio';
 import { usePortfolioRegisterStore } from '@/store/portfolio-regist-store';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { XIcon } from 'lucide-react';
@@ -23,7 +24,6 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 interface IStepTwoProps {}
-<></>;
 
 const StepTwo: React.FunctionComponent<IStepTwoProps> = () => {
   const portfolioInfo = usePortfolioRegisterStore(
@@ -33,6 +33,8 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = () => {
     (state) => state.setPortfolioInfo,
   );
 
+  const photoList = usePortfolioRegisterStore((state) => state.photoList);
+
   const [tag, setTag] = useState('');
   const [togather, setTogather] = useState('');
 
@@ -40,10 +42,16 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = () => {
     resolver: zodResolver(portfolioInfoSchema),
   });
 
-  const onSubmit = (values: PortfolioDetailFormValues) => {
-    console.log(values);
-    console.log(portfolioInfo);
-    console.log(setPortfolioInfo);
+  const onSubmit = async (values: PortfolioDetailFormValues) => {
+    const newValue = {
+      title: values.title,
+      description: values.detail,
+      hashtags: values.tagList,
+      togethers: values.togather,
+      photos: [...photoList!],
+    };
+
+    const test = await postPortfolio(newValue);
   };
 
   const addTag = () => {

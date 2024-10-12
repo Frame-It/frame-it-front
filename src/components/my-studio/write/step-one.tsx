@@ -28,6 +28,7 @@ interface IStepOneProps {}
 const StepOne: React.FunctionComponent<IStepOneProps> = () => {
   // zustand
   const nextStep = usePortfolioRegisterStore((state) => state.nextStep);
+  const setPhoto = usePortfolioRegisterStore((state) => state.setPhoto);
 
   const form = useForm<PortfolioImageFormValues>({
     resolver: zodResolver(portfolioImageSchema),
@@ -37,6 +38,7 @@ const StepOne: React.FunctionComponent<IStepOneProps> = () => {
 
   const onSubmit = (values: PortfolioImageFormValues) => {
     console.log(values);
+    setPhoto(values.images);
     nextStep();
   };
 
