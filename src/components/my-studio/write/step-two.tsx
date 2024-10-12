@@ -50,11 +50,9 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = () => {
       photos: [...photoList!],
     };
 
-    const test = await postPortfolio(newValue);
+    const isSuccess = await postPortfolio(newValue);
 
-    console.log(test);
-
-    if (test) {
+    if (isSuccess) {
       toast({
         variant: 'success',
         title: '업로드에 성공 하였습니다.',

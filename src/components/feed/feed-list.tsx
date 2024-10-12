@@ -1,14 +1,14 @@
-import { generateRandomImageList } from '@/lib/faker';
 import PhotoList from '../common/photo-list';
+import { Feed } from '@/types/portfolio';
 
-interface IFeedListProps {}
+interface IFeedListProps {
+  feedList: Feed[];
+}
 
-const FeedList: React.FunctionComponent<IFeedListProps> = () => {
-  const imageArr = Array.from({ length: 10 }, () => generateRandomImageList());
-
+const FeedList: React.FunctionComponent<IFeedListProps> = ({ feedList }) => {
   return (
     <section className="mx-auto w-full">
-      <PhotoList imageList={imageArr} isNavigate isFeed />
+      <PhotoList imageList={feedList} isNavigate isFeed />
     </section>
   );
 };

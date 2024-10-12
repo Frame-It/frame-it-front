@@ -16,6 +16,8 @@ import { getMyPage } from '@/service/my-service';
 export default async function MyPage() {
   const myInfo = await getMyPage();
 
+  console.log(myInfo);
+
   return (
     <>
       <Header className="">
