@@ -3,26 +3,27 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import * as React from 'react';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 
 interface IMyPageHeaderProps {
   nickName?: string;
+  imageUrl?: string;
 }
 
-const MyPageHeader = ({ nickName }: IMyPageHeaderProps) => {
+const MyPageHeader = ({ nickName, imageUrl }: IMyPageHeaderProps) => {
   const router = useRouter();
 
   return (
     <section className="mt-[20px] flex items-center gap-x-4">
-      <Image
-        src={'/test-image.webp'}
-        alt="프로필 이미지"
-        width={100}
-        height={100}
-        sizes="100px"
-        priority
-        className="aspect-square cursor-pointer rounded-[16px]"
+      <Avatar
         onClick={() => router.push('/my-page/profile')}
-      />
+        className="aspect-square size-[100px] cursor-pointer rounded-[16px]"
+      >
+        <AvatarImage src={imageUrl} />
+        <AvatarFallback className="aspect-square size-[100px] cursor-pointer rounded-[16px]">
+          F
+        </AvatarFallback>
+      </Avatar>
       <div className="space-y-1">
         <div className="text-lg font-semibold leading-[135%] text-gray-10">
           {nickName}

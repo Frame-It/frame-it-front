@@ -16,8 +16,6 @@ import { getMyPage } from '@/service/my-service';
 export default async function MyPage() {
   const myInfo = await getMyPage();
 
-  console.log(myInfo);
-
   return (
     <>
       <Header className="">
@@ -33,7 +31,7 @@ export default async function MyPage() {
       </Header>
       <main className="px-[12px] pb-[66px] pt-[58px]">
         {/* --- */}
-        <MyPageHeader nickName={myInfo?.name} />
+        <MyPageHeader nickName={myInfo?.nickname} />
         <MyPageMenu />
         <Separator className="my-6" />
         <HelpCenter />

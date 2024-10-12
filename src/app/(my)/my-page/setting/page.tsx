@@ -1,5 +1,6 @@
 import LogoutDialog from '@/components/setting/logout-dialog';
 import { Switch } from '@/components/ui/switch';
+import { getMyInfo } from '@/service/my-service';
 import Link from 'next/link';
 
 const settingLI = 'space-y-1 px-4 py-[12px]';
@@ -9,8 +10,8 @@ const settingDD = 'text-sm leading-[150%] text-gray-10';
 const basicText =
   'relative flex-1 w-full text-sm font-medium leading-[150%] text-gray-10';
 
-export default function SettingPage() {
-  // 서버로부터 개인정보 가져옴
+export default async function SettingPage() {
+  const myInfo = await getMyInfo();
 
   return (
     <main>
@@ -21,15 +22,15 @@ export default function SettingPage() {
         <ul className="mt-[12px] rounded-[8px] bg-gray-90">
           <li className={settingLI}>
             <dt className={settingDT}>이름</dt>
-            <dd className={settingDD}>박소은</dd>
+            <dd className={settingDD}>{myInfo?.name}</dd>
           </li>
           <li className={settingLI}>
             <dt className={settingDT}>닉네임</dt>
-            <dd className={settingDD}>마마원마마원투투</dd>
+            <dd className={settingDD}>{myInfo?.nickname}</dd>
           </li>
           <li className={settingLI}>
             <dt className={settingDT}>이메일</dt>
-            <dd className={settingDD}>qkqh123@naver.com</dd>
+            <dd className={settingDD}>{myInfo?.email}</dd>
           </li>
         </ul>
       </section>
