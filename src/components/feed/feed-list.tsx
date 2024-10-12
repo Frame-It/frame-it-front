@@ -18,8 +18,6 @@ const FeedList: React.FunctionComponent<IFeedListProps> = ({ role }) => {
     data: feedData,
     fetchNextPage,
     hasNextPage,
-    isFetchingNextPage,
-    status,
   } = useInfiniteQuery({
     queryKey: ['feeds', role],
     queryFn: ({ pageParam = 0, queryKey }) =>
@@ -27,8 +25,6 @@ const FeedList: React.FunctionComponent<IFeedListProps> = ({ role }) => {
     enabled: !!role,
     initialPageParam: 0,
     getNextPageParam: (lastPage) => {
-      console.log(lastPage);
-
       const { number, totalPages } = lastPage;
       return number + 1 < totalPages ? number + 1 : undefined;
     },
@@ -55,9 +51,3 @@ const FeedList: React.FunctionComponent<IFeedListProps> = ({ role }) => {
 };
 
 export default FeedList;
-
-// {feeds && feeds.content.length === 0 ? (
-//   <EmptyFeeds />
-// ) : (
-//   <FeedList feedList={feeds.content} />
-// )}
