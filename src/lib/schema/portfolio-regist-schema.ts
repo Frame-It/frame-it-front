@@ -14,10 +14,10 @@ export const portfolioImageSchema = z.object({
 });
 
 export const portfolioInfoSchema = z.object({
-  title: z.string().min(10).max(100),
-  detail: z.string().min(10).max(500),
-  tagList: z.array(z.string()).min(1).max(5),
-  togather: z.string(),
+  title: z.string().min(2).max(42),
+  detail: z.string().or(z.literal('')).optional(),
+  tagList: z.array(z.string()).min(1).max(5).nullable().optional(),
+  togather: z.string().or(z.literal('')).optional(),
 });
 
 export type PortfolioImageFormValues = z.infer<typeof portfolioImageSchema>;

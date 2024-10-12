@@ -19,14 +19,17 @@ export const getMyPortfolio = async () => {
   const cookieStore = cookies();
   const token = cookieStore.get('accessToken');
 
-  const res = await fetch(`${API_URL}/portfolios?page=1&size=3`, {
-    method: 'GET',
-    cache: 'no-store',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+  if (token) {
+    const res = await fetch(`${API_URL}/me?page=1&size=3`, {
+      method: 'GET',
+      cache: 'no-store',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token.value}`,
+      },
+    });
 
-  const data = await res.json();
-  return data;
+    const data = await res.json();
+    return data;
+  }
 };

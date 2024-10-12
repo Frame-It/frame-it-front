@@ -4,23 +4,45 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const postPortfolio = async (data: any) => {
   const formData = new FormData();
+
+  // 필수
   formData.append('title', data.title);
-  formData.append('description', data.description);
-  formData.append('hashtags', JSON.stringify(data.hashtags));
-  formData.append('togethers', JSON.stringify(data.togethers));
-  formData.append('photos', data.photo);
+  data.photos.forEach((photo: any, i: number) => {
+    formData.append('photos', photo, 'photo' + i);
+  });
+
+  // 선택
+  if (data.description) {
+    formData.append('description', data.description);
+  }
+
+  if (data.hashtags) {
+    data.hashtags.forEach((hashtag: string) => {
+      formData.append('hashtags', hashtag);
+    });
+  }
+
+  if (data.togethers) {
+    data.hashtags.forEach((together: string) => {
+      formData.append('togethers', together);
+    });
+  }
 
   const token = getCookie('accessToken');
 
-  const res = await fetch(`${API_URL}/portfolio`, {
+  const res = await fetch(`${API_URL}/portfolios/portfolio`, {
     method: 'POST',
     body: formData,
-    credentials: 'include',
     headers: {
-      'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
   });
 
-  console.log(res);
+  if (res.ok) {
+    return true;
+  }
+  const result = await res.json();
+  console.log('Result', result);
+
+  return false;
 };

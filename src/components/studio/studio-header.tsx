@@ -1,16 +1,13 @@
 import Image from 'next/image';
 import RoleBadge from '../common/role-badge';
 
-interface IMyStudioHeaderProps {
+interface IStudioHeaderProps {
   profileUrl: string;
   role: 'author' | 'model';
   nickName: string;
 }
 
-const MyStudioHeader: React.FunctionComponent<IMyStudioHeaderProps> = ({
-  profileUrl,
-  role,
-}) => {
+const StudioHeader = ({ profileUrl, role }: IStudioHeaderProps) => {
   return (
     <section className="">
       <div className="flex items-center gap-x-[45px]">
@@ -44,4 +41,4 @@ const MyStudioHeader: React.FunctionComponent<IMyStudioHeaderProps> = ({
   );
 };
 
-export default MyStudioHeader;
+export default StudioHeader;

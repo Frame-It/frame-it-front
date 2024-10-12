@@ -12,6 +12,7 @@ import {
   FormLabel,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { toast } from '@/components/ui/use-toast';
 import {
   PortfolioDetailFormValues,
   portfolioInfoSchema,
@@ -20,20 +21,16 @@ import { postPortfolio } from '@/service/client-actions/portfolio';
 import { usePortfolioRegisterStore } from '@/store/portfolio-regist-store';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { XIcon } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 interface IStepTwoProps {}
 
 const StepTwo: React.FunctionComponent<IStepTwoProps> = () => {
-  const portfolioInfo = usePortfolioRegisterStore(
-    (state) => state.portfolioInfo,
-  );
-  const setPortfolioInfo = usePortfolioRegisterStore(
-    (state) => state.setPortfolioInfo,
-  );
-
+  const router = useRouter();
   const photoList = usePortfolioRegisterStore((state) => state.photoList);
+  const clearData = usePortfolioRegisterStore((state) => state.clear);
 
   const [tag, setTag] = useState('');
   const [togather, setTogather] = useState('');
@@ -45,13 +42,33 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = () => {
   const onSubmit = async (values: PortfolioDetailFormValues) => {
     const newValue = {
       title: values.title,
-      description: values.detail,
-      hashtags: values.tagList,
-      togethers: values.togather,
+      description: values.detail || undefined,
+      hashtags: values.tagList || undefined,
+      togethers: values.togather
+        ? Array.from({ length: 1 }, () => values.togather)
+        : undefined,
       photos: [...photoList!],
     };
 
     const test = await postPortfolio(newValue);
+
+    console.log(test);
+
+    if (test) {
+      toast({
+        variant: 'success',
+        title: '업로드에 성공 하였습니다.',
+        duration: 1300,
+      });
+      clearData();
+      router.replace('/my-page/my-studio');
+    } else {
+      toast({
+        variant: 'destructive',
+        title: '업로드에 실패 하였습니다.',
+        duration: 1300,
+      });
+    }
   };
 
   const addTag = () => {
@@ -66,7 +83,7 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = () => {
 
   const deleteTag = (tag: string) => {
     const prevTagArr = form.getValues('tagList');
-    const newTagArr = prevTagArr.filter((el) => el !== tag);
+    const newTagArr = prevTagArr?.filter((el) => el !== tag);
     form.setValue('tagList', newTagArr);
   };
 
@@ -86,11 +103,11 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = () => {
     const subscription = form.watch(() => {
       const values = form.getValues();
 
-      console.log('value', values);
+      if (values.tagList?.length === 0) {
+        form.setValue('tagList', undefined);
+      }
 
       const result = portfolioInfoSchema.safeParse(values);
-      console.log('result', result);
-
       setIsFormValid(result.success);
     });
 

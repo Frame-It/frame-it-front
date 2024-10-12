@@ -2,9 +2,9 @@ import { create } from 'zustand';
 
 export interface IPortfolioRegistInfo {
   title: string;
-  detail: string;
-  tagList: string[];
-  togather: string;
+  detail?: string;
+  tagList?: string[];
+  togather?: string;
 }
 
 interface PortfolioRegisterState {
@@ -14,6 +14,8 @@ interface PortfolioRegisterState {
   photoList: File[] | null;
   portfolioInfo: IPortfolioRegistInfo;
 
+  init: () => void;
+  clear: () => void;
   nextStep: () => void;
   prevStep: () => void;
   setPhoto: (photoList: File[]) => void;
@@ -30,6 +32,23 @@ export const usePortfolioRegisterStore = create<PortfolioRegisterState>(
       detail: '',
       tagList: [],
       togather: '',
+    },
+
+    init() {},
+    clear() {
+      return set(() => {
+        return {
+          currentStep: 1,
+          maxStep: 2,
+          photoList: null,
+          portfolioInfo: {
+            title: '',
+            detail: '',
+            tagList: [],
+            togather: '',
+          },
+        };
+      });
     },
 
     prevStep() {

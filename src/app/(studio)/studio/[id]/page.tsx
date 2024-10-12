@@ -1,15 +1,15 @@
 import MySturioFilter from '@/components/my-studio/filter';
 import MyStudioHeader from '@/components/my-studio/header';
-import MyStudioIntroduce from '@/components/my-studio/introduce';
 import MyStudioPortfolioGallery from '@/components/my-studio/portfolio-gallery';
 import ProjectList from '@/components/my-studio/project-list';
 import ReviewList from '@/components/my-studio/review-list';
+import StudioIntroduce from '@/components/studio/studio-introduce';
 
 import { generateRandomImageList } from '@/lib/faker';
 import { getMyPage } from '@/service/my-service';
 import { faker } from '@faker-js/faker';
 
-export default async function MyStudioPage(params: {
+export default async function StudioDetailPage(params: {
   searchParams: { type: string };
 }) {
   const {
@@ -20,7 +20,6 @@ export default async function MyStudioPage(params: {
 
   // 쿼리스트링에 따라 다른 데이터를 패칭
   const imageArr = Array.from({ length: 10 }, () => generateRandomImageList());
-
   const myInfo = await getMyPage();
 
   return (
@@ -31,7 +30,7 @@ export default async function MyStudioPage(params: {
         nickName={myInfo?.nickname || '로딩중'}
       />
       {/* 소개 글 */}
-      <MyStudioIntroduce
+      <StudioIntroduce
         introduce="소개글이요. 저는 이런사람 입니다. 묵찌빠를 전공하였고 전공을살려
         홈프로텍터로 일하는 중이며 세계 제일의 사진사가 될겁니다."
         tagList={['아름다운', '이쁜', '날렵한', '감성적인', '사랑스러운']}
