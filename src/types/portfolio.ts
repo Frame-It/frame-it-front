@@ -38,3 +38,16 @@ export interface IPortfolioResponse {
   pageable: IPageable;
   empty: boolean;
 }
+
+export interface IPortfolioDetail {
+  id: number;
+  title: string;
+  userId: number;
+  identity: string;
+  profileImageUrl: string | null;
+  userName: string;
+  description: string;
+  photosUrl: string[];
+  hashtags: string[];
+  collaborators: string;
+}

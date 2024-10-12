@@ -1,12 +1,15 @@
 import Icon from '@/components/common/icon';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { faker } from '@faker-js/faker';
 
-interface IPortfolioDetailFooterProps {}
+interface IPortfolioDetailFooterProps {
+  collaborators?: string;
+  createdAt?: string;
+}
 
-const PortfolioDetailFooter: React.FunctionComponent<
-  IPortfolioDetailFooterProps
-> = () => {
+const PortfolioDetailFooter = ({
+  collaborators,
+  createdAt,
+}: IPortfolioDetailFooterProps) => {
   return (
     <section className="mt-[16px] space-y-[8px] text-[12px] font-[400] leading-[18px] text-[#4D4744]">
       <div className="flex items-center gap-x-[8px]">
@@ -14,15 +17,15 @@ const PortfolioDetailFooter: React.FunctionComponent<
           <AvatarImage src={'/test-image.webp'} />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
-        <span>곱슬머리님과 작업했습니다.</span>
+        <span>{`${collaborators}과 작업했습니다.`}</span>
       </div>
       <div className="flex items-center gap-x-[8px]">
         <Icon id="calendar-icon" size={24} className="text-[#7E7774]" />
-        <time>2024. 08. 04 일요일</time>
+        <time>{createdAt}</time>
       </div>
       <div className="flex items-center gap-x-[8px]">
         <Icon id="view-icon" size={24} />
-        <span>조회수 103</span>
+        <span>조회수 0</span>
       </div>
     </section>
   );
