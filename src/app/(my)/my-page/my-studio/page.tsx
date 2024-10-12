@@ -18,7 +18,7 @@ export default async function MyStudioPage(params: {
 
   const queryString = type || 'portfolio';
 
-  // 쿼리스트링에 따라 다른 데이터를 패칭
+  // TODO : 마이스튜디오 데이터 더 받기
   const imageArr = Array.from({ length: 10 }, () => generateRandomImageList());
 
   const myInfo = await getMyPage();
@@ -26,9 +26,11 @@ export default async function MyStudioPage(params: {
   return (
     <main className="h-[calc(100dvh-58px-63px)] overflow-y-auto px-[16px] py-[14px]">
       <MyStudioHeader
-        profileUrl={'/test-image.webp'}
-        role={'model'}
-        nickName={myInfo?.nickname || '로딩중'}
+        profileUrl={myInfo?.profileImageUrl || ''}
+        role={(myInfo?.identity.toLowerCase() as 'model' | 'author') || 'model'}
+        nickName={myInfo?.nickname || ''}
+        portfolioCount={myInfo?.portfolioCount || 0}
+        projectCount={myInfo?.projectCount || 0}
       />
       {/* 소개 글 */}
       <MyStudioIntroduce
@@ -40,9 +42,7 @@ export default async function MyStudioPage(params: {
       <MySturioFilter />
 
       {/* 포트폴리오 */}
-      {queryString === 'portfolio' && (
-        <MyStudioPortfolioGallery imageArr={imageArr} />
-      )}
+      {queryString === 'portfolio' && <MyStudioPortfolioGallery />}
 
       {/* 프로젝트 */}
       {queryString === 'project' && (

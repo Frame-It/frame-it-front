@@ -1,4 +1,4 @@
-import { IMyInfo } from '@/types/my';
+import { IMyInfo, IMyStudio } from '@/types/my';
 import { cookies } from 'next/headers';
 
 const SERVER_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -17,7 +17,7 @@ export const getMyPage = async () => {
       cache: 'no-store',
     });
 
-    const data = await response.json();
+    const data: IMyStudio = await response.json();
     return data;
   }
 };
