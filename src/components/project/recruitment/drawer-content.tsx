@@ -1,3 +1,5 @@
+'use client';
+
 import { PROJECT_CONCEPTS } from '@/constants/project';
 import useDisclosure from '@/hooks/useDisclosure';
 import { cn } from '@/lib/utils';
