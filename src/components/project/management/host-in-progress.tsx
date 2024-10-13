@@ -28,7 +28,9 @@ const HostInProgressContent = ({
 
   const handleClickComplete = async () => {
     await postCompleteProject(projectId);
-    router.push(`/review-register/${projectId}?status=${project.status}`);
+    router.push(
+      `/review-register/${projectId}?status=${project.status}&${project.isHost}`,
+    );
   };
 
   const handleClickShowReview = async () => {

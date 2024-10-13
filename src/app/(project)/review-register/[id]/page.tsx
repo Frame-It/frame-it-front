@@ -15,6 +15,7 @@ interface ReviewRegisterPageProps {
   searchParams: {
     complete?: string;
     status?: Exclude<ActiveStatus, 'CANCELED' | 'RECRUITING'>;
+    isHost?: string;
   };
 }
 
@@ -24,6 +25,7 @@ const ReviewRegisterPage = async ({
 }: ReviewRegisterPageProps) => {
   const { id } = params;
   const isComplete = searchParams.complete === 'true';
+  const isHost = searchParams.isHost === 'true';
 
   if (!id || searchParams.status === undefined) {
     redirect('/404');
@@ -41,7 +43,7 @@ const ReviewRegisterPage = async ({
   console.log(statusProject);
 
   return isComplete ? (
-    <Complete projectId={Number(id)} />
+    <Complete projectId={Number(id)} isHost={isHost} />
   ) : (
     <ReviewRegister
       project={statusProject}
@@ -51,7 +53,13 @@ const ReviewRegisterPage = async ({
   );
 };
 
-const Complete = ({ projectId }: { projectId: number }) => {
+const Complete = ({
+  projectId,
+  isHost,
+}: {
+  projectId: number;
+  isHost: boolean;
+}) => {
   return (
     <div className="flex h-full flex-col items-center justify-center gap-[9px]">
       <div className="flex flex-col items-center gap-1">
@@ -62,7 +70,7 @@ const Complete = ({ projectId }: { projectId: number }) => {
       </div>
 
       <Link
-        href={`/project-management/${projectId}?status=${'IN_PROGRESS'}&isHost=${'true'}`}
+        href={`/project-management/${projectId}?status=${'IN_PROGRESS'}&isHost=${isHost}`}
         className="w-[217px]"
       >
         <BottomButton
