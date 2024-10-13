@@ -34,7 +34,7 @@ export default async function PortfolioLayout({
         </HeaderLeft>
         <HeaderRight>
           {isMyPortfolio ? (
-            <PortfolioDetailMenu />
+            <PortfolioDetailMenu id={id} />
           ) : (
             <ShareButton>
               <Icon id="share-icon" size={32} className="text-gray-40" />

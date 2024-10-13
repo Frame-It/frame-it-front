@@ -10,7 +10,7 @@ export default function PortfolioDetailPage() {
   const { portfolioDetail } = useMyInfoContext();
 
   return (
-    <div className="h-[calc(100dvh-54px)] overflow-y-auto">
+    <div className="h-[calc(100dvh-54px)] overflow-y-auto pb-[14px] pt-4">
       <PortfolioProfile
         identity={portfolioDetail?.identity}
         userId={portfolioDetail?.userId}

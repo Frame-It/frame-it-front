@@ -8,18 +8,20 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
+  DrawerTitle,
   DrawerTrigger,
 } from '../ui/drawer';
 import { toast } from '../ui/use-toast';
 import { IPortfolioDetail } from '@/types/portfolio';
+import { deletePortfolio } from '@/service/client-actions/portfolio';
 
 interface IPortfolioDetailMenuProps {
-  portfolioDetail?: IPortfolioDetail;
+  id?: string;
 }
 
 const PortfolioDetailMenu: React.FunctionComponent<
   IPortfolioDetailMenuProps
-> = () => {
+> = ({ id }) => {
   const router = useRouter();
   const pathnameArr = usePathname()
     .split('/')
@@ -41,6 +43,24 @@ const PortfolioDetailMenu: React.FunctionComponent<
     router.push(`/portfolio-register?id=${portfolioId}`);
   };
   const handleDelete = async () => {
+    if (id) {
+      const isDeleted = await deletePortfolio(id);
+
+      if (isDeleted) {
+        toast({
+          title: '삭제에 성공했어요!',
+          variant: 'success',
+          duration: 1300,
+        });
+        router.back();
+      } else {
+        toast({
+          title: '삭제에 실패했어요!',
+          variant: 'destructive',
+          duration: 1300,
+        });
+      }
+    }
     onClose();
   };
 
@@ -51,6 +71,7 @@ const PortfolioDetailMenu: React.FunctionComponent<
           <Icon id="more-icon" size={32} className="text-gray-40" />
         </DrawerTrigger>
         <DrawerContent className="rounded-t-l-[16px] rounded-t-r-[16px] pb-[20px] pt-[18px]">
+          <DrawerTitle className="hidden"></DrawerTitle>
           <ul className="flex flex-col gap-y-[6px]">
             <li>
               <DrawerClose className="w-full p-0">

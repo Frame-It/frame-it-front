@@ -113,9 +113,28 @@ export const getPortfolioDetailClient = async (id?: string) => {
     });
 
     const data: IPortfolioDetail = await res.json();
-
-    console.log(data);
-
     return data;
+  }
+};
+
+export const deletePortfolio = async (id: string) => {
+  const token = getCookie('accessToken');
+
+  if (token) {
+    const res = await fetch(`${API_URL}/portfolio/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log(await res.json());
+
+    if (res.ok) {
+      return true;
+    } else {
+      return false;
+    }
   }
 };
