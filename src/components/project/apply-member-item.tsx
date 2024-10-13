@@ -139,7 +139,6 @@ const RecruitingButtons = ({
   projectId,
   applicantId,
 }: RecruitingButtonsProps) => {
-  // TODO: project start
   const router = useRouter();
   const searchParams = useSearchParams();
   const handleClickStart = async () => {
@@ -156,7 +155,7 @@ const RecruitingButtons = ({
 
   // TODO: DM
   return (
-    <div className="flex gap-[6px]">
+    <div className="flex w-full gap-[6px]">
       <BottomButton
         variant="stroke"
         size="small"

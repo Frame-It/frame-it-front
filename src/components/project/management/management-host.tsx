@@ -1,4 +1,3 @@
-import BottomButton from '@/components/common/bottom-button';
 import Guide from '@/components/common/guide';
 import { HostProjectGuide } from '@/constants/guide';
 import {
@@ -15,6 +14,7 @@ import ProjectInfo from '../project-info';
 import { HostReviewDialogButton } from '../review/review-dialog-button';
 import { ApplicantList } from './applicant-list';
 import { ProjectApplyGuest } from './apply-info';
+import HostInProgressContent from './host-in-progress';
 import ProgressBox from './progress-box';
 
 interface HostContentProps {
@@ -31,6 +31,7 @@ const ManagementHost = async ({ id, status }: HostContentProps) => {
   } else {
     statusProject = await getCompletedProject(id);
   }
+  console.log(statusProject);
 
   const project: IActiveProject = {
     status: statusProject.status,
@@ -46,7 +47,7 @@ const ManagementHost = async ({ id, status }: HostContentProps) => {
     <ManagementHostLayout project={project}>
       {status === 'RECRUITING' && <RecruitingContent projectId={id} />}
       {status === 'IN_PROGRESS' && (
-        <InProgressContent
+        <HostInProgressContent
           projectId={id}
           project={statusProject as InProgressProject}
         />
@@ -104,55 +105,23 @@ const RecruitingContent = async ({ projectId }: RecruitingContentProps) => {
   return <ApplicantList applicantList={applicants} projectId={projectId} />;
 };
 
-interface InProgressContentProps {
-  projectId: number;
-  project: InProgressProject;
-}
-
-const InProgressContent = async ({
-  projectId,
-  project,
-}: InProgressContentProps) => {
-  // TODO: project 완료
-
-  return (
-    <>
-      <BottomButton
-        variant={'secondary'}
-        size={'large'}
-        label={'프로젝트 완료하기'}
-      />
-      <Guide guides={HostProjectGuide.inProgress} />
-      <ProjectApplyGuest
-        partner={project.guest}
-        id={projectId}
-        status={'IN_PROGRESS'}
-        applyContent={project.applyContent}
-        appliedAt={project.appliedAt}
-      />
-    </>
-  );
-};
-
 interface CompletedContentProps {
   projectId: number;
 }
 
 const CompletedContent = async ({ projectId }: CompletedContentProps) => {
-  // TODO: completed project api call
-
-  const { projectMember, reviewId } = await getCompletedProject(projectId);
+  const { guest, reviewId } = await getCompletedProject(projectId);
 
   return (
     <>
       <HostReviewDialogButton
         projectId={projectId}
-        guest={projectMember}
+        guest={guest}
         reviewId={reviewId}
       />
       <ProjectApplyGuest
         status={'COMPLETED'}
-        partner={projectMember}
+        partner={guest}
         id={projectId}
         applyContent={''}
         appliedAt={''}

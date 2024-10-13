@@ -25,7 +25,7 @@ export default function ProjectManagementLayout({
     <div className="flex h-screen flex-col pb-[66px] pt-[58px]">
       <Header>
         <HeaderLeft>
-          <BackButton>
+          <BackButton path={`/project-management/list`}>
             <Icon id="back-icon" className="size-[32px] text-gray-40" />
           </BackButton>
         </HeaderLeft>
