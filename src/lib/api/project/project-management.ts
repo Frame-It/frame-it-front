@@ -45,6 +45,8 @@ export interface InProgressProject extends BaseProject {
   guest: ProjectMember;
   appliedAt: string;
   applyContent: string;
+  isReviewDone: boolean;
+  reviewId: number | null;
 }
 
 // 완료된 프로젝트 타입
@@ -53,9 +55,11 @@ export interface CompletedProject extends BaseProject {
   isReviewDone: boolean;
   reviewId: number | null;
   isHost: boolean;
-  projectMember: ProjectMember & {
+  guest: ProjectMember & {
     isReviewDone: boolean;
     reviewId: number | null;
+    appliedAt: string;
+    applyContent: string;
   };
 }
 

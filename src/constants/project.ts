@@ -30,12 +30,22 @@ export const USER_CONCEPTS = [
   { label: '코스프레', id: 'PC-013' },
 ];
 
-export type IProjectConcept = {
+export const REVIEW_TAGS = [
+  { label: '포징을 잘해줘요', id: 'RE-001' },
+  { label: '보정을 잘해줘요', id: 'RE-002' },
+  { label: '친절해요', id: 'RE-003' },
+  { label: '약속시간을 잘 지켜요', id: 'RE-004' },
+  { label: '매너가 좋아요', id: 'RE-005' },
+  { label: '커뮤니케이션이 잘 돼요', id: 'RE-006' },
+  { label: '컨셉이 좋아요', id: 'RE-007' },
+  { label: '선택할 카테고리가 없어요', id: 'RE-008' },
+];
+
+export type ITag = {
   label: string;
   id: string;
 };
 
-export type IUserConcept = {
-  label: string;
-  id: string;
-};
+export type IProjectConcept = ITag;
+
+export type IUserConcept = ITag;
