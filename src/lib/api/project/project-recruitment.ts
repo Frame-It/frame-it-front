@@ -1,3 +1,4 @@
+import { LocationType, TimeOption } from '@/types/project.type';
 import { getAuthHeader } from './header';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -14,19 +15,45 @@ export interface IRecruitResponse {
   isBookmarked: boolean;
 }
 
-export const getRecruitAnnouncements = async (
-  recruitmentRole: IRecruitResponse['recruitmentRole'],
-) => {
-  const queryParam = recruitmentRole
-    ? `?recruitmentRole=${recruitmentRole}`
-    : '';
+export interface IRecruitFilter {
+  recruitmentRole?: IRecruitResponse['recruitmentRole'];
+  startDate?: string;
+  endDate?: string;
+  timeOption?: TimeOption;
+  locationType?: LocationType;
+  concepts?: string[];
+}
 
+export const getRecruitAnnouncements = async ({
+  recruitmentRole,
+  startDate,
+  endDate,
+  timeOption,
+  locationType,
+  concepts,
+}: IRecruitFilter) => {
   const headers = await getAuthHeader();
 
-  const res = await fetch(`${API_URL}/projects/announcement${queryParam}`, {
+  const queryParams = new URLSearchParams();
+  if (recruitmentRole) queryParams.append('recruitmentRole', recruitmentRole);
+  if (startDate) queryParams.append('startDate', startDate.slice(0, 10));
+  if (endDate) queryParams.append('endDate', endDate.slice(0, 10));
+  if (timeOption) queryParams.append('timeOption', timeOption);
+  if (locationType) queryParams.append('locationType', locationType);
+  if (concepts) {
+    concepts.forEach((concept) => {
+      queryParams.append('concepts', concept);
+    });
+  }
+
+  const queryParamString = queryParams.toString();
+  const url = `${API_URL}/projects/announcement${queryParamString ? `?${queryParamString}` : ''}`;
+
+  const res = await fetch(url, {
     headers,
     cache: 'no-store',
   });
+
   const data = await res.json();
   if (res.status !== 200) {
     console.error(data.message);

@@ -5,6 +5,7 @@ import RecruitCard, {
   IRecruitCardProps,
 } from '@/components/project/recruit-card';
 import FilterDrawers from '@/components/project/recruitment/filter-drawers';
+import { IRecruitFilter } from '@/lib/api/project/project-recruitment';
 import { cn } from '@/lib/utils';
 import { useRecruitStore } from '@/store/recruit-store';
 import { ITabData } from '@/types/filter';
@@ -14,12 +15,14 @@ interface RecruitClientProps {
   recruitList: IRecruitCardProps[];
   currentTab: string;
   tabsData: ITabData[];
+  filter: IRecruitFilter;
 }
 
 const RecruitClient = ({
   recruitList,
   currentTab,
   tabsData,
+  filter,
 }: RecruitClientProps) => {
   const { recruits, setRecruits } = useRecruitStore();
 
@@ -30,14 +33,14 @@ const RecruitClient = ({
         return existingRecruit ? existingRecruit : recruit;
       }),
     );
-  }, [recruitList, setRecruits, currentTab]);
+  }, [recruitList, setRecruits, currentTab, filter]);
 
   return (
     <div className={cn('relative h-[calc(100vh-122px)] overflow-hidden')}>
       <div className={cn('sticky z-10 bg-white')}>
         <FilterTabs tabsData={tabsData} currentTab={currentTab} />
         <div className={cn('h-[46px]')}>
-          <FilterDrawers />
+          <FilterDrawers filter={filter} />
         </div>
       </div>
       <div className={cn('h-[calc(100%-94px)] overflow-auto py-[19px]')}>

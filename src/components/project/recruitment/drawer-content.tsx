@@ -16,7 +16,7 @@ interface DrawerProps {
   onClose: () => void;
 }
 
-export const ConceptDrawerContent: FC<DrawerProps> = () => {
+export const ConceptDrawerContent: FC<DrawerProps> = ({ onClose }) => {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const router = useRouter();
 
@@ -30,8 +30,9 @@ export const ConceptDrawerContent: FC<DrawerProps> = () => {
 
   const handleSelectConcept = () => {
     const queryString = new URLSearchParams(window.location.search);
-    queryString.set('concepts', selectedTags.join(','));
+    queryString.set('concepts', selectedTags.join('+'));
     router.push(`?${queryString.toString()}`);
+    onClose();
   };
 
   return (
@@ -80,7 +81,7 @@ export const AddressDrawerContent: FC<DrawerProps> = () => {
 
   const appendQuery = (address: string) => {
     const queryString = new URLSearchParams(window.location.search);
-    queryString.set('address', address);
+    queryString.set('spot', address);
     router.push(`?${queryString.toString()}`);
   };
 
@@ -119,9 +120,11 @@ export const AddressDrawerContent: FC<DrawerProps> = () => {
   );
 };
 
-export const DateDrawerContent: FC<DrawerProps> = () => {
+export const DateDrawerContent: FC<DrawerProps> = ({ onClose }) => {
   const [selectedTime, setSelectedTime] = useState<TimeOption | null>(null);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
+
   const router = useRouter();
 
   const handleTimeSelection = (time: TimeOption) => {
@@ -129,11 +132,13 @@ export const DateDrawerContent: FC<DrawerProps> = () => {
   };
 
   const applyFilters = () => {
-    if (selectedDate && selectedTime) {
+    if (startDate && endDate && selectedTime) {
       const queryString = new URLSearchParams(window.location.search);
-      queryString.set('date', selectedDate.toISOString()); // 'date' 쿼리 키 업데이트
-      queryString.set('time', selectedTime); // 'time' 쿼리 키 업데이트
+      queryString.set('startDate', startDate.toISOString()); // 'date' 쿼리 키 업데이트
+      queryString.set('endDate', endDate.toISOString()); // 'date' 쿼리 키 업데이트
+      queryString.set('timeOption', selectedTime); // 'time' 쿼리 키 업데이트
       router.push(`?${queryString.toString()}`);
+      onClose();
     }
   };
 
@@ -154,7 +159,10 @@ export const DateDrawerContent: FC<DrawerProps> = () => {
           </div>
           <div>
             <DatePicker
-              onDateChange={(date: Date | null) => setSelectedDate(date)}
+              onDateChange={(startDate: Date | null, endDate: Date | null) => {
+                setStartDate(startDate);
+                setEndDate(endDate);
+              }}
             />
           </div>
         </div>
@@ -194,14 +202,14 @@ export const DateDrawerContent: FC<DrawerProps> = () => {
           size={'large'}
           label={'필터 적용하기'}
           onClick={applyFilters}
-          disabled={!(selectedDate && selectedTime)}
+          disabled={!(startDate && endDate && selectedTime)}
         />
       </div>
     </div>
   );
 };
 
-export const LocationDrawerContent: FC<DrawerProps> = () => {
+export const LocationDrawerContent: FC<DrawerProps> = ({ onClose }) => {
   const [selectedLocation, setSelectedLocation] = useState<LocationType | null>(
     null,
   );
@@ -212,8 +220,9 @@ export const LocationDrawerContent: FC<DrawerProps> = () => {
 
     // 쿼리 문자열 업데이트
     const queryString = new URLSearchParams(window.location.search);
-    queryString.set('location', location); // 'location' 쿼리 키 업데이트
+    queryString.set('locationType', location);
     router.push(`?${queryString.toString()}`);
+    onClose();
   };
 
   return (

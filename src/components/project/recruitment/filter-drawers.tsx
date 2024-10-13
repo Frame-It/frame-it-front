@@ -1,6 +1,8 @@
 'use client';
 
+import { IRecruitFilter } from '@/lib/api/project/project-recruitment';
 import { cn } from '@/lib/utils';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import Drawer from '../../common/drawer';
 import Icon from '../../common/icon';
@@ -13,19 +15,19 @@ import {
 import DropdownButton from './dropdown-button';
 
 const filterOptions = {
-  concept: {
+  concepts: {
     label: '촬영컨셉',
     component: ConceptDrawerContent,
   },
-  location: {
+  spot: {
     label: '지역',
     component: AddressDrawerContent,
   },
-  date: {
+  startDate: {
     label: '촬영일시',
     component: DateDrawerContent,
   },
-  place: {
+  locationType: {
     label: '촬영장소',
     component: LocationDrawerContent,
   },
@@ -33,13 +35,15 @@ const filterOptions = {
 
 type FilterType = keyof typeof filterOptions;
 
-const FilterDrawers = () => {
-  // TODO: 필터 초기화
+const FilterDrawers = ({ filter }: { filter: IRecruitFilter }) => {
   const [openFilter, setOpenFilter] = useState<FilterType | null>(null);
-
+  const router = useRouter();
   const onOpenChange = (open: boolean, filter: FilterType) => {
     setOpenFilter(open ? filter : null);
   };
+
+  const searchParams = useSearchParams();
+  const tab = searchParams.get('tab');
 
   return (
     <div
@@ -51,6 +55,7 @@ const FilterDrawers = () => {
         className={cn(
           'flex h-[30px] w-[30px] flex-shrink-0 items-center justify-center rounded-full border-[1px] border-[#4D4744]',
         )}
+        onClick={() => router.push(`/recruit?tab=${tab ?? 'all'}`)}
       >
         <Icon
           id={'reload-icon'}
@@ -67,7 +72,13 @@ const FilterDrawers = () => {
             open={openFilter === key}
             onOpenChange={(open) => onOpenChange(open, key as FilterType)}
             onClose={() => setOpenFilter(null)}
-            trigger={<DropdownButton key={key} label={label} />}
+            trigger={
+              <DropdownButton
+                key={key}
+                label={label}
+                isSelected={filter[key as keyof IRecruitFilter] !== undefined}
+              />
+            }
           >
             <Component onClose={() => setOpenFilter(null)} />
           </Drawer>
