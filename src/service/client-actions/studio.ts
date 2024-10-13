@@ -64,34 +64,3 @@ export const getMyProjects = async () => {
     }
   }
 };
-
-export const getMyReviews = async (id: number) => {
-  const token = getCookie('accessToken');
-
-  try {
-    const res = await fetch(`${API_URL}/users/${id}/projects/reviews`, {
-      method: 'GET',
-      cache: 'no-store',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    // if (!res.ok) {
-    //   throw new Error('something error : ' + res.status);
-    // }
-
-    const data: {
-      reviewerNickname: string;
-      tags: string[];
-      content: string;
-    }[] = await res.json();
-
-    console.log(data);
-
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
-};
