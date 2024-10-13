@@ -29,6 +29,7 @@ interface IStepTwoProps {
   id?: string;
 }
 
+// TODO : 프로젝트 수정 시 로직 추가하기
 const StepTwo: React.FunctionComponent<IStepTwoProps> = ({ id }) => {
   const router = useRouter();
   const photoList = usePortfolioRegisterStore((state) => state.photoList);

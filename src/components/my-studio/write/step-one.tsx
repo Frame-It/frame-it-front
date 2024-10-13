@@ -9,6 +9,7 @@ import {
   IPortfolioRegistImage,
   usePortfolioRegisterStore,
 } from '@/store/portfolio-regist-store';
+import { cn } from '@/lib/utils';
 
 interface IStepOneProps {}
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
@@ -21,7 +22,7 @@ const StepOne: React.FunctionComponent<IStepOneProps> = () => {
 
   const photos = usePortfolioRegisterStore((state) => state.photoList) || [];
 
-  console.log(photos);
+  const validPhotos = photos.filter((file) => !file.isDelete);
 
   const handleNext = () => {
     if (photos.length > 10) {
@@ -88,7 +89,10 @@ const StepOne: React.FunctionComponent<IStepOneProps> = () => {
       {/* 미리보기 섹션 */}
       <div className="mt-4 columns-1 space-y-[8px]">
         {photos.map((info, index) => (
-          <div key={index} className="relative w-full">
+          <div
+            key={index}
+            className={cn('relative w-full', info.isDelete && 'hidden')}
+          >
             <img
               alt={`preview-${index}`}
               src={info.prevImageUrl}
@@ -143,7 +147,7 @@ const StepOne: React.FunctionComponent<IStepOneProps> = () => {
           <Button
             type="button"
             className="w-full"
-            disabled={photos.length <= 0}
+            disabled={validPhotos.length <= 0}
             onClick={handleNext}
           >
             다음
