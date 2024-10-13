@@ -1,7 +1,6 @@
 'use client';
 
 import BackButton from '@/components/common/back-button';
-import BottomNavbar from '@/components/common/bottom-navbar';
 import {
   Header,
   HeaderCenter,
@@ -22,10 +21,10 @@ export default function ProjectManagementLayout({
   const isList = id === undefined;
 
   return (
-    <div className="flex h-screen flex-col pb-[66px] pt-[58px]">
+    <div className="flex h-screen flex-col pt-[58px]">
       <Header>
         <HeaderLeft>
-          <BackButton path={`/project-management/list`}>
+          <BackButton path={isList ? '/my-page' : `/project-management/list`}>
             <Icon id="back-icon" className="size-[32px] text-gray-40" />
           </BackButton>
         </HeaderLeft>
@@ -39,7 +38,6 @@ export default function ProjectManagementLayout({
         </HeaderRight>
       </Header>
       {children}
-      <BottomNavbar />
     </div>
   );
 }

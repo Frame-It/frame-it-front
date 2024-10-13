@@ -177,16 +177,30 @@ export const postCompleteProject = async (projectId: number) => {
   }
 };
 
-export const deleteApplyProject = async (projectId: number) => {
+export const deleteApplyProject = async ({
+  projectId,
+  content,
+  cancelReasons,
+}: {
+  projectId: number;
+  content: string;
+  cancelReasons: string[];
+}) => {
   const headers = await getAuthHeader();
 
   const res = await fetch(`${API_URL}/projects/${projectId}/applicants`, {
     method: 'DELETE',
-    headers,
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      cancelReasons,
+      content,
+    }),
   });
-  console.log(res);
 
   if (!res.ok) {
-    throw new Error('Failed to fetch completed project');
+    throw new Error('Failed to delete project');
   }
 };
