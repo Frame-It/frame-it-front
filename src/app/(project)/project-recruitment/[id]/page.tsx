@@ -96,7 +96,7 @@ const ProjectRecruitmentDetailPage: FC<
         <div className={cn('font-body-14 pt-2')}>{retouchingDescription}</div>
       </div>
       <div className={cn('font-title-18 flex flex-col gap-2')}>
-        작가
+        {host.identity === 'PHOTOGRAPHER' ? '작가' : '모델'}
         <WriterInfo
           hostId={host.id}
           nickname={host.nickname}
