@@ -75,8 +75,9 @@ const StepTwo: React.FC = () => {
       });
 
       try {
-        const result = await postAnnouncement(formData);
+        await postAnnouncement(formData);
 
+        // TODO: 초기화
         router.push('?complete=true');
       } catch (error) {
         console.error(error);

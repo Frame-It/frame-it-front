@@ -4,8 +4,8 @@ import { ActiveStatus } from '@/types/project.type';
 import { redirect } from 'next/navigation';
 
 interface ProjectManagementDetailPageProps {
-  params: { id: string }; // from URL
-  searchParams: { status?: ActiveStatus; isHost?: string }; // from query string
+  params: { id: string };
+  searchParams: { status?: ActiveStatus; isHost?: string };
 }
 
 const ProjectManagementDetailPage = ({
