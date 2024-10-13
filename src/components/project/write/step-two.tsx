@@ -29,7 +29,7 @@ import { ChangeEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 const StepTwo: React.FC = () => {
-  const { projectInfo } = useProjectRegisterStore();
+  const { projectInfo, reset } = useProjectRegisterStore();
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   const router = useRouter();
@@ -77,7 +77,7 @@ const StepTwo: React.FC = () => {
       try {
         await postAnnouncement(formData);
 
-        // TODO: 초기화
+        reset();
         router.push('?complete=true');
       } catch (error) {
         console.error(error);

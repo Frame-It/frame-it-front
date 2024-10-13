@@ -26,21 +26,24 @@ interface ProjectRegisterState {
   prevStep: () => void;
   setProjectInfo: (info: Partial<IProjectRegistInfo>) => void;
   setPhotos: (photos: File[]) => void;
+  reset: () => void; // 상태 초기화를 위한 메서드
 }
+
+const initialProjectInfo: IProjectRegistInfo = {
+  type: 'PHOTOGRAPHER',
+  projectName: '',
+  shootingDate: { date: '', time: '', period: 'MORNING' },
+  location: { type: 'INDOOR', address: '', detail: '' },
+  conceptTags: [],
+  photos: null,
+  description: '',
+  retouchingDetails: '',
+};
 
 export const useProjectRegisterStore = create<ProjectRegisterState>((set) => ({
   currentStep: 1,
   maxStep: 2,
-  projectInfo: {
-    type: 'PHOTOGRAPHER',
-    projectName: '',
-    shootingDate: { date: '', time: '', period: 'MORNING' },
-    location: { type: 'INDOOR', address: '', detail: '' },
-    conceptTags: [],
-    photos: null,
-    description: '',
-    retouchingDetails: '',
-  },
+  projectInfo: initialProjectInfo,
 
   prevStep() {
     set((state) => ({
@@ -63,4 +66,11 @@ export const useProjectRegisterStore = create<ProjectRegisterState>((set) => ({
     set((state) => ({
       projectInfo: { ...state.projectInfo, photos },
     })),
+
+  reset() {
+    set({
+      currentStep: 1,
+      projectInfo: initialProjectInfo,
+    });
+  },
 }));
