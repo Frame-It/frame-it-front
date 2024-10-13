@@ -36,19 +36,28 @@ const ReviewRegisterPage = async ({
   const status = searchParams.status;
 
   if (status === 'IN_PROGRESS') {
-    statusProject = await getInProgressProject(projectId, 'HOST');
+    statusProject = await getInProgressProject(
+      projectId,
+      isHost ? 'HOST' : 'GUEST',
+    );
   } else {
-    statusProject = await getCompletedProject(projectId, 'GUEST');
+    statusProject = await getCompletedProject(
+      projectId,
+      isHost ? 'HOST' : 'GUEST',
+    );
   }
-  if (!statusProject.guest) return null;
+  const reviewee = statusProject.guest
+    ? statusProject.guest
+    : statusProject.host;
+  if (!reviewee) return null;
 
   return isComplete ? (
-    <Complete projectId={Number(id)} isHost={isHost} />
+    <Complete projectId={Number(id)} isHost={isHost} status={status} />
   ) : (
     <ReviewRegister
       project={statusProject}
       projectId={Number(id)}
-      revieweeId={statusProject.guest.id}
+      revieweeId={reviewee.id}
     />
   );
 };
@@ -56,9 +65,11 @@ const ReviewRegisterPage = async ({
 const Complete = ({
   projectId,
   isHost,
+  status,
 }: {
   projectId: number;
   isHost: boolean;
+  status: ActiveStatus;
 }) => {
   return (
     <div className="flex h-full flex-col items-center justify-center gap-[9px]">
@@ -70,7 +81,7 @@ const Complete = ({
       </div>
 
       <Link
-        href={`/project-management/${projectId}?status=${'IN_PROGRESS'}&isHost=${isHost}&isReviewDone=true`}
+        href={`/project-management/${projectId}?status=${status}&isHost=${isHost}&isReviewDone=true`}
         className="w-[217px]"
       >
         <BottomButton

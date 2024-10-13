@@ -63,7 +63,6 @@ export interface CompletedProject extends BaseProject {
   status: 'COMPLETED';
   isReviewDone: boolean;
   reviewId: number | null;
-  isHost: boolean;
   guest?: ProjectMember & {
     isReviewDone: boolean;
     reviewId: number | null;
@@ -154,11 +153,12 @@ export const getCompletedProject = async (
     },
   );
 
+  const data: CompletedProject = await res.json();
   if (!res.ok) {
+    console.log(data);
+
     throw new Error('Failed to start project');
   }
-
-  const data: CompletedProject = await res.json();
   return data;
 };
 
@@ -192,6 +192,8 @@ export const postCompleteProject = async (projectId: number) => {
   if (!res.ok) {
     throw new Error('Failed to post completed project');
   }
+  const data = await res.json();
+  return data;
 };
 
 export const deleteApplyProject = async ({

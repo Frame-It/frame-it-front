@@ -5,12 +5,14 @@ import { GuestReviewDialogButton } from '../review/review-dialog-button';
 export const HostInfo = ({
   host,
   reviewId,
+  canViewReview,
 }: {
   host: ProjectMember & {
     isReviewDone: boolean;
     reviewId: number | null;
   };
   reviewId: number | null;
+  canViewReview: boolean;
 }) => {
   return (
     <div className="flex flex-col gap-3">
@@ -29,6 +31,7 @@ export const HostInfo = ({
         <GuestReviewDialogButton
           host={{ userId: host.id, name: host.nickname }}
           reviewId={reviewId}
+          canViewReview={canViewReview}
         />
       </div>
     </div>

@@ -3,6 +3,7 @@
 import BottomButton from '@/components/common/bottom-button';
 import useDisclosure from '@/hooks/useDisclosure';
 import { ProjectMember } from '@/lib/api/project/project-management';
+import { ActiveStatus } from '@/types/project.type';
 import { useRouter } from 'next/navigation';
 import ReviewDialog from './review-dialog';
 
@@ -10,21 +11,23 @@ export const HostReviewDialogButton = ({
   projectId,
   reviewId,
   guest,
+  status,
 }: {
   projectId: number;
   reviewId: number | null;
   guest: ProjectMember;
+  status: ActiveStatus;
 }) => {
   const router = useRouter();
   const { isOpen: isReviewDialogOpen, setIsOpen: setIsReviewDialogOpen } =
     useDisclosure(false);
-  const isReviewDone = true;
+  const isReviewDone = reviewId !== null;
 
   const handleClickReview = () => {
     if (isReviewDone) {
       setIsReviewDialogOpen(true);
     } else {
-      router.push(`/review-register/${projectId}`);
+      router.push(`/review-register/${projectId}?status=${status}`);
     }
   };
 
@@ -33,7 +36,7 @@ export const HostReviewDialogButton = ({
       <BottomButton
         variant={'secondary'}
         size={'large'}
-        label={'리뷰 작성하기'}
+        label={isReviewDone ? '리뷰 확인하기' : '리뷰 작성하기'}
         onClick={handleClickReview}
       />
       {reviewId && (
@@ -50,9 +53,11 @@ export const HostReviewDialogButton = ({
 export const GuestReviewDialogButton = ({
   host,
   reviewId,
+  canViewReview = true,
 }: {
   host: { userId: number; name: string };
   reviewId: number | null;
+  canViewReview?: boolean;
 }) => {
   const { isOpen: isReviewDialogOpen, onToggle: toggleReviewDialog } =
     useDisclosure(false);
@@ -73,6 +78,7 @@ export const GuestReviewDialogButton = ({
         label={reviewId === null ? '호스트에게 DM하기' : '리뷰 확인하기'}
         className="font-tag-12 max-w-[126px]"
         onClick={handleClickHost}
+        disabled={reviewId !== null && !canViewReview}
       />
       {reviewId && (
         <ReviewDialog

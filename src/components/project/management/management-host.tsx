@@ -120,13 +120,14 @@ const CompletedContent = async ({ projectId }: CompletedContentProps) => {
         projectId={projectId}
         guest={guest}
         reviewId={reviewId}
+        status={'COMPLETED'}
       />
       <ProjectApplyGuest
         status={'COMPLETED'}
         partner={guest}
         id={projectId}
-        applyContent={''}
-        appliedAt={''}
+        applyContent={guest.applyContent}
+        appliedAt={guest.appliedAt}
       />
     </>
   );

@@ -15,8 +15,8 @@ import { cn } from '@/lib/utils';
 import { ActiveStatus, IActiveProject } from '@/types/project.type';
 import ProjectInfo from '../project-info';
 import { MyApplyInfo } from './apply-info';
+import GuestCompletedContent from './guest-completed';
 import GuestInProgressContent from './guest-in-progress';
-import { HostInfo } from './host-info';
 import ProgressBox from './progress-box';
 
 const ManagementGuest = async ({
@@ -63,7 +63,12 @@ const ManagementGuest = async ({
           project={statusProject as InProgressProject}
         />
       )}
-      {status === 'COMPLETED' && <CompletedContent projectId={id} />}
+      {status === 'COMPLETED' && (
+        <GuestCompletedContent
+          projectId={id}
+          project={statusProject as CompletedProject}
+        />
+      )}
     </ManagementGuestLayout>
   );
 };
@@ -135,26 +140,6 @@ const RecruitingContent = async ({
         appliedAt={myApplication.appliedAt}
         applyContent={myApplication.applyContent}
       />
-    </>
-  );
-};
-
-interface CompletedContentProps {
-  projectId: number;
-}
-
-const CompletedContent = async ({ projectId }: CompletedContentProps) => {
-  const { host, reviewId } = await getCompletedProject(projectId, 'GUEST');
-
-  if (!host) return null;
-  return (
-    <>
-      <BottomButton
-        variant={'secondary'}
-        size={'large'}
-        label={'리뷰 작성하기'}
-      />
-      <HostInfo host={host} reviewId={reviewId} />
     </>
   );
 };
