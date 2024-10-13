@@ -102,3 +102,25 @@ export const deleteRecruitBookmark = async (id: number) => {
     console.error(e);
   }
 };
+
+export const postProjectApply = async (
+  projectId: number,
+  applyContent: string,
+) => {
+  const headers = await getAuthHeader();
+
+  const res = await fetch(`${API_URL}/projects/${projectId}/apply`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      applyContent,
+    }),
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch completed project');
+  }
+};

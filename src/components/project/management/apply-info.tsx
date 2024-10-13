@@ -1,12 +1,14 @@
+'use client';
+
+import Icon from '@/components/common/icon';
+import useDisclosure from '@/hooks/useDisclosure';
 import { ProjectMember } from '@/lib/api/project/project-management';
 import { cn } from '@/lib/utils';
-import { ActiveStatus, IActiveProject } from '@/types/project.type';
+import { IActiveProject } from '@/types/project.type';
 import { MyApplyItem, ProjectApplyGuestItem } from '../apply-member-item';
 
 interface ApplyLayoutProps {
   title: string;
-  member: ProjectMember;
-  status: ActiveStatus;
   children: React.ReactNode;
 }
 
@@ -33,7 +35,7 @@ export const ProjectApplyGuest = ({
   appliedAt,
 }: ProjectApplyGuestProps) => {
   return (
-    <ApplyLayout title="프로젝트 게스트" member={partner} status={status}>
+    <ApplyLayout title="프로젝트 게스트">
       <ProjectApplyGuestItem
         status={status}
         appliedAt={appliedAt}
@@ -47,18 +49,41 @@ export const ProjectApplyGuest = ({
 
 type ApplyInfoProps = {
   principal: ProjectMember;
+  appliedAt: string;
+  applyContent: string;
 } & Pick<IActiveProject, 'status' | 'id'>;
 
-export const MyApplyInfo = ({ principal, status, id }: ApplyInfoProps) => {
+export const MyApplyInfo = ({
+  principal,
+  status,
+  id,
+  appliedAt,
+  applyContent,
+}: ApplyInfoProps) => {
+  const { isOpen, onToggle } = useDisclosure(false);
+
   return (
-    <ApplyLayout title="신청정보" member={principal} status={status}>
-      <MyApplyItem
-        projectId={id}
-        appliedAt={''}
-        applyContent={'my'}
-        status={status}
-        {...principal}
-      />
-    </ApplyLayout>
+    <div className={cn('flex w-full flex-col')}>
+      <div className={cn('flex w-full justify-between')}>
+        <h1 className={cn('font-title-18 text-gray-20')}>신청정보</h1>
+        <Icon
+          id={isOpen ? 'arrow-up-icon' : 'arrow-down-icon'}
+          size={24}
+          onClick={onToggle}
+          className={cn('text-gray-40')}
+        />
+      </div>
+      {isOpen && (
+        <div className="flex-1 divide-y divide-gray-80">
+          <MyApplyItem
+            projectId={id}
+            appliedAt={appliedAt}
+            applyContent={applyContent}
+            status={status}
+            {...principal}
+          />
+        </div>
+      )}
+    </div>
   );
 };

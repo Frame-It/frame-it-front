@@ -25,7 +25,6 @@ const ProjectRecruitmentDetailPage: FC<
 > = async ({ params }) => {
   const projectId = parseInt(params.id, 10);
   const projectData = await getRecruitAnnouncement(projectId);
-  const userRole = 'HOST'; // TODO: 서버에서 보내줘야 할 듯
 
   const {
     title,
@@ -37,6 +36,7 @@ const ProjectRecruitmentDetailPage: FC<
     retouchingDescription,
     host,
     conceptPhotoUrls,
+    isHost,
   } = projectData;
 
   return (
@@ -110,10 +110,14 @@ const ProjectRecruitmentDetailPage: FC<
           'absolute bottom-0 left-0 flex h-[64px] w-full items-center justify-center gap-[8px] px-4',
         )}
       >
-        {userRole === 'HOST' ? (
+        {isHost ? (
           <HostBottom projectId={projectId} />
         ) : (
-          <GuestBottom title={title} projectId={projectId} />
+          <GuestBottom
+            title={title}
+            projectId={projectId}
+            hostIdentity={host.identity}
+          />
         )}
       </div>
     </main>
