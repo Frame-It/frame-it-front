@@ -31,7 +31,9 @@ export const HostBottom: FC<HostBottomProps> = ({ projectId }) => {
       <IconButton
         icon={<Icon id={'edit-icon'} size={24} className="text-gray-40" />}
       />
-      <Link href={`/project-management/${projectId}`}>
+      <Link
+        href={`/project-management/${projectId}?status=RECRUITING&isHost=true`}
+      >
         <BottomButton
           variant={'secondary'}
           size={'large'}
