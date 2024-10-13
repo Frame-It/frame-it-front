@@ -19,6 +19,9 @@ const FeedList: React.FunctionComponent<IFeedListProps> = ({ role }) => {
     data: feedData,
     fetchNextPage,
     hasNextPage,
+    isFetchingNextPage,
+    status,
+    error,
   } = useInfiniteQuery({
     queryKey: ['feeds', role],
     queryFn: ({ pageParam = 0, queryKey }) =>
@@ -37,24 +40,28 @@ const FeedList: React.FunctionComponent<IFeedListProps> = ({ role }) => {
     }
   }, [inView, fetchNextPage, hasNextPage]);
 
+  const isEmptyFeed =
+    !feedData || feedData.pages.every((page) => page.content.length === 0);
+
   return (
-    <section ref={ref} className="mx-auto h-full w-full">
-      {feedData ? (
-        <>
-          {feedData?.pages?.map((page: IPortfolioResponse, i: number) => (
-            <PhotoList
-              key={page?.content[0]?.id + i}
-              imageList={(page?.content as IFeed[]) || []}
-              isNavigate
-              isFeed
-            />
-          ))}
-        </>
+    <section className="mx-auto h-full w-full">
+      {status === 'pending' && <p>Loading feeds...</p>}
+      {status === 'error' && <p>Error loading feeds.</p>}
+      {isEmptyFeed ? (
+        <EmptyFeeds />
       ) : (
-        <>
-          <EmptyFeeds />
-        </>
+        feedData?.pages?.map((page: IPortfolioResponse, i: number) => (
+          <PhotoList
+            key={i}
+            imageList={(page?.content as IFeed[]) || []}
+            isNavigate
+            isFeed
+          />
+        ))
       )}
+      <div ref={ref} style={{ height: '20px', background: 'transparent' }}>
+        {isFetchingNextPage ? <p>Loading more feed...</p> : null}
+      </div>
     </section>
   );
 };

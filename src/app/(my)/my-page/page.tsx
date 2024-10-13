@@ -11,7 +11,7 @@ import {
   HeaderRight,
 } from '@/components/common/header';
 import NotificationButton from '@/components/common/notification-button';
-import { getMyPage } from '@/service/my-service';
+import { getMyPage } from '@/service/server-actions/my-service';
 
 export default async function MyPage() {
   const myInfo = await getMyPage();

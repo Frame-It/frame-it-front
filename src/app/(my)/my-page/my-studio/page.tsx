@@ -5,8 +5,7 @@ import MyStudioPortfolioGallery from '@/components/my-studio/portfolio-gallery';
 import ProjectList from '@/components/my-studio/project-list';
 import ReviewList from '@/components/my-studio/review-list';
 
-import { generateRandomImageList } from '@/lib/faker';
-import { getMyPage } from '@/service/my-service';
+import { getMyPage } from '@/service/server-actions/my-service';
 import { faker } from '@faker-js/faker';
 
 export default async function MyStudioPage(params: {
@@ -19,15 +18,15 @@ export default async function MyStudioPage(params: {
   const queryString = type || 'portfolio';
 
   // TODO : 마이스튜디오 데이터 더 받기
-  const imageArr = Array.from({ length: 10 }, () => generateRandomImageList());
-
   const myInfo = await getMyPage();
 
   return (
     <main className="h-[calc(100dvh-58px-63px)] overflow-y-auto px-[16px] py-[14px]">
       <MyStudioHeader
         profileUrl={myInfo?.profileImageUrl || ''}
-        role={(myInfo?.identity.toLowerCase() as 'model' | 'author') || 'model'}
+        role={
+          (myInfo?.identity?.toLowerCase() as 'model' | 'author') || 'model'
+        }
         nickName={myInfo?.nickname || ''}
         portfolioCount={myInfo?.portfolioCount || 0}
         projectCount={myInfo?.projectCount || 0}
@@ -85,41 +84,7 @@ export default async function MyStudioPage(params: {
       )}
 
       {/* 리뷰 */}
-      {queryString === 'review' && (
-        <ReviewList
-          reviewList={[
-            {
-              nickname: '아키나86',
-              tagList: [
-                '약속시간을 잘 지켜요',
-                '매너가 좋아요',
-                '친절해요',
-                '사진을 잘 찍어요',
-              ],
-              constents: '즐거웠습니다.',
-            },
-            {
-              nickname: '아키나86',
-              tagList: [
-                '약속시간을 잘 지켜요',
-                '매너가 좋아요',
-                '친절해요',
-                '사진을 잘 찍어요',
-              ],
-              constents: '즐거웠습니다.',
-            },
-            {
-              nickname: '아키나86',
-              tagList: [
-                '컨셉이 좋아요',
-                '매너가 좋아요',
-                '친절해요',
-                '사진을 잘 찍어요',
-              ],
-            },
-          ]}
-        />
-      )}
+      {queryString === 'review' && myInfo && <ReviewList id={myInfo.id} />}
     </main>
   );
 }

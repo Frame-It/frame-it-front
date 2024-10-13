@@ -1,8 +1,7 @@
 // middleware.ts
-import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set('x-pathname', request.nextUrl.pathname);
 
@@ -13,13 +12,20 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  if (url.pathname === '/my-page') {
-    const cookieStore = cookies();
-    const token = cookieStore.get('accessToken');
+  if (url.pathname.startsWith('/my-page')) {
+    const { status } = await getValidateToken(request);
 
-    return token?.value
+    return status === 200
       ? NextResponse.next()
       : NextResponse.redirect(new URL('/login', request.url));
+  }
+
+  if (url.pathname === '/login') {
+    const { status, res } = await getValidateToken(request);
+
+    return status !== 200
+      ? res
+      : NextResponse.redirect(new URL('/', request.url));
   }
 
   return NextResponse.next({
@@ -27,4 +33,30 @@ export function middleware(request: NextRequest) {
       headers: requestHeaders,
     },
   });
+}
+
+async function getValidateToken(req: NextRequest) {
+  const accessToken = req.cookies.get('accessToken')?.value;
+
+  const nextRes = NextResponse.next();
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/tokens/validate`,
+    {
+      method: 'GET',
+      cache: 'no-store',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    },
+  );
+
+  if (res.status === 403) {
+    nextRes.cookies.set('accessToken', '', { maxAge: 0 });
+  }
+
+  return {
+    status: res.status,
+    res: nextRes,
+  };
 }

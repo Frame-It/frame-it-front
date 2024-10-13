@@ -1,6 +1,6 @@
 import LogoutDialog from '@/components/setting/logout-dialog';
 import { Switch } from '@/components/ui/switch';
-import { getMyInfo } from '@/service/my-service';
+import { getMyInfo } from '@/service/server-actions/my-service';
 import Link from 'next/link';
 
 const settingLI = 'space-y-1 px-4 py-[12px]';

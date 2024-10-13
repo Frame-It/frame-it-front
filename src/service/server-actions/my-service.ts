@@ -17,6 +17,10 @@ export const getMyPage = async () => {
       cache: 'no-store',
     });
 
+    // if (!response.ok) {
+    //   throw new Error(`Error : ${response.status}`);
+    // }
+
     const data: IMyStudio = await response.json();
     return data;
   }

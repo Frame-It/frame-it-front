@@ -1,22 +1,19 @@
-'use client';
-
+import { getMyReviews } from '@/service/client-actions/studio';
 import { Textarea } from '../ui/textarea';
 import { cn } from '@/lib/utils';
 
 interface IReviewListProps {
-  reviewList: {
-    nickname: string;
-    tagList: string[];
-    constents?: string;
-  }[];
+  id: number;
 }
 
-const ReviewList: React.FunctionComponent<IReviewListProps> = ({
-  reviewList,
-}) => {
+const ReviewList = async ({ id }: IReviewListProps) => {
+  const reviewList = await getMyReviews(id);
+
+  console.log(reviewList);
+
   return (
     <section>
-      {reviewList.length <= 0 && (
+      {/* {reviewList.length <= 0 && (
         <div className="mt-[48px] text-center">
           <div className="font-semibold leading-[135%] text-gray-20">
             아직 작성된 리뷰가 없습니다.
@@ -60,7 +57,7 @@ const ReviewList: React.FunctionComponent<IReviewListProps> = ({
             )}
           </li>
         ))}
-      </ul>
+      </ul> */}
     </section>
   );
 };
