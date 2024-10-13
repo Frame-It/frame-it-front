@@ -29,9 +29,9 @@ const ManagementHost = async ({ id, status }: HostContentProps) => {
   } else if (status === 'IN_PROGRESS') {
     statusProject = await getInProgressProject(id, 'HOST');
   } else {
-    statusProject = await getCompletedProject(id);
+    statusProject = await getCompletedProject(id, 'HOST');
   }
-  console.log(statusProject);
+  // console.log(statusProject);
 
   const project: IActiveProject = {
     status: statusProject.status,
@@ -110,7 +110,9 @@ interface CompletedContentProps {
 }
 
 const CompletedContent = async ({ projectId }: CompletedContentProps) => {
-  const { guest, reviewId } = await getCompletedProject(projectId);
+  const { guest, reviewId } = await getCompletedProject(projectId, 'HOST');
+
+  if (!guest) return;
 
   return (
     <>

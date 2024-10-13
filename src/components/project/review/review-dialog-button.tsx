@@ -51,7 +51,7 @@ export const GuestReviewDialogButton = ({
   host,
   reviewId,
 }: {
-  host: { userId: string; name: string };
+  host: { userId: number; name: string };
   reviewId: number | null;
 }) => {
   const { isOpen: isReviewDialogOpen, onToggle: toggleReviewDialog } =

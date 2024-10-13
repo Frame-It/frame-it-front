@@ -8,7 +8,7 @@ import {
   InProgressProject,
   postCompleteProject,
 } from '@/lib/api/project/project-management';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import ReviewDialog from '../review/review-dialog';
 import { ProjectApplyGuest } from './apply-info';
 
@@ -22,9 +22,12 @@ const HostInProgressContent = ({
   project,
 }: HostInProgressContentProps) => {
   // project 완료 -> 리뷰 페이지 이동
-  const { isReviewDone, reviewId } = project;
   const router = useRouter();
   const { isOpen, onOpenChange, onOpen } = useDisclosure(false);
+  const searchParams = useSearchParams();
+  const isReviewDoneQuery = searchParams.get('isReviewDone') === 'true';
+
+  const { isReviewDone, reviewId } = project;
 
   const handleClickComplete = async () => {
     await postCompleteProject(projectId);
@@ -36,10 +39,11 @@ const HostInProgressContent = ({
   const handleClickShowReview = async () => {
     onOpen();
   };
+  if (!project.guest) return;
 
   return (
     <>
-      {isReviewDone ? (
+      {isReviewDone || isReviewDoneQuery ? (
         <BottomButton
           variant={'secondary'}
           size={'large'}

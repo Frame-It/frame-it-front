@@ -22,7 +22,7 @@ export interface Applicant {
 }
 
 // 본인의 지원 정보 타입 (GUEST로 프로젝트 참여한 경우)
-interface MyApplication extends Applicant {}
+export interface MyApplication extends Applicant {}
 
 // 진행 중 또는 완료된 프로젝트의 멤버 정보 (상대방)
 export interface ProjectMember {
@@ -42,7 +42,16 @@ export interface RecruitingProject extends BaseProject {
 export interface InProgressProject extends BaseProject {
   status: 'IN_PROGRESS';
   isHost: boolean;
-  guest: ProjectMember;
+  guest?: ProjectMember & {
+    isReviewDone: boolean;
+    reviewId: number | null;
+    appliedAt: string;
+    applyContent: string;
+  };
+  host?: ProjectMember & {
+    isReviewDone: boolean;
+    reviewId: number | null;
+  };
   appliedAt: string;
   applyContent: string;
   isReviewDone: boolean;
@@ -55,11 +64,15 @@ export interface CompletedProject extends BaseProject {
   isReviewDone: boolean;
   reviewId: number | null;
   isHost: boolean;
-  guest: ProjectMember & {
+  guest?: ProjectMember & {
     isReviewDone: boolean;
     reviewId: number | null;
     appliedAt: string;
     applyContent: string;
+  };
+  host?: ProjectMember & {
+    isReviewDone: boolean;
+    reviewId: number | null;
   };
 }
 
@@ -80,35 +93,36 @@ export const getUserProjects = async () => {
 };
 
 export const getRecruitingProject = async (
-  id: number,
+  projectId: number,
   type: 'HOST' | 'GUEST',
 ): Promise<RecruitingProject> => {
   const headers = await getAuthHeader();
 
   const res = await fetch(
-    `${API_URL}/recruiting-projects/${id}/${type.toLowerCase()}`,
+    `${API_URL}/recruiting-projects/${projectId}/${type.toLowerCase()}`,
     {
       headers,
       cache: 'no-store',
     },
   );
 
+  const data: RecruitingProject = await res.json();
+
   if (!res.ok) {
+    console.log(data);
     throw new Error('Failed to fetch recruiting project');
   }
-
-  const data: RecruitingProject = await res.json();
   return data;
 };
 
 export const getInProgressProject = async (
-  id: number,
+  projectId: number,
   type: 'HOST' | 'GUEST',
 ): Promise<InProgressProject> => {
   const headers = await getAuthHeader();
 
   const res = await fetch(
-    `${API_URL}/in-progress-projects/${id}/${type.toLowerCase()}`,
+    `${API_URL}/in-progress-projects/${projectId}/${type.toLowerCase()}`,
     {
       headers,
       cache: 'no-store',
@@ -117,25 +131,31 @@ export const getInProgressProject = async (
 
   const data: InProgressProject = await res.json();
   if (!res.ok) {
-    console.log(data);
+    console.log('getInProgressProject:', data);
 
     throw new Error('Failed to fetch in-progress project');
   }
+  // console.log('getInProgressProject:', data);
+
   return data;
 };
 
 export const getCompletedProject = async (
-  id: number,
+  projectId: number,
+  type: 'HOST' | 'GUEST',
 ): Promise<CompletedProject> => {
   const headers = await getAuthHeader();
 
-  const res = await fetch(`${API_URL}/completed-projects/${id}`, {
-    headers,
-    cache: 'no-store',
-  });
+  const res = await fetch(
+    `${API_URL}/completed-projects/${projectId}/${type.toLowerCase()}`,
+    {
+      headers,
+      cache: 'no-store',
+    },
+  );
 
   if (!res.ok) {
-    throw new Error('Failed to fetch completed project');
+    throw new Error('Failed to start project');
   }
 
   const data: CompletedProject = await res.json();
@@ -156,10 +176,8 @@ export const postStartProject = async (
     },
   );
 
-  console.log(res);
-
   if (!res.ok) {
-    throw new Error('Failed to fetch completed project');
+    throw new Error('Failed to start project');
   }
 };
 
@@ -170,10 +188,9 @@ export const postCompleteProject = async (projectId: number) => {
     method: 'POST',
     headers,
   });
-  console.log(res);
 
   if (!res.ok) {
-    throw new Error('Failed to fetch completed project');
+    throw new Error('Failed to post completed project');
   }
 };
 

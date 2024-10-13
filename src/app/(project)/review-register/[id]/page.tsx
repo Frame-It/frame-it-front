@@ -38,9 +38,9 @@ const ReviewRegisterPage = async ({
   if (status === 'IN_PROGRESS') {
     statusProject = await getInProgressProject(projectId, 'HOST');
   } else {
-    statusProject = await getCompletedProject(projectId);
+    statusProject = await getCompletedProject(projectId, 'GUEST');
   }
-  console.log(statusProject);
+  if (!statusProject.guest) return null;
 
   return isComplete ? (
     <Complete projectId={Number(id)} isHost={isHost} />
@@ -70,7 +70,7 @@ const Complete = ({
       </div>
 
       <Link
-        href={`/project-management/${projectId}?status=${'IN_PROGRESS'}&isHost=${isHost}`}
+        href={`/project-management/${projectId}?status=${'IN_PROGRESS'}&isHost=${isHost}&isReviewDone=true`}
         className="w-[217px]"
       >
         <BottomButton
