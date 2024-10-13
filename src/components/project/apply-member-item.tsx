@@ -231,8 +231,11 @@ interface MyApplyButtonProps {
 }
 
 const MyApplyButton = ({ projectId }: MyApplyButtonProps) => {
-  // TODO: 신청 취소
-  const handleCancelApply = () => {};
+  const router = useRouter();
+
+  const handleCancelApply = () => {
+    router.push(`/project-management/cancel-register/${projectId}`);
+  };
 
   return (
     <div className="flex gap-[6px]">
