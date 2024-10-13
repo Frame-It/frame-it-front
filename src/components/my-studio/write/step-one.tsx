@@ -1,70 +1,79 @@
 'use client';
 
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent } from 'react';
 import { PlusIcon } from 'lucide-react';
-import Image from 'next/image';
 import { toast } from '@/components/ui/use-toast';
 import { Button } from '@/components/ui/button';
+
 import {
-  PortfolioImageFormValues,
-  portfolioImageSchema,
-} from '@/lib/schema/portfolio-regist-schema';
-import { usePortfolioRegisterStore } from '@/store/portfolio-regist-store';
+  IPortfolioRegistImage,
+  usePortfolioRegisterStore,
+} from '@/store/portfolio-regist-store';
 
 interface IStepOneProps {}
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
 const StepOne: React.FunctionComponent<IStepOneProps> = () => {
   // zustand
   const nextStep = usePortfolioRegisterStore((state) => state.nextStep);
-  const setPhoto = usePortfolioRegisterStore((state) => state.setPhoto);
+  const addPhoto = usePortfolioRegisterStore((state) => state.addPhoto);
+  const deletePhoto = usePortfolioRegisterStore((state) => state.deletePhoto);
 
-  const form = useForm<PortfolioImageFormValues>({
-    resolver: zodResolver(portfolioImageSchema),
-  });
-  const [previews, setPreviews] = useState<string[]>([]);
-  const [files, setFiles] = useState<File[]>([]);
+  const photos = usePortfolioRegisterStore((state) => state.photoList) || [];
 
-  const onSubmit = (values: PortfolioImageFormValues) => {
-    console.log(values);
-    setPhoto(values.images);
-    nextStep();
-  };
+  console.log(photos);
 
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { files: newFiles, displayUrls } = getImageData(e);
-
-    if (previews.length + displayUrls.length > 10) {
+  const handleNext = () => {
+    if (photos.length > 10) {
       toast({
         title: '사진은 최대 10장까지 등록 가능해요!',
       });
       return;
     }
 
-    // FileList를 명확하게 File[]로 변환
-    const newFilesArray = Array.from(newFiles) as File[];
-
-    setPreviews((prev) => [...prev, ...displayUrls]);
-    setFiles((prev) => [...prev, ...newFilesArray]);
-    form.setValue('images', [...files, ...newFilesArray]);
+    nextStep();
   };
 
-  const handleRemoveImage = (index: number) => {
-    setPreviews((prev) => prev.filter((_, i) => i !== index));
-    const updatedFiles = files.filter((_, i) => i !== index);
-    setFiles(updatedFiles);
-    form.setValue('images', updatedFiles);
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { files: newFiles, displayUrls } = getImageData(e);
+
+    if (photos.length + displayUrls.length > 10) {
+      toast({
+        title: '사진은 최대 10장까지 등록 가능해요!',
+      });
+      return;
+    }
+
+    // 파일 크기 제한 (5MB)
+    const invalidFiles = Array.from(newFiles).filter(
+      (file) => file.size > MAX_FILE_SIZE,
+    );
+
+    if (invalidFiles.length > 0) {
+      toast({
+        title: '이미지 중에 5MB를 초과하는 파일이 있어요!',
+      });
+      return;
+    }
+
+    const fileList = Array.from(newFiles);
+    const urlList = Array.from(displayUrls);
+
+    const newPhotoList: IPortfolioRegistImage[] = [];
+    for (let i = 0; i < fileList.length; i++) {
+      newPhotoList.push({
+        isNew: true,
+        file: fileList[i],
+        prevImageUrl: urlList[i],
+        isDelete: false,
+      });
+    }
+
+    addPhoto(newPhotoList);
+  };
+
+  const handleRemoveImage = (info: IPortfolioRegistImage, index: number) => {
+    deletePhoto(info, index);
   };
 
   return (
@@ -77,12 +86,12 @@ const StepOne: React.FunctionComponent<IStepOneProps> = () => {
       </p>
 
       {/* 미리보기 섹션 */}
-      <div className="columns-1 space-y-[8px]">
-        {previews.map((preview, index) => (
+      <div className="mt-4 columns-1 space-y-[8px]">
+        {photos.map((info, index) => (
           <div key={index} className="relative w-full">
-            <Image
+            <img
               alt={`preview-${index}`}
-              src={preview}
+              src={info.prevImageUrl}
               width={0}
               height={0}
               sizes="100vw"
@@ -92,7 +101,7 @@ const StepOne: React.FunctionComponent<IStepOneProps> = () => {
             <button
               type="button"
               className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full bg-gray-100 opacity-70"
-              onClick={() => handleRemoveImage(index)}
+              onClick={() => handleRemoveImage(info, index)}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -111,48 +120,36 @@ const StepOne: React.FunctionComponent<IStepOneProps> = () => {
         ))}
       </div>
 
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="mt-[16px]">
-          {files.length >= 10 ? null : (
-            <FormField
-              control={form.control}
-              name="images"
-              render={() => (
-                <FormItem>
-                  <FormControl>
-                    <>
-                      <FormLabel
-                        htmlFor="images"
-                        className="relative flex h-[328px] w-full cursor-pointer flex-col items-center justify-center rounded-[8px] border border-gray-60"
-                      >
-                        <PlusIcon size={32} className="text-gray-40" />
-                        <Input
-                          id="images"
-                          accept="image/*"
-                          type="file"
-                          multiple
-                          className="hidden"
-                          onChange={handleFileChange}
-                        />
-                      </FormLabel>
-                    </>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          )}
-          <div className="fixed inset-x-0 bottom-0 mx-auto w-full max-w-[360px] bg-white px-[16px] py-[9px]">
-            <Button
-              type="submit"
-              disabled={previews.length <= 0}
-              className="w-full"
+      <div className="mt-[16px]">
+        {photos.length >= 10 ? null : (
+          <>
+            <label
+              htmlFor="images"
+              className="relative flex h-[328px] w-full cursor-pointer flex-col items-center justify-center rounded-[8px] border border-gray-60"
             >
-              다음
-            </Button>
-          </div>
-        </form>
-      </Form>
+              <PlusIcon size={32} className="text-gray-40" />
+              <input
+                id="images"
+                accept="image/*"
+                multiple
+                type="file"
+                className="hidden"
+                onChange={handleFileChange}
+              />
+            </label>
+          </>
+        )}
+        <div className="fixed inset-x-0 bottom-0 mx-auto w-full max-w-[360px] bg-white px-[16px] py-[9px]">
+          <Button
+            type="button"
+            className="w-full"
+            disabled={photos.length <= 0}
+            onClick={handleNext}
+          >
+            다음
+          </Button>
+        </div>
+      </div>
     </section>
   );
 };

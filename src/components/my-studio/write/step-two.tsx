@@ -25,9 +25,11 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-interface IStepTwoProps {}
+interface IStepTwoProps {
+  id?: string;
+}
 
-const StepTwo: React.FunctionComponent<IStepTwoProps> = () => {
+const StepTwo: React.FunctionComponent<IStepTwoProps> = ({ id }) => {
   const router = useRouter();
   const photoList = usePortfolioRegisterStore((state) => state.photoList);
   const clearData = usePortfolioRegisterStore((state) => state.clear);
@@ -47,7 +49,7 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = () => {
       togethers: values.togather
         ? Array.from({ length: 1 }, () => values.togather)
         : undefined,
-      photos: [...photoList!],
+      photos: photoList?.map((el) => el.file),
     };
 
     const isSuccess = await postPortfolio(newValue);

@@ -11,9 +11,11 @@ import {
   DrawerTrigger,
 } from '../ui/drawer';
 import { toast } from '../ui/use-toast';
-// import Drawer from '@/components/common/drawer';
+import { IPortfolioDetail } from '@/types/portfolio';
 
-interface IPortfolioDetailMenuProps {}
+interface IPortfolioDetailMenuProps {
+  portfolioDetail?: IPortfolioDetail;
+}
 
 const PortfolioDetailMenu: React.FunctionComponent<
   IPortfolioDetailMenuProps
@@ -38,8 +40,8 @@ const PortfolioDetailMenu: React.FunctionComponent<
   const handleEdit = () => {
     router.push(`/portfolio-register?id=${portfolioId}`);
   };
-  const handleDelete = () => {
-    onOpen();
+  const handleDelete = async () => {
+    onClose();
   };
 
   return (

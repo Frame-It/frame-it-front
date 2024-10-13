@@ -6,7 +6,6 @@ import ProjectList from '@/components/my-studio/project-list';
 import ReviewList from '@/components/my-studio/review-list';
 
 import { getMyPage } from '@/service/server-actions/my-service';
-import { faker } from '@faker-js/faker';
 
 export default async function MyStudioPage(params: {
   searchParams: { type: string };
@@ -16,7 +15,6 @@ export default async function MyStudioPage(params: {
   } = params;
 
   const queryString = type || 'portfolio';
-
   const myInfo = await getMyPage();
 
   return (

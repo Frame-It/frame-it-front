@@ -1,3 +1,4 @@
+import { IPortfolioDetail } from '@/types/portfolio';
 import { getCookie } from 'cookies-next';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -94,6 +95,27 @@ export const getFeeds = async ({
     );
 
     const data = await res.json();
+    return data;
+  }
+};
+
+export const getPortfolioDetailClient = async (id?: string) => {
+  const token = getCookie('accessToken');
+
+  if (token && id) {
+    const res = await fetch(`${API_URL}/portfolios/portfolio/${id}`, {
+      method: 'GET',
+      cache: 'no-store',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const data: IPortfolioDetail = await res.json();
+
+    console.log(data);
+
     return data;
   }
 };

@@ -24,9 +24,6 @@ export default async function PortfolioLayout({
 
   const isMyPortfolio = myPage?.id === portfolioDetail?.userId;
 
-  console.log(myPage);
-  console.log(portfolioDetail);
-
   return (
     <>
       <Header className="border-none shadow-none">

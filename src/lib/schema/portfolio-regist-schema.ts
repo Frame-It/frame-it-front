@@ -9,8 +9,8 @@ export const portfolioImageSchema = z.object({
         message: 'Each file must be less than 10MB',
       }),
     )
-    .min(1, 'At least one file is required.') // 최소 1개 파일 필요
-    .max(10, 'You can upload up to 10 images.'), // 최대 10개 파일 허용
+    .min(1, 'At least one file is required.')
+    .max(10, 'You can upload up to 10 images.'),
 });
 
 export const portfolioInfoSchema = z.object({

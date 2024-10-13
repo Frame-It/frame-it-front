@@ -26,7 +26,7 @@ ToastViewport.displayName = ToastPrimitives.Viewport.displayName;
 
 const toastVariants = cva(
   `
-  group pointer-events-auto relative w-full mx-auto flex w-full items-center justify-center space-x-4 overflow-hidden rounded-md border py-[12px] px-[26px] shadow-lg transition-all 
+  group pointer-events-auto relative max-w-[350px] w-full mx-auto flex w-full items-center justify-center space-x-4 overflow-hidden rounded-md border py-[12px] px-[26px] shadow-lg transition-all 
   data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-[var(--radix-toast-swipe-end-x)] data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] 
   data-[swipe=move]:transition-none data-[state=open]:animate-slide-down
   data-[state=closed]:animate-slide-up data-[swipe=end]:animate-out 
