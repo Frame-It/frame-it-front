@@ -1,11 +1,11 @@
 'use client';
 
-import { useEffect } from 'react';
 import SocialButton from '@/components/common/social-button';
-import Link from 'next/link';
 import { sendCodeToBackend } from '@/service/auth-service';
-import { useRouter } from 'next/navigation';
 import { setCookie } from 'cookies-next';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 const KAKAO_HREF = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}&response_type=code&state=kakao`;
 const GOOGLE_HREF = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URL}&response_type=code&scope=profile email&state=google`;
@@ -27,6 +27,7 @@ export default function LoginPage({
             setCookie('accessToken', data.accessToken);
             router.push('/register');
           } else {
+            setCookie('identity', data.identity);
             setCookie('accessToken', data.accessToken);
             router.push('/');
           }
