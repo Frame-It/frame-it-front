@@ -10,11 +10,11 @@ interface ProjectItemProps {
 
 const ProjectListItem: React.FC<ProjectItemProps> = ({
   project,
-  routePath = 'project-recruitment',
+  routePath,
 }) => {
   return (
     <Link
-      href={`/${routePath}/${project.id}?status=${project.status}&isHost=${project.isHost}`}
+      href={routePath ? routePath : `/${routePath}/${project.id}`}
       className="flex justify-between gap-x-[13px] border-b border-gray-80 pb-[18px]"
     >
       <div className="space-y-[12px]">

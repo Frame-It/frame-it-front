@@ -34,7 +34,7 @@ const ProjectList: React.FC<ProjectListProps> = ({ projectList }) => {
             <ProjectListItem
               key={project.id}
               project={project}
-              routePath="project-management"
+              routePath={`/project-management/${project.id}?status=${project.status}&isHost=${project.isHost}`}
             />
           ))}
         </ul>
