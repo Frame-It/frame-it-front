@@ -15,6 +15,8 @@ export async function middleware(request: NextRequest) {
   if (url.pathname.startsWith('/my-page')) {
     const { status } = await getValidateToken(request);
 
+    console.log(status);
+
     return status === 200
       ? NextResponse.next()
       : NextResponse.redirect(new URL('/login', request.url));
@@ -37,7 +39,6 @@ export async function middleware(request: NextRequest) {
 
 async function getValidateToken(req: NextRequest) {
   const accessToken = req.cookies.get('accessToken')?.value;
-
   const nextRes = NextResponse.next();
 
   const res = await fetch(

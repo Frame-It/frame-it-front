@@ -12,4 +12,6 @@ export interface IMyStudio {
   profileImageUrl: string | null;
   portfolioCount: number;
   projectCount: number;
+  description: string;
+  concepts: string[];
 }

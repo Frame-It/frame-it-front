@@ -10,31 +10,60 @@ export const getMyPortfolios = async ({
 }) => {
   const token = getCookie('accessToken');
 
-  try {
-    const res = await fetch(
-      `${API_URL}/portfolios/me?page=${pageParam}&size=10`,
-      {
+  if (token) {
+    try {
+      const res = await fetch(
+        `${API_URL}/portfolios/me?page=${pageParam}&size=10`,
+        {
+          method: 'GET',
+          cache: 'no-store',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      if (!res.ok) {
+        throw new Error('something error');
+      }
+
+      const data: IPortfolioResponse = await res.json();
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+};
+
+export const getMyProjects = async () => {
+  const token = getCookie('accessToken');
+
+  if (token) {
+    try {
+      const res = await fetch(`${API_URL}/users/projects`, {
         method: 'GET',
         cache: 'no-store',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-      },
-    );
+      });
 
-    if (!res.ok) {
-      throw new Error('something error');
+      if (!res.ok) {
+        throw new Error('something error');
+      }
+
+      const data: any = await res.json();
+
+      console.log(data);
+
+      return data;
+    } catch (error) {
+      console.log(error);
     }
-
-    const data: IPortfolioResponse = await res.json();
-    return data;
-  } catch (error) {
-    console.log(error);
   }
 };
-
-export const getMyProjects = () => {};
 
 export const getMyReviews = async (id: number) => {
   const token = getCookie('accessToken');
@@ -49,9 +78,9 @@ export const getMyReviews = async (id: number) => {
       },
     });
 
-    if (!res.ok) {
-      throw new Error('something error : ' + res.status);
-    }
+    // if (!res.ok) {
+    //   throw new Error('something error : ' + res.status);
+    // }
 
     const data: {
       reviewerNickname: string;
