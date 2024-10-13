@@ -5,9 +5,11 @@ function BackButton({
   className,
   children,
   path,
+  onClick,
 }: React.PropsWithChildren<{
   className?: string;
   path?: string;
+  onClick?: () => void;
 }>) {
   const router = useRouter();
   const handleClickBack = () => {
@@ -15,7 +17,11 @@ function BackButton({
     else router.back();
   };
   return (
-    <button className={className} onClick={handleClickBack} type="button">
+    <button
+      className={className}
+      onClick={onClick ? onClick : handleClickBack}
+      type="button"
+    >
       {children}
     </button>
   );

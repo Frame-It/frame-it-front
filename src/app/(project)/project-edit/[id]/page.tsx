@@ -4,7 +4,7 @@ import { Progress } from '@/components/ui/progress';
 import { getRecruitAnnouncement } from '@/lib/api/project/project-recruitment';
 import { useProjectRegisterStore } from '@/store/project-regist-store';
 import { useParams } from 'next/navigation';
-import { Suspense, lazy, useEffect } from 'react';
+import { Suspense, lazy, useEffect, useState } from 'react';
 
 const StepOne = lazy(() => import('@/components/project/write/step-one'));
 const StepTwo = lazy(() => import('@/components/project/write/step-two'));
@@ -16,15 +16,15 @@ export default function ProjectEditPage() {
     (state) => state.setProjectInfo,
   );
 
+  const [loading, setLoading] = useState(true);
+
   const params = useParams();
   const projectId = params.id;
 
-  // 데이터 가져오기 및 초기화
   useEffect(() => {
     if (projectId) {
       getRecruitAnnouncement(Number(projectId))
         .then((data) => {
-          // API 응답에 따라 store 초기값 설정
           setProjectInfo({
             projectName: data.title,
             type: data.recruitmentRole,
@@ -44,6 +44,7 @@ export default function ProjectEditPage() {
             photoUrls: data.conceptPhotoUrls,
             conceptTags: data.projectConcepts,
           });
+          setLoading(false);
         })
         .catch((error) => {
           console.error('Failed to fetch project data:', error);
@@ -51,6 +52,8 @@ export default function ProjectEditPage() {
         });
     }
   }, [projectId, setProjectInfo]);
+
+  if (loading) return <div>Loading...</div>;
 
   return (
     <>
