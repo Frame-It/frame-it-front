@@ -7,11 +7,12 @@ interface IProjectRegistInfo {
   shootingDate: {
     date: string;
     time: string;
-    period: TimeOption;
+    period: TimeOption | null;
   };
-  location: { type: LocationType; address: string; detail: string };
+  location: { type: LocationType | null; address: string; detail: string };
   conceptTags: string[];
   photos: File[] | null;
+  photoUrls?: string[] | null;
   description: string;
   retouchingDetails: string;
 }
@@ -32,8 +33,8 @@ interface ProjectRegisterState {
 const initialProjectInfo: IProjectRegistInfo = {
   type: 'PHOTOGRAPHER',
   projectName: '',
-  shootingDate: { date: '', time: '', period: 'MORNING' },
-  location: { type: 'INDOOR', address: '', detail: '' },
+  shootingDate: { date: '', time: '', period: null },
+  location: { type: null, address: '', detail: '' },
   conceptTags: [],
   photos: null,
   description: '',

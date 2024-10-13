@@ -98,6 +98,28 @@ export const postAnnouncement = async (formData: FormData) => {
   }
 };
 
+export const putAnnouncement = async (formData: FormData) => {
+  const headers = await getAuthHeader();
+
+  try {
+    const response = await fetch(`${API_URL}/projects`, {
+      method: 'PUT',
+      body: formData,
+      headers,
+    });
+
+    if (!response.ok) {
+      // throw new Error('Network response was not ok');
+    }
+
+    const result = await response.json();
+    return result;
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
+};
+
 export const postRecruitBookmark = async (id: number) => {
   const headers = await getAuthHeader();
 
