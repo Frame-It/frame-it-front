@@ -1,19 +1,16 @@
+'use client';
+
 import PortfolioContents from '@/components/portfolio-detail/contents';
 import PortfolioDetailFooter from '@/components/portfolio-detail/footer';
 import PortfolioDetailGallery from '@/components/portfolio-detail/portfolio-gallery';
 import PortfolioProfile from '@/components/portfolio-detail/profile';
-import { getPortfolioDetail } from '@/service/server-actions/portfolio';
-import { headers } from 'next/headers';
+import { useMyInfoContext } from '@/providers/my-info-provider';
 
-export default async function PortfolioDetailPage() {
-  const headersList = headers();
-  const headerPathname = headersList.get('x-pathname') || '';
-
-  const id = headerPathname.split('/').at(-1);
-  const portfolioDetail = await getPortfolioDetail(id);
+export default function PortfolioDetailPage() {
+  const { portfolioDetail } = useMyInfoContext();
 
   return (
-    <div className="h-[calc(100dvh-58px)] overflow-y-auto py-2">
+    <div className="h-[calc(100dvh-54px)] overflow-y-auto">
       <PortfolioProfile
         identity={portfolioDetail?.identity}
         userId={portfolioDetail?.userId}
@@ -27,8 +24,9 @@ export default async function PortfolioDetailPage() {
       />
       <PortfolioDetailGallery imageList={portfolioDetail?.photosUrl} />
       <PortfolioDetailFooter
-        collaborators={portfolioDetail?.collaborators}
-        createdAt={portfolioDetail?.userName}
+        collaborators={portfolioDetail?.collaborators || '알수없음 님'}
+        createdAt={portfolioDetail?.createdAt}
+        views="아직 구현되지 않은 기능"
       />
     </div>
   );

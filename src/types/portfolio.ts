@@ -50,4 +50,5 @@ export interface IPortfolioDetail {
   photosUrl: string[];
   hashtags: string[];
   collaborators: string;
+  createdAt: string;
 }

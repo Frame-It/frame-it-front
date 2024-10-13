@@ -83,7 +83,7 @@ export const getFeeds = async ({
 
   if (role === 'author') {
     const res = await fetch(
-      `${API_URL}/portfolios/author?page=${pageParam}&size=10`,
+      `${API_URL}/portfolios/photography?page=${pageParam}&size=10`,
       {
         method: 'GET',
         cache: 'no-store',
