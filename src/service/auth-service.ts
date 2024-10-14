@@ -17,6 +17,10 @@ export const sendCodeToBackend = async (code: string, state: string) => {
     },
   );
 
+  if (!response.ok) {
+    throw new Error(`서버오류가 발생하였습니다 상태 코드 :${response.status}`);
+  }
+
   const data = await response.json();
   return data;
 };
