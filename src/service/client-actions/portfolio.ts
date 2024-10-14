@@ -122,20 +122,20 @@ export const getPortfolioDetailClient = async (id?: string) => {
 export const updatePortfolio = async (data: any, id: string) => {
   const formData = new FormData();
 
+  console.log(data);
+
   formData.append('title', data.title);
 
   // 선택
-  if (data.description) {
-    formData.append('description', data.description);
-  }
+  formData.append('description', data.description);
 
-  if (data.hashtags) {
+  if (data.hashtags || data.togethers.length >= 0) {
     data.hashtags.forEach((hashtag: string) => {
       formData.append('hashtags', hashtag);
     });
   }
 
-  if (data.togethers) {
+  if (data.togethers || data.togethers === '') {
     data.hashtags.forEach((together: string) => {
       formData.append('togethers', together);
     });
@@ -163,6 +163,8 @@ export const updatePortfolio = async (data: any, id: string) => {
     },
   });
 
+  // console.log(await res.json());
+
   if (res.ok) {
     return true;
   }
@@ -170,24 +172,4 @@ export const updatePortfolio = async (data: any, id: string) => {
   return false;
 };
 
-export const deletePortfolio = async (id: string) => {
-  const token = getCookie('accessToken');
-
-  if (token) {
-    const res = await fetch(`${API_URL}/portfolios/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    console.log(res);
-
-    if (res.ok) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-};
+export const deletePortfolio = async (id: string) => {};

@@ -46,12 +46,6 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = ({ id }) => {
 
   const form = useForm<PortfolioDetailFormValues>({
     resolver: zodResolver(portfolioInfoSchema),
-    defaultValues: {
-      title: portfolioInfo.title,
-      detail: portfolioInfo.detail,
-      tagList: portfolioInfo.tagList,
-      togather: portfolioInfo.togather,
-    },
   });
 
   const onSubmit = async (values: PortfolioDetailFormValues) => {
@@ -86,8 +80,8 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = ({ id }) => {
     } else {
       const newValue = {
         title: values.title,
-        description: values.detail || undefined,
-        hashtags: values.tagList || undefined,
+        description: values.detail,
+        hashtags: values.tagList,
         togethers: values.togather
           ? Array.from({ length: 1 }, () => values.togather)
           : undefined,
@@ -148,12 +142,28 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = ({ id }) => {
   const [isFormValid, setIsFormValid] = useState(false);
 
   useEffect(() => {
+    form.reset({
+      title: portfolioInfo.title,
+      detail: portfolioInfo.detail || undefined,
+      tagList: portfolioInfo.tagList || undefined,
+      togather: portfolioInfo.togather || undefined,
+    });
+
+    const values = form.getValues();
+    console.log(values);
+    const result = portfolioInfoSchema.safeParse(values);
+    setIsFormValid(result.success);
+  }, []);
+
+  useEffect(() => {
     const subscription = form.watch(() => {
       const values = form.getValues();
 
       if (values.tagList?.length === 0) {
         form.setValue('tagList', undefined);
       }
+
+      console.log(values);
 
       const result = portfolioInfoSchema.safeParse(values);
       setIsFormValid(result.success);
