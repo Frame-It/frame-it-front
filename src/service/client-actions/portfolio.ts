@@ -17,14 +17,14 @@ export const postPortfolio = async (data: any) => {
     formData.append('description', data.description);
   }
 
-  if (data.hashtags) {
+  if (data.hashtags && data.hashtags.length > 0) {
     data.hashtags.forEach((hashtag: string) => {
       formData.append('hashtags', hashtag);
     });
   }
 
-  if (data.togethers) {
-    data.hashtags.forEach((together: string) => {
+  if (data.togethers && data.hashtags.length > 0) {
+    data.togethers.forEach((together: string) => {
       formData.append('togethers', together);
     });
   }
@@ -120,12 +120,14 @@ export const getPortfolioDetailClient = async (id?: string) => {
 export const updatePortfolio = async (data: any, id: string) => {
   const formData = new FormData();
 
-  console.log(data);
-
   formData.append('title', data.title);
 
   // 선택
-  formData.append('description', data.description);
+  if (data.description) {
+    formData.append('description', data.description);
+  } else {
+    formData.append('description', '');
+  }
 
   if (data.hashtags || data.togethers.length >= 0) {
     data.hashtags.forEach((hashtag: string) => {
@@ -133,19 +135,19 @@ export const updatePortfolio = async (data: any, id: string) => {
     });
   }
 
-  if (data.togethers || data.togethers === '') {
-    data.hashtags.forEach((together: string) => {
+  if (data.togethers && data.hashtags.length > 0) {
+    data.togethers.forEach((together: string) => {
       formData.append('togethers', together);
     });
   }
 
-  if (data.addPhotos.length > 0) {
+  if (data.addPhotos && data.addPhotos.length > 0) {
     data.addPhotos.forEach((photo: any, i: number) => {
       formData.append('addPhotos', photo, 'aphoto' + i);
     });
   }
 
-  if (data.deletePhotos.length > 0) {
+  if (data.deletePhotos && data.deletePhotos.length > 0) {
     data.deletePhotos.forEach((deletePhotos: string) => {
       formData.append('deletePhotos', deletePhotos);
     });

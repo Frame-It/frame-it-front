@@ -16,7 +16,7 @@ export const portfolioImageSchema = z.object({
 export const portfolioInfoSchema = z.object({
   title: z.string().min(2).max(42),
   detail: z.string().or(z.literal('')).optional(),
-  tagList: z.array(z.string()).min(1).max(5).nullable().optional(),
+  tagList: z.array(z.string()).min(0).max(5).nullable().optional(),
   togather: z.string().or(z.literal('')).optional(),
 });
 

@@ -139,38 +139,23 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = ({ id }) => {
     form.setValue('togather', '');
   };
 
-  const [isFormValid, setIsFormValid] = useState(false);
-
   useEffect(() => {
     form.reset({
-      title: portfolioInfo.title,
-      detail: portfolioInfo.detail || undefined,
+      title: portfolioInfo.title || '',
+      detail: portfolioInfo.detail || '',
       tagList: portfolioInfo.tagList || undefined,
       togather: portfolioInfo.togather || undefined,
     });
+  }, [
+    form,
+    portfolioInfo.detail,
+    portfolioInfo.tagList,
+    portfolioInfo.title,
+    portfolioInfo.togather,
+  ]);
 
-    const values = form.getValues();
-    console.log(values);
-    const result = portfolioInfoSchema.safeParse(values);
-    setIsFormValid(result.success);
-  }, []);
-
-  useEffect(() => {
-    const subscription = form.watch(() => {
-      const values = form.getValues();
-
-      if (values.tagList?.length === 0) {
-        form.setValue('tagList', undefined);
-      }
-
-      console.log(values);
-
-      const result = portfolioInfoSchema.safeParse(values);
-      setIsFormValid(result.success);
-    });
-
-    return () => subscription.unsubscribe();
-  }, [form]);
+  const values = form.getValues();
+  const valid = portfolioInfoSchema.safeParse({ ...values });
 
   return (
     <Form {...form}>
@@ -334,7 +319,7 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = ({ id }) => {
         />
 
         <div className="fixed inset-x-0 bottom-0 mx-auto w-full max-w-[360px] bg-white px-[16px] py-[9px]">
-          <Button type="submit" className="w-full" disabled={!isFormValid}>
+          <Button type="submit" className="w-full" disabled={!valid.success}>
             다음
           </Button>
         </div>

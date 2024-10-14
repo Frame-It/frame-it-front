@@ -10,7 +10,6 @@ import { usePathname } from 'next/navigation';
 
 export default function PortfolioDetailPage() {
   const id = usePathname().split('/').at(-1);
-  console.log(id);
 
   const { data } = useQuery({
     queryKey: ['portfolioDetail', id],
@@ -18,8 +17,6 @@ export default function PortfolioDetailPage() {
     enabled: !!id,
     staleTime: 0,
   });
-
-  console.log(data);
 
   return (
     <div className="h-[calc(100dvh-54px)] overflow-y-auto pb-[14px] pt-4">
