@@ -1,31 +1,40 @@
-import * as React from 'react';
+'use client';
+
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { faker } from '@faker-js/faker';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
-interface IPortfolioProfileProps {}
+interface IPortfolioProfileProps {
+  userId?: number;
+  userName?: string;
+  profileImageUrl?: string;
+  identity?: string;
+}
 
-const PortfolioProfile: React.FunctionComponent<
-  IPortfolioProfileProps
-> = () => {
-  // props로 데이터를 받아올 수 있음
-  const temp = {
-    imageUrl: '/test-image.webp',
-    nickName: faker.person.fullName(),
-    role: '작가',
-  };
+const PortfolioProfile = ({
+  userName,
+  userId,
+  profileImageUrl,
+  identity,
+}: IPortfolioProfileProps) => {
+  const router = useRouter();
+
   return (
     <section className="flex w-full items-center justify-between">
-      <div className="flex items-center gap-x-[12px]">
+      <div
+        className="flex items-center gap-x-[12px]"
+        onClick={() => router.push(`/studio/${userId}`)}
+      >
         <Avatar className="h-[46px] w-[46px] rounded-[4px]">
-          <AvatarImage src={temp.imageUrl} />
+          <AvatarImage src={profileImageUrl} />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
         <div>
-          <p className="text-[14px] font-[500] leading-[21px]">
-            {temp.nickName}
+          <p className="text-[14px] font-[500] leading-[21px]">{userName}</p>
+          <p className="text-[12px] font-[500] leading-[18px]">
+            {identity === 'MODEL' ? '모델' : '작가'}
           </p>
-          <p className="text-[12px] font-[500] leading-[18px]">{temp.role}</p>
         </div>
       </div>
       <Image

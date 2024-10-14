@@ -12,26 +12,34 @@ import {
   FormLabel,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { toast } from '@/components/ui/use-toast';
 import {
   PortfolioDetailFormValues,
   portfolioInfoSchema,
 } from '@/lib/schema/portfolio-regist-schema';
+import {
+  postPortfolio,
+  updatePortfolio,
+} from '@/service/client-actions/portfolio';
 import { usePortfolioRegisterStore } from '@/store/portfolio-regist-store';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { XIcon } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-interface IStepTwoProps {}
-<></>;
+interface IStepTwoProps {
+  id?: string;
+}
 
-const StepTwo: React.FunctionComponent<IStepTwoProps> = () => {
+// TODO : 프로젝트 수정 시 로직 추가하기
+const StepTwo: React.FunctionComponent<IStepTwoProps> = ({ id }) => {
+  const router = useRouter();
   const portfolioInfo = usePortfolioRegisterStore(
     (state) => state.portfolioInfo,
   );
-  const setPortfolioInfo = usePortfolioRegisterStore(
-    (state) => state.setPortfolioInfo,
-  );
+  const photoList = usePortfolioRegisterStore((state) => state.photoList);
+  const clearData = usePortfolioRegisterStore((state) => state.clear);
 
   const [tag, setTag] = useState('');
   const [togather, setTogather] = useState('');
@@ -40,10 +48,69 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = () => {
     resolver: zodResolver(portfolioInfoSchema),
   });
 
-  const onSubmit = (values: PortfolioDetailFormValues) => {
-    console.log(values);
-    console.log(portfolioInfo);
-    console.log(setPortfolioInfo);
+  const onSubmit = async (values: PortfolioDetailFormValues) => {
+    if (!id) {
+      const newValue = {
+        title: values.title,
+        description: values.detail || undefined,
+        hashtags: values.tagList || undefined,
+        togethers: values.togather
+          ? Array.from({ length: 1 }, () => values.togather)
+          : undefined,
+        photos: photoList?.map((el) => el.file),
+      };
+
+      const isSuccess = await postPortfolio(newValue);
+
+      if (isSuccess) {
+        toast({
+          variant: 'success',
+          title: '업로드에 성공 하였습니다.',
+          duration: 1300,
+        });
+        clearData();
+        router.replace('/my-page/my-studio');
+      } else {
+        toast({
+          variant: 'destructive',
+          title: '업로드에 실패 하였습니다.',
+          duration: 1300,
+        });
+      }
+    } else {
+      const newValue = {
+        title: values.title,
+        description: values.detail,
+        hashtags: values.tagList,
+        togethers: values.togather
+          ? Array.from({ length: 1 }, () => values.togather)
+          : undefined,
+        addPhotos: photoList?.filter((el) => el.file).map((el) => el.file),
+        deletePhotos: photoList
+          ?.filter((el) => el.isDelete)
+          .map((el) => el.prevImageUrl),
+      };
+
+      const isSuccess = await updatePortfolio(newValue, id);
+
+      if (isSuccess) {
+        toast({
+          variant: 'success',
+          title: '수정에 성공 하였습니다.',
+          duration: 1300,
+        });
+        clearData();
+        // router.replace(`/portfolio-detail/${id}`);
+        router.refresh();
+        router.back();
+      } else {
+        toast({
+          variant: 'destructive',
+          title: '수정에 실패 하였습니다.',
+          duration: 1300,
+        });
+      }
+    }
   };
 
   const addTag = () => {
@@ -58,7 +125,7 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = () => {
 
   const deleteTag = (tag: string) => {
     const prevTagArr = form.getValues('tagList');
-    const newTagArr = prevTagArr.filter((el) => el !== tag);
+    const newTagArr = prevTagArr?.filter((el) => el !== tag);
     form.setValue('tagList', newTagArr);
   };
 
@@ -75,14 +142,30 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = () => {
   const [isFormValid, setIsFormValid] = useState(false);
 
   useEffect(() => {
+    form.reset({
+      title: portfolioInfo.title,
+      detail: portfolioInfo.detail || undefined,
+      tagList: portfolioInfo.tagList || undefined,
+      togather: portfolioInfo.togather || undefined,
+    });
+
+    const values = form.getValues();
+    console.log(values);
+    const result = portfolioInfoSchema.safeParse(values);
+    setIsFormValid(result.success);
+  }, []);
+
+  useEffect(() => {
     const subscription = form.watch(() => {
       const values = form.getValues();
 
-      console.log('value', values);
+      if (values.tagList?.length === 0) {
+        form.setValue('tagList', undefined);
+      }
+
+      console.log(values);
 
       const result = portfolioInfoSchema.safeParse(values);
-      console.log('result', result);
-
       setIsFormValid(result.success);
     });
 
