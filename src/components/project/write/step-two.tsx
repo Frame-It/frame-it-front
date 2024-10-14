@@ -29,13 +29,19 @@ import { ChangeEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 const StepTwo: React.FC = () => {
-  const { projectInfo } = useProjectRegisterStore();
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const { projectInfo, reset } = useProjectRegisterStore();
+  const [selectedTags, setSelectedTags] = useState<string[]>(
+    projectInfo.conceptTags,
+  );
 
   const router = useRouter();
 
-  const [description, setDescription] = useState<string>('');
-  const [retouchingDetails, setRetouchingDetails] = useState('');
+  const [description, setDescription] = useState<string>(
+    projectInfo.description,
+  );
+  const [retouchingDetails, setRetouchingDetails] = useState(
+    projectInfo.retouchingDetails,
+  );
   const handleTagToggle = (id: string) => {
     setSelectedTags((prevSelectedTags) =>
       prevSelectedTags.includes(id)
@@ -48,7 +54,7 @@ const StepTwo: React.FC = () => {
     selectedTags.length &&
       description &&
       retouchingDetails &&
-      projectInfo.photos?.length,
+      (projectInfo.photos?.length || projectInfo.photoUrls?.length),
   );
 
   const handleNext = async () => {
@@ -60,8 +66,8 @@ const StepTwo: React.FC = () => {
         'shootingAt',
         `${projectInfo.shootingDate.date}T${projectInfo.shootingDate.time}:00`,
       );
-      formData.append('timeOption', projectInfo.shootingDate.period);
-      formData.append('locationType', projectInfo.location.type);
+      formData.append('timeOption', projectInfo.shootingDate.period ?? '');
+      formData.append('locationType', projectInfo.location.type ?? '');
       formData.append('spot', projectInfo.location.address);
       formData.append('description', description);
       formData.append('retouchingDescription', retouchingDetails);
@@ -77,7 +83,7 @@ const StepTwo: React.FC = () => {
       try {
         await postAnnouncement(formData);
 
-        // TODO: 초기화
+        reset();
         router.push('?complete=true');
       } catch (error) {
         console.error(error);
@@ -143,7 +149,7 @@ const StepTwo: React.FC = () => {
           onClick={handleNext}
           variant={'primary'}
           size={'large'}
-          label={'다음'}
+          label={'수정하기'}
           disabled={!isNextEnabled}
         />
       </div>
@@ -166,7 +172,9 @@ const Images = () => {
     resolver: zodResolver(projectImageSchema),
   });
 
-  const [previews, setPreviews] = useState<string[]>([]);
+  const [previews, setPreviews] = useState<string[]>(
+    projectInfo.photoUrls ?? [],
+  );
   const [files, setFiles] = useState<File[]>([]);
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {

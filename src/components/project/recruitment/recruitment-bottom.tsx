@@ -25,11 +25,13 @@ interface HostBottomProps {
 }
 
 export const HostBottom: FC<HostBottomProps> = ({ projectId }) => {
+  const router = useRouter();
   return (
     <>
       <BookmarkButton projectId={projectId} />
       <IconButton
         icon={<Icon id={'edit-icon'} size={24} className="text-gray-40" />}
+        onClick={() => router.push(`/project-edit/${projectId}`)}
       />
       <Link
         href={`/project-management/${projectId}?status=RECRUITING&isHost=true`}

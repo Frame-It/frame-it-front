@@ -6,6 +6,7 @@ import {
   getRecruitAnnouncements,
 } from '@/lib/api/project/project-recruitment';
 import { ITabData, USER_TYPE } from '@/types/filter';
+import { LocationType, TimeOption } from '@/types/project.type';
 
 const RECRUIT = '구인';
 
@@ -30,14 +31,28 @@ const tabsData: ITabData[] = [
 const RecruitPage = async ({
   searchParams,
 }: {
-  searchParams: { tab?: string };
+  searchParams: {
+    tab?: string;
+    startDate?: string;
+    endDate?: string;
+    timeOption?: string;
+    locationType?: string;
+    concepts?: string;
+  };
 }) => {
-  const query =
-    searchParams.tab && searchParams.tab !== 'all' ? searchParams.tab : '';
+  const filter = {
+    recruitmentRole:
+      searchParams.tab === 'all'
+        ? undefined
+        : (searchParams.tab as IRecruitResponse['recruitmentRole']),
+    startDate: searchParams.startDate,
+    endDate: searchParams.endDate,
+    timeOption: searchParams.timeOption as TimeOption,
+    locationType: searchParams.locationType as LocationType,
+    concepts: searchParams.concepts?.split('+'),
+  };
 
-  const fetchedData = await getRecruitAnnouncements(
-    query as IRecruitResponse['recruitmentRole'],
-  );
+  const fetchedData = await getRecruitAnnouncements(filter);
 
   const recruitList: IRecruitCardProps[] = fetchedData.map(
     (item: IRecruitResponse) => ({
@@ -59,6 +74,7 @@ const RecruitPage = async ({
       recruitList={recruitList}
       currentTab={searchParams.tab ?? 'all'}
       tabsData={tabsData}
+      filter={filter}
     />
   );
 };

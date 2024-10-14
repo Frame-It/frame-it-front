@@ -1,8 +1,7 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import Link from 'next/link';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import * as React from 'react';
 
 interface IManagementTabsProps {}
@@ -10,6 +9,7 @@ interface IManagementTabsProps {}
 const ManagementTabs: React.FunctionComponent<IManagementTabsProps> = () => {
   const pathName = usePathname();
   const searchParams = useSearchParams();
+  const router = useRouter();
   const filter = searchParams.get('type') || 'all';
 
   const tabs = [
@@ -20,19 +20,25 @@ const ManagementTabs: React.FunctionComponent<IManagementTabsProps> = () => {
     { label: '취소', type: 'cancelled' },
   ];
 
+  const handleTabClick = (type: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('type', type);
+    router.push(`${pathName}?${params.toString()}`);
+  };
+
   return (
     <section className="flex items-center gap-4 px-6 py-2">
       {tabs.map((tab) => (
-        <Link
+        <button
           key={tab.type}
-          href={`${pathName}?type=${tab.type}`}
+          onClick={() => handleTabClick(tab.type)}
           className={cn(
             'font-body-14m',
             filter === tab.type ? 'text-gray-10' : 'text-gray-60',
           )}
         >
           {tab.label}
-        </Link>
+        </button>
       ))}
     </section>
   );

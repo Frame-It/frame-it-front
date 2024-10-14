@@ -3,18 +3,26 @@ import Icon from '../../common/icon';
 
 interface IDropdownButtonProps {
   label: string;
+  isSelected?: boolean;
 }
 
-const DropdownButton = ({ label }: IDropdownButtonProps) => {
+const DropdownButton = ({
+  label,
+  isSelected = false,
+}: IDropdownButtonProps) => {
   return (
     <div
       className={cn(
-        'flex items-center justify-center gap-[2px] self-stretch rounded-full border-[1px] border-[#4D4744] p-[6px] px-[12px]',
+        'flex items-center justify-center gap-[2px] self-stretch rounded-full border-[1px] p-[6px] px-[12px]',
+        isSelected
+          ? 'border-transparent bg-[#4D4744] text-white'
+          : 'border-[#4D4744] bg-transparent text-[#4D4744]',
       )}
     >
       <span
         className={cn(
-          'whitespace-nowrap text-[14px] font-normal leading-[14px] text-[#4D4744]',
+          'whitespace-nowrap text-[14px] font-normal leading-[14px]',
+          isSelected ? 'text-white' : 'text-[#4D4744]',
         )}
       >
         {label}

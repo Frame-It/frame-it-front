@@ -14,18 +14,24 @@ import { redirect } from 'next/navigation';
 import '../../../styles/input.css';
 
 const StepOne: React.FC = () => {
-  const { setProjectInfo, nextStep } = useProjectRegisterStore();
+  const { projectInfo, setProjectInfo, nextStep } = useProjectRegisterStore();
   const type =
     (getCookie('identity') as ProfessionRole) === 'MODEL'
       ? 'PHOTOGRAPHER'
       : 'MODEL';
-  const [projectName, setProjectName] = useState<string>('');
-  const [date, setDate] = useState<string>('');
-  const [time, setTime] = useState<string>('');
-  const [period, setPeriod] = useState<TimeOption | null>(null);
-  const [locationType, setLocationType] = useState<LocationType | null>(null);
-  const [address, setAddress] = useState<string>('');
-  const [detail, setDetail] = useState<string>('');
+  const [projectName, setProjectName] = useState<string>(
+    projectInfo.projectName,
+  );
+  const [date, setDate] = useState<string>(projectInfo.shootingDate.date);
+  const [time, setTime] = useState<string>(projectInfo.shootingDate.time);
+  const [period, setPeriod] = useState<TimeOption | null>(
+    projectInfo.shootingDate.period,
+  );
+  const [locationType, setLocationType] = useState<LocationType | null>(
+    projectInfo.location.type,
+  );
+  const [address, setAddress] = useState<string>(projectInfo.location.address);
+  const [detail, setDetail] = useState<string>(projectInfo.location.detail);
 
   const dateInputRef = useRef<HTMLInputElement>(null);
   const timeInputRef = useRef<HTMLInputElement>(null);
@@ -136,6 +142,7 @@ const StepOne: React.FC = () => {
             </div>
             <div className="flex gap-[6px]">
               <Input
+                value={time}
                 type="time"
                 placeholder="00:00"
                 onChange={(e) => setTime(e.target.value)}
