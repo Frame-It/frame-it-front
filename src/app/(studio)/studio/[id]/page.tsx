@@ -6,7 +6,7 @@ import ReviewList from '@/components/my-studio/review-list';
 import StudioIntroduce from '@/components/studio/studio-introduce';
 
 import { generateRandomImageList } from '@/lib/faker';
-import { getMyPage } from '@/service/my-service';
+import { getMyPage } from '@/service/server-actions/my-service';
 import { faker } from '@faker-js/faker';
 
 export default async function StudioDetailPage(params: {
@@ -24,11 +24,11 @@ export default async function StudioDetailPage(params: {
 
   return (
     <main className="h-[calc(100dvh-58px-63px)] overflow-y-auto px-[16px] py-[14px]">
-      <MyStudioHeader
+      {/* <MyStudioHeader
         profileUrl={'/test-image.webp'}
         role={'model'}
         nickName={myInfo?.nickname || '로딩중'}
-      />
+      /> */}
       {/* 소개 글 */}
       <StudioIntroduce
         introduce="소개글이요. 저는 이런사람 입니다. 묵찌빠를 전공하였고 전공을살려
@@ -36,15 +36,15 @@ export default async function StudioDetailPage(params: {
         tagList={['아름다운', '이쁜', '날렵한', '감성적인', '사랑스러운']}
       />
 
-      <MySturioFilter />
+      {/* <MySturioFilter /> */}
 
       {/* 포트폴리오 */}
-      {queryString === 'portfolio' && (
+      {/* {queryString === 'portfolio' && (
         <MyStudioPortfolioGallery imageArr={imageArr} />
-      )}
+      )} */}
 
       {/* 프로젝트 */}
-      {queryString === 'project' && (
+      {/* {queryString === 'project' && (
         <ProjectList
           projectList={[
             {
@@ -81,10 +81,10 @@ export default async function StudioDetailPage(params: {
             },
           ]}
         />
-      )}
+      )} */}
 
       {/* 리뷰 */}
-      {queryString === 'review' && (
+      {/* {queryString === 'review' && (
         <ReviewList
           reviewList={[
             {
@@ -118,7 +118,7 @@ export default async function StudioDetailPage(params: {
             },
           ]}
         />
-      )}
+      )} */}
     </main>
   );
 }
