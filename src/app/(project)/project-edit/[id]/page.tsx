@@ -64,7 +64,7 @@ export default function ProjectEditPage() {
       <div className="h-full px-4 pt-6">
         <Suspense fallback={<div>Loading...</div>}>
           {currentStep === 1 && <StepOne />}
-          {currentStep === 2 && <StepTwo />}
+          {currentStep === 2 && <StepTwo isEdit={true} />}
         </Suspense>
       </div>
     </>

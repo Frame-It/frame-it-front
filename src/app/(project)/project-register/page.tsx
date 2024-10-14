@@ -10,15 +10,13 @@ import { useSearchParams } from 'next/navigation';
 export default function ProjectWritePage() {
   const currentStep = useProjectRegisterStore((state) => state.currentStep);
   const maxStep = useProjectRegisterStore((state) => state.maxStep);
-  const projectName = useProjectRegisterStore(
-    (state) => state.projectInfo.projectName,
-  );
 
   const searchParams = useSearchParams();
   const isComplete = searchParams.get('complete') === 'true';
+  const title = searchParams.get('title') ?? '';
 
   if (isComplete) {
-    return <Complete title={projectName} />;
+    return <Complete title={title} />;
   }
 
   return (

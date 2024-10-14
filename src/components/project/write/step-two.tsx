@@ -28,7 +28,7 @@ import { useRouter } from 'next/navigation';
 import { ChangeEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-const StepTwo: React.FC = () => {
+const StepTwo = ({ isEdit = false }: { isEdit?: boolean }) => {
   const { projectInfo, reset } = useProjectRegisterStore();
   const [selectedTags, setSelectedTags] = useState<string[]>(
     projectInfo.conceptTags,
@@ -82,9 +82,9 @@ const StepTwo: React.FC = () => {
 
       try {
         await postAnnouncement(formData);
+        router.push(`?complete=true&title=${projectInfo.projectName}`);
 
         reset();
-        router.push('?complete=true');
       } catch (error) {
         console.error(error);
         // TODO: error handling
@@ -149,7 +149,7 @@ const StepTwo: React.FC = () => {
           onClick={handleNext}
           variant={'primary'}
           size={'large'}
-          label={'수정하기'}
+          label={isEdit ? '수정하기' : '다음'}
           disabled={!isNextEnabled}
         />
       </div>
