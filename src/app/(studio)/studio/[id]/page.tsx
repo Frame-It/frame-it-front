@@ -30,11 +30,11 @@ export default async function StudioDetailPage(params: {
         nickName={myInfo?.nickname || '로딩중'}
       /> */}
       {/* 소개 글 */}
-      <StudioIntroduce
+      {/* <StudioIntroduce
         introduce="소개글이요. 저는 이런사람 입니다. 묵찌빠를 전공하였고 전공을살려
         홈프로텍터로 일하는 중이며 세계 제일의 사진사가 될겁니다."
         tagList={['아름다운', '이쁜', '날렵한', '감성적인', '사랑스러운']}
-      />
+      /> */}
 
       {/* <MySturioFilter /> */}
 
