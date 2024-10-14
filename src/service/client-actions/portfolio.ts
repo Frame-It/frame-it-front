@@ -102,8 +102,6 @@ export const getFeeds = async ({
 export const getPortfolioDetailClient = async (id?: string) => {
   const token = getCookie('accessToken');
 
-  console.log(id);
-
   if (token && id) {
     const res = await fetch(`${API_URL}/portfolios/portfolio/${id}`, {
       method: 'GET',
@@ -172,4 +170,21 @@ export const updatePortfolio = async (data: any, id: string) => {
   return false;
 };
 
-export const deletePortfolio = async (id: string) => {};
+export const deletePortfolio = async (id: string) => {
+  const token = getCookie('accessToken');
+
+  if (token && id) {
+    const res = await fetch(`${API_URL}/portfolios/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (res.ok) {
+      return true;
+    }
+    return false;
+  }
+};
