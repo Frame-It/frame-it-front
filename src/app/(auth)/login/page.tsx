@@ -1,6 +1,7 @@
 'use client';
 
 import SocialButton from '@/components/common/social-button';
+import { toast } from '@/components/ui/use-toast';
 import { sendCodeToBackend } from '@/service/auth-service';
 import { setCookie } from 'cookies-next';
 import Link from 'next/link';
@@ -22,6 +23,13 @@ export default function LoginPage({
       if (code && state) {
         try {
           const data = await sendCodeToBackend(code, state);
+
+          if (data === undefined) {
+            toast({
+              title: '서버에서 오류가 발생하였습니다.',
+              variant: 'destructive',
+            });
+          }
 
           if (!data?.signUpCompleted) {
             setCookie('accessToken', data.accessToken);
