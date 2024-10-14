@@ -30,7 +30,9 @@ const StepOne: React.FC = () => {
   const [locationType, setLocationType] = useState<LocationType | null>(
     projectInfo.location.type,
   );
-  const [address, setAddress] = useState<string>(projectInfo.location.address);
+  // const [address, setAddress] = useState<string>(projectInfo.location.address);
+  const [address] = useState<string>('SEOUL');
+
   const [detail, setDetail] = useState<string>(projectInfo.location.detail);
 
   const dateInputRef = useRef<HTMLInputElement>(null);
@@ -211,7 +213,7 @@ const StepOne: React.FC = () => {
               <Input
                 type="text"
                 value={address}
-                onChange={(e) => setAddress(e.target.value)}
+                // onChange={(e) => setAddress(e.target.value)}
                 placeholder="주소"
               />
               <IconButton
