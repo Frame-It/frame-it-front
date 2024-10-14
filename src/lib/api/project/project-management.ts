@@ -1,4 +1,4 @@
-import { ActiveStatus, TimeOption } from '@/types/project.type';
+import { ActiveStatus, Status, TimeOption } from '@/types/project.type';
 import { getAuthHeader } from './header';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -75,13 +75,25 @@ export interface CompletedProject extends BaseProject {
   };
 }
 
-export const getUserProjects = async () => {
+export const getUserProjects = async (
+  status?: Status,
+  includesApplicant = true,
+) => {
   const headers = await getAuthHeader();
 
-  const res = await fetch(`${API_URL}/users/projects`, {
-    headers,
-    cache: 'no-store',
-  });
+  const queryParams = new URLSearchParams();
+  if (status) {
+    queryParams.set('status', status);
+  }
+  queryParams.set('includesApplicant', includesApplicant.toString());
+
+  const res = await fetch(
+    `${API_URL}/users/projects?${queryParams.toString()}`,
+    {
+      headers,
+      cache: 'no-store',
+    },
+  );
   const data = await res.json();
 
   if (res.status !== 200) {
