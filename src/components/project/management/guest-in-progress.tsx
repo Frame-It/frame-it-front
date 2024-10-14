@@ -22,7 +22,6 @@ const GuestInProgressContent = ({
   projectId,
   project,
 }: GuestInProgressContentProps) => {
-  if (!project.host) return;
   const router = useRouter();
   const { isOpen, onOpenChange, onOpen } = useDisclosure(false);
 
@@ -38,6 +37,9 @@ const GuestInProgressContent = ({
   const handleClickShowReview = async () => {
     onOpen();
   };
+
+  if (!project.host) return;
+
   return (
     <>
       <div className={cn('flex flex-col gap-2')}>
