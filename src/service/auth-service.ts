@@ -3,13 +3,11 @@
 import { IUserRegistInfo } from '@/store/user-regist-store';
 import { getCookie } from 'cookies-next';
 
-const ADDRESS = `${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}/login`;
+const ADDRESS = `${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}`;
 
 const SERVER_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const sendCodeToBackend = async (code: string, state: string) => {
-  console.log(code, state);
-
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/login/${state}?code=${code}&redirect_uri=${ADDRESS}`,
     {
