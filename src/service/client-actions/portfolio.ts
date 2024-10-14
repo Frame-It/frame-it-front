@@ -102,6 +102,8 @@ export const getFeeds = async ({
 export const getPortfolioDetailClient = async (id?: string) => {
   const token = getCookie('accessToken');
 
+  console.log(id);
+
   if (token && id) {
     const res = await fetch(`${API_URL}/portfolios/portfolio/${id}`, {
       method: 'GET',
@@ -115,6 +117,57 @@ export const getPortfolioDetailClient = async (id?: string) => {
     const data: IPortfolioDetail = await res.json();
     return data;
   }
+};
+
+export const updatePortfolio = async (data: any, id: string) => {
+  const formData = new FormData();
+
+  formData.append('title', data.title);
+
+  // 선택
+  if (data.description) {
+    formData.append('description', data.description);
+  }
+
+  if (data.hashtags) {
+    data.hashtags.forEach((hashtag: string) => {
+      formData.append('hashtags', hashtag);
+    });
+  }
+
+  if (data.togethers) {
+    data.hashtags.forEach((together: string) => {
+      formData.append('togethers', together);
+    });
+  }
+
+  if (data.addPhotos.length > 0) {
+    data.addPhotos.forEach((photo: any, i: number) => {
+      formData.append('addPhotos', photo, 'aphoto' + i);
+    });
+  }
+
+  if (data.deletePhotos.length > 0) {
+    data.deletePhotos.forEach((deletePhotos: string) => {
+      formData.append('deletePhotos', deletePhotos);
+    });
+  }
+
+  const token = getCookie('accessToken');
+
+  const res = await fetch(`${API_URL}/portfolios/${id}`, {
+    method: 'PUT',
+    body: formData,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (res.ok) {
+    return true;
+  }
+
+  return false;
 };
 
 export const deletePortfolio = async (id: string) => {

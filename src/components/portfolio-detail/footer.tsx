@@ -14,7 +14,7 @@ const PortfolioDetailFooter = ({
   createdAt,
   views,
 }: IPortfolioDetailFooterProps) => {
-  const date = parseISO(createdAt || '');
+  const date = parseISO(createdAt || '2024-10-13T05:52:39');
   const formattedDate = format(date, 'yyyy. MM. dd EEEE', { locale: ko });
 
   return (

@@ -1,4 +1,3 @@
-import MyPage from '@/app/(my)/my-page/page';
 import BackButton from '@/components/common/back-button';
 import { Header, HeaderLeft, HeaderRight } from '@/components/common/header';
 import Icon from '@/components/common/icon';
@@ -7,8 +6,8 @@ import PortfolioDetailMenu from '@/components/portfolio-detail/menu';
 import { MyInfoProvider } from '@/providers/my-info-provider';
 import { getMyPage } from '@/service/server-actions/my-service';
 import { getPortfolioDetail } from '@/service/server-actions/portfolio';
+import { revalidatePath } from 'next/cache';
 import { headers } from 'next/headers';
-import React from 'react';
 
 export default async function PortfolioLayout({
   children,
@@ -21,7 +20,6 @@ export default async function PortfolioLayout({
 
   const myPage = await getMyPage();
   const portfolioDetail = await getPortfolioDetail(id);
-
   const isMyPortfolio = myPage?.id === portfolioDetail?.userId;
 
   return (
@@ -42,16 +40,7 @@ export default async function PortfolioLayout({
           )}
         </HeaderRight>
       </Header>
-      <main className="mb-[16px] mt-[56px] px-[16px]">
-        <MyInfoProvider
-          value={{
-            myPage,
-            portfolioDetail,
-          }}
-        >
-          {children}
-        </MyInfoProvider>
-      </main>
+      <main className="mb-[16px] mt-[56px] px-[16px]">{children}</main>
     </>
   );
 }

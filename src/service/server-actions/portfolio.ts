@@ -1,3 +1,5 @@
+'use server';
+
 import { IPortfolioDetail } from '@/types/portfolio';
 import { cookies } from 'next/headers';
 
@@ -34,11 +36,10 @@ export const getPortfolioDetail = async (id?: string) => {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token.value}`,
       },
+      next: { tags: ['getPortfolioDetail'] },
     });
 
     const data: IPortfolioDetail = await res.json();
-
-    console.log(data);
 
     return data;
   }

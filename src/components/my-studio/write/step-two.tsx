@@ -17,7 +17,10 @@ import {
   PortfolioDetailFormValues,
   portfolioInfoSchema,
 } from '@/lib/schema/portfolio-regist-schema';
-import { postPortfolio } from '@/service/client-actions/portfolio';
+import {
+  postPortfolio,
+  updatePortfolio,
+} from '@/service/client-actions/portfolio';
 import { usePortfolioRegisterStore } from '@/store/portfolio-regist-store';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { XIcon } from 'lucide-react';
@@ -32,6 +35,9 @@ interface IStepTwoProps {
 // TODO : 프로젝트 수정 시 로직 추가하기
 const StepTwo: React.FunctionComponent<IStepTwoProps> = ({ id }) => {
   const router = useRouter();
+  const portfolioInfo = usePortfolioRegisterStore(
+    (state) => state.portfolioInfo,
+  );
   const photoList = usePortfolioRegisterStore((state) => state.photoList);
   const clearData = usePortfolioRegisterStore((state) => state.clear);
 
@@ -40,35 +46,76 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = ({ id }) => {
 
   const form = useForm<PortfolioDetailFormValues>({
     resolver: zodResolver(portfolioInfoSchema),
+    defaultValues: {
+      title: portfolioInfo.title,
+      detail: portfolioInfo.detail,
+      tagList: portfolioInfo.tagList,
+      togather: portfolioInfo.togather,
+    },
   });
 
   const onSubmit = async (values: PortfolioDetailFormValues) => {
-    const newValue = {
-      title: values.title,
-      description: values.detail || undefined,
-      hashtags: values.tagList || undefined,
-      togethers: values.togather
-        ? Array.from({ length: 1 }, () => values.togather)
-        : undefined,
-      photos: photoList?.map((el) => el.file),
-    };
+    if (!id) {
+      const newValue = {
+        title: values.title,
+        description: values.detail || undefined,
+        hashtags: values.tagList || undefined,
+        togethers: values.togather
+          ? Array.from({ length: 1 }, () => values.togather)
+          : undefined,
+        photos: photoList?.map((el) => el.file),
+      };
 
-    const isSuccess = await postPortfolio(newValue);
+      const isSuccess = await postPortfolio(newValue);
 
-    if (isSuccess) {
-      toast({
-        variant: 'success',
-        title: '업로드에 성공 하였습니다.',
-        duration: 1300,
-      });
-      clearData();
-      router.replace('/my-page/my-studio');
+      if (isSuccess) {
+        toast({
+          variant: 'success',
+          title: '업로드에 성공 하였습니다.',
+          duration: 1300,
+        });
+        clearData();
+        router.replace('/my-page/my-studio');
+      } else {
+        toast({
+          variant: 'destructive',
+          title: '업로드에 실패 하였습니다.',
+          duration: 1300,
+        });
+      }
     } else {
-      toast({
-        variant: 'destructive',
-        title: '업로드에 실패 하였습니다.',
-        duration: 1300,
-      });
+      const newValue = {
+        title: values.title,
+        description: values.detail || undefined,
+        hashtags: values.tagList || undefined,
+        togethers: values.togather
+          ? Array.from({ length: 1 }, () => values.togather)
+          : undefined,
+        addPhotos: photoList?.filter((el) => el.file).map((el) => el.file),
+        deletePhotos: photoList
+          ?.filter((el) => el.isDelete)
+          .map((el) => el.prevImageUrl),
+      };
+
+      const isSuccess = await updatePortfolio(newValue, id);
+
+      if (isSuccess) {
+        toast({
+          variant: 'success',
+          title: '수정에 성공 하였습니다.',
+          duration: 1300,
+        });
+        clearData();
+        // router.replace(`/portfolio-detail/${id}`);
+        router.refresh();
+        router.back();
+      } else {
+        toast({
+          variant: 'destructive',
+          title: '수정에 실패 하였습니다.',
+          duration: 1300,
+        });
+      }
     }
   };
 

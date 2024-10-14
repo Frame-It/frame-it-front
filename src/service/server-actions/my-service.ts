@@ -15,6 +15,7 @@ export const getMyPage = async () => {
         Authorization: `Bearer ${token.value}`,
       },
       cache: 'no-store',
+      next: { tags: ['getMyPage'] },
     });
 
     if (!response.ok) {
