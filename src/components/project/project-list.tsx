@@ -1,4 +1,7 @@
+'use client';
+
 import { IProject } from '@/types/project.type';
+import { useRouter } from 'next/navigation';
 import BottomButton from '../common/bottom-button';
 import Icon from '../common/icon';
 import ProjectListItem from './project-list-item';
@@ -8,6 +11,7 @@ interface ProjectListProps {
 }
 
 const ProjectList: React.FC<ProjectListProps> = ({ projectList }) => {
+  const router = useRouter();
   return (
     <section className="flex h-full flex-auto flex-col">
       {projectList.length === 0 ? (
@@ -26,6 +30,7 @@ const ProjectList: React.FC<ProjectListProps> = ({ projectList }) => {
             size={'middle'}
             label={'모집글 등록하기'}
             className="w-fit px-6"
+            onClick={() => router.push('/project-register')}
           />
         </div>
       ) : (
