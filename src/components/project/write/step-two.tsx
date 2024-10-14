@@ -82,9 +82,9 @@ const StepTwo = ({ isEdit = false }: { isEdit?: boolean }) => {
 
       try {
         await postAnnouncement(formData);
+        router.push(`?complete=true&title=${projectInfo.projectName}`);
 
         reset();
-        router.push('?complete=true');
       } catch (error) {
         console.error(error);
         // TODO: error handling
