@@ -4,7 +4,9 @@ export type CommonIconID =
   | 'next-icon'
   | 'check-icon'
   | 'camera-icon'
-  | 'person-icon';
+  | 'person-icon'
+  | 'square-check-icon'
+  | 'square-uncheck-icon';
 
 export const commonSVG = (
   <>
@@ -107,6 +109,60 @@ export const commonSVG = (
           strokeLinecap="round"
         />
       </g>
+    </symbol>
+
+    {/* square-check-icon */}
+    <symbol
+      id="square-check-icon"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/symbol"
+    >
+      <g id="ic_20" clipPath="url(#clip0_2801_24302)">
+        <g id="Frame 427319707">
+          <rect x="2" y="2" width="16" height="16" rx="4" fill="#4D4744" />
+          <path
+            id="Vector 139"
+            d="M6 9.5L9 12.5L14 7.5"
+            stroke="white"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </g>
+      </g>
+      <defs>
+        <clipPath id="clip0_2801_24302">
+          <rect width="20" height="20" fill="white" />
+        </clipPath>
+      </defs>
+    </symbol>
+
+    {/* square-uncheck-icon */}
+    <symbol
+      id="square-uncheck-icon"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g id="ic_20" clipPath="url(#clip0_2801_24277)">
+        <g id="Frame 427319707">
+          <rect
+            x="2.75"
+            y="2.75"
+            width="14.5"
+            height="14.5"
+            rx="3.25"
+            stroke="#7E7774"
+            strokeWidth="1.5"
+          />
+        </g>
+      </g>
+      <defs>
+        <clipPath id="clip0_2801_24277">
+          <rect width="20" height="20" fill="white" />
+        </clipPath>
+      </defs>
     </symbol>
 
     {/* camera-icon */}

@@ -25,4 +25,5 @@ export interface IApplyInfo {
   applicationDate: string;
   content: string;
   partnerRole: UserRole;
+  userId: string;
 }

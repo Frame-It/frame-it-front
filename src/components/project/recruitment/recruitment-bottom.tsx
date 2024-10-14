@@ -5,14 +5,20 @@ import Drawer from '@/components/common/drawer';
 import Guide from '@/components/common/guide';
 import Icon from '@/components/common/icon';
 import IconButton from '@/components/common/icon-button';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
 import { GuestProjectGuide } from '@/constants/guide';
 import useDisclosure from '@/hooks/useDisclosure';
-import { deleteRecruitBookmark, postRecruitBookmark } from '@/lib/api/project';
+import {
+  deleteRecruitBookmark,
+  postProjectApply,
+  postRecruitBookmark,
+} from '@/lib/api/project/project-recruitment';
 import { cn } from '@/lib/utils';
 import { useRecruitStore } from '@/store/recruit-store';
 import Link from 'next/link';
-import { FC } from 'react';
+import { useRouter } from 'next/navigation';
+import { FC, useState } from 'react';
 
 interface HostBottomProps {
   projectId: number;
@@ -25,7 +31,9 @@ export const HostBottom: FC<HostBottomProps> = ({ projectId }) => {
       <IconButton
         icon={<Icon id={'edit-icon'} size={24} className="text-gray-40" />}
       />
-      <Link href={`/project-management/${projectId}`}>
+      <Link
+        href={`/project-management/${projectId}?status=RECRUITING&isHost=true`}
+      >
         <BottomButton
           variant={'secondary'}
           size={'large'}
@@ -40,9 +48,11 @@ export const HostBottom: FC<HostBottomProps> = ({ projectId }) => {
 export const GuestBottom = ({
   title,
   projectId,
+  hostIdentity,
 }: {
   title: string;
   projectId: number;
+  hostIdentity: 'PHOTOGRAPHER' | 'MODEL';
 }) => {
   return (
     <>
@@ -50,7 +60,11 @@ export const GuestBottom = ({
       <IconButton
         icon={<Icon id={'share-icon'} size={24} className="text-gray-40" />}
       />
-      <ApplyDrawer title={title} projectId={projectId} />
+      <ApplyDrawer
+        title={title}
+        projectId={projectId}
+        hostIdentity={hostIdentity}
+      />
     </>
   );
 };
@@ -58,11 +72,29 @@ export const GuestBottom = ({
 const ApplyDrawer = ({
   title,
   projectId,
+  hostIdentity,
 }: {
   title: string;
   projectId: number;
+  hostIdentity: 'PHOTOGRAPHER' | 'MODEL';
 }) => {
   const { isOpen, onOpenChange, onClose } = useDisclosure(false);
+  const [content, setContent] = useState('');
+  const {
+    isOpen: isModalOpen,
+    onOpenChange: onModalOpenChange,
+    onOpen: onModalOpen,
+  } = useDisclosure(false);
+  const router = useRouter();
+
+  const handleClickApply = async () => {
+    try {
+      await postProjectApply(projectId, content);
+      onModalOpen();
+    } catch (e) {
+      alert(e);
+    }
+  };
 
   return (
     <Drawer
@@ -76,7 +108,6 @@ const ApplyDrawer = ({
           size={'large'}
           label={'프로젝트 신청하기'}
           className="w-[222px]"
-          // disabled={!isNextEnabled}
         />
       }
       className="pb-0"
@@ -87,9 +118,13 @@ const ApplyDrawer = ({
         </div>
         <div className="flex flex-col gap-2">
           <h1 className={cn('font-title-16 text-gray-10')}>
-            작가님께 하고싶은 말
+            {hostIdentity === 'PHOTOGRAPHER' ? '작가' : '모델'}님께 하고싶은 말
           </h1>
-          <Textarea placeholder="자유롭게 적어주세요." />
+          <Textarea
+            placeholder="자유롭게 적어주세요."
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+          />
         </div>
         <Guide title="지원 안내" guides={GuestProjectGuide.general} />
         <div
@@ -97,13 +132,47 @@ const ApplyDrawer = ({
             'absolute bottom-0 left-0 flex h-[64px] w-full items-center',
           )}
         >
-          <BottomButton
-            variant={'primary'}
-            size={'large'}
-            label={'신청 하기'}
-          />
+          <Dialog open={isModalOpen} onOpenChange={onModalOpenChange}>
+            <DialogTrigger asChild>
+              <BottomButton
+                variant={'primary'}
+                size={'large'}
+                label={'신청 하기'}
+                disabled={!content}
+                onClick={handleClickApply}
+              />
+            </DialogTrigger>
+            <DialogContent className="flex w-[312px] flex-col gap-[6px] px-[12px] pb-[24px] pt-[32px]">
+              <div
+                className={cn(
+                  'font-title-16 flex flex-wrap items-start justify-center self-stretch',
+                )}
+              >
+                신청이 완료되었습니다.
+              </div>
+              <p
+                className={cn(
+                  'font-body-14 mb-4 flex justify-center self-stretch text-gray-20',
+                )}
+              >
+                {title}
+              </p>
+              <BottomButton
+                variant={'secondary'}
+                size={'middle'}
+                label={'확인하기'}
+                onClick={() => {
+                  router.push(
+                    `/project-management/${projectId}?status=RECRUITING&isHost=false`,
+                  );
+                }}
+                className="max-w-none"
+              />
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
+      <></>
     </Drawer>
   );
 };

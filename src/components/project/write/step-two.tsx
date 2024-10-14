@@ -15,7 +15,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from '@/components/ui/use-toast';
 import { PROJECT_CONCEPTS } from '@/constants/project';
-import { postAnnouncement } from '@/lib/api/project';
+import { postAnnouncement } from '@/lib/api/project/project-recruitment';
 import {
   ProjectImageFormValues,
   projectImageSchema,
@@ -75,8 +75,9 @@ const StepTwo: React.FC = () => {
       });
 
       try {
-        const result = await postAnnouncement(formData);
+        await postAnnouncement(formData);
 
+        // TODO: 초기화
         router.push('?complete=true');
       } catch (error) {
         console.error(error);

@@ -3,31 +3,31 @@
 import BottomButton from '@/components/common/bottom-button';
 import ConceptTag from '@/components/common/concept-tag';
 import Guide from '@/components/common/guide';
-import ProjectInfo from '@/components/project/project-info';
 import { AutosizeTextarea } from '@/components/ui/auto-size-textarea';
-import { PROJECT_CONCEPTS } from '@/constants/project';
+import { REVIEW_TAGS } from '@/constants/project';
+import {
+  CompletedProject,
+  InProgressProject,
+} from '@/lib/api/project/project-management';
+import { postProjectReview } from '@/lib/api/project/project-review';
 import { cn } from '@/lib/utils';
-import { IProject } from '@/types/project.type';
-import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
+import ProjectInfo from '../project-info';
 
-const ReviewRegisterPage = () => {
-  const searchParams = useSearchParams();
-  const isComplete = searchParams.get('complete') === 'true';
-
-  return isComplete ? <Complete /> : <Register />;
-};
-
-const Register = () => {
-  const project: Omit<IProject, 'timeOption' | 'isHost' | 'status'> = {
-    id: 1,
-    shootingAt: '7/31T12:00:00',
-    // time: '12:00~14:00',
-    spot: '서울시 종로구',
-    title: '노들섬에서 촬용해 주세요',
-  };
+const ReviewRegister = ({
+  project,
+  projectId,
+  revieweeId,
+}: {
+  project: InProgressProject | CompletedProject;
+  projectId: number;
+  revieweeId: number;
+}) => {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [reviewContent, setReviewContent] = useState('');
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const toggleTag = (id: string) => {
     setSelectedTags((prevSelectedTags) =>
@@ -37,7 +37,23 @@ const Register = () => {
     );
   };
 
-  const handleComplete = () => {};
+  const handleComplete = async () => {
+    try {
+      const { projectStatus } = await postProjectReview({
+        projectId,
+        content: reviewContent,
+        tags: selectedTags,
+        revieweeId,
+      });
+
+      const newParams = new URLSearchParams(searchParams);
+      newParams.set('complete', 'true');
+      newParams.set('status', projectStatus);
+      router.push(`?${newParams.toString()}`);
+    } catch (e) {
+      alert(e);
+    }
+  };
 
   return (
     <div className="relative flex h-full flex-col p-4">
@@ -53,7 +69,7 @@ const Register = () => {
               'flex flex-wrap content-start items-start gap-2 self-stretch',
             )}
           >
-            {PROJECT_CONCEPTS.map((tag) => (
+            {REVIEW_TAGS.map((tag) => (
               <ConceptTag
                 key={tag.id}
                 id={tag.id}
@@ -76,6 +92,8 @@ const Register = () => {
           <AutosizeTextarea
             minHeight={63}
             placeholder="ex) 친절하게 잘해주세요! 구도도 도와주십니다 :)"
+            value={reviewContent}
+            onChange={(e) => setReviewContent(e.target.value)}
           />
           <Guide
             guides={[
@@ -87,51 +105,17 @@ const Register = () => {
         </div>
       </div>
 
-      <Link
-        className="absolute bottom-0 left-0 flex h-[64px] w-full items-center px-4"
-        href={'?complete=true'}
-      >
+      <div className="absolute bottom-0 left-0 flex h-[64px] w-full items-center px-4">
         <BottomButton
           variant={'primary'}
           size={'large'}
           label={'작성완료'}
           onClick={handleComplete}
+          disabled={selectedTags.length === 0 || reviewContent.length === 0}
         />
-      </Link>
-    </div>
-  );
-};
-
-const Complete = () => {
-  return (
-    <div className="flex h-full flex-col items-center justify-center gap-[9px]">
-      <div className="flex flex-col items-center gap-1">
-        <h1 className="font-title-16 text-gray-20">리뷰작성 완료</h1>
-        <p className="font-body-14 text-gray-60">
-          프로젝트를 통해 한 단계 성장했어요!
-        </p>
       </div>
-      {/* TODO: 프로젝트 id로 이동 */}
-      <Link href={'/project-management/1'} className="w-[217px]">
-        <BottomButton
-          variant={'secondary'}
-          size={'middle'}
-          label={'프로젝트 리뷰 보러가기'}
-          className="font-button-14"
-        />
-      </Link>
-      <Link href={'/'} className="w-[217px]">
-        <BottomButton
-          variant={'stroke'}
-          size={'middle'}
-          label={'홈으로'}
-          className="font-button-14"
-        />
-      </Link>
-
-      <div className="h-[58px]" />
     </div>
   );
 };
 
-export default ReviewRegisterPage;
+export default ReviewRegister;

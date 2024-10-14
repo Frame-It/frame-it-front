@@ -7,12 +7,18 @@ import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { useProjectRegisterStore } from '@/store/project-regist-store';
 import { LocationType, ProfessionRole, TimeOption } from '@/types/project.type';
+import { getCookie } from 'cookies-next';
 import React, { useRef, useState } from 'react';
+
+import { redirect } from 'next/navigation';
 import '../../../styles/input.css';
 
 const StepOne: React.FC = () => {
   const { setProjectInfo, nextStep } = useProjectRegisterStore();
-  const [type] = useState<ProfessionRole | null>('PHOTOGRAPHER'); // TODO: 본인 타입으로 고정
+  const type =
+    (getCookie('identity') as ProfessionRole) === 'MODEL'
+      ? 'PHOTOGRAPHER'
+      : 'MODEL';
   const [projectName, setProjectName] = useState<string>('');
   const [date, setDate] = useState<string>('');
   const [time, setTime] = useState<string>('');
@@ -20,6 +26,11 @@ const StepOne: React.FC = () => {
   const [locationType, setLocationType] = useState<LocationType | null>(null);
   const [address, setAddress] = useState<string>('');
   const [detail, setDetail] = useState<string>('');
+
+  const dateInputRef = useRef<HTMLInputElement>(null);
+  const timeInputRef = useRef<HTMLInputElement>(null);
+
+  if (!type) redirect('/login');
 
   const isNextEnabled =
     type &&
@@ -44,8 +55,6 @@ const StepOne: React.FC = () => {
       alert('모든 필드를 입력해주세요.');
     }
   };
-  const dateInputRef = useRef<HTMLInputElement>(null);
-  const timeInputRef = useRef<HTMLInputElement>(null);
 
   const handleDateClick = () => {
     if (dateInputRef.current) {

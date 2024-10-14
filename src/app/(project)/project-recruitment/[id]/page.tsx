@@ -10,7 +10,7 @@ import {
   CarouselItem,
 } from '@/components/ui/carousel';
 import { IProjectConcept, PROJECT_CONCEPTS } from '@/constants/project';
-import { getRecruitAnnouncement } from '@/lib/api/project';
+import { getRecruitAnnouncement } from '@/lib/api/project/project-recruitment';
 import { cn } from '@/lib/utils';
 import { FC } from 'react';
 
@@ -25,17 +25,18 @@ const ProjectRecruitmentDetailPage: FC<
 > = async ({ params }) => {
   const projectId = parseInt(params.id, 10);
   const projectData = await getRecruitAnnouncement(projectId);
-  const userRole = 'HOST'; // TODO: 서버에서 보내줘야 할 듯
 
   const {
     title,
     description,
     shootingAt,
     spot,
-    concepts,
+    hostConcepts,
+    projectConcepts,
     retouchingDescription,
     host,
     conceptPhotoUrls,
+    isHost,
   } = projectData;
 
   return (
@@ -63,7 +64,7 @@ const ProjectRecruitmentDetailPage: FC<
         <div className={cn('py-2')}>
           {
             <TagList
-              tags={concepts.map((conceptId: string) =>
+              tags={projectConcepts.map((conceptId: string) =>
                 PROJECT_CONCEPTS.find((v) => v.id === conceptId),
               )}
               size={'medium'}
@@ -95,14 +96,13 @@ const ProjectRecruitmentDetailPage: FC<
         <div className={cn('font-body-14 pt-2')}>{retouchingDescription}</div>
       </div>
       <div className={cn('font-title-18 flex flex-col gap-2')}>
-        작가
+        {host.identity === 'PHOTOGRAPHER' ? '작가' : '모델'}
         <WriterInfo
           hostId={host.id}
           nickname={host.nickname}
           profileImageUrl={host.profileImageUrl}
           description={host.description}
-          // TODO: host의 concepts 필요
-          concepts={[]}
+          concepts={hostConcepts}
         />
       </div>
       <div
@@ -110,10 +110,14 @@ const ProjectRecruitmentDetailPage: FC<
           'absolute bottom-0 left-0 flex h-[64px] w-full items-center justify-center gap-[8px] px-4',
         )}
       >
-        {userRole === 'HOST' ? (
+        {isHost ? (
           <HostBottom projectId={projectId} />
         ) : (
-          <GuestBottom title={title} projectId={projectId} />
+          <GuestBottom
+            title={title}
+            projectId={projectId}
+            hostIdentity={host.identity}
+          />
         )}
       </div>
     </main>
@@ -148,7 +152,7 @@ const WriterInfo: FC<WriterInfoProps> = ({
       <div className="flex flex-col items-center justify-center gap-[10px] self-stretch">
         <div className="font-body-14">{description}</div>
         <div>
-          <TagList tags={[]} size={'medium'} className="gap-[4px]" />
+          <TagList tags={concepts} size={'medium'} className="gap-[4px]" />
         </div>
       </div>
     </section>

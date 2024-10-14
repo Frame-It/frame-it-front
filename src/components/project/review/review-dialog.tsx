@@ -1,6 +1,9 @@
+import { ITag, REVIEW_TAGS } from '@/constants/project';
+import { getProjectReview } from '@/lib/api/project/project-review';
 import { cn } from '@/lib/utils';
-import ConceptTag from '../common/concept-tag';
-import Icon from '../common/icon';
+import { useEffect, useState } from 'react';
+import ConceptTag from '../../common/concept-tag';
+import Icon from '../../common/icon';
 import {
   Dialog,
   DialogClose,
@@ -8,13 +11,14 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '../ui/dialog';
+} from '../../ui/dialog';
 
 interface ReviewDialogProps {
   trigger?: React.ReactNode;
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
   name?: string;
+  reviewId: number;
 }
 
 const ReviewDialog = ({
@@ -22,23 +26,24 @@ const ReviewDialog = ({
   isOpen,
   onOpenChange,
   name,
+  reviewId,
 }: ReviewDialogProps) => {
-  const tags = [
-    {
-      id: 1,
-      label: '약속시간을 잘 지켜요',
-    },
-    {
-      id: 2,
-      label: '매너가 좋아요',
-    },
-    {
-      id: 3,
-      label: '커뮤니케이션이 잘 돼요',
-    },
-  ];
+  const [tags, setTags] = useState<ITag['id'][] | null>(null);
+  const [content, setContent] = useState('');
 
-  const review = `처음이라 어색했는데 제가 원하는 컨셉에 따라 포징도 잘해주셨습니다. 덕분에 좋은 촬영을 했어요. 감사합니다 :)`;
+  useEffect(() => {
+    if (tags?.length && content) return;
+    (async () => {
+      try {
+        const review = await getProjectReview(reviewId);
+        console.log(review);
+        setTags(review.tags);
+        setContent(review.content);
+      } catch (error) {
+        console.error('Error fetching review:', error);
+      }
+    })();
+  }, [reviewId]);
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
@@ -57,11 +62,14 @@ const ReviewDialog = ({
             'flex flex-wrap content-start items-start gap-[6px] self-stretch',
           )}
         >
-          {tags.map((tag) => (
+          {tags?.map((tag: ITag['id']) => (
             <ConceptTag
-              key={tag.id}
-              id={tag.id}
-              label={tag.label}
+              key={tag}
+              id={tag}
+              label={
+                REVIEW_TAGS.find((reviewTag) => reviewTag.id === tag)?.label ??
+                ''
+              }
               isSelected={true}
             />
           ))}
@@ -71,7 +79,7 @@ const ReviewDialog = ({
             'font-body-14 flex max-h-[127px] min-h-[83px] items-start self-stretch rounded-md border border-gray-60 p-3 text-gray-20',
           )}
         >
-          {review}
+          {content}
         </p>
       </DialogContent>
     </Dialog>

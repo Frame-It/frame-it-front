@@ -1,26 +1,20 @@
-'use client';
-
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { IProject } from '@/types/project.type';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 interface ProjectItemProps {
   project: IProject;
   routePath?: string;
-  isMine?: boolean;
 }
 
 const ProjectListItem: React.FC<ProjectItemProps> = ({
   project,
-  routePath = 'project-recruitment',
-  isMine = false,
+  routePath,
 }) => {
-  const router = useRouter();
-
   return (
-    <li
-      onClick={() => router.push(`/${routePath}/${project.id}`)}
+    <Link
+      href={routePath ? routePath : `/${routePath}/${project.id}`}
       className="flex justify-between gap-x-[13px] border-b border-gray-80 pb-[18px]"
     >
       <div className="space-y-[12px]">
@@ -28,7 +22,7 @@ const ProjectListItem: React.FC<ProjectItemProps> = ({
           {project.title}
         </div>
         <div className="flex items-center gap-1">
-          {isMine && <MyBadge />}
+          {project.isHost && <MyBadge />}
           <div className="font-body-14 flex items-center leading-[150%] text-gray-40">
             <span className='after:mx-2 after:content-["|"]'>
               {project.spot}
@@ -52,7 +46,7 @@ const ProjectListItem: React.FC<ProjectItemProps> = ({
         {project.status === 'IN_PROGRESS' && '진행중'}
         {project.status === 'COMPLETED' && '완료'}
       </Badge>
-    </li>
+    </Link>
   );
 };
 

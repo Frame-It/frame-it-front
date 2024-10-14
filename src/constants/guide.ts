@@ -11,6 +11,10 @@ export const HostProjectGuide = Object.freeze({
     `취소 접수 동안은 ‘진행 중’ 상태를 유지합니다.`,
     `취소된 프로젝트는 ‘취소’ 상태로 변경됩니다.`,
   ],
+  inProgress: [
+    '호스트와 게스트 모두가 ‘프로젝트 완료’를 눌러야 프로젝트가 정상 완료됩니다.',
+    '프로젝트를 완료하면 변경할 수 없습니다.',
+  ],
 });
 
 export const GuestProjectGuide = Object.freeze({

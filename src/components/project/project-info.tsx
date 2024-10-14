@@ -4,7 +4,7 @@ import { IProject } from '@/types/project.type';
 const ProjectInfo = ({
   project,
 }: {
-  project: Omit<IProject, 'timeOption' | 'isHost' | 'status'>;
+  project: Pick<IProject, 'shootingAt'| 'title'| 'spot'>;
 }) => {
   return (
     <div className="flex flex-col gap-1 rounded-[8px] bg-gray-90 px-[12px] py-[14px]">
