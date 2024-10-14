@@ -9,15 +9,15 @@ export const portfolioImageSchema = z.object({
         message: 'Each file must be less than 10MB',
       }),
     )
-    .min(1, 'At least one file is required.') // 최소 1개 파일 필요
-    .max(10, 'You can upload up to 10 images.'), // 최대 10개 파일 허용
+    .min(1, 'At least one file is required.')
+    .max(10, 'You can upload up to 10 images.'),
 });
 
 export const portfolioInfoSchema = z.object({
-  title: z.string().min(10).max(100),
-  detail: z.string().min(10).max(500),
-  tagList: z.array(z.string()).min(1).max(5),
-  togather: z.string(),
+  title: z.string().min(2).max(42),
+  detail: z.string().or(z.literal('')).optional(),
+  tagList: z.array(z.string()).min(1).max(5).nullable().optional(),
+  togather: z.string().or(z.literal('')).optional(),
 });
 
 export type PortfolioImageFormValues = z.infer<typeof portfolioImageSchema>;

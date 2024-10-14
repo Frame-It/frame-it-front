@@ -1,18 +1,12 @@
 'use client';
 
-import Image from 'next/image';
 import { Badge } from '../ui/badge';
 import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
+import { IFeed } from '@/types/portfolio';
 
 interface IPhotoListProps {
-  imageList: {
-    id: string;
-    url: string;
-    isPremium?: boolean;
-    role: 'model' | 'author';
-    height: number;
-  }[];
+  imageList: IFeed[];
   isNavigate?: boolean;
   isFeed?: boolean;
 }
@@ -24,28 +18,24 @@ const PhotoList: React.FunctionComponent<IPhotoListProps> = ({
 }) => {
   const router = useRouter();
 
-  const handleNavigate = (id: string) => {
+  const handleNavigate = (id: number) => {
     if (!isNavigate) return;
-
     router.push(`/portfolio-detail/${id}`);
   };
 
   return (
     <ul className="flex w-full flex-col gap-y-4">
-      {imageList.map((image) => {
+      {imageList?.map((feed, i) => {
         return (
           <li
             className="relative overflow-hidden rounded-[8px]"
-            key={image.id}
-            onClick={() => handleNavigate(image.id)}
+            key={feed.id}
+            onClick={() => handleNavigate(feed.id)}
           >
-            <Image
-              key={image.id}
-              src={image.url}
-              alt={'feed 이미지' + image.id}
-              width={0}
-              height={0}
-              sizes="360px"
+            <img
+              key={feed.id}
+              src={feed.portfolioImageUrl}
+              alt={'feed 이미지' + i}
               className="rounded-[8px]"
               style={{ width: '100%', height: 'auto' }}
             />
@@ -55,23 +45,20 @@ const PhotoList: React.FunctionComponent<IPhotoListProps> = ({
                   variant="feed"
                   className={cn(
                     'px-[12px]',
-                    image.role === 'model'
+                    feed.identity === 'MODEL'
                       ? 'border border-white bg-[#201A17B2]/70 text-white'
                       : 'border border-[#201A17]/20 bg-[#ffffff]/70 text-gray-10',
                   )}
                 >
-                  {image.role === 'model' ? '모델' : '작가'}
+                  {feed.identity === 'MODEL' ? '모델' : '작가'}
                 </Badge>
-
-                {image.isPremium ? (
-                  <Image
+                {/* {feed.title ? (
+                  <img
                     src="/png/certification-mark.png"
                     alt="활동마크"
-                    width={33}
-                    height={33}
-                    className="aspect-square"
+                    className="aspect-square size-[33px]"
                   />
-                ) : null}
+                ) : null} */}
               </div>
             ) : null}
           </li>

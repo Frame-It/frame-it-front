@@ -11,8 +11,11 @@ import {
   HeaderRight,
 } from '@/components/common/header';
 import NotificationButton from '@/components/common/notification-button';
+import { getMyPage } from '@/service/server-actions/my-service';
 
-export default function MyPage() {
+export default async function MyPage() {
+  const myInfo = await getMyPage();
+
   return (
     <>
       <Header className="">
@@ -28,7 +31,7 @@ export default function MyPage() {
       </Header>
       <main className="px-[12px] pb-[66px] pt-[58px]">
         {/* --- */}
-        <MyPageHeader />
+        <MyPageHeader nickName={myInfo?.nickname} />
         <MyPageMenu />
         <Separator className="my-6" />
         <HelpCenter />

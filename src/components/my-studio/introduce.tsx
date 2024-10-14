@@ -31,7 +31,7 @@ const MyStudioIntroduce: React.FunctionComponent<IMyStudioIntroduceProps> = ({
       </ul>
       <div className="mt-[16px] flex items-center gap-x-[8px]">
         <Button
-          onClick={() => router.push('/')}
+          onClick={() => router.push('/my-page/profile')}
           className="h-[37px] w-full rounded-[8px] border border-[#7E7774] bg-white text-[14px] text-[#201A17]"
         >
           프로필 편집

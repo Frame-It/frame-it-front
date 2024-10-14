@@ -23,7 +23,7 @@ const LogoutDialog: React.FunctionComponent<ILogoutDialogProps> = ({
         cancleTitle="취소"
         confirmTitle="로그아웃"
         open={isOpen}
-        onConfirm={() => {
+        onConfirm={async () => {
           onClose();
         }}
         onCancle={() => onClose()}

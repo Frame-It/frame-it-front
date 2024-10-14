@@ -1,19 +1,14 @@
-'use client';
-
+import { getMyReviews } from '@/service/server-actions/studio';
 import { Textarea } from '../ui/textarea';
 import { cn } from '@/lib/utils';
 
 interface IReviewListProps {
-  reviewList: {
-    nickname: string;
-    tagList: string[];
-    constents?: string;
-  }[];
+  id: number;
 }
 
-const ReviewList: React.FunctionComponent<IReviewListProps> = ({
-  reviewList,
-}) => {
+const ReviewList = async ({ id }: IReviewListProps) => {
+  const reviewList = await getMyReviews(id);
+
   return (
     <section>
       {reviewList.length <= 0 && (
@@ -30,7 +25,7 @@ const ReviewList: React.FunctionComponent<IReviewListProps> = ({
       <ul className="space-y-4">
         {reviewList.map((review, i) => (
           <li
-            key={review.nickname}
+            key={review.reviewerNickname + i}
             className={cn(
               'pb-[16px]',
               i === reviewList.length - 1
@@ -39,10 +34,10 @@ const ReviewList: React.FunctionComponent<IReviewListProps> = ({
             )}
           >
             <div className="text-lg font-semibold leading-[135%]">
-              {review.nickname}
+              {review.reviewerNickname}
             </div>
             <div className="mt-2 flex flex-wrap items-center gap-[6px]">
-              {review.tagList.map((tag, i) => (
+              {review.tags.map((tag, i) => (
                 <span
                   key={i + tag}
                   className="inline-flex items-center justify-center rounded-[8px] bg-gray-90 p-2 text-xs text-gray-10"
@@ -51,11 +46,11 @@ const ReviewList: React.FunctionComponent<IReviewListProps> = ({
                 </span>
               ))}
             </div>
-            {review.constents && (
+            {review.content && (
               <Textarea
                 readOnly
                 className="mt-[10px] resize-none focus-visible:ring-0 focus-visible:ring-offset-0"
-                value={review.constents}
+                value={review.content}
               />
             )}
           </li>

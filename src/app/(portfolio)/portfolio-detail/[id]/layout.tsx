@@ -3,23 +3,24 @@ import { Header, HeaderLeft, HeaderRight } from '@/components/common/header';
 import Icon from '@/components/common/icon';
 import ShareButton from '@/components/common/share-button';
 import PortfolioDetailMenu from '@/components/portfolio-detail/menu';
+import { MyInfoProvider } from '@/providers/my-info-provider';
+import { getMyPage } from '@/service/server-actions/my-service';
+import { getPortfolioDetail } from '@/service/server-actions/portfolio';
+import { revalidatePath } from 'next/cache';
 import { headers } from 'next/headers';
 
-export default function PortfolioLayout({
+export default async function PortfolioLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const headersList = headers();
   const headerPathname = headersList.get('x-pathname') || '';
-  const userID = '0000';
-  const portfolioID = headerPathname.split('/').filter((el) => !!el)[1];
+  const id = headerPathname.split('/').at(-1);
 
-  console.log(userID);
-  console.log(portfolioID);
-  // 유저 아이디로 작성된 게시글이면 공유버튼말고 ... 버튼이 존재해야 함
-
-  const isMyPortfolio = true;
+  const myPage = await getMyPage();
+  const portfolioDetail = await getPortfolioDetail(id);
+  const isMyPortfolio = myPage?.id === portfolioDetail?.userId;
 
   return (
     <>
@@ -31,7 +32,7 @@ export default function PortfolioLayout({
         </HeaderLeft>
         <HeaderRight>
           {isMyPortfolio ? (
-            <PortfolioDetailMenu />
+            <PortfolioDetailMenu id={id} />
           ) : (
             <ShareButton>
               <Icon id="share-icon" size={32} className="text-gray-40" />

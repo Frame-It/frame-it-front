@@ -1,7 +1,5 @@
 'use client';
 
-import Image from 'next/image';
-
 import { cn } from '@/lib/utils';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import {
@@ -10,16 +8,15 @@ import {
   CarouselDots,
   CarouselItem,
 } from '@/components/ui/carousel';
-import PhotoList from '../common/photo-list';
-import { generateRandomImageList } from '@/lib/faker';
 import { useEffect, useState } from 'react';
 
-interface IportfolioDetailGalleryProps {}
+interface IportfolioDetailGalleryProps {
+  imageList?: string[];
+}
 
-const PortfolioDetailGallery: React.FunctionComponent<
-  IportfolioDetailGalleryProps
-> = () => {
-  const imageArr = Array.from({ length: 10 }, () => generateRandomImageList());
+const PortfolioDetailGallery = ({
+  imageList,
+}: IportfolioDetailGalleryProps) => {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -32,9 +29,17 @@ const PortfolioDetailGallery: React.FunctionComponent<
     <section className="mt-[24px]">
       <Dialog>
         <DialogTrigger asChild>
-          <div>
-            <PhotoList imageList={imageArr} />
-          </div>
+          <ul className="flex w-full flex-col gap-y-4">
+            {imageList?.map((el, i) => (
+              <li key={'키키' + i}>
+                <img
+                  src={el}
+                  alt={'세부 이미지' + i}
+                  className="w-full rounded-[8px] object-cover"
+                />
+              </li>
+            ))}
+          </ul>
         </DialogTrigger>
         <DialogContent
           className="border-none bg-transparent px-[16px]"
@@ -43,27 +48,18 @@ const PortfolioDetailGallery: React.FunctionComponent<
         >
           <Carousel>
             <CarouselContent>
-              {imageArr.map((image) => (
+              {imageList?.map((image) => (
                 <CarouselItem
-                  key={image.id}
+                  key={image}
                   className={cn(
                     'flex max-h-[500px] flex-col items-center justify-center',
-                    `h-[${image.height}px]`,
                   )}
                 >
-                  <div
-                    className={cn('relative w-full')}
-                    style={{
-                      height: image.height,
-                    }}
-                  >
-                    <Image
-                      src={image.url}
+                  <div className={cn('relative w-full')}>
+                    <img
+                      src={image}
                       alt={'imagecarousel'}
-                      fill
-                      priority
-                      sizes="500px"
-                      className="rounded-[8px] object-cover"
+                      className="w-full rounded-[8px] object-cover"
                     />
                   </div>
                 </CarouselItem>
