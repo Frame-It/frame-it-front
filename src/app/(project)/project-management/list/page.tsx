@@ -3,11 +3,27 @@ import ProjectList from '@/components/project/project-list';
 import { getUserProjects } from '@/lib/api/project/project-management';
 
 import { cn } from '@/lib/utils';
-import { IProject } from '@/types/project.type';
+import { IProject, Status } from '@/types/project.type';
 
-const ProjectManagementListPage = async () => {
-  const { nickname, projects }: { nickname: string; projects: IProject[] } =
-    await getUserProjects();
+interface IProjectManagementListPageProps {
+  searchParams: { type?: string };
+}
+
+const ProjectManagementListPage = async ({
+  searchParams,
+}: IProjectManagementListPageProps) => {
+  const filter = searchParams.type || 'all';
+
+  const statusMap: Record<string, Status> = {
+    recruiting: 'RECRUITING',
+    progress: 'IN_PROGRESS',
+    completed: 'COMPLETED',
+    cancelled: 'CANCELED',
+  };
+
+  const status = filter !== 'all' ? statusMap[filter] : undefined;
+
+  const { projects }: { projects: IProject[] } = await getUserProjects(status);
 
   return (
     <div className="flex h-full flex-col overflow-hidden">
