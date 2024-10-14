@@ -121,7 +121,7 @@ export const deletePortfolio = async (id: string) => {
   const token = getCookie('accessToken');
 
   if (token) {
-    const res = await fetch(`${API_URL}/portfolio/${id}`, {
+    const res = await fetch(`${API_URL}/portfolios/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -129,7 +129,7 @@ export const deletePortfolio = async (id: string) => {
       },
     });
 
-    console.log(await res.json());
+    console.log(res);
 
     if (res.ok) {
       return true;

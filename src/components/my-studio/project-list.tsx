@@ -13,6 +13,7 @@ const ProjectList = () => {
   const { data } = useQuery({
     queryKey: ['userProject'],
     queryFn: getMyProjects,
+    staleTime: 0,
   });
 
   return (
@@ -25,7 +26,10 @@ const ProjectList = () => {
           <p className="mt-1 text-sm leading-[150%] text-gray-60">
             프로젝트를 등록해 작업자를 찾아봐요
           </p>
-          <Button className="mt-[9px] bg-gray-20 px-6 text-white">
+          <Button
+            onClick={() => router.push('/project-register')}
+            className="mt-[9px] bg-gray-20 px-6 text-white"
+          >
             프로젝트 등록하기
           </Button>
         </div>

@@ -42,26 +42,8 @@ const PortfolioDetailMenu: React.FunctionComponent<
   const handleEdit = () => {
     router.push(`/portfolio-register?id=${portfolioId}`);
   };
-  const handleDelete = async () => {
-    if (id) {
-      const isDeleted = await deletePortfolio(id);
-
-      if (isDeleted) {
-        toast({
-          title: '삭제에 성공했어요!',
-          variant: 'success',
-          duration: 1300,
-        });
-        router.back();
-      } else {
-        toast({
-          title: '삭제에 실패했어요!',
-          variant: 'destructive',
-          duration: 1300,
-        });
-      }
-    }
-    onClose();
+  const handleDelete = () => {
+    onOpen();
   };
 
   return (
@@ -117,9 +99,25 @@ const PortfolioDetailMenu: React.FunctionComponent<
         cancleTitle="취소"
         confirmTitle="삭제"
         open={isOpen}
-        onConfirm={() => {
-          onClose();
-          router.back();
+        onConfirm={async () => {
+          if (id) {
+            const isDeleted = await deletePortfolio(id);
+            if (isDeleted) {
+              toast({
+                title: '삭제에 성공했어요!',
+                variant: 'success',
+                duration: 1300,
+              });
+              onClose();
+              router.back();
+            } else {
+              toast({
+                title: '삭제에 실패했어요!',
+                variant: 'destructive',
+                duration: 1300,
+              });
+            }
+          }
         }}
         onCancle={() => onClose()}
         onOpenChange={() => onClose()}

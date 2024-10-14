@@ -15,6 +15,7 @@ const MyStudioPortfolioGallery = () => {
     queryKey: ['MyPortfolios'],
     queryFn: ({ pageParam = 0 }) => getMyPortfolios({ pageParam }),
     initialPageParam: 0,
+    staleTime: 0,
     getNextPageParam: (lastPage: any) => {
       const { number, totalPages } = lastPage;
       return number + 1 < totalPages ? number + 1 : undefined;
