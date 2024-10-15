@@ -33,18 +33,18 @@ const RegisterStepTwo: React.FunctionComponent<IRegisterStepTwoProps> = () => {
         <button
           className={cn(
             RoleCommonDiv,
-            role === 'author' ? RoleActiveDiv : RoleNonActiveDiv,
+            role === 'PHOTOGRAPHER' ? RoleActiveDiv : RoleNonActiveDiv,
           )}
-          onClick={() => handleClick('author')}
+          onClick={() => handleClick('PHOTOGRAPHER')}
         >
           <Icon id="camera-icon" className="h-[48px] w-[54px] text-current" />
         </button>
         <button
           className={cn(
             RoleCommonDiv,
-            role === 'model' ? RoleActiveDiv : RoleNonActiveDiv,
+            role === 'MODEL' ? RoleActiveDiv : RoleNonActiveDiv,
           )}
-          onClick={() => handleClick('model')}
+          onClick={() => handleClick('MODEL')}
         >
           <Icon id="person-icon" className="h-[53px] w-[20px] text-current" />
         </button>

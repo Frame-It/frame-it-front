@@ -5,9 +5,7 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { faker } from '@faker-js/faker';
 
-interface IBookMarkPageProps {}
-
-const BookMarkPage: React.FunctionComponent<IBookMarkPageProps> = () => {
+const BookMarkPage = async () => {
   const bookMarkList: any = Array.from({ length: 10 }, (_, i) => {
     return {
       id: i,
@@ -20,6 +18,9 @@ const BookMarkPage: React.FunctionComponent<IBookMarkPageProps> = () => {
       isBookmarked: true,
     };
   });
+
+  // const boomarks = await getBookMarkList
+
   return (
     <main
       className={cn(

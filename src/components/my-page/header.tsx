@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import * as React from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
