@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils';
 import { ActiveStatus } from '@/types/project.type';
 import { useRouter, useSearchParams } from 'next/navigation';
 import BottomButton from '../common/bottom-button';
+import DMButton from '../common/dm-button';
 import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog';
 import ReviewDialog from './review/review-dialog';
 
@@ -117,7 +118,9 @@ const ProjectApplyGuestButtons = ({
       {status === 'RECRUITING' && (
         <RecruitingButtons projectId={projectId} applicantId={applicantId} />
       )}
-      {status === 'IN_PROGRESS' && <InProgressButtons projectId={projectId} />}
+      {status === 'IN_PROGRESS' && (
+        <InProgressButtons projectId={projectId} applicantId={applicantId} />
+      )}
     </ProjectApplyGuestButtonsLayout>
   );
 };
@@ -161,14 +164,14 @@ const RecruitingButtons = ({
     }
   };
 
-  // TODO: DM
   return (
     <div className="flex w-full gap-[6px]">
-      <BottomButton
+      <DMButton
         variant="stroke"
         size="small"
         label={'DM'}
         className="font-tag-12 max-w-none flex-1"
+        participantId={applicantId}
       />
       <Dialog open={isModalOpen} onOpenChange={onModalOpenChange}>
         <DialogTrigger asChild>
@@ -210,18 +213,18 @@ const RecruitingButtons = ({
 };
 
 interface InProgressButtonsProps {
+  applicantId: number;
   projectId: number;
 }
 
-const InProgressButtons = ({ projectId }: InProgressButtonsProps) => {
-  // TODO: DM
-
+const InProgressButtons = ({ applicantId }: InProgressButtonsProps) => {
   return (
-    <BottomButton
+    <DMButton
       variant="stroke"
       size="small"
       label={'DM'}
       className="font-tag-12 max-w-none flex-1"
+      participantId={applicantId}
     />
   );
 };

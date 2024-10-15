@@ -1,4 +1,4 @@
-import BottomButton from '@/components/common/bottom-button';
+import DMButton from '@/components/common/dm-button';
 import Guide from '@/components/common/guide';
 import { GuestProjectGuide } from '@/constants/guide';
 import {
@@ -55,6 +55,7 @@ const ManagementGuest = async ({
           projectId={id}
           status={'RECRUITING'}
           myApplication={myApplication}
+          project={statusProject as RecruitingProject}
         />
       )}
       {status === 'IN_PROGRESS' && (
@@ -113,12 +114,14 @@ interface RecruitingContentProps {
   projectId: number;
   status: ActiveStatus;
   myApplication: MyApplication;
+  project: RecruitingProject;
 }
 
 const RecruitingContent = async ({
   projectId,
   status,
   myApplication,
+  project,
 }: RecruitingContentProps) => {
   const principal: ProjectMember = {
     id: myApplication.applicantId,
@@ -127,12 +130,15 @@ const RecruitingContent = async ({
   };
   return (
     <>
-      <BottomButton
-        variant={'secondary'}
-        size={'middle'}
-        label={'호스트에게 DM'}
-        className="max-w-none"
-      />
+      {project.hostId && (
+        <DMButton
+          variant={'secondary'}
+          size={'middle'}
+          label={'호스트에게 DM'}
+          className="max-w-none"
+          participantId={project.hostId}
+        />
+      )}
       <MyApplyInfo
         principal={principal}
         id={projectId}
