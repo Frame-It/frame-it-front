@@ -62,31 +62,35 @@ export const GuestReviewDialogButton = ({
   const { isOpen: isReviewDialogOpen, onToggle: toggleReviewDialog } =
     useDisclosure(false);
 
-  const handleClickHost = () => {
-    if (reviewId) {
-      toggleReviewDialog();
-    } else {
-      // TODO: 호스트에게 dm
-    }
-  };
+  const handleDM = () => {};
 
   return (
     <>
-      <BottomButton
-        variant={'stroke'}
-        size={'small'}
-        label={reviewId === null ? '호스트에게 DM하기' : '리뷰 확인하기'}
-        className="font-tag-12 max-w-[126px]"
-        onClick={handleClickHost}
-        disabled={reviewId !== null && !canViewReview}
-      />
-      {reviewId && (
-        <ReviewDialog
-          reviewId={reviewId}
-          isOpen={isReviewDialogOpen}
-          onOpenChange={toggleReviewDialog}
-          name={host.name}
+      {reviewId === null ? (
+        <BottomButton
+          variant={'stroke'}
+          size={'small'}
+          label={'호스트에게 DM하기'}
+          className="font-tag-12 max-w-[126px]"
+          onClick={handleDM}
         />
+      ) : (
+        <>
+          <BottomButton
+            variant={'stroke'}
+            size={'small'}
+            label={'리뷰 확인하기'}
+            className="font-tag-12 max-w-[126px]"
+            onClick={toggleReviewDialog}
+            disabled={!canViewReview}
+          />
+          <ReviewDialog
+            reviewId={reviewId}
+            isOpen={isReviewDialogOpen}
+            onOpenChange={toggleReviewDialog}
+            name={host.name}
+          />
+        </>
       )}
     </>
   );

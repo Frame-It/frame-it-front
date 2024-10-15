@@ -1,5 +1,5 @@
 import { LocationType, TimeOption } from '@/types/project.type';
-import { getAuthHeader } from './header';
+import { getAuthHeader } from '../header';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 

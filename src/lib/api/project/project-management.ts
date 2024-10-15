@@ -1,5 +1,5 @@
 import { ActiveStatus, Status, TimeOption } from '@/types/project.type';
-import { getAuthHeader } from './header';
+import { getAuthHeader } from '../header';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -118,6 +118,7 @@ export const getRecruitingProject = async (
   );
 
   const data: RecruitingProject = await res.json();
+  console.log(data);
 
   if (!res.ok) {
     console.log(data);
