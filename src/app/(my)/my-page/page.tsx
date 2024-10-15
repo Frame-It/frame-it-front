@@ -31,7 +31,10 @@ export default async function MyPage() {
       </Header>
       <main className="px-[12px] pb-[66px] pt-[58px]">
         {/* --- */}
-        <MyPageHeader nickName={myInfo?.nickname} />
+        <MyPageHeader
+          nickName={myInfo?.nickname}
+          imageUrl={myInfo?.profileImageUrl || undefined}
+        />
         <MyPageMenu />
         <Separator className="my-6" />
         <HelpCenter />

@@ -8,8 +8,6 @@ const ADDRESS = `${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}`;
 const SERVER_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const sendCodeToBackend = async (code: string, state: string) => {
-  console.log(code, state);
-
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/login/${state}?code=${code}&redirect_uri=${ADDRESS}`,
     {
@@ -27,18 +25,21 @@ export const sendCodeToBackend = async (code: string, state: string) => {
 };
 
 export const checkDuplicateId = async (nickname: string) => {
-  const response = await fetch(`${SERVER_URL}/users/nicknames/check`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      nickname,
-    }),
-  });
+  try {
+    const response = await fetch(`${SERVER_URL}/users/nicknames/check`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ nickname }),
+    });
 
-  const resData = await response.json();
-  return resData.isDuplicated;
+    const resData = await response?.json();
+    return resData.isDuplicated;
+  } catch (error) {
+    console.error('닉네임 중복 확인 중 오류 발생:', error);
+    throw error;
+  }
 };
 
 export const registUser = async (userInfo: IUserRegistInfo) => {

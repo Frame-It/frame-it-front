@@ -2,6 +2,8 @@
 
 import useDisclosure from '@/hooks/useDisclosure';
 import AlertDialog from '@/components/common/alert-dialog';
+import { useRouter } from 'next/navigation';
+import { deleteCookie } from 'cookies-next';
 
 interface ILogoutDialogProps {
   children: React.ReactNode;
@@ -11,6 +13,7 @@ const LogoutDialog: React.FunctionComponent<ILogoutDialogProps> = ({
   children,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure(false);
+  const router = useRouter();
 
   return (
     <>
@@ -24,6 +27,8 @@ const LogoutDialog: React.FunctionComponent<ILogoutDialogProps> = ({
         confirmTitle="로그아웃"
         open={isOpen}
         onConfirm={async () => {
+          deleteCookie('accessToken');
+          router.refresh();
           onClose();
         }}
         onCancle={() => onClose()}

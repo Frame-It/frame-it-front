@@ -26,8 +26,8 @@ const FeedList: React.FunctionComponent<IFeedListProps> = ({ role }) => {
     queryKey: ['feeds', role],
     queryFn: ({ pageParam = 0, queryKey }) =>
       getFeeds({ pageParam, role: queryKey[1] }),
-    enabled: !!role,
     initialPageParam: 0,
+    enabled: !!role,
     getNextPageParam: (lastPage) => {
       const { number, totalPages } = lastPage;
       return number + 1 < totalPages ? number + 1 : undefined;
@@ -41,7 +41,7 @@ const FeedList: React.FunctionComponent<IFeedListProps> = ({ role }) => {
   }, [inView, fetchNextPage, hasNextPage]);
 
   const isEmptyFeed =
-    !feedData || feedData.pages.every((page) => page.content.length === 0);
+    !feedData || feedData.pages.every((page) => page?.content?.length === 0);
 
   return (
     <section className="mx-auto h-full w-full">

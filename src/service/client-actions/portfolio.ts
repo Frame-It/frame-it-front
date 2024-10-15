@@ -48,7 +48,7 @@ export const postPortfolio = async (data: any) => {
 
 export const getFeeds = async ({
   pageParam = 0,
-  role,
+  role = 'all',
 }: {
   pageParam: number;
   role: string;

@@ -14,12 +14,15 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { useRouter } from 'next/navigation';
+import { deleteUser } from '@/service/client-actions/my-client';
+import { deleteCookie } from 'cookies-next';
 
 export default function LeavePage() {
   const router = useRouter();
 
   const [isChecked, setIsChecked] = useState(false);
   const [textareaValue, setTextareaValue] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleCheckboxChange = (checked: boolean) => {
     setIsChecked(checked);
@@ -27,6 +30,22 @@ export default function LeavePage() {
 
   const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTextareaValue(e.target.value);
+  };
+
+  const handleDeleteUser = async () => {
+    const isDeleted = await deleteUser(textareaValue);
+
+    if (isDeleted) {
+      setIsOpen(true);
+      deleteCookie('accessToken');
+    } else {
+      toast({
+        title: '회원 탈퇴가 불가합니다',
+        description: '아직 진행중인 프로젝트가 있어요.',
+        className: 'bg-error text-white max-w-[250px] text-center',
+        duration: 1300,
+      });
+    }
   };
 
   return (
@@ -75,20 +94,12 @@ export default function LeavePage() {
         disabled={!isChecked}
         className="absolute bottom-0 left-0 mx-auto mb-[9px] w-full"
         size="lg"
-        onClick={() => {
-          toast({
-            title: '회원 탈퇴가 불가합니다',
-            description: '아직 진행중인 프로젝트가 있어요.',
-            className: 'bg-error text-white max-w-[250px] text-center',
-            duration: 1500,
-          });
-        }}
+        onClick={handleDeleteUser}
       >
         회원탈퇴
       </Button>
 
-      <Dialog>
-        {/* <DialogTrigger>Open</DialogTrigger> */}
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent className="flex max-w-[280px] flex-col items-center justify-center pb-[24px] pt-[32px]">
           <DialogHeader>
             <DialogTitle className="text-center text-lg">
@@ -101,7 +112,7 @@ export default function LeavePage() {
           <DialogFooter className="w-full">
             <Button
               className="w-full bg-gray-20 font-normal"
-              onClick={() => router.push('/')}
+              onClick={() => router.refresh()}
             >
               홈으로 가기
             </Button>
