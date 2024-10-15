@@ -18,7 +18,7 @@ export const TagList = ({
         className,
       )}
     >
-      {tags.map((tag: IProjectConcept | IUserConcept) => (
+      {tags?.map((tag: IProjectConcept | IUserConcept) => (
         <Tag key={tag.id} label={tag.label} size={size} />
       ))}
     </div>

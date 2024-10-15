@@ -6,10 +6,10 @@ import {
   postRecruitBookmark,
 } from '@/lib/api/project/project-recruitment';
 import { cn } from '@/lib/utils';
-import { useRecruitStore } from '@/store/recruit-store';
 import Link from 'next/link';
-import Icon from '../common/icon';
-import { TagList } from '../common/tag-list';
+import Icon from '@/components/common/icon';
+import { TagList } from '@/components/common/tag-list';
+import { useQueryClient } from '@tanstack/react-query';
 
 export interface IRecruitCardProps {
   id: number;
@@ -22,26 +22,21 @@ export interface IRecruitCardProps {
   isBookmarked: boolean;
 }
 
-const RecruitCard = (props: IRecruitCardProps) => {
-  const { recruits, toggleBookmark } = useRecruitStore((state) => ({
-    recruits: state.recruits,
-    toggleBookmark: state.toggleBookmark,
-  }));
-
-  const isBookmarked = recruits.find(
-    (recruit) => recruit.id === props.id,
-  )?.isBookmarked;
+const BookMarkCard = (props: IRecruitCardProps) => {
+  const queryClient = useQueryClient();
 
   const handleBookmarkToggle = async (event: React.MouseEvent) => {
     event.preventDefault();
     try {
       const projectId = props.id;
-      if (isBookmarked) {
+      if (props.isBookmarked) {
         await deleteRecruitBookmark(projectId);
       } else {
         await postRecruitBookmark(projectId);
       }
-      toggleBookmark(projectId);
+      queryClient.invalidateQueries({
+        queryKey: ['getBookMarks'],
+      });
     } catch (error) {
       console.error('Failed to toggle bookmark:', error);
     }
@@ -126,4 +121,4 @@ const Thumbnail = ({
   );
 };
 
-export default RecruitCard;
+export default BookMarkCard;

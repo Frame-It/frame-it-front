@@ -1,37 +1,41 @@
-import RecruitCard, {
-  IRecruitCardProps,
-} from '@/components/project/recruit-card';
+'use client';
+
+import BookMarkCard from '@/components/my-page/bookmark/bookmark-card';
 import { Button } from '@/components/ui/button';
+import { PROJECT_CONCEPTS } from '@/constants/project';
+import { IRecruitResponse } from '@/lib/api/project/project-recruitment';
 import { cn } from '@/lib/utils';
-import { getBookMarks } from '@/service/server-actions/bookmark';
-import { faker } from '@faker-js/faker';
+import { getBookMarks } from '@/service/client-actions/bookmark';
+import { useQuery } from '@tanstack/react-query';
 
-const BookMarkPage = async () => {
-  const bookMarkList: any = Array.from({ length: 10 }, (_, i) => {
-    return {
-      id: i,
-      imageUrl: '/test-image.webp',
-      type: 'MODEL',
-      title: faker.music.songName(),
-      location: faker.location.city(),
-      date: faker.date.anytime().toDateString(),
-      tagList: Array.from({ length: 3 }, () => faker.music.genre()),
-      isBookmarked: true,
-    };
+const BookMarkPage = () => {
+  const { data: bookMarkList, isLoading } = useQuery({
+    queryKey: ['getBookMarks'],
+    queryFn: getBookMarks,
+    select: (data) => {
+      return data?.map((item: IRecruitResponse) => ({
+        id: item.id,
+        imageUrl: item.previewImageUrl,
+        type: item.recruitmentRole,
+        title: item.title,
+        location: item.spot,
+        date: new Date(item.shootingAt).toDateString(),
+        tagList: item.concepts.map((v) =>
+          PROJECT_CONCEPTS.find((concept) => concept.id === v),
+        ),
+        isBookmarked: item.isBookmarked,
+      }));
+    },
   });
-
-  const bookmarks = await getBookMarks();
-
-  console.log(bookmarks);
 
   return (
     <main
       className={cn(
         'h-[calc(100dvh-58px)] w-full overflow-y-auto px-4',
-        bookMarkList.length <= 0 ? 'flex items-center justify-center' : '',
+        bookMarkList?.length <= 0 ? 'flex items-center justify-center' : '',
       )}
     >
-      {bookMarkList.length <= 0 ? (
+      {bookMarkList?.length <= 0 ? (
         <section className="text-center">
           <div className="leading-[135%] text-gray-20">
             저장한 모집글이 없어요
@@ -45,8 +49,8 @@ const BookMarkPage = async () => {
         </section>
       ) : (
         <ul className="my-4 space-y-4">
-          {bookMarkList.map((recruitInfo: any) => (
-            <RecruitCard key={recruitInfo.imageUrl} {...recruitInfo} />
+          {bookMarkList?.map((recruitInfo: any) => (
+            <BookMarkCard key={recruitInfo.id} {...recruitInfo} />
           ))}
         </ul>
       )}
