@@ -67,7 +67,7 @@ export default function ProfilePage() {
         duration: 1300,
       });
       queryClient.invalidateQueries({ queryKey: ['getProfile'] });
-      router.back();
+      router.replace('/my-page');
     } else {
       toast({
         title: '닉네임 변경에 실패하였습니다',

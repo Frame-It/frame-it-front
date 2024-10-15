@@ -38,6 +38,9 @@ const ProfileImageSelector: React.FC<IProfileImageSelectorProps> = ({
 
   const handleDelete = () => {
     // TODO : 삭제시키기
+    form.setValue('profileImage', undefined);
+    setPreviewImage(null);
+    onClose();
   };
 
   return (
