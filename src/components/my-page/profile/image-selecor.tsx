@@ -3,14 +3,17 @@ import { Drawer, DrawerContent } from '@/components/ui/drawer';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import useDisclosure from '@/hooks/useDisclosure';
-import Image from 'next/image';
+import { ProfileFormType } from '@/lib/schema/profile-schema';
 import { useState } from 'react';
+import { UseFormReturn } from 'react-hook-form';
 
 interface IProfileImageSelectorProps {
-  prevImageUrl?: string; // 이전에 업로드된 이미지 URL (있다면)
+  form: UseFormReturn<ProfileFormType>;
+  prevImageUrl?: string | null;
 }
 
 const ProfileImageSelector: React.FC<IProfileImageSelectorProps> = ({
+  form,
   prevImageUrl,
 }) => {
   const [previewImage, setPreviewImage] = useState<string | null>(
@@ -27,21 +30,23 @@ const ProfileImageSelector: React.FC<IProfileImageSelectorProps> = ({
         setPreviewImage(reader.result as string);
       };
       reader.readAsDataURL(file);
+      form.setValue('profileImage', file);
     }
 
     onClose();
   };
 
-  const handleDelete = async () => {};
+  const handleDelete = () => {
+    // TODO : 삭제시키기
+  };
 
   return (
     <Drawer open={isOpen} onOpenChange={onOpenChange}>
       <div className="relative mx-auto mt-4 h-[114px] w-[114px]">
-        <Image
+        <img
           src={previewImage || '/png/profile.png'}
           alt="프로필 이미지"
-          className="object-cover"
-          fill
+          className="overflow-hidden rounded-[16px] bg-cover bg-center"
         />
         <button
           type="button"

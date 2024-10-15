@@ -19,37 +19,84 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { toast } from '@/components/ui/use-toast';
 import { NickNameFormType, nicknameSchema } from '@/lib/schema/profile-schema';
 import { cn } from '@/lib/utils';
+import { checkDuplicateId } from '@/service/auth-service';
+import {
+  getUserProfileClient,
+  updateNickname,
+} from '@/service/client-actions/my-client';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 export default function ProfilePage() {
+  const { data } = useQuery({
+    queryKey: ['getProfile'],
+    queryFn: getUserProfileClient,
+    staleTime: 0,
+  });
+
+  const queryClient = useQueryClient();
+  const router = useRouter();
+
   const form = useForm<NickNameFormType>({
     resolver: zodResolver(nicknameSchema),
-    defaultValues: {},
+    defaultValues: {
+      nickname: data?.nickname || '',
+    },
     mode: 'onChange',
   });
 
   const [isDuplicate, setIsDuplicate] = useState(true);
   const [checkDuplicate, setCheckDuplicate] = useState(false);
 
-  const onSubmit = (values: NickNameFormType) => {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  const onSubmit = async (values: NickNameFormType) => {
+    const isSuccess = await updateNickname({
+      id: data?.id || null,
+      nickname: values.nickname,
+    });
+
+    if (isSuccess) {
+      toast({
+        title: '닉네임 변경에 성공하였습니다',
+        variant: 'success',
+        duration: 1300,
+      });
+      queryClient.invalidateQueries({ queryKey: ['getProfile'] });
+      router.back();
+    } else {
+      toast({
+        title: '닉네임 변경에 실패하였습니다',
+        variant: 'destructive',
+        duration: 1300,
+      });
+    }
   };
 
   const handleEmailCheck = async (value: string) => {
     if (!value) return;
-    setCheckDuplicate(true);
-    setIsDuplicate(false);
-    // form.setError('nickname', { message: '중복된 닉네임이 있습니다.' });
+
+    const isDuplicated = await checkDuplicateId(value);
+
+    if (isDuplicated) {
+      form.setError('nickname', { message: '중복된 닉네임이 있습니다.' });
+      setCheckDuplicate(true);
+      setIsDuplicate(true);
+    } else {
+      setCheckDuplicate(true);
+      setIsDuplicate(false);
+      form.clearErrors();
+    }
   };
 
   const nickname = form.watch('nickname');
-  const isDisabled = !!nickname;
+  const isValid = nicknameSchema.safeParse({ nickname }).success;
+
+  const isDisabled = !isValid || isDuplicate || !checkDuplicate;
 
   return (
     <main>
@@ -64,7 +111,7 @@ export default function ProfilePage() {
             <HeaderCenter>닉네임 변경</HeaderCenter>
             <HeaderRight>
               <button
-                disabled={!isDisabled}
+                disabled={isDisabled}
                 type="submit"
                 className="size-[32px] text-primary disabled:text-gray-70"
               >
@@ -86,6 +133,11 @@ export default function ProfilePage() {
                     <div className="flex items-center gap-x-[20px]">
                       <Input
                         placeholder="닉네임을 입력해 주세요."
+                        onChangeCapture={() => {
+                          setIsDuplicate(true);
+                          setCheckDuplicate(false);
+                          console.log('초기화');
+                        }}
                         {...field}
                         value={field.value || ''}
                         className={cn(

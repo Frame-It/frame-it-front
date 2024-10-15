@@ -3,7 +3,7 @@
 import { CustomCheckbox } from '@/components/ui/checkbox';
 import { FormControl, FormField, FormItem } from '@/components/ui/form';
 import { Textarea } from '@/components/ui/textarea';
-import { profileConcepts } from '@/constants/profile';
+import { USER_CONCEPTS } from '@/constants/project';
 import { ProfileFormType } from '@/lib/schema/profile-schema';
 import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
@@ -11,6 +11,7 @@ import * as React from 'react';
 import { UseFormReturn } from 'react-hook-form';
 
 interface IProfilSettingProps {
+  nickname?: string;
   form: UseFormReturn<ProfileFormType>;
 }
 
@@ -20,6 +21,7 @@ const wrapperDesc = 'text-gray-40 leading-[150%] text-sm font-medium';
 
 const ProfilSetting: React.FunctionComponent<IProfilSettingProps> = ({
   form,
+  nickname,
 }) => {
   const router = useRouter();
 
@@ -34,8 +36,9 @@ const ProfilSetting: React.FunctionComponent<IProfilSettingProps> = ({
               wrapperDesc,
             )}
           >
-            사진마스터
+            {nickname}
             <button
+              type="button"
               onClick={() => router.push('/my-page/nickname')}
               className="flex items-center justify-center rounded-[8px] bg-gray-80 px-[12px] py-2 text-xs text-gray-20"
             >
@@ -75,31 +78,28 @@ const ProfilSetting: React.FunctionComponent<IProfilSettingProps> = ({
               name="concepts"
               render={() => (
                 <FormItem className="flex flex-wrap items-center gap-2 space-y-0">
-                  {profileConcepts.map((item) => (
+                  {USER_CONCEPTS.map((item) => (
                     <FormField
-                      key={item.value}
+                      key={item.id}
                       control={form.control}
                       name="concepts"
                       render={({ field }) => {
                         return (
-                          <FormItem id={item.value} key={item.value}>
+                          <FormItem id={item.id} key={item.id}>
                             <FormControl>
                               <CustomCheckbox
-                                checked={field.value?.includes(item.value)}
+                                checked={field.value?.includes(item.id)}
                                 onCheckedChange={(checked) => {
                                   return checked
-                                    ? field.onChange([
-                                        ...field.value,
-                                        item.value,
-                                      ])
+                                    ? field.onChange([...field.value, item.id])
                                     : field.onChange(
                                         field.value?.filter(
-                                          (value) => value !== item.value,
+                                          (value) => value !== item.id,
                                         ),
                                       );
                                 }}
                               >
-                                {item.name}
+                                {item.label}
                               </CustomCheckbox>
                             </FormControl>
                           </FormItem>
