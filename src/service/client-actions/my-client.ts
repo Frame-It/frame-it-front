@@ -57,8 +57,11 @@ export const updateProfile = async (value: {
   profileImage: File | null;
   description: string | null;
   concepts: string[] | null;
+  isDelete: boolean;
 }) => {
   const token = getCookie('accessToken');
+
+  console.log(value);
 
   if (token && value.id) {
     try {
@@ -77,6 +80,8 @@ export const updateProfile = async (value: {
       if (value.profileImage) {
         formData.append('profileImage', value.profileImage);
       }
+
+      formData.append('isDelete', value.isDelete ? 'true' : 'false');
 
       const res = await fetch(`${API_URL}/users/${value.id}`, {
         method: 'PATCH',

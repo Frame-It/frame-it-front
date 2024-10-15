@@ -3,6 +3,7 @@ import RecruitCard, {
 } from '@/components/project/recruit-card';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { getBookMarks } from '@/service/server-actions/bookmark';
 import { faker } from '@faker-js/faker';
 
 const BookMarkPage = async () => {
@@ -19,7 +20,9 @@ const BookMarkPage = async () => {
     };
   });
 
-  // const boomarks = await getBookMarkList
+  const bookmarks = await getBookMarks();
+
+  console.log(bookmarks);
 
   return (
     <main

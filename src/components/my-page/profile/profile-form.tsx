@@ -21,14 +21,16 @@ import {
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from '@/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 interface IProfileFormProps {}
 
 const ProfileForm = () => {
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['getProfile'],
     queryFn: getUserProfileClient,
     staleTime: 0,
+    gcTime: 0,
   });
 
   const queryClient = useQueryClient();
@@ -37,10 +39,21 @@ const ProfileForm = () => {
   const form = useForm<ProfileFormType>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
-      introduce: data?.description || '',
-      concepts: data?.concepts || [],
+      introduce: '',
+      concepts: [],
+      isDelete: false,
     },
   });
+
+  useEffect(() => {
+    if (data) {
+      form.reset({
+        introduce: data.description,
+        concepts: data.concepts,
+        isDelete: false,
+      });
+    }
+  }, [data, form]);
 
   const onSubmit = async (values: ProfileFormType) => {
     // Do something with the form values.
@@ -51,6 +64,7 @@ const ProfileForm = () => {
       profileImage: values.profileImage || null,
       description: values.introduce || null,
       concepts: values.concepts || null,
+      isDelete: values.isDelete || false,
     });
 
     if (isModified) {
@@ -60,6 +74,7 @@ const ProfileForm = () => {
       });
       queryClient.invalidateQueries({ queryKey: ['getProfile'] });
       router.replace('/my-page');
+      router.refresh();
     } else {
       toast({
         title: '수정에 실패하였습니다',
@@ -71,6 +86,7 @@ const ProfileForm = () => {
   const introduce = form.watch('introduce');
   const concepts = form.watch('concepts');
   const isDisabled = introduce || concepts.length > 0;
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="pt-[58px]">

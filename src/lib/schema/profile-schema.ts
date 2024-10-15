@@ -4,6 +4,7 @@ export const profileSchema = z.object({
   introduce: z.string().optional(),
   concepts: z.array(z.string()).refine((value) => value.some((item) => item)),
   profileImage: z.instanceof(File).optional(),
+  isDelete: z.boolean().optional(),
 });
 
 export type ProfileFormType = z.infer<typeof profileSchema>;

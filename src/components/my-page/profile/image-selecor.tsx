@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import useDisclosure from '@/hooks/useDisclosure';
 import { ProfileFormType } from '@/lib/schema/profile-schema';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 
 interface IProfileImageSelectorProps {
@@ -16,11 +16,15 @@ const ProfileImageSelector: React.FC<IProfileImageSelectorProps> = ({
   form,
   prevImageUrl,
 }) => {
-  const [previewImage, setPreviewImage] = useState<string | null>(
-    prevImageUrl || null,
-  );
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
 
   const { isOpen, onClose, onOpen, onOpenChange } = useDisclosure();
+
+  useEffect(() => {
+    if (prevImageUrl) {
+      setPreviewImage(prevImageUrl);
+    }
+  }, [prevImageUrl]);
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -39,6 +43,7 @@ const ProfileImageSelector: React.FC<IProfileImageSelectorProps> = ({
   const handleDelete = () => {
     // TODO : 삭제시키기
     form.setValue('profileImage', undefined);
+    form.setValue('isDelete', true);
     setPreviewImage(null);
     onClose();
   };
