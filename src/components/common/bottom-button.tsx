@@ -1,15 +1,18 @@
 import { cn } from '@/lib/utils';
 import React, { ButtonHTMLAttributes } from 'react';
 
-interface ButtonProps {
+export interface IBottomButtonProps {
   variant: 'primary' | 'secondary' | 'stroke';
   size: 'large' | 'middle' | 'small';
   label: string;
   disabled?: boolean;
 }
 
+export type BottomButtonProps = IBottomButtonProps &
+  ButtonHTMLAttributes<HTMLButtonElement>;
+
 const BottomButton: React.FC<
-  ButtonProps & ButtonHTMLAttributes<HTMLButtonElement>
+  IBottomButtonProps & ButtonHTMLAttributes<HTMLButtonElement>
 > = ({ variant, size, label, disabled = false, ...props }) => {
   const sizeStyles = {
     large: 'max-w-[328px] min-h-[46px] h-[46px]',

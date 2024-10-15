@@ -1,5 +1,5 @@
 import { ActiveStatus, Status, TimeOption } from '@/types/project.type';
-import { getAuthHeader } from './header';
+import { getAuthHeader } from '../header';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -36,6 +36,7 @@ export interface RecruitingProject extends BaseProject {
   status: 'RECRUITING';
   applicants?: Applicant[]; // HOST인 경우
   myApplication?: MyApplication; // GUEST인 경우
+  hostId?: number; // GUEST인 경우
 }
 
 // 진행 중인 프로젝트 타입
@@ -118,6 +119,7 @@ export const getRecruitingProject = async (
   );
 
   const data: RecruitingProject = await res.json();
+  console.log(data);
 
   if (!res.ok) {
     console.log(data);
