@@ -55,6 +55,14 @@ export const getRecruitAnnouncements = async ({
   });
 
   const data = await res.json();
+  if (res.status === 403) {
+    const res = await fetch(url, {
+      cache: 'no-store',
+    });
+    const data = await res.json();
+
+    return data;
+  }
   if (res.status !== 200) {
     console.error(data.message);
     return []; // TODO: error handling
@@ -64,12 +72,20 @@ export const getRecruitAnnouncements = async ({
 
 export const getRecruitAnnouncement = async (id: number) => {
   const headers = await getAuthHeader();
-
-  const res = await fetch(`${API_URL}/projects/${id}/announcement`, {
+  const url = `${API_URL}/projects/${id}/announcement`;
+  const res = await fetch(url, {
     headers,
     cache: 'no-store',
   });
   const data = await res.json();
+  if (res.status === 403) {
+    const res = await fetch(url, {
+      cache: 'no-store',
+    });
+    const data = await res.json();
+
+    return data;
+  }
   if (res.status !== 200) {
     console.error(data.message);
   }
