@@ -30,7 +30,7 @@ export const postProjectReview = async ({
   });
 
   if (!res.ok) {
-    throw new Error('Failed to fetch completed project');
+    throw new Error('Failed to post project review');
   }
 
   const data = res.json();

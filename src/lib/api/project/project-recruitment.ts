@@ -186,6 +186,6 @@ export const postProjectApply = async (
   });
 
   if (!res.ok) {
-    throw new Error('Failed to fetch completed project');
+    throw new Error('Failed to post apply project');
   }
 };

@@ -204,7 +204,7 @@ export const postCompleteProject = async (projectId: number) => {
   });
 
   if (!res.ok) {
-    throw new Error('Failed to post completed project');
+    throw new Error('Failed to post complete project');
   }
   const data = await res.json();
   return data;
