@@ -1,21 +1,40 @@
 export interface IParticipant {
-  user_id: string;
-  imageUrl: string;
-  username: string;
-  role: 'author' | 'model';
+  id: number;
+  name: string;
+  profileImageUrl: string;
+  identity: 'MODEL' | 'PHOTOGRAPHER';
+}
+
+export interface IChat {
+  chatId: number;
+  participants: IParticipant;
+  lastMessage: string;
+  lastMessageTime: string;
+  unreadMessageCount: number;
+}
+
+export interface ISender {
+  id: number;
+  name: string;
+  profileImageUrl: string;
 }
 
 export interface IMessage {
-  message_id: string;
-  sender_id: string;
-  receiver_id: string;
+  messageId: number;
+  sender: ISender;
+  timeStamp: string;
   content: string;
-  timestamp: string;
-  status: string;
+  isMe: boolean;
 }
 
-export interface TLetter {
-  conversation_id: string;
+export interface IParticipant {
+  id: number;
+  name: string;
+  profileImageUrl: string;
+}
+
+export interface IChatDetail {
+  chatId: number;
   participants: IParticipant[];
   messages: IMessage[];
 }

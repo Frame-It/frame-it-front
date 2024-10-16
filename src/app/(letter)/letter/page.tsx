@@ -2,83 +2,51 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { faker } from '@faker-js/faker';
 import RoleBadge from '@/components/common/role-badge';
+import { getUserChat } from '@/service/server-actions/chat';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { IChat } from '@/types/letter';
+import { formatDistanceToNow } from 'date-fns';
+import { ko } from 'date-fns/locale';
 
-export default function LetterPage() {
-  const roleArr = ['model', 'author'];
-  const lettarArr = Array.from({ length: 20 }, () => {
-    return {
-      id: faker.string.uuid(),
-      messages: [
-        {
-          sender: '닉네임 원',
-          profileUrl: '/test-image.webp',
-          role: 'model',
-          value: '안녕하세요',
-        },
-        {
-          sender: '닉네임 투',
-          profileUrl: '/test-image.webp',
-          role: 'author',
-          value: '쪽지 테스트 입니다.',
-        },
-        {
-          sender: '닉네임 투',
-          profileUrl: '/test-image.webp',
-          role: 'author',
-          value: '안녕히 계세요',
-        },
-        {
-          sender: '닉네임 원',
-          profileUrl: '/test-image.webp',
-          role: 'author',
-          value: '잘자요',
-        },
-        {
-          sender: '닉네임 원',
-          profileUrl: '/test-image.webp',
-          role: roleArr[Math.floor(Math.random() * 2)],
-          value: '굿 나잇',
-        },
-      ],
-    };
+export default async function LetterPage() {
+  const chatList: IChat[] = await getUserChat();
+
+  const lastMessageTime = new Date('2024-10-16T18:26:50.099667');
+  const timeAgo = formatDistanceToNow(lastMessageTime, {
+    addSuffix: true,
+    locale: ko,
   });
+
   return (
     <main className="h-[calc(100dvh-58px-63px)] overflow-y-auto px-4">
       <ul className="my-6 flex flex-col gap-y-6">
-        {lettarArr.map((letter) => {
-          const lastMessage = letter.messages.at(-1);
-
-          console.log(lastMessage?.role);
-
+        {chatList.map((chat) => {
           return (
-            <Link href={`/letter-detail/${letter.id}`} key={letter.id}>
-              <li className="flex items-center justify-between" key={letter.id}>
-                <Image
-                  alt="profile"
-                  src={lastMessage?.profileUrl || ''}
-                  width={46}
-                  height={46}
-                  priority
-                  sizes="46px"
-                  className="rounded-[8px]"
-                />
+            <Link href={`/letter-detail/${chat.chatId}`} key={chat.chatId}>
+              <li className="flex items-center justify-between">
+                <Avatar className="aspect-square size-[46px] cursor-pointer rounded-[8px]">
+                  <AvatarImage src={chat.participants.profileImageUrl} />
+                  <AvatarFallback className="aspect-square size-[100px] cursor-pointer rounded-[16px]">
+                    Fr
+                  </AvatarFallback>
+                </Avatar>
                 <div className="ml-2 flex-1 space-y-[4px]">
                   <div className="flex items-center justify-between py-[2.5px]">
                     <div className="flex items-center gap-x-[4px]">
                       <RoleBadge
-                        role={lastMessage?.role as 'author' | 'model'}
+                        role={chat.participants.identity as 'author' | 'model'}
                       />
-                      <div className="font-body-14m">{lastMessage?.sender}</div>
+                      <div className="font-body-14m">
+                        {chat.participants.name}
+                      </div>
                     </div>
 
-                    <time className="font-tag-12 text-gray-20">방금</time>
+                    <time className="font-tag-12 text-gray-20">{timeAgo}</time>
                   </div>
                   <div className="flex items-center justify-between">
-                    <p className="text-xs leading-[150%]">
-                      {lastMessage?.value}
-                    </p>
+                    <p className="text-xs leading-[150%]">{chat.lastMessage}</p>
                     <div className="flex size-5 items-center justify-center rounded-full bg-primary text-[12px] text-white">
-                      3
+                      {chat.unreadMessageCount}
                     </div>
                   </div>
                 </div>

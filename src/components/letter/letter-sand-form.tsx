@@ -5,32 +5,35 @@ import { Button } from '@/components/ui/button';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { toast } from '@/components/ui/use-toast';
 import { ArrowUp } from 'lucide-react';
 import { AutosizeTextarea } from '@/components/ui/auto-size-textarea';
-
-interface ILetterSandFormProps {}
+import { postChatMessage } from '@/lib/api/chat/chat';
+import { usePathname } from 'next/navigation';
+import { useQueryClient } from '@tanstack/react-query';
 
 const FormSchema = z.object({
   contents: z.string({
-    required_error: '한 글자 이상이 필요',
+    required_error: '한 글자 이상이 필요합니다',
   }),
 });
 
-const LetterSandForm: React.FunctionComponent<ILetterSandFormProps> = () => {
+const LetterSandForm = ({ userId }: { userId?: number }) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
 
-  const onSubmit = (data: z.infer<typeof FormSchema>) => {
-    toast({
-      title: 'You submitted the following values:',
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
+  const queryClient = useQueryClient();
+
+  const letterId = usePathname().split('/').at(-1) || '';
+
+  const onSubmit = async (data: z.infer<typeof FormSchema>) => {
+    await postChatMessage({
+      chatId: letterId,
+      userId,
+      message: data.contents,
     });
+    queryClient.invalidateQueries({ queryKey: ['getChatMessages'] });
+    form.setValue('contents', '');
   };
   return (
     <Form {...form}>
@@ -49,7 +52,16 @@ const LetterSandForm: React.FunctionComponent<ILetterSandFormProps> = () => {
                     placeholder="메세지를 적어보세요."
                     {...field}
                     minHeight={21}
-                    className="font-body-14 max-w-[270px] border-none bg-transparent p-0 text-gray-10 focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                    className="font-body-14 max-w-[270px] resize-none border-none bg-transparent p-0 text-gray-10 focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                    onKeyDown={(e) => {
+                      const contents = form.getValues('contents');
+                      if (e.key === 'Enter' && !e.shiftKey && contents.trim()) {
+                        e.preventDefault();
+                        form.handleSubmit(onSubmit)();
+                      } else if (e.key === 'Enter' && !contents.trim()) {
+                        e.preventDefault();
+                      }
+                    }}
                   />
                   <Button
                     type="submit"

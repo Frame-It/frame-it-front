@@ -1,14 +1,15 @@
 import LetterList from '@/components/letter/letter-list';
-import LetterSandForm from '@/components/letter/letter-sand-form';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import { talkList } from '@/constants/chat';
+import { getMyPage } from '@/service/server-actions/my-service';
 
-export default function LetterDetailPage() {
+export default async function LetterDetailPage() {
+  const myInfo = await getMyPage();
+
   return (
     <>
       <Accordion
@@ -26,9 +27,7 @@ export default function LetterDetailPage() {
           </AccordionContent>
         </AccordionItem>
       </Accordion>
-
-      <LetterList letterList={talkList} />
-      <LetterSandForm />
+      <LetterList myId={myInfo?.id} myImage={myInfo?.profileImageUrl || ''} />
     </>
   );
 }
