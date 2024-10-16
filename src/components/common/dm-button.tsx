@@ -11,7 +11,7 @@ const DMButton = ({
   const router = useRouter();
   const handleClickDM = async () => {
     let chatRoomId = await getChatByParticipantId(participantId);
-    if (chatRoomId === null) {
+    if (chatRoomId === '') {
       chatRoomId = await postCreateChat(participantId);
     }
     router.push(`/letter-detail/${chatRoomId}`);

@@ -4,12 +4,12 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
 export const getChatByParticipantId = async (participantId: number) => {
   const headers = await getAuthHeader();
 
-  const res = await fetch(`${API_URL}/chats/users/${participantId}`, {
+  const res: Response = await fetch(`${API_URL}/chats/users/${participantId}`, {
     headers,
     cache: 'no-store',
   });
 
-  const data = await res.json();
+  const data = await res.text();
   if (!res.ok) {
     console.log(data);
 
@@ -32,7 +32,7 @@ export const postCreateChat = async (participantId: number) => {
       participantId,
     }),
   });
-  const data = res.json();
+  const data = res.text();
 
   if (!res.ok) {
     console.log(res);
