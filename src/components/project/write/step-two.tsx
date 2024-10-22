@@ -88,7 +88,9 @@ const StepTwo = ({ isEdit = false }: { isEdit?: boolean }) => {
         reset();
       } catch (error) {
         console.error(error);
-        // TODO: error handling
+        toast({
+          title: '프로젝트 등록에 실패했습니다.',
+        });
       }
     } else {
       alert('컨셉 태그와 프로젝트 설명을 입력해주세요.');
