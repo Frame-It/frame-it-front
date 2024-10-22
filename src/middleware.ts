@@ -9,25 +9,23 @@ export async function middleware(request: NextRequest) {
 
   if (url.pathname === '/') {
     url.pathname = '/recruit';
+
     return NextResponse.redirect(url);
-  }
-
-  if (url.pathname.startsWith('/my-page')) {
-    const { status } = await getValidateToken(request);
-
-    console.log(status);
-
-    return status === 200
-      ? NextResponse.next()
-      : NextResponse.redirect(new URL('/login', request.url));
-  }
-
-  if (url.pathname === '/login') {
+  } else if (url.pathname === '/login') {
     const { status, res } = await getValidateToken(request);
 
     return status !== 200
       ? res
       : NextResponse.redirect(new URL('/', request.url));
+  } else if (
+    !url.pathname.startsWith('/recruit') &&
+    !url.pathname.startsWith('/feed')
+  ) {
+    const { status } = await getValidateToken(request);
+
+    return status === 200
+      ? NextResponse.next()
+      : NextResponse.redirect(new URL('/login', request.url));
   }
 
   return NextResponse.next({
@@ -61,3 +59,17 @@ async function getValidateToken(req: NextRequest) {
     res: nextRes,
   };
 }
+
+export const config = {
+  matcher: [
+    '/',
+    '/recruit',
+    '/feed',
+    '/project-register',
+    '/portfolio-register',
+    '/letter',
+    '/my-page/:path*',
+    '/project-management/:path*',
+    '/project-recruitment/:path*',
+  ],
+};
