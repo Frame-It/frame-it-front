@@ -16,6 +16,8 @@ import {
 } from '@/lib/api/project/project-recruitment';
 import { cn } from '@/lib/utils';
 import { useRecruitStore } from '@/store/recruit-store';
+import { getCookie } from 'cookies-next';
+
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { FC, useState } from 'react';
@@ -88,6 +90,7 @@ const ApplyDrawer = ({
     onOpen: onModalOpen,
   } = useDisclosure(false);
   const router = useRouter();
+  const myIdentity = getCookie('identity');
 
   const handleClickApply = async () => {
     try {
@@ -110,6 +113,7 @@ const ApplyDrawer = ({
           size={'large'}
           label={'프로젝트 신청하기'}
           className="w-[222px]"
+          disabled={hostIdentity === myIdentity}
         />
       }
       className="pb-0"
