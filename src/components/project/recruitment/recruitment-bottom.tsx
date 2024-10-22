@@ -24,13 +24,17 @@ import { FC, useState } from 'react';
 
 interface HostBottomProps {
   projectId: number;
+  isBookmarked: boolean;
 }
 
-export const HostBottom: FC<HostBottomProps> = ({ projectId }) => {
+export const HostBottom: FC<HostBottomProps> = ({
+  projectId,
+  isBookmarked,
+}) => {
   const router = useRouter();
   return (
     <>
-      <BookmarkButton projectId={projectId} />
+      <BookmarkButton projectId={projectId} isBookmarked={isBookmarked} />
       <IconButton
         icon={<Icon id={'edit-icon'} size={24} className="text-gray-40" />}
         onClick={() => router.push(`/project-edit/${projectId}`)}
@@ -53,14 +57,16 @@ export const GuestBottom = ({
   title,
   projectId,
   hostIdentity,
+  isBookmarked,
 }: {
   title: string;
   projectId: number;
   hostIdentity: 'PHOTOGRAPHER' | 'MODEL';
+  isBookmarked: boolean;
 }) => {
   return (
     <>
-      <BookmarkButton projectId={projectId} />
+      <BookmarkButton projectId={projectId} isBookmarked={isBookmarked} />
       <IconButton
         icon={<Icon id={'share-icon'} size={24} className="text-gray-40" />}
       />
@@ -185,13 +191,17 @@ const ApplyDrawer = ({
 
 interface BookmarkButtonProps {
   projectId: number;
+  isBookmarked: boolean;
 }
 
-const BookmarkButton: FC<BookmarkButtonProps> = ({ projectId }) => {
+const BookmarkButton: FC<BookmarkButtonProps> = ({
+  projectId,
+  isBookmarked,
+}) => {
   const { recruits, toggleBookmark } = useRecruitStore();
-  const isBookmarked = recruits.find(
-    (recruit) => recruit.id === projectId,
-  )?.isBookmarked;
+  const nowBookmarked =
+    recruits.find((recruit) => recruit.id === projectId)?.isBookmarked ??
+    isBookmarked;
 
   const handleBookmarkToggle = async () => {
     try {
@@ -212,12 +222,12 @@ const BookmarkButton: FC<BookmarkButtonProps> = ({ projectId }) => {
         <Icon
           id={'bookmark-icon'}
           size={24}
-          className="text-gray-40"
-          stroke={'#7E7774'}
-          fill={isBookmarked ? '#7E7774' : 'white'}
+          stroke={nowBookmarked ? 'white' : '#7E7774'}
+          fill={nowBookmarked ? '#4D4744' : 'white'}
           onClick={handleBookmarkToggle}
         />
       }
+      className={cn(nowBookmarked ? 'bg-[#4D4744]' : 'bg-white')}
     />
   );
 };
