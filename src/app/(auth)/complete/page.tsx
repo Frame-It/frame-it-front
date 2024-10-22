@@ -1,11 +1,16 @@
 import { Button } from '@/components/ui/button';
+import { cookies } from 'next/headers';
 import Link from 'next/link';
 
-export default function CompletePage({
+export default async function CompletePage({
   searchParams,
 }: {
   searchParams: { role: string; nickname: string };
 }) {
+  const cookieStore = cookies();
+  cookieStore.set('identify', searchParams.role);
+  cookieStore.set('nickname', searchParams.nickname);
+
   return (
     <main
       className="h-dvh bg-cover text-white"
