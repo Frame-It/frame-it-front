@@ -7,7 +7,7 @@ import {
 import { Label } from '@/components/ui/label';
 import { RegisterDatePicker } from './register-date-picker';
 import { Input } from '../ui/input';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { stepThreeSchema } from '@/lib/schema/user-regist-schema';
 import { z } from 'zod';
 

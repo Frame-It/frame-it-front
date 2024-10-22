@@ -66,13 +66,16 @@ const RegisterStepFour: React.FunctionComponent<
     if (isDuplicate === true) {
       setErrorMessage('중복된 닉네임 입니다.');
       setSuccessMessage(null);
-    } else if (isDuplicate === false) {
+    } else if (
+      isDuplicate === false &&
+      stepFourSchema.safeParse({ nickname }).success
+    ) {
       setErrorMessage(null);
       setSuccessMessage('사용할 수 있는 닉네임 입니다.');
     } else {
       setSuccessMessage(null);
     }
-  }, [isDuplicate]);
+  }, [isDuplicate, nickname]);
 
   // 가입 버튼 클릭 핸들러
   const handleSubmit = async () => {
