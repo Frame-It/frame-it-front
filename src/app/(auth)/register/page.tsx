@@ -10,7 +10,7 @@ export default function RegisterPage() {
   const step = useUserRegisterStore((state) => state.currentStep);
 
   return (
-    <main className="relative mb-[16px] mt-[56px] h-full">
+    <main className="relative h-full pb-[16px] pt-[56px]">
       {/* steps */}
       {step === 1 && <RegisterStepOne />}
       {step === 2 && <RegisterStepTwo />}
