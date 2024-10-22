@@ -64,7 +64,8 @@ const StepTwo = ({ isEdit = false }: { isEdit?: boolean }) => {
       formData.append('recruitmentRole', projectInfo.type || 'MODEL');
       formData.append(
         'shootingAt',
-        `${projectInfo.shootingDate.date}T${projectInfo.shootingDate.time}:00`,
+        // `${projectInfo.shootingDate.date}T${projectInfo.shootingDate.time}:00`,
+        `${projectInfo.shootingDate.date}T00:00:00`,
       );
       formData.append('timeOption', projectInfo.shootingDate.period ?? '');
       formData.append('locationType', projectInfo.location.type ?? '');
