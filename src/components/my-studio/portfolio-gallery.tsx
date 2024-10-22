@@ -7,13 +7,15 @@ import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import Masonry from 'react-responsive-masonry';
 
-const MyStudioPortfolioGallery = () => {
+const MyStudioPortfolioGallery = ({ id }: { id?: number }) => {
   const { ref, inView } = useInView();
   const router = useRouter();
 
   const { data, fetchNextPage, hasNextPage } = useInfiniteQuery({
-    queryKey: ['MyPortfolios'],
-    queryFn: ({ pageParam = 0 }) => getMyPortfolios({ pageParam }),
+    queryKey: ['MyPortfolios', id],
+    queryFn: ({ pageParam = 0, queryKey }) =>
+      getMyPortfolios({ pageParam, id: queryKey[1] as number }),
+    enabled: !!id,
     initialPageParam: 0,
     staleTime: 0,
     getNextPageParam: (lastPage: any) => {

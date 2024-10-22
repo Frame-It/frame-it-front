@@ -2,16 +2,19 @@
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
 
 interface IMyStudioIntroduceProps {
   tagList: string[];
   introduce: string;
+  isGuest?: boolean;
 }
 
 const MyStudioIntroduce: React.FunctionComponent<IMyStudioIntroduceProps> = ({
   tagList,
   introduce,
+  isGuest,
 }) => {
   const router = useRouter();
 
@@ -29,7 +32,12 @@ const MyStudioIntroduce: React.FunctionComponent<IMyStudioIntroduceProps> = ({
           </Badge>
         ))}
       </ul>
-      <div className="mt-[16px] flex items-center gap-x-[8px]">
+      <div
+        className={cn(
+          'mt-[16px] flex items-center gap-x-[8px]',
+          isGuest && 'hidden',
+        )}
+      >
         <Button
           onClick={() => router.push('/my-page/profile')}
           className="h-[37px] w-full rounded-[8px] border border-[#7E7774] bg-white text-[14px] text-[#201A17]"

@@ -39,8 +39,8 @@ export default async function MyPage() {
         <Separator className="my-6" />
         <HelpCenter />
         {/* --- */}
-        <BottomNavbar />
       </main>
+      <BottomNavbar />
     </>
   );
 }

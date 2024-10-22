@@ -43,6 +43,7 @@ export interface IPortfolioDetail {
   id: number;
   title: string;
   userId: number;
+  userNickname: string;
   identity: string;
   profileImageUrl: string | null;
   userName: string;

@@ -13,7 +13,6 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
   } else if (url.pathname === '/login') {
     const { status, res } = await getValidateToken(request);
-
     return status !== 200
       ? res
       : NextResponse.redirect(new URL('/', request.url));
@@ -24,7 +23,11 @@ export async function middleware(request: NextRequest) {
     const { status } = await getValidateToken(request);
 
     return status === 200
-      ? NextResponse.next()
+      ? NextResponse.next({
+          request: {
+            headers: requestHeaders,
+          },
+        })
       : NextResponse.redirect(new URL('/login', request.url));
   }
 
@@ -69,6 +72,7 @@ export const config = {
     '/portfolio-register',
     '/letter',
     '/my-page/:path*',
+    '/studio/:path*',
     '/project-management/:path*',
     '/project-recruitment/:path*',
   ],
