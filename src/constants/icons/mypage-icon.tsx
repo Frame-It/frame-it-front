@@ -1,7 +1,7 @@
 export type MypageIconID =
   | 'home-icon'
   | 'project-icon'
-  | 'bookmark-icon'
+  // | 'bookmark-icon'
   | 'setting-icon'
   | 'right-arrow-icon';
 
@@ -38,7 +38,7 @@ export const mypageSVG = (
     </symbol>
 
     {/* book mark */}
-    <symbol
+    {/* <symbol
       id="bookmark-icon"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
