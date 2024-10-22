@@ -9,6 +9,7 @@ import {
 import { UserRegisterCheckbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import Icon from '@/components/common/icon';
+import Link from 'next/link';
 
 interface IRegisterStepOneProps {}
 
@@ -82,7 +83,12 @@ const RegisterStepOne: React.FunctionComponent<IRegisterStepOneProps> = () => {
                 (필수) 이용약관에 동의합니다.
               </Label>
             </span>
-            <Icon id="right-arrow-icon" className="size-[15px]" />
+            <Link
+              target="_blank"
+              href="https://frameit.notion.site/fb50555b39f24ac0b735e4d6e882767d"
+            >
+              <Icon id="right-arrow-icon" className="size-[15px]" />
+            </Link>
           </li>
           <li className={StepOneLI}>
             <span className={StepOneSpan}>
@@ -98,7 +104,12 @@ const RegisterStepOne: React.FunctionComponent<IRegisterStepOneProps> = () => {
                 (필수) 개인정보처리방침에 동의합니다.
               </Label>
             </span>
-            <Icon id="right-arrow-icon" className="size-[15px]" />
+            <Link
+              target="_blank"
+              href="https://frameit.notion.site/9db4e942750a419c8079a79806a03113"
+            >
+              <Icon id="right-arrow-icon" className="size-[15px]" />
+            </Link>
           </li>
           <li className={StepOneLI}>
             <span className={StepOneSpan}>
