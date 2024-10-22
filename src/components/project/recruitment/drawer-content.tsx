@@ -86,7 +86,7 @@ export const AddressDrawerContent: FC<DrawerProps> = () => {
   };
 
   return (
-    <div>
+    <div className="flex h-full flex-col justify-between">
       {/* <Dialog open={isOpen}>
           <DialogContent className="h-full">
             <DaumPostcodeEmbed
@@ -143,7 +143,7 @@ export const DateDrawerContent: FC<DrawerProps> = ({ onClose }) => {
   };
 
   return (
-    <div>
+    <div className="flex h-full flex-col justify-between">
       <div
         className={cn(
           'flex min-h-[352px] flex-col items-start gap-4 self-stretch pb-[40px]',
@@ -197,14 +197,14 @@ export const DateDrawerContent: FC<DrawerProps> = ({ onClose }) => {
             />
           </div>
         </div>
-        <BottomButton
-          variant={'primary'}
-          size={'large'}
-          label={'필터 적용하기'}
-          onClick={applyFilters}
-          disabled={!(startDate && endDate && selectedTime)}
-        />
       </div>
+      <BottomButton
+        variant={'primary'}
+        size={'large'}
+        label={'필터 적용하기'}
+        onClick={applyFilters}
+        disabled={!(startDate && endDate && selectedTime)}
+      />
     </div>
   );
 };
@@ -215,12 +215,11 @@ export const LocationDrawerContent: FC<DrawerProps> = ({ onClose }) => {
   );
   const router = useRouter();
 
-  const handleSelectLocation = (location: LocationType) => {
-    setSelectedLocation(location);
-
+  const handleSelectLocation = () => {
     // 쿼리 문자열 업데이트
+    if (!selectedLocation) return;
     const queryString = new URLSearchParams(window.location.search);
-    queryString.set('locationType', location);
+    queryString.set('locationType', selectedLocation);
     router.push(`?${queryString.toString()}`);
     onClose();
   };
@@ -232,15 +231,23 @@ export const LocationDrawerContent: FC<DrawerProps> = ({ onClose }) => {
           variant={selectedLocation === 'OUTDOOR' ? 'secondary' : 'stroke'}
           size={'large'}
           label={'야외'}
-          onClick={() => handleSelectLocation('OUTDOOR')}
+          onClick={() => setSelectedLocation('OUTDOOR')}
         />
         <BottomButton
           variant={selectedLocation === 'INDOOR' ? 'secondary' : 'stroke'}
           size={'large'}
           label={'스튜디오'}
-          onClick={() => handleSelectLocation('INDOOR')}
+          onClick={() => setSelectedLocation('INDOOR')}
         />
       </div>
+
+      <BottomButton
+        variant={'primary'}
+        size={'large'}
+        label={'필터 적용하기'}
+        onClick={handleSelectLocation}
+        disabled={!selectedLocation}
+      />
     </div>
   );
 };

@@ -31,9 +31,9 @@ const Drawer = ({
   return (
     <UiDrawer open={open} onOpenChange={onOpenChange}>
       <DrawerTrigger asChild>
-        <button className="btn-primary flex items-center justify-center">
+        <div className="btn-primary flex items-center justify-center">
           {trigger}
-        </button>
+        </div>
       </DrawerTrigger>
       <DrawerContent>
         {title ? (

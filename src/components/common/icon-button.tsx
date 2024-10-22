@@ -1,3 +1,5 @@
+'use client';
+
 import { cn } from '@/lib/utils';
 import { ButtonHTMLAttributes, ReactNode } from 'react';
 
@@ -9,7 +11,8 @@ const IconButton = ({
     <button
       {...props}
       className={cn(
-        'flex h-[41px] w-[41px] flex-shrink-0 flex-col items-center justify-center rounded-[8px] border border-gray-40 bg-white',
+        'flex h-[41px] w-[41px] flex-shrink-0 flex-col items-center justify-center rounded-[8px] border border-gray-40',
+        props.className,
       )}
     >
       {icon}

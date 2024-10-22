@@ -64,7 +64,8 @@ const StepTwo = ({ isEdit = false }: { isEdit?: boolean }) => {
       formData.append('recruitmentRole', projectInfo.type || 'MODEL');
       formData.append(
         'shootingAt',
-        `${projectInfo.shootingDate.date}T${projectInfo.shootingDate.time}:00`,
+        // `${projectInfo.shootingDate.date}T${projectInfo.shootingDate.time}:00`,
+        `${projectInfo.shootingDate.date}T00:00:00`,
       );
       formData.append('timeOption', projectInfo.shootingDate.period ?? '');
       formData.append('locationType', projectInfo.location.type ?? '');
@@ -87,7 +88,9 @@ const StepTwo = ({ isEdit = false }: { isEdit?: boolean }) => {
         reset();
       } catch (error) {
         console.error(error);
-        // TODO: error handling
+        toast({
+          title: '프로젝트 등록에 실패했습니다.',
+        });
       }
     } else {
       alert('컨셉 태그와 프로젝트 설명을 입력해주세요.');

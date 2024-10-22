@@ -23,7 +23,7 @@ const StepOne: React.FC = () => {
     projectInfo.projectName,
   );
   const [date, setDate] = useState<string>(projectInfo.shootingDate.date);
-  const [time, setTime] = useState<string>(projectInfo.shootingDate.time);
+  // const [time, setTime] = useState<string>(projectInfo.shootingDate.time);
   const [period, setPeriod] = useState<TimeOption | null>(
     projectInfo.shootingDate.period,
   );
@@ -36,7 +36,7 @@ const StepOne: React.FC = () => {
   const [detail, setDetail] = useState<string>(projectInfo.location.detail);
 
   const dateInputRef = useRef<HTMLInputElement>(null);
-  const timeInputRef = useRef<HTMLInputElement>(null);
+  // const timeInputRef = useRef<HTMLInputElement>(null);
 
   if (!type) redirect('/login');
 
@@ -44,7 +44,7 @@ const StepOne: React.FC = () => {
     type &&
     projectName &&
     date &&
-    time &&
+    // time &&
     period &&
     locationType &&
     address &&
@@ -55,7 +55,7 @@ const StepOne: React.FC = () => {
       setProjectInfo({
         type,
         projectName,
-        shootingDate: { date, time, period },
+        shootingDate: { date, period },
         location: { type: locationType, address, detail },
       });
       nextStep();
@@ -69,11 +69,11 @@ const StepOne: React.FC = () => {
       dateInputRef.current.showPicker();
     }
   };
-  const handleTimeClick = () => {
-    if (timeInputRef.current) {
-      timeInputRef.current.showPicker();
-    }
-  };
+  // const handleTimeClick = () => {
+  //   if (timeInputRef.current) {
+  //     timeInputRef.current.showPicker();
+  //   }
+  // };
 
   return (
     <div className={cn('relative flex h-full flex-col justify-between')}>
@@ -142,7 +142,7 @@ const StepOne: React.FC = () => {
                 onClick={handleDateClick}
               />
             </div>
-            <div className="flex gap-[6px]">
+            {/* <div className="flex gap-[6px]">
               <Input
                 value={time}
                 type="time"
@@ -152,14 +152,13 @@ const StepOne: React.FC = () => {
                 onClick={handleTimeClick}
                 className="font-body-14 flex h-[40px] w-full flex-1 flex-col items-center justify-center rounded-[8px] bg-transparent p-[10.514px] text-center text-gray-20 placeholder-gray-60 focus:ring-0"
               />
-
               <IconButton
                 icon={
                   <Icon id={'time-icon'} size={24} className="text-gray-40" />
                 }
                 onClick={handleTimeClick}
               />
-            </div>
+            </div> */}
             <div className={cn('flex gap-2')}>
               <BottomButton
                 variant={period === 'MORNING' ? 'secondary' : 'stroke'}

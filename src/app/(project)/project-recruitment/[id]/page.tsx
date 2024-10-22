@@ -37,6 +37,7 @@ const ProjectRecruitmentDetailPage: FC<
     host,
     conceptPhotoUrls,
     isHost,
+    isBookmarked,
   } = projectData;
 
   return (
@@ -111,12 +112,13 @@ const ProjectRecruitmentDetailPage: FC<
         )}
       >
         {isHost ? (
-          <HostBottom projectId={projectId} />
+          <HostBottom projectId={projectId} isBookmarked={isBookmarked} />
         ) : (
           <GuestBottom
             title={title}
             projectId={projectId}
             hostIdentity={host.identity}
+            isBookmarked={isBookmarked}
           />
         )}
       </div>
