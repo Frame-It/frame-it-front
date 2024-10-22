@@ -86,13 +86,14 @@ const RegisterStepFour: React.FunctionComponent<
         title: '환영합니다!',
         variant: 'default',
       });
-      router.push('/');
+      router.replace(
+        `/complete?role=${userInfo.role}&nickname=${userInfo.nickname}`,
+      );
     } else {
       toast({
         title: '일시적인 오류로 가입이 실패하였습니다!',
         variant: 'destructive',
       });
-      router.push('/login');
     }
   };
 
