@@ -1,9 +1,9 @@
 import { TagList } from '@/components/common/tag-list';
+import HostInfo from '@/components/project/recruitment/host-info';
 import {
   GuestBottom,
   HostBottom,
 } from '@/components/project/recruitment/recruitment-bottom';
-import WriterInfo from '@/components/project/recruitment/writer-info';
 import {
   Carousel,
   CarouselContent,
@@ -99,7 +99,7 @@ const ProjectRecruitmentDetailPage: FC<
       </div>
       <div className={cn('font-title-18 flex flex-col gap-2')}>
         {host.identity === 'PHOTOGRAPHER' ? '작가' : '모델'}
-        <WriterInfo
+        <HostInfo
           hostId={host.id}
           nickname={host.nickname}
           profileImageUrl={host.profileImageUrl}

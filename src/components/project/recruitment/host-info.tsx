@@ -2,7 +2,7 @@ import { TagList } from '@/components/common/tag-list';
 import { ITag, USER_CONCEPTS } from '@/constants/project';
 import { FC } from 'react';
 
-interface WriterInfoProps {
+interface HostInfoProps {
   hostId: number;
   nickname: string;
   profileImageUrl: string | null;
@@ -10,7 +10,7 @@ interface WriterInfoProps {
   concepts: string[];
 }
 
-const WriterInfo: FC<WriterInfoProps> = ({
+const HostInfo: FC<HostInfoProps> = ({
   hostId,
   nickname,
   profileImageUrl,
@@ -42,4 +42,4 @@ const WriterInfo: FC<WriterInfoProps> = ({
   );
 };
 
-export default WriterInfo;
+export default HostInfo;
