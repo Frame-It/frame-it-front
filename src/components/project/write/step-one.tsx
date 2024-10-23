@@ -129,6 +129,7 @@ const StepOne: React.FC = () => {
                 placeholder="YYYY/MM/DD"
                 ref={dateInputRef}
                 onClick={handleDateClick}
+                min={new Date().toISOString().split('T')[0]}
                 className="font-body-14 flex h-[40px] w-full flex-1 flex-col items-center justify-center rounded-[8px] border bg-transparent p-[10.514px] text-center text-gray-20 placeholder-gray-60 focus:ring-0"
               />
               <IconButton
