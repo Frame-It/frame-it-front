@@ -9,12 +9,15 @@ import { useUserRegisterStore } from '@/store/user-regist-store';
 
 export default function RegisterPage() {
   const step = useUserRegisterStore((state) => state.currentStep);
+  const storeClear = useUserRegisterStore((state) => state.clear);
 
   const isDirty = !!step;
   const message =
     '정말 뒤로가기를 누르시겠습니까? 이미 작성된 정보는 저장되지 않습니다!';
 
-  usePreventNavigation(isDirty, message);
+  usePreventNavigation(isDirty, message, () => {
+    storeClear();
+  });
 
   return (
     <main className="relative h-full pb-[16px] pt-[56px]">

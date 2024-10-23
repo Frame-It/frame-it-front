@@ -1,5 +1,8 @@
+'use client';
+
 import RoleBadge from '@/components/common/role-badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useRouter } from 'next/navigation';
 
 interface IMyStudioHeaderProps {
   profileUrl: string;
@@ -16,12 +19,16 @@ const MyStudioHeader: React.FunctionComponent<IMyStudioHeaderProps> = ({
   portfolioCount,
   projectCount,
 }) => {
+  const router = useRouter();
   return (
     <section className="">
       <div className="flex items-center gap-x-[45px]">
-        <Avatar className="h-[114px] w-[116px] rounded-[4px]">
+        <Avatar
+          className="h-[114px] w-[116px] cursor-pointer rounded-[16px]"
+          onClick={() => router.push('/my-page/profile')}
+        >
           <AvatarImage src={profileUrl} />
-          <AvatarFallback>F</AvatarFallback>
+          <AvatarFallback className="rounded-[16px]">F</AvatarFallback>
         </Avatar>
         <div className="flex gap-[32px]">
           <div className="flex flex-col items-center justify-center">

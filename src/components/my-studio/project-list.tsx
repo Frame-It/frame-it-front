@@ -5,14 +5,17 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useQuery } from '@tanstack/react-query';
-import { getMyProjects } from '@/service/client-actions/studio';
+import {
+  getGuestProjects,
+  getMyProjects,
+} from '@/service/client-actions/studio';
 
-const ProjectList = () => {
+const ProjectList = ({ id }: { id?: number }) => {
   const router = useRouter();
 
   const { data } = useQuery({
     queryKey: ['userProject'],
-    queryFn: getMyProjects,
+    queryFn: () => (id ? getGuestProjects(id) : getMyProjects()),
     staleTime: 0,
   });
 

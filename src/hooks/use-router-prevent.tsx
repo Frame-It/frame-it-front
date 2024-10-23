@@ -1,7 +1,11 @@
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useRef } from 'react';
 
-export const usePreventNavigation = (isDirty: boolean, message: string) => {
+export const usePreventNavigation = (
+  isDirty: boolean,
+  message: string,
+  onAfterPage?: () => void,
+) => {
   const router = useRouter();
   const isClickedFirst = useRef(false);
 
@@ -19,6 +23,10 @@ export const usePreventNavigation = (isDirty: boolean, message: string) => {
     if (isDirty && !confirm(message)) {
       history.pushState(null, '', '');
       return;
+    }
+
+    if (onAfterPage) {
+      onAfterPage();
     }
     history.back();
   }, [isDirty, message]);

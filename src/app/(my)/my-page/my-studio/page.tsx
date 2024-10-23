@@ -37,7 +37,9 @@ export default async function MyStudioPage(params: {
       <MySturioFilter />
 
       {/* 포트폴리오 */}
-      {queryString === 'portfolio' && <MyStudioPortfolioGallery />}
+      {queryString === 'portfolio' && (
+        <MyStudioPortfolioGallery id={myInfo?.id} />
+      )}
 
       {/* 프로젝트 */}
       {queryString === 'project' && <ProjectList />}

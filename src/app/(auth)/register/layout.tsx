@@ -6,7 +6,7 @@ import { Header, HeaderLeft } from '@/components/common/header';
 const RegisterLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className={cn('flex h-screen flex-col')}>
-      <Header>
+      <Header className="px-0">
         <HeaderLeft>
           <BackButton>
             <Icon id={'back-icon'} size={32} className="text-gray-20" />
