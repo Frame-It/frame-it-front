@@ -24,37 +24,34 @@ const RegisterStepTwo: React.FunctionComponent<IRegisterStepTwoProps> = () => {
   };
 
   return (
-    <section>
-      <div className="font-title-18 ml-2 mt-[42px] max-w-[200px] break-keep">
-        <div>프레이밋에서</div>
-        <div>어떤 활동을 원하시나요?</div>
+    <section className="flex h-[calc(100dvh-58px)] flex-col justify-between pb-2">
+      <div>
+        <div className="font-title-18 ml-2 mt-[42px] max-w-[200px] break-keep">
+          <div>프레이밋에서</div>
+          <div>어떤 활동을 원하시나요?</div>
+        </div>
+        <div className="mt-[32px] flex w-full items-center justify-center gap-x-6 px-[32px]">
+          <button
+            className={cn(
+              RoleCommonDiv,
+              role === 'PHOTOGRAPHER' ? RoleActiveDiv : RoleNonActiveDiv,
+            )}
+            onClick={() => handleClick('PHOTOGRAPHER')}
+          >
+            <Icon id="camera-icon" className="h-[48px] w-[54px] text-current" />
+          </button>
+          <button
+            className={cn(
+              RoleCommonDiv,
+              role === 'MODEL' ? RoleActiveDiv : RoleNonActiveDiv,
+            )}
+            onClick={() => handleClick('MODEL')}
+          >
+            <Icon id="person-icon" className="h-[53px] w-[20px] text-current" />
+          </button>
+        </div>
       </div>
-      <div className="mt-[32px] flex w-full items-center justify-center gap-x-6 px-[32px]">
-        <button
-          className={cn(
-            RoleCommonDiv,
-            role === 'PHOTOGRAPHER' ? RoleActiveDiv : RoleNonActiveDiv,
-          )}
-          onClick={() => handleClick('PHOTOGRAPHER')}
-        >
-          <Icon id="camera-icon" className="h-[48px] w-[54px] text-current" />
-        </button>
-        <button
-          className={cn(
-            RoleCommonDiv,
-            role === 'MODEL' ? RoleActiveDiv : RoleNonActiveDiv,
-          )}
-          onClick={() => handleClick('MODEL')}
-        >
-          <Icon id="person-icon" className="h-[53px] w-[20px] text-current" />
-        </button>
-      </div>
-      <Button
-        size="lg"
-        className="absolute bottom-0 w-full"
-        disabled={!role}
-        onClick={nextStep}
-      >
+      <Button size="lg" className="w-full" disabled={!role} onClick={nextStep}>
         다음
       </Button>
     </section>
