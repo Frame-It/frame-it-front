@@ -83,7 +83,7 @@ const StepTwo = ({ isEdit = false }: { isEdit?: boolean }) => {
 
       try {
         const { projectId } = await postAnnouncement(formData);
-        router.push(
+        router.replace(
           `?complete=true&title=${projectInfo.projectName}&id=${projectId}`,
         );
         reset();
