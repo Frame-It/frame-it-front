@@ -1,6 +1,4 @@
 import Link from 'next/link';
-import Image from 'next/image';
-import { faker } from '@faker-js/faker';
 import RoleBadge from '@/components/common/role-badge';
 import { getUserChat } from '@/service/server-actions/chat';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -9,7 +7,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { ko } from 'date-fns/locale';
 
 export default async function LetterPage() {
-  const chatList: IChat[] = await getUserChat();
+  const chatList: IChat[] = (await getUserChat()) || [];
 
   const lastMessageTime = new Date('2024-10-16T18:26:50.099667');
   const timeAgo = formatDistanceToNow(lastMessageTime, {
@@ -20,7 +18,7 @@ export default async function LetterPage() {
   return (
     <main className="h-[calc(100dvh-58px-63px)] overflow-y-auto px-4">
       <ul className="my-6 flex flex-col gap-y-6">
-        {chatList.map((chat) => {
+        {chatList?.map((chat) => {
           return (
             <Link href={`/letter-detail/${chat.chatId}`} key={chat.chatId}>
               <li className="flex items-center justify-between">
