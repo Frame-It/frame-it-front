@@ -30,7 +30,6 @@ export default function ProjectEditPage() {
             type: data.recruitmentRole,
             shootingDate: {
               date: data.shootingAt.split('T')[0],
-              time: data.shootingAt.split('T')[1],
               period: data.timeOption,
             },
             location: {
