@@ -1,15 +1,14 @@
 import { Button } from '@/components/ui/button';
-import { cookies } from 'next/headers';
 import Link from 'next/link';
+import { setCookie } from 'cookies-next';
 
 export default async function CompletePage({
   searchParams,
 }: {
   searchParams: { role: string; nickname: string };
 }) {
-  // const cookieStore = cookies();
-  // cookieStore.set('identify', searchParams.role);
-  // cookieStore.set('nickname', searchParams.nickname);
+  setCookie('identify', searchParams.role);
+  setCookie('nickname', searchParams.nickname);
 
   return (
     <main

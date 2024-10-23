@@ -11,6 +11,7 @@ const privatePaths = [
   '/letter',
   '/portfolio-register',
   '/project-register',
+  '/notification',
 ];
 const restrictedPaths = ['/login', '/register', '/complete'];
 
@@ -37,6 +38,11 @@ export async function middleware(request: NextRequest) {
 
   // 로그인이 되어있다면 접근할 수 없는 경로
   if (restrictedPaths.includes(url.pathname)) {
+    // 회원가입 페이지 보호 필요 : 나중에 작업
+    if (url.pathname === '/register') {
+      return NextResponse.next();
+    }
+
     return status === 200
       ? NextResponse.redirect(new URL('/', request.url))
       : NextResponse.next();
@@ -87,15 +93,20 @@ async function getValidateToken(req: NextRequest) {
 
 export const config = {
   matcher: [
-    '/',
-    '/complete',
-    '/recruit',
+    // auth
+    '/login',
     '/register',
+    '/complete',
+
+    // main
+    '/',
     '/feed',
+    '/recruit',
+    '/my-page/:path*',
+    '/letter',
+    '/notification',
     '/project-register',
     '/portfolio-register',
-    '/letter',
-    '/my-page/:path*',
     '/studio/:path*',
     '/project-management/:path*',
     '/project-recruitment/:path*',
