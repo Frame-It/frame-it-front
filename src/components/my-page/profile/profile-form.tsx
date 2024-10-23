@@ -73,7 +73,7 @@ const ProfileForm = () => {
         variant: 'success',
       });
       queryClient.invalidateQueries({ queryKey: ['getProfile'] });
-      router.replace('/my-page');
+      router.replace('/my-page/my-studio');
       router.refresh();
     } else {
       toast({

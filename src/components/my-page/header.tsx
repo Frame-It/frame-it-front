@@ -1,6 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import * as React from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 
@@ -10,14 +9,9 @@ interface IMyPageHeaderProps {
 }
 
 const MyPageHeader = ({ nickName, imageUrl }: IMyPageHeaderProps) => {
-  const router = useRouter();
-
   return (
     <section className="mt-[20px] flex items-center gap-x-4">
-      <Avatar
-        onClick={() => router.push('/my-page/profile')}
-        className="aspect-square size-[100px] cursor-pointer rounded-[16px]"
-      >
+      <Avatar className="aspect-square size-[100px] rounded-[16px]">
         <AvatarImage src={imageUrl} />
         <AvatarFallback className="aspect-square size-[100px] cursor-pointer rounded-[16px]">
           F
