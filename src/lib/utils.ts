@@ -1,3 +1,4 @@
+import { USER_CONCEPTS } from '@/constants/project';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -20,4 +21,9 @@ export const calTextAreaRows = (length: number) => {
   if (length <= 225) return 8;
   if (length <= 255) return 9;
   return 10;
+};
+
+export const getLabelById = (id: string): string | undefined => {
+  const concept = USER_CONCEPTS.find((concept) => concept.id === id);
+  return concept ? concept.label : undefined;
 };
