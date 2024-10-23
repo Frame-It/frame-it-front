@@ -1,5 +1,6 @@
 import { TagList } from '@/components/common/tag-list';
 import { ITag, USER_CONCEPTS } from '@/constants/project';
+import Link from 'next/link';
 import { FC } from 'react';
 
 interface HostInfoProps {
@@ -21,9 +22,11 @@ const HostInfo: FC<HostInfoProps> = ({
     .map((conceptId) => USER_CONCEPTS.find(({ id }) => id === conceptId))
     .filter((tag): tag is ITag => tag !== undefined);
 
-  // TODO: 클릭 시 스튜디오 페이지로 이동
   return (
-    <section className="flex flex-col items-center justify-center gap-[10px] self-stretch rounded-[8px] bg-gray-90 px-[16px] pb-[18px] pt-[16px]">
+    <Link
+      href={`/studio/${hostId}`}
+      className="flex flex-col items-center justify-center gap-[10px] self-stretch rounded-[8px] bg-gray-90 px-[16px] pb-[18px] pt-[16px]"
+    >
       <div className="flex flex-col items-center justify-center gap-[6px] self-stretch">
         <img
           className="h-[64px] w-[64px] rounded-[8px]"
@@ -38,7 +41,7 @@ const HostInfo: FC<HostInfoProps> = ({
           <TagList tags={tags} size={'medium'} className="gap-[4px]" />
         </div>
       </div>
-    </section>
+    </Link>
   );
 };
 
