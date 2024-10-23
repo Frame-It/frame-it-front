@@ -66,13 +66,16 @@ const RegisterStepFour: React.FunctionComponent<
     if (isDuplicate === true) {
       setErrorMessage('중복된 닉네임 입니다.');
       setSuccessMessage(null);
-    } else if (isDuplicate === false) {
+    } else if (
+      isDuplicate === false &&
+      stepFourSchema.safeParse({ nickname }).success
+    ) {
       setErrorMessage(null);
       setSuccessMessage('사용할 수 있는 닉네임 입니다.');
     } else {
       setSuccessMessage(null);
     }
-  }, [isDuplicate]);
+  }, [isDuplicate, nickname]);
 
   // 가입 버튼 클릭 핸들러
   const handleSubmit = async () => {
@@ -83,55 +86,58 @@ const RegisterStepFour: React.FunctionComponent<
         title: '환영합니다!',
         variant: 'default',
       });
-      router.push('/');
+      router.replace(
+        `/complete?role=${userInfo.role}&nickname=${userInfo.nickname}`,
+      );
     } else {
       toast({
         title: '일시적인 오류로 가입이 실패하였습니다!',
         variant: 'destructive',
       });
-      router.push('/login');
     }
   };
 
   return (
-    <section className="px-6">
-      <div className="font-title-18 mt-[42px] max-w-[200px] break-keep">
-        <div>프레이밋에서 사용할</div>
-        <div>닉네임을 설정해 주세요.</div>
-      </div>
-      <div className="mt-[40px]">
-        <Label
-          htmlFor="nickname"
-          className="font-caption-12 font-[400] text-gray-20"
-        >
-          닉네임
-        </Label>
-        <div className="flex w-full items-center justify-between gap-x-2">
-          <Input
-            id="nickname"
-            placeholder="닉네임을 입력해 주세요"
-            className="border-b-1 rounded-none border-l-0 border-r-0 border-t-0 pb-1 pl-1"
-            value={nickname}
-            onChange={handleChange}
-          />
-          <Button
-            size="sm"
-            className="font-tag-12 px-[12px] py-2 font-[400]"
-            onClick={handleButtonClick}
-          >
-            중복 확인
-          </Button>
+    <section className="flex h-[calc(100dvh-58px)] flex-col justify-between px-6 pb-2">
+      <div>
+        <div className="font-title-18 mt-[42px] max-w-[200px] break-keep">
+          <div>프레이밋에서 사용할</div>
+          <div>닉네임을 설정해 주세요.</div>
         </div>
-        {errorMessage && (
-          <p className="font-tag-12 mt-2 text-error">{errorMessage}</p>
-        )}
-        {successMessage && (
-          <p className="font-tag-12 mt-2 text-sub-green">{successMessage}</p>
-        )}
+        <div className="mt-[40px]">
+          <Label
+            htmlFor="nickname"
+            className="font-caption-12 font-[400] text-gray-20"
+          >
+            닉네임
+          </Label>
+          <div className="flex w-full items-center justify-between gap-x-2">
+            <Input
+              id="nickname"
+              placeholder="닉네임을 입력해 주세요"
+              className="border-b-1 rounded-none border-l-0 border-r-0 border-t-0 pb-1 pl-1"
+              value={nickname}
+              onChange={handleChange}
+            />
+            <Button
+              size="sm"
+              className="font-tag-12 px-[12px] py-2 font-[400]"
+              onClick={handleButtonClick}
+            >
+              중복 확인
+            </Button>
+          </div>
+          {errorMessage && (
+            <p className="font-tag-12 mt-2 text-error">{errorMessage}</p>
+          )}
+          {successMessage && (
+            <p className="font-tag-12 mt-2 text-sub-green">{successMessage}</p>
+          )}
+        </div>
       </div>
       <Button
         size="lg"
-        className="absolute bottom-0 left-0 w-full"
+        className="w-full"
         disabled={isDisabled}
         onClick={handleSubmit}
       >
