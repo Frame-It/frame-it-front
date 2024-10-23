@@ -171,7 +171,7 @@ export const getCompletedProject = async (
   if (!res.ok) {
     console.log(data);
 
-    throw new Error('Failed to start project');
+    throw new Error('Failed fetch completed project');
   }
   return data;
 };
