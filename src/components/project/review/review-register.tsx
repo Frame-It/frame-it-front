@@ -111,7 +111,7 @@ const ReviewRegister = ({
           size={'large'}
           label={'작성완료'}
           onClick={handleComplete}
-          disabled={selectedTags.length === 0 || reviewContent.length === 0}
+          disabled={selectedTags.length === 0 || reviewContent.length < 10}
         />
       </div>
     </div>
