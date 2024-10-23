@@ -17,9 +17,9 @@ export const getMyReviews = async (id: number) => {
         },
       });
 
-      // if (!res.ok) {
-      //   throw new Error('something error : ' + res.status);
-      // }
+      if (!res.ok) {
+        throw new Error('something error : ' + res.status);
+      }
 
       const data: {
         reviewerNickname: string;
@@ -33,4 +33,29 @@ export const getMyReviews = async (id: number) => {
     }
   }
   return [];
+};
+
+export const getGuestStudio = async (id?: string) => {
+  const cookieStore = cookies();
+  const token = cookieStore.get('accessToken');
+
+  if (token) {
+    const res = await fetch(`${API_URL}/users/${id}/studio`, {
+      method: 'GET',
+      cache: 'no-store',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token?.value}`,
+      },
+    });
+
+    if (!res.ok) {
+      throw new Error('게스트 스튜디오 데이터 오류 : ' + res.status);
+    }
+
+    const data = await res.json();
+    return data;
+  }
+
+  return {};
 };

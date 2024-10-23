@@ -3,6 +3,7 @@
 import StepOne from '@/components/my-studio/write/step-one';
 import StepTwo from '@/components/my-studio/write/step-two';
 import { Progress } from '@/components/ui/progress';
+import { usePreventNavigation } from '@/hooks/use-router-prevent';
 import { getPortfolioDetailClient } from '@/service/client-actions/portfolio';
 import {
   IPortfolioRegistImage,
@@ -22,6 +23,16 @@ export default function MyStudioWritePage({
 
   const setPhoto = usePortfolioRegisterStore((state) => state.setPhoto);
   const setInfo = usePortfolioRegisterStore((state) => state.setPortfolioInfo);
+
+  const storeClear = usePortfolioRegisterStore((state) => state.clear);
+
+  const isDirty = !!currentStep;
+  const message =
+    '정말 뒤로가기를 누르시겠습니까? 이미 작성된 정보는 저장되지 않습니다!';
+
+  usePreventNavigation(isDirty, message, () => {
+    storeClear();
+  });
 
   useEffect(() => {
     const loadData = async () => {

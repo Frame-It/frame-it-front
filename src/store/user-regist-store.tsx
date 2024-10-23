@@ -24,6 +24,7 @@ interface UserRegisterState {
   nextStep: () => void;
   prevStep: () => void;
 
+  clear: () => void;
   toggleAllCheck: (checked: boolean) => void;
   toggleItemCheck: (item: TCheckListKeys, checked: boolean) => void;
 
@@ -49,6 +50,29 @@ export const useUserRegisterStore = create<UserRegisterState>((set) => ({
     nickname: null,
     role: null,
     birth: null,
+  },
+
+  clear() {
+    return set(() => {
+      return {
+        currentStep: 1,
+        minStep: 1,
+        maxStep: 4,
+
+        userInfo: {
+          agreeList: {
+            age: false,
+            info: false,
+            use: false,
+            marketing: false,
+          },
+          name: null,
+          nickname: null,
+          role: null,
+          birth: null,
+        },
+      };
+    });
   },
 
   prevStep() {

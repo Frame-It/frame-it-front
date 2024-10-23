@@ -1,17 +1,20 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { getMyProjects } from '@/service/client-actions/studio';
+import {
+  getGuestProjects,
+  getMyProjects,
+} from '@/service/client-actions/studio';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import ProjectListItem from '../project/project-list-item';
 
-const ProjectList = () => {
+const ProjectList = ({ id }: { id?: number }) => {
   const router = useRouter();
 
   const { data } = useQuery({
     queryKey: ['userProject'],
-    queryFn: getMyProjects,
+    queryFn: () => (id ? getGuestProjects(id) : getMyProjects()),
     staleTime: 0,
   });
 

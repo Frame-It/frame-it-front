@@ -23,7 +23,7 @@ export default function PortfolioDetailPage() {
       <PortfolioProfile
         identity={data?.identity}
         userId={data?.userId}
-        userName={data?.userName}
+        userName={data?.userNickname}
         profileImageUrl={data?.profileImageUrl || ''}
       />
       <PortfolioContents

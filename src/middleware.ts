@@ -1,30 +1,61 @@
 // middleware.ts
 import { NextRequest, NextResponse } from 'next/server';
 
+// 경로 그룹 변수 정의
+const publicPaths = ['/', '/recruit', '/feed'];
+const privatePaths = [
+  '/my-page',
+  '/studio',
+  '/project-management',
+  '/project-recruitment',
+  '/letter',
+  '/portfolio-register',
+  '/project-register',
+  '/notification',
+];
+const restrictedPaths = ['/login', '/register', '/complete'];
+
 export async function middleware(request: NextRequest) {
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set('x-pathname', request.nextUrl.pathname);
 
   const url = request.nextUrl;
+  const { status } = await getValidateToken(request);
 
-  if (url.pathname === '/') {
-    url.pathname = '/recruit';
+  // 로그인이 안되어있어도 접근할 수 있는 경로
+  if (publicPaths.includes(url.pathname)) {
+    if (url.pathname === '/') {
+      url.pathname = '/recruit';
+      return NextResponse.redirect(url);
+    }
 
-    return NextResponse.redirect(url);
-  } else if (url.pathname === '/login') {
-    const { status, res } = await getValidateToken(request);
+    return NextResponse.next({
+      request: {
+        headers: requestHeaders,
+      },
+    });
+  }
 
-    return status !== 200
-      ? res
-      : NextResponse.redirect(new URL('/', request.url));
-  } else if (
-    !url.pathname.startsWith('/recruit') &&
-    !url.pathname.startsWith('/feed')
-  ) {
-    const { status } = await getValidateToken(request);
+  // 로그인이 되어있다면 접근할 수 없는 경로
+  if (restrictedPaths.includes(url.pathname)) {
+    // 회원가입 페이지 보호 필요 : 나중에 작업
+    if (url.pathname === '/register') {
+      return NextResponse.next();
+    }
 
     return status === 200
-      ? NextResponse.next()
+      ? NextResponse.redirect(new URL('/', request.url))
+      : NextResponse.next();
+  }
+
+  // 로그인이 되어있을 때만 접근할 수 있는 경로
+  if (privatePaths.some((path) => url.pathname.startsWith(path))) {
+    return status === 200
+      ? NextResponse.next({
+          request: {
+            headers: requestHeaders,
+          },
+        })
       : NextResponse.redirect(new URL('/login', request.url));
   }
 
@@ -62,13 +93,21 @@ async function getValidateToken(req: NextRequest) {
 
 export const config = {
   matcher: [
+    // auth
+    '/login',
+    '/register',
+    '/complete',
+
+    // main
     '/',
-    '/recruit',
     '/feed',
+    '/recruit',
+    '/my-page/:path*',
+    '/letter',
+    '/notification',
     '/project-register',
     '/portfolio-register',
-    '/letter',
-    '/my-page/:path*',
+    '/studio/:path*',
     '/project-management/:path*',
     '/project-recruitment/:path*',
   ],
