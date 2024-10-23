@@ -7,9 +7,9 @@ export default async function CompletePage({
 }: {
   searchParams: { role: string; nickname: string };
 }) {
-  const cookieStore = cookies();
-  cookieStore.set('identify', searchParams.role);
-  cookieStore.set('nickname', searchParams.nickname);
+  // const cookieStore = cookies();
+  // cookieStore.set('identify', searchParams.role);
+  // cookieStore.set('nickname', searchParams.nickname);
 
   return (
     <main

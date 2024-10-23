@@ -18,7 +18,9 @@ export default function MyStudioLayout({
     <div className="pb-[66px] pt-[58px]">
       <Header>
         <HeaderLeft>
-          <div className="h-8 w-8" />
+          <BackButton>
+            <Icon id={'back-icon'} size={32} className="text-gray-20" />
+          </BackButton>
         </HeaderLeft>
         <HeaderCenter>마이 스튜디오</HeaderCenter>
         <HeaderRight>
