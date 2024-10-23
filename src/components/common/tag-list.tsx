@@ -1,4 +1,4 @@
-import { IProjectConcept, IUserConcept } from '@/constants/project';
+import { IProjectConcept, ITag, IUserConcept } from '@/constants/project';
 import { cn } from '@/lib/utils';
 
 export const TagList = ({
@@ -6,7 +6,7 @@ export const TagList = ({
   size,
   className,
 }: {
-  tags: IProjectConcept[] | IUserConcept[];
+  tags: ITag[];
   size: 'medium' | 'small';
   className?: string;
 }) => {

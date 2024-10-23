@@ -9,7 +9,7 @@ import {
   CarouselDots,
   CarouselItem,
 } from '@/components/ui/carousel';
-import { IProjectConcept, PROJECT_CONCEPTS } from '@/constants/project';
+import { ITag, PROJECT_CONCEPTS, USER_CONCEPTS } from '@/constants/project';
 import { getRecruitAnnouncement } from '@/lib/api/project/project-recruitment';
 import { cn } from '@/lib/utils';
 import { FC } from 'react';
@@ -131,7 +131,7 @@ interface WriterInfoProps {
   nickname: string;
   profileImageUrl: string | null;
   description: string;
-  concepts: IProjectConcept[];
+  concepts: string[];
 }
 
 const WriterInfo: FC<WriterInfoProps> = ({
@@ -141,6 +141,9 @@ const WriterInfo: FC<WriterInfoProps> = ({
   description,
   concepts,
 }) => {
+  const tags = concepts
+    .map((conceptId) => USER_CONCEPTS.find(({ id }) => id === conceptId))
+    .filter((tag): tag is ITag => tag !== undefined);
   return (
     <section className="flex flex-col items-center justify-center gap-[10px] self-stretch rounded-[8px] bg-gray-90 px-[16px] pb-[18px] pt-[16px]">
       <div className="flex flex-col items-center justify-center gap-[6px] self-stretch">
@@ -154,7 +157,7 @@ const WriterInfo: FC<WriterInfoProps> = ({
       <div className="flex flex-col items-center justify-center gap-[10px] self-stretch">
         <div className="font-body-14">{description}</div>
         <div>
-          <TagList tags={concepts} size={'medium'} className="gap-[4px]" />
+          <TagList tags={tags} size={'medium'} className="gap-[4px]" />
         </div>
       </div>
     </section>
