@@ -17,19 +17,20 @@ export default function Error({
 
   return (
     <div className="flex h-dvh w-full flex-col items-center justify-center gap-y-2 break-keep bg-slate-100 px-4">
-      <h2 className="font-heading-24 mb-[40px] text-center">
-        데이터를 받아오는 도중 오류가 발생했어요!
+      <h2 className="font-heading-28 mb-[40px] text-center">
+        데이터를 받아오는 도중 오류가 발생했어요 !
       </h2>
       <div className="flex w-full items-center gap-x-2">
         <Button
           className="w-full"
           variant="secondary"
+          size="default"
           onClick={() => router.replace('/')}
         >
-          홈으로
+          홈으로 가기
         </Button>
-        <Button className="w-full" onClick={() => reset()}>
-          이전 페이지로
+        <Button className="w-full" size="default" onClick={() => reset()}>
+          데이터 다시 요청하기
         </Button>
       </div>
     </div>
