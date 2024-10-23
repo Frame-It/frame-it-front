@@ -53,7 +53,7 @@ const RegisterStepOne: React.FunctionComponent<IRegisterStepOneProps> = () => {
           />
           <Label htmlFor="allCheck">모든 약관에 동의합니다.</Label>
         </div>
-        <ul className="mt-[32px] space-y-6">
+        <ul className="mt-[32px] space-y-6 px-[12px]">
           <li className={StepOneLI}>
             <span className={StepOneSpan}>
               <UserRegisterCheckbox
