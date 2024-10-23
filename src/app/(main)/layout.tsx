@@ -2,7 +2,6 @@ import BottomNavbar from '@/components/common/bottom-navbar';
 import { Header, HeaderLeft, HeaderRight } from '@/components/common/header';
 import Icon from '@/components/common/icon';
 import NotificationButton from '@/components/common/notification-button';
-import { Button } from '@/components/ui/button';
 import { cookies } from 'next/headers';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -16,7 +15,7 @@ export default function Layout({
   const token = cookieStore.get('accessToken');
 
   return (
-    <div className="pb-[66px] pt-[58px]">
+    <div className="h-screen-dvh pb-[66px] pt-[58px]">
       <Header>
         <HeaderLeft>
           <Link href="/">

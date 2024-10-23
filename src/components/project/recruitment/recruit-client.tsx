@@ -36,7 +36,7 @@ const RecruitClient = ({
   }, [recruitList, setRecruits, currentTab, filter]);
 
   return (
-    <div className={cn('relative h-[calc(100vh-122px)] overflow-hidden')}>
+    <div className={cn('relative h-full overflow-hidden')}>
       <div className={cn('sticky z-10 bg-white')}>
         <FilterTabs tabsData={tabsData} currentTab={currentTab} />
         <div className={cn('h-[46px]')}>
