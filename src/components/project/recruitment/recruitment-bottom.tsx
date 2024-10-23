@@ -136,6 +136,7 @@ const ApplyDrawer = ({
             placeholder="자유롭게 적어주세요."
             value={content}
             onChange={(e) => setContent(e.target.value)}
+            maxLength={100}
           />
         </div>
         <Guide title="지원 안내" guides={GuestProjectGuide.general} />

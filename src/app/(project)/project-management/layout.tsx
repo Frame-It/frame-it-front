@@ -21,7 +21,7 @@ export default function ProjectManagementLayout({
   const isList = id === undefined;
 
   return (
-    <div className="flex h-screen flex-col pt-[58px]">
+    <div className="h-screen-dvh flex flex-col pt-[58px]">
       <Header>
         <HeaderLeft>
           <BackButton path={isList ? '/my-page' : `/project-management/list`}>

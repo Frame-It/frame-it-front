@@ -9,7 +9,7 @@ const ProjectRecruitmentDetailLayout = ({
   children: React.ReactNode;
 }) => {
   return (
-    <div className={cn('flex h-screen flex-col')}>
+    <div className={cn('h-screen-dvh flex flex-col')}>
       <Header>
         <HeaderLeft>
           <BackButton>

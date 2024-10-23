@@ -31,7 +31,7 @@ export const ConceptDrawerContent: FC<DrawerProps> = ({ onClose }) => {
   const handleSelectConcept = () => {
     const queryString = new URLSearchParams(window.location.search);
     queryString.set('concepts', selectedTags.join('+'));
-    router.push(`?${queryString.toString()}`);
+    router.replace(`?${queryString.toString()}`);
     onClose();
   };
 
@@ -82,7 +82,7 @@ export const AddressDrawerContent: FC<DrawerProps> = () => {
   const appendQuery = (address: string) => {
     const queryString = new URLSearchParams(window.location.search);
     queryString.set('spot', address);
-    router.push(`?${queryString.toString()}`);
+    router.replace(`?${queryString.toString()}`);
   };
 
   return (
@@ -100,7 +100,7 @@ export const AddressDrawerContent: FC<DrawerProps> = () => {
           className={cn('h-[46px]')}
           placeholder="주소를 검색해주세요"
           value={address || ''}
-          onChange={(e) => setAddress(e.target.value)} // Allow manual address input
+          onChange={(e) => setAddress(e.target.value)}
         />
         <Icon
           id={'search-icon'}
@@ -137,7 +137,7 @@ export const DateDrawerContent: FC<DrawerProps> = ({ onClose }) => {
       queryString.set('startDate', startDate.toISOString()); // 'date' 쿼리 키 업데이트
       queryString.set('endDate', endDate.toISOString()); // 'date' 쿼리 키 업데이트
       queryString.set('timeOption', selectedTime); // 'time' 쿼리 키 업데이트
-      router.push(`?${queryString.toString()}`);
+      router.replace(`?${queryString.toString()}`);
       onClose();
     }
   };
@@ -220,7 +220,7 @@ export const LocationDrawerContent: FC<DrawerProps> = ({ onClose }) => {
     if (!selectedLocation) return;
     const queryString = new URLSearchParams(window.location.search);
     queryString.set('locationType', selectedLocation);
-    router.push(`?${queryString.toString()}`);
+    router.replace(`?${queryString.toString()}`);
     onClose();
   };
 

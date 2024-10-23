@@ -1,7 +1,13 @@
 import BottomButton from '@/components/common/bottom-button';
 import Link from 'next/link';
 
-const Complete = ({ title }: { title: string }) => {
+const Complete = ({
+  projectId,
+  title,
+}: {
+  projectId: number;
+  title: string;
+}) => {
   return (
     <div className="flex h-full flex-col items-center justify-center gap-[9px]">
       <div className="flex flex-col items-center gap-1">
@@ -10,11 +16,11 @@ const Complete = ({ title }: { title: string }) => {
         </h1>
         <p className="font-body-14 text-gray-60">{title}</p>
       </div>
-      <Link href={'/'} className="w-[217px]">
+      <Link href={`/project-recruitment/${projectId}`} className="w-[217px]">
         <BottomButton
           variant={'secondary'}
           size={'middle'}
-          label={'홈으로 가기'}
+          label={'확인하기'}
           className="font-button-14"
         />
       </Link>

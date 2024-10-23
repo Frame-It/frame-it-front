@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 
 const LoginLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className={cn('flex h-screen flex-col bg-gray-10')}>
+    <div className={cn('h-screen-dvh flex flex-col bg-gray-10')}>
       <Header className="border-none bg-transparent">
         <HeaderLeft>
           <BackButton>
