@@ -13,10 +13,11 @@ export default function ProjectWritePage() {
 
   const searchParams = useSearchParams();
   const isComplete = searchParams.get('complete') === 'true';
+  const projectId = searchParams.get('id');
   const title = searchParams.get('title') ?? '';
 
   if (isComplete) {
-    return <Complete title={title} />;
+    return <Complete title={title} projectId={Number(projectId)} />;
   }
 
   return (
