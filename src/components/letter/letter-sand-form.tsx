@@ -66,11 +66,11 @@ const LetterSandForm = ({
                     className="font-body-14 max-w-[270px] resize-none border-none bg-transparent p-0 text-gray-10 focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                     onKeyDown={(e) => {
                       const contents = form.getValues('contents');
-                      if (e.key === 'Enter' && !e.shiftKey && contents.trim()) {
-                        e.preventDefault();
-                        form.handleSubmit(onSubmit)();
-                      } else if (e.key === 'Enter' && !contents.trim()) {
-                        e.preventDefault();
+                      if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault(); // 엔터키가 눌렸을 때 기본 동작을 막습니다.
+                        if (contents.trim()) {
+                          form.handleSubmit(onSubmit)();
+                        }
                       }
                     }}
                   />
