@@ -15,6 +15,8 @@ export default async function LetterPage() {
     locale: ko,
   });
 
+  console.log(chatList);
+
   return (
     <main className="h-[calc(100dvh-58px-63px)] overflow-y-auto px-4">
       <ul className="my-6 flex flex-col gap-y-6">

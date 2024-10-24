@@ -20,6 +20,7 @@ export default function Error({
       <h2 className="font-heading-28 mb-[40px] text-center">
         데이터를 받아오는 도중 오류가 발생했어요 !
       </h2>
+      <pre>{error.message}</pre>
       <div className="flex w-full items-center gap-x-2">
         <Button
           className="w-full"

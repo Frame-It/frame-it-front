@@ -85,6 +85,7 @@ const RegisterStepFour: React.FunctionComponent<
       toast({
         title: '환영합니다!',
         variant: 'default',
+        duration: 1300,
       });
       router.replace(
         `/complete?role=${userInfo.role}&nickname=${userInfo.nickname}`,
@@ -93,6 +94,7 @@ const RegisterStepFour: React.FunctionComponent<
       toast({
         title: '일시적인 오류로 가입이 실패하였습니다!',
         variant: 'destructive',
+        duration: 1300,
       });
     }
   };

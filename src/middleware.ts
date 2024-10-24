@@ -2,7 +2,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 // 경로 그룹 변수 정의
-const publicPaths = ['/', '/recruit', '/feed'];
+const publicPaths = ['/', '/recruit', '/feed', '/complete'];
 const privatePaths = [
   '/my-page',
   '/studio',
@@ -13,7 +13,7 @@ const privatePaths = [
   '/project-register',
   '/notification',
 ];
-const restrictedPaths = ['/login', '/register', '/complete'];
+const restrictedPaths = ['/login', '/register'];
 
 export async function middleware(request: NextRequest) {
   const requestHeaders = new Headers(request.headers);

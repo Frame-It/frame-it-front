@@ -37,4 +37,5 @@ export interface IChatDetail {
   chatId: number;
   participants: IParticipant[];
   messages: IMessage[];
+  isQuit: boolean;
 }

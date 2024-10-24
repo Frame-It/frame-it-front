@@ -17,7 +17,13 @@ const FormSchema = z.object({
   }),
 });
 
-const LetterSandForm = ({ userId }: { userId?: number }) => {
+const LetterSandForm = ({
+  userId,
+  disabled,
+}: {
+  userId?: number;
+  disabled?: boolean;
+}) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
@@ -49,7 +55,12 @@ const LetterSandForm = ({ userId }: { userId?: number }) => {
               <FormControl>
                 <div className="relative flex h-fit items-center rounded-[12px] bg-gray-80 px-[12px] py-[12px]">
                   <AutosizeTextarea
-                    placeholder="메세지를 적어보세요."
+                    disabled={disabled}
+                    placeholder={
+                      disabled
+                        ? '해당 사용자는 탈퇴한 사용자 입니다.'
+                        : '메세지를 적어보세요.'
+                    }
                     {...field}
                     minHeight={21}
                     className="font-body-14 max-w-[270px] resize-none border-none bg-transparent p-0 text-gray-10 focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
@@ -65,6 +76,7 @@ const LetterSandForm = ({ userId }: { userId?: number }) => {
                   />
                   <Button
                     type="submit"
+                    disabled={disabled}
                     className="absolute bottom-[7.5px] right-[12px] size-[30px] rounded-full"
                   >
                     <ArrowUp strokeWidth={2.5} className="size-[24px]" />
