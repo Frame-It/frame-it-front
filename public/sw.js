@@ -1,4 +1,5 @@
 // pubic/service-worker.js
+
 function registerServiceWorker() {
     if (typeof window !== "undefined") {
       if ("serviceWorker" in navigator) {
@@ -11,4 +12,7 @@ function registerServiceWorker() {
       }
     }
   }
+
+  
   registerServiceWorker();
+

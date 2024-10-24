@@ -41,6 +41,7 @@
     "embla-carousel-react": "^8.1.7",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
+    "firebase": "^11.0.1",
     "husky": "^9.1.1",
     "input-otp": "^1.2.4",
     "lucide-react": "^0.412.0",

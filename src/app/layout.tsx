@@ -7,6 +7,7 @@ import { Toaster } from '@/components/ui/toaster';
 import localFont from 'next/font/local';
 import ReactQueryProvider from '@/providers/react-query-provider';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import Script from 'next/script';
 
 export const metadata: Metadata = {
   manifest: '/manifest.json',
@@ -36,6 +37,7 @@ export default function RootLayout({
         <div className="mx-auto max-w-[360px] overflow-x-hidden">
           <ReactQueryProvider>
             {children}
+            <Script src="/sw.js" />
             <ReactQueryDevtools />
           </ReactQueryProvider>
         </div>
