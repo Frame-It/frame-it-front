@@ -2,7 +2,7 @@
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { cn, getLabelById } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
 
 interface IMyStudioIntroduceProps {
@@ -28,7 +28,7 @@ const MyStudioIntroduce: React.FunctionComponent<IMyStudioIntroduceProps> = ({
             variant="feed"
             className="h-[24px] px-[8px] text-[12px] font-normal"
           >
-            {el}
+            {getLabelById(el)}
           </Badge>
         ))}
       </ul>

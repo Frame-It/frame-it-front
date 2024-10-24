@@ -8,7 +8,7 @@ const LoginLayout = ({ children }: { children: React.ReactNode }) => {
     <div className={cn('h-screen-dvh flex flex-col bg-gray-10')}>
       <Header className="border-none bg-transparent">
         <HeaderLeft>
-          <BackButton>
+          <BackButton path="/">
             <Icon id={'back-icon'} size={32} className="text-white" />
           </BackButton>
         </HeaderLeft>

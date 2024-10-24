@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const profileSchema = z.object({
   introduce: z.string().optional(),
-  concepts: z.array(z.string()).refine((value) => value.some((item) => item)),
+  concepts: z.array(z.string()).optional(),
   profileImage: z.instanceof(File).optional(),
   isDelete: z.boolean().optional(),
 });

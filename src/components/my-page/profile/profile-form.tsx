@@ -48,16 +48,15 @@ const ProfileForm = () => {
   useEffect(() => {
     if (data) {
       form.reset({
-        introduce: data.description,
-        concepts: data.concepts,
+        introduce: data.description || undefined,
+        concepts: data.concepts || undefined,
         isDelete: false,
       });
     }
   }, [data, form]);
 
   const onSubmit = async (values: ProfileFormType) => {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+    console.log(values);
 
     const isModified = await updateProfile({
       id: data?.id || null,
@@ -83,10 +82,6 @@ const ProfileForm = () => {
     }
   };
 
-  const introduce = form.watch('introduce');
-  const concepts = form.watch('concepts');
-  const isDisabled = introduce || concepts.length > 0;
-
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="pt-[58px]">
@@ -99,7 +94,6 @@ const ProfileForm = () => {
           <HeaderCenter>프로필 편집</HeaderCenter>
           <HeaderRight>
             <button
-              disabled={!isDisabled}
               type="submit"
               className="size-[32px] text-primary disabled:text-gray-70"
             >

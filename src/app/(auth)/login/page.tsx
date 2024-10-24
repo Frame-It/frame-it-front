@@ -23,7 +23,6 @@ export default function LoginPage({
       if (code && state) {
         try {
           const data = await sendCodeToBackend(code, state);
-
           if (data === undefined) {
             toast({
               title: '서버에서 오류가 발생하였습니다.',
@@ -31,9 +30,11 @@ export default function LoginPage({
             });
           }
 
+          console.log(data);
+
           if (!data?.signUpCompleted) {
-            setCookie('accessToken', data.accessToken);
-            router.push('/register');
+            router.push(`/register`);
+            setCookie('oauthId', data.oauthUserId);
           } else {
             setCookie('identity', data.identity);
             setCookie('accessToken', data.accessToken);

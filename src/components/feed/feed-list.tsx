@@ -43,6 +43,8 @@ const FeedList: React.FunctionComponent<IFeedListProps> = ({ role }) => {
   const isEmptyFeed =
     !feedData || feedData.pages.every((page) => page?.content?.length === 0);
 
+  console.log(feedData);
+
   return (
     <section className="mx-auto h-full w-full">
       {status === 'pending' && <p>Loading feeds...</p>}

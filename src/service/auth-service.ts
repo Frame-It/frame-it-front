@@ -1,7 +1,7 @@
 // src/services/authService.ts
 
 import { IUserRegistInfo } from '@/store/user-regist-store';
-import { getCookie } from 'cookies-next';
+import { getCookie, setCookie } from 'cookies-next';
 
 const ADDRESS = `${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}`;
 
@@ -44,12 +44,12 @@ export const checkDuplicateId = async (nickname: string) => {
 
 export const registUser = async (userInfo: IUserRegistInfo) => {
   if (userInfo) {
-    const token = getCookie('accessToken');
+    const oauthId = getCookie('oauthId');
+
     const response = await fetch(`${SERVER_URL}/users`, {
-      method: 'PUT',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
       },
       credentials: 'include',
       body: JSON.stringify({
@@ -58,8 +58,13 @@ export const registUser = async (userInfo: IUserRegistInfo) => {
         birthDate: userInfo.birth,
         nickname: userInfo.nickname,
         notificationsEnabled: true,
+        oauthUserId: oauthId,
       }),
     });
+
+    const data = await response.json();
+    setCookie('accessToken', data.accessToken);
+    setCookie('identity', data.identity);
 
     return response.ok;
   }

@@ -32,19 +32,24 @@ const MyStudioPortfolioGallery = ({ id }: { id?: number }) => {
 
   return (
     <section ref={ref} className="mt-[8px]">
-      {data ? (
+      {data &&
+      data.pages.some(
+        (page) => page?.totalElements && page.totalElements > 0,
+      ) ? (
         <Masonry columnsCount={2} gutter="10px">
-          {data?.pages.map((page) =>
-            page?.content?.map((item) => (
-              <img
-                onClick={() => router.push(`/portfolio-detail/${item.id}`)}
-                key={item.id}
-                src={item.portfolioImageUrl}
-                alt={item.title}
-                className="rounded-[8px]"
-                style={{ width: '100%', height: 'auto' }}
-              />
-            )),
+          {data.pages.map(
+            (page) =>
+              page &&
+              page.content.map((item) => (
+                <img
+                  onClick={() => router.push(`/portfolio-detail/${item.id}`)}
+                  key={item.id}
+                  src={item.portfolioImageUrl}
+                  alt={item.title}
+                  className="rounded-[8px]"
+                  style={{ width: '100%', height: 'auto' }}
+                />
+              )),
           )}
         </Masonry>
       ) : (

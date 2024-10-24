@@ -7,6 +7,10 @@ export default async function CompletePage({
 }: {
   searchParams: { role: string; nickname: string };
 }) {
+  if (!searchParams.nickname || !searchParams.role) {
+    throw new Error('비 정상적인 접근 입니다!');
+  }
+
   setCookie('identify', searchParams.role);
   setCookie('nickname', searchParams.nickname);
 

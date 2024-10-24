@@ -11,6 +11,7 @@ import { ko } from 'date-fns/locale/ko';
 import { usePathname } from 'next/navigation';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useEffect, useRef } from 'react';
+import LetterSandForm from './letter-sand-form';
 
 const REFETCH_INTERVAL = 5000;
 
@@ -97,6 +98,7 @@ const LetterList = ({ myId, myImage }: { myId?: number; myImage: string }) => {
         ))}
         <div ref={endOfMessagesRef} />
       </div>
+      <LetterSandForm userId={myId} disabled={chats?.isQuit} />
     </div>
   );
 };

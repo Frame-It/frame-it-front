@@ -6,6 +6,7 @@ import RegisterStepThree from '@/components/auth/register-step-three';
 import RegisterStepTwo from '@/components/auth/register-step-two';
 import { usePreventNavigation } from '@/hooks/use-router-prevent';
 import { useUserRegisterStore } from '@/store/user-regist-store';
+import { deleteCookie } from 'cookies-next';
 
 export default function RegisterPage() {
   const step = useUserRegisterStore((state) => state.currentStep);
@@ -16,6 +17,9 @@ export default function RegisterPage() {
     '정말 뒤로가기를 누르시겠습니까? 이미 작성된 정보는 저장되지 않습니다!';
 
   usePreventNavigation(isDirty, message, () => {
+    deleteCookie('accessToken');
+    deleteCookie('identity');
+    deleteCookie('nickname');
     storeClear();
   });
 
