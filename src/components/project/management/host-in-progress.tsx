@@ -21,7 +21,6 @@ const HostInProgressContent = ({
   projectId,
   project,
 }: HostInProgressContentProps) => {
-  // project 완료 -> 리뷰 페이지 이동
   const router = useRouter();
   const { isOpen, onOpenChange, onOpen } = useDisclosure(false);
   const searchParams = useSearchParams();
@@ -30,9 +29,10 @@ const HostInProgressContent = ({
   const { isReviewDone, reviewId } = project;
 
   const handleClickComplete = async () => {
-    await postCompleteProject(projectId);
-    router.push(
-      `/review-register/${projectId}?status=${project.status}&isHost=true`,
+    const { projectStatus } = await postCompleteProject(projectId);
+
+    router.replace(
+      `/review-register/${projectId}?status=${projectStatus}&isHost=true`,
     );
   };
 

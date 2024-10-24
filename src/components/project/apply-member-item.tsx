@@ -261,7 +261,6 @@ interface CompletedButtonsProps {
 const CompletedButtons = ({ reviewId, nickname }: CompletedButtonsProps) => {
   const { isOpen, onToggle } = useDisclosure(false);
 
-  // TODO: 내가 리뷰 작성하지 않았으면 리뷰 확인하기 disabled
   return (
     <>
       <BottomButton
@@ -270,6 +269,7 @@ const CompletedButtons = ({ reviewId, nickname }: CompletedButtonsProps) => {
         label={'리뷰 확인하기'}
         className="font-tag-12 max-w-none flex-1"
         onClick={onToggle}
+        disabled={reviewId === null}
       />
       {reviewId && (
         <ReviewDialog

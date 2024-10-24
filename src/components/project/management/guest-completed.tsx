@@ -22,7 +22,6 @@ const GuestCompletedContent = ({
   const searchParams = useSearchParams();
 
   const isReviewDoneQuery = searchParams.get('isReviewDone') === 'true';
-  console.log(project);
 
   const handleClickReview = () => {
     if (isReviewDone || isReviewDoneQuery) onOpen();
