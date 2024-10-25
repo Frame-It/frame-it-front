@@ -26,6 +26,9 @@ export const useToggleRecruitBookmark = () => {
       queryClient.invalidateQueries({
         queryKey: [RecruitmentQueryKey.RECRUIT_ANNOUNCEMENTS],
       });
+      queryClient.invalidateQueries({
+        queryKey: [RecruitmentQueryKey.RECRUIT_ANNOUNCEMENT],
+      });
     },
     onError: (error) => {
       console.error('Failed to toggle bookmark:', error);
