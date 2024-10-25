@@ -1,28 +1,17 @@
 'use client';
 
-import { IProjectConcept } from '@/constants/project';
 import {
   deleteRecruitBookmark,
   postRecruitBookmark,
 } from '@/lib/api/project/project-recruitment';
 import { cn } from '@/lib/utils';
 import { useRecruitStore } from '@/store/recruit-store';
+import { IRecruitProject } from '@/types/project.type';
 import Link from 'next/link';
 import Icon from '../common/icon';
 import { TagList } from '../common/tag-list';
 
-export interface IRecruitCardProps {
-  id: number;
-  type: 'MODEL' | 'PHOTOGRAPHER';
-  imageUrl: string;
-  title: string;
-  location: string;
-  date: string;
-  tagList: IProjectConcept[];
-  isBookmarked: boolean;
-}
-
-const RecruitCard = (props: IRecruitCardProps) => {
+const RecruitCard = (props: IRecruitProject) => {
   const { recruits, toggleBookmark } = useRecruitStore((state) => ({
     recruits: state.recruits,
     toggleBookmark: state.toggleBookmark,
@@ -87,11 +76,11 @@ const RecruitCard = (props: IRecruitCardProps) => {
         >
           <div className={cn('flex items-center gap-[6px]')}>
             <Icon id="location-icon" className="h-[18px] w-[18px]" />
-            <span>{props.location}</span>
+            <span>{props.spot}</span>
           </div>
           <div className={cn('flex items-center gap-[6px]')}>
             <Icon id="time-icon" className="h-[18px] w-[18px]" />
-            <span>{props.date}</span>
+            <span>{props.shootingAt}</span>
           </div>
           <TagList tags={props.tagList} size={'small'} />
         </div>

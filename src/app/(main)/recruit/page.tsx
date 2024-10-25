@@ -1,12 +1,18 @@
-import { IRecruitCardProps } from '@/components/project/recruit-card';
-import RecruitClient from '@/components/project/recruitment/recruit-client';
-import { PROJECT_CONCEPTS } from '@/constants/project';
-import {
-  IRecruitResponse,
-  getRecruitAnnouncements,
-} from '@/lib/api/project/project-recruitment';
+'use client';
+
+import { FilterTabs } from '@/components/common/filter-tabs';
+import RecruitCard from '@/components/project/recruit-card';
+import FilterDrawers from '@/components/project/recruitment/filter-drawers';
+import { useRecruitAnnouncements } from '@/hooks/queries/useRecruitAnnouncements';
+import { IRecruitFilter } from '@/lib/api/project/project.interface';
+import { cn } from '@/lib/utils';
 import { ITabData, USER_TYPE } from '@/types/filter';
-import { LocationType, TimeOption } from '@/types/project.type';
+import {
+  Identity,
+  IRecruitProject,
+  LocationType,
+  TimeOption,
+} from '@/types/project.type';
 
 const RECRUIT = '구인';
 
@@ -28,9 +34,7 @@ const tabsData: ITabData[] = [
   },
 ];
 
-const RecruitPage = async ({
-  searchParams,
-}: {
+interface RecruitPageProps {
   searchParams: {
     tab?: string;
     startDate?: string;
@@ -39,12 +43,12 @@ const RecruitPage = async ({
     locationType?: string;
     concepts?: string;
   };
-}) => {
-  const filter = {
+}
+
+const RecruitPage = ({ searchParams }: RecruitPageProps) => {
+  const filter: IRecruitFilter = {
     recruitmentRole:
-      searchParams.tab === 'all'
-        ? undefined
-        : (searchParams.tab as IRecruitResponse['recruitmentRole']),
+      searchParams.tab === 'all' ? undefined : (searchParams.tab as Identity),
     startDate: searchParams.startDate,
     endDate: searchParams.endDate,
     timeOption: searchParams.timeOption as TimeOption,
@@ -52,30 +56,34 @@ const RecruitPage = async ({
     concepts: searchParams.concepts?.split('+'),
   };
 
-  const fetchedData = await getRecruitAnnouncements(filter);
+  const currentTab = searchParams.tab ?? 'all';
+  const {
+    data: recruitList,
+    isLoading,
+    isError,
+  } = useRecruitAnnouncements(filter);
 
-  const recruitList: IRecruitCardProps[] = fetchedData.map(
-    (item: IRecruitResponse) => ({
-      id: item.id,
-      imageUrl: item.previewImageUrl,
-      type: item.recruitmentRole,
-      title: item.title,
-      location: item.spot,
-      date: new Date(item.shootingAt).toDateString(),
-      tagList: item.concepts.map((v) =>
-        PROJECT_CONCEPTS.find((concept) => concept.id === v),
-      ),
-      isBookmarked: item.isBookmarked,
-    }),
-  );
+  if (isError) {
+    return <div>Failed to load recruit announcements</div>;
+  }
 
   return (
-    <RecruitClient
-      recruitList={recruitList}
-      currentTab={searchParams.tab ?? 'all'}
-      tabsData={tabsData}
-      filter={filter}
-    />
+    <div className={cn('relative h-full overflow-hidden')}>
+      <div className={cn('sticky z-10 bg-white')}>
+        <FilterTabs tabsData={tabsData} currentTab={currentTab} />
+        <div className={cn('h-[46px]')}>
+          <FilterDrawers filter={filter} />
+        </div>
+      </div>
+      <div className={cn('h-[calc(100%-94px)] overflow-auto py-[19px]')}>
+        <div className={cn('flex flex-col gap-[16px] px-[16px]')}>
+          {isLoading && <div>Loading...</div>}
+          {recruitList?.map((recruit: IRecruitProject) => (
+            <RecruitCard key={recruit.id} {...recruit} />
+          ))}
+        </div>
+      </div>
+    </div>
   );
 };
 
