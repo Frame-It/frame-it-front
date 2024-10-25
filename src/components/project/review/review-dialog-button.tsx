@@ -1,6 +1,7 @@
 'use client';
 
 import BottomButton from '@/components/common/bottom-button';
+import DMButton from '@/components/common/dm-button';
 import useDisclosure from '@/hooks/useDisclosure';
 import { ProjectMember } from '@/lib/api/project/project-management';
 import { ActiveStatus } from '@/types/project.type';
@@ -62,17 +63,15 @@ export const GuestReviewDialogButton = ({
   const { isOpen: isReviewDialogOpen, onToggle: toggleReviewDialog } =
     useDisclosure(false);
 
-  const handleDM = () => {};
-
   return (
     <>
       {reviewId === null ? (
-        <BottomButton
+        <DMButton
           variant={'stroke'}
           size={'small'}
           label={'호스트에게 DM하기'}
           className="font-tag-12 max-w-[126px]"
-          onClick={handleDM}
+          participantId={host.userId}
         />
       ) : (
         <>
