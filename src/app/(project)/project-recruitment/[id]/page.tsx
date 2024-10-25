@@ -12,9 +12,9 @@ import {
   CarouselDots,
   CarouselItem,
 } from '@/components/ui/carousel';
+import { timeOptionLabels } from '@/constants/project';
 import { useRecruitmentQuery } from '@/hooks/queries/projects/useRecruitmentQuery';
 import { cn } from '@/lib/utils';
-import { TimeOption } from '@/types/project.type';
 import { FC } from 'react';
 
 interface ProjectRecruitmentDetailPageProps {
@@ -57,12 +57,6 @@ const ProjectRecruitmentDetailPage: FC<ProjectRecruitmentDetailPageProps> = ({
     timeOption,
   } = projectData;
 
-  const time: Record<TimeOption, string> = {
-    MORNING: '오전',
-    AFTERNOON: '오후',
-    TO_BE_DISCUSSED: '시간협의',
-  };
-
   return (
     <main
       className={cn(
@@ -76,7 +70,7 @@ const ProjectRecruitmentDetailPage: FC<ProjectRecruitmentDetailPageProps> = ({
       <div className={cn('font-title-18')}>
         촬영 일시
         <div className={cn('font-body-14 pt-2')}>
-          {shootingAt} | {time[timeOption]}
+          {shootingAt} {timeOptionLabels[timeOption]}
         </div>
       </div>
       <div className={cn('font-title-18')}>

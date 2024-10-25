@@ -1,5 +1,6 @@
 'use client';
 
+import { timeOptionLabels } from '@/constants/project';
 import { useRecruitBookmarkMutation } from '@/hooks/queries/projects/useRecruitBookmarkMutation';
 import { cn } from '@/lib/utils';
 import { IRecruitProject } from '@/types/project.type';
@@ -62,7 +63,9 @@ const RecruitCard = (props: IRecruitProject) => {
           </div>
           <div className={cn('flex items-center gap-[6px]')}>
             <Icon id="time-icon" className="h-[18px] w-[18px]" />
-            <span>{props.shootingAt}</span>
+            <span>
+              {props.shootingAt} | {timeOptionLabels[props.timeOption]}
+            </span>
           </div>
           <TagList tags={props.tagList} size={'small'} />
         </div>

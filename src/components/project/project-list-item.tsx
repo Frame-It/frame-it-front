@@ -1,4 +1,5 @@
 import { Badge } from '@/components/ui/badge';
+import { timeOptionLabels } from '@/constants/project';
 import { cn } from '@/lib/utils';
 import { IManageProject } from '@/types/project.type';
 import Link from 'next/link';
@@ -28,9 +29,9 @@ const ProjectListItem: React.FC<ProjectItemProps> = ({
               {project.spot}
             </span>
             <span className='after:mx-2 after:content-["|"]'>
-              {project.shootingAt.split('T')[0]}
+              {project.shootingAt}
             </span>
-            <span>{project.shootingAt.split('T')[1].slice(0, -3)}</span>
+            <span>{timeOptionLabels[project.timeOption]}</span>
           </div>
         </div>
       </div>
