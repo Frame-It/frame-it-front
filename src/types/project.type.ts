@@ -33,6 +33,17 @@ export interface IRecruitProject extends IProject {
 
 export interface IRecruitProjectDetail extends IRecruitProject {
   description: string;
+  retouchingDescription: string;
+  hostConcepts: string[];
+  host: {
+    id: number;
+    nickname: string;
+    profileImageUrl: string;
+    description: string;
+    identity: Identity;
+  };
+  conceptPhotoUrls: string[];
+  isHost: boolean;
 }
 
 export interface IApplyInfo {

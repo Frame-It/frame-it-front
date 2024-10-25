@@ -1,3 +1,5 @@
+'use client';
+
 import { TagList } from '@/components/common/tag-list';
 import HostInfo from '@/components/project/recruitment/host-info';
 import {
@@ -10,9 +12,9 @@ import {
   CarouselDots,
   CarouselItem,
 } from '@/components/ui/carousel';
-import { PROJECT_CONCEPTS } from '@/constants/project';
-import { getRecruitAnnouncement } from '@/lib/api/project/project-recruitment';
+import { useRecruitmentQuery } from '@/hooks/queries/projects/useRecruitmentQuery';
 import { cn } from '@/lib/utils';
+import { TimeOption } from '@/types/project.type';
 import { FC } from 'react';
 
 interface ProjectRecruitmentDetailPageProps {
@@ -21,11 +23,24 @@ interface ProjectRecruitmentDetailPageProps {
   };
 }
 
-const ProjectRecruitmentDetailPage: FC<
-  ProjectRecruitmentDetailPageProps
-> = async ({ params }) => {
+const ProjectRecruitmentDetailPage: FC<ProjectRecruitmentDetailPageProps> = ({
+  params,
+}) => {
   const projectId = parseInt(params.id, 10);
-  const projectData = await getRecruitAnnouncement(projectId);
+  const {
+    data: projectData,
+    isLoading,
+    error,
+  } = useRecruitmentQuery(projectId);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error || !projectData) {
+    console.error('Failed to fetch recruit announcement:', error);
+    return <div>Failed to load recruit announcement</div>;
+  }
 
   const {
     title,
@@ -33,13 +48,20 @@ const ProjectRecruitmentDetailPage: FC<
     shootingAt,
     spot,
     hostConcepts,
-    projectConcepts,
+    tagList,
     retouchingDescription,
     host,
     conceptPhotoUrls,
     isHost,
     isBookmarked,
+    timeOption,
   } = projectData;
+
+  const time: Record<TimeOption, string> = {
+    MORNING: '오전',
+    AFTERNOON: '오후',
+    TO_BE_DISCUSSED: '시간협의',
+  };
 
   return (
     <main
@@ -54,7 +76,7 @@ const ProjectRecruitmentDetailPage: FC<
       <div className={cn('font-title-18')}>
         촬영 일시
         <div className={cn('font-body-14 pt-2')}>
-          {new Date(shootingAt).toLocaleString()} {/* 날짜 형식 변환 */}
+          {shootingAt} | {time[timeOption]}
         </div>
       </div>
       <div className={cn('font-title-18')}>
@@ -64,14 +86,7 @@ const ProjectRecruitmentDetailPage: FC<
       <div className={cn('font-title-18')}>
         촬영 컨셉
         <div className={cn('py-2')}>
-          {
-            <TagList
-              tags={projectConcepts.map((conceptId: string) =>
-                PROJECT_CONCEPTS.find((v) => v.id === conceptId),
-              )}
-              size={'medium'}
-            />
-          }
+          {<TagList tags={tagList} size={'medium'} />}
         </div>
         <Carousel>
           <CarouselContent>

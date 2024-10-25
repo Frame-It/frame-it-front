@@ -17,6 +17,22 @@ export interface IRecruitRes {
   isBookmarked: boolean;
 }
 
+export interface IRecruitDetailRes extends Omit<IRecruitRes, 'concepts'> {
+  description: string;
+  hostConcepts: string[];
+  projectConcepts: string[];
+  retouchingDescription: string;
+  host: {
+    id: number;
+    nickname: string;
+    profileImageUrl: string;
+    description: string;
+    identity: Identity;
+  };
+  conceptPhotoUrls: string[];
+  isHost: boolean;
+}
+
 export interface IRecruitFilter {
   recruitmentRole?: Identity;
   startDate?: string;
