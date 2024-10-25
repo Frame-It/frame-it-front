@@ -45,7 +45,9 @@ const NotificationGuide = () => {
     <div className="fixed bottom-[64px] flex max-w-[360px] items-center justify-center bg-gray-50 shadow-md">
       <div className="rounded-lg border border-primary bg-white px-4 py-3 shadow-lg">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold">알림을 허용해주세요</h2>
+          <h2 className="text-lg font-semibold">
+            잠깐! 아직 알림을 허용 안하셨나요?
+          </h2>
           <button onClick={() => setIsGuideVisible(false)}>
             <XIcon />
           </button>
