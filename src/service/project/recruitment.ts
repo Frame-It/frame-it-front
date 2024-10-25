@@ -106,11 +106,14 @@ export const postAnnouncement = async (formData: FormData) => {
   }
 };
 
-export const putAnnouncement = async (formData: FormData) => {
+export const putAnnouncement = async (
+  formData: FormData,
+  projectId: number,
+) => {
   const headers = await getAuthHeader();
 
   try {
-    const response = await fetch(`${API_URL}/projects`, {
+    const response = await fetch(`${API_URL}/projects/${projectId}`, {
       method: 'PUT',
       body: formData,
       headers,
