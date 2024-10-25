@@ -16,7 +16,11 @@ const Complete = ({
         </h1>
         <p className="font-body-14 text-gray-60">{title}</p>
       </div>
-      <Link href={`/project-recruitment/${projectId}`} className="w-[217px]">
+      <Link
+        href={`/project-recruitment/${projectId}`}
+        replace
+        className="w-[217px]"
+      >
         <BottomButton
           variant={'secondary'}
           size={'middle'}
