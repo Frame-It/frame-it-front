@@ -10,8 +10,9 @@ import { Textarea } from '@/components/ui/textarea';
 import { GuestProjectGuide } from '@/constants/guide';
 import { useRecruitBookmarkMutation } from '@/hooks/queries/projects/useRecruitBookmarkMutation';
 import useDisclosure from '@/hooks/useDisclosure';
-import { postProjectApply } from '@/lib/api/project/project-recruitment';
+
 import { cn } from '@/lib/utils';
+import { postProjectApply } from '@/service/project/recruitment';
 import { getCookie } from 'cookies-next';
 
 import Link from 'next/link';

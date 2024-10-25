@@ -31,7 +31,6 @@ const ManagementHost = async ({ id, status }: HostContentProps) => {
   } else {
     statusProject = await getCompletedProject(id, 'HOST');
   }
-  // console.log(statusProject);
 
   const project: IActiveProject = {
     status: statusProject.status,
