@@ -1,8 +1,8 @@
-import { LocationType, ProfessionRole, TimeOption } from '@/types/project.type';
+import { Identity, LocationType, TimeOption } from '@/types/project.type';
 import { create } from 'zustand';
 
 interface IProjectRegistInfo {
-  type: ProfessionRole;
+  type: Identity;
   projectName: string;
   shootingDate: {
     date: string;

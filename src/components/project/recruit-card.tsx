@@ -1,50 +1,21 @@
 'use client';
 
-import { IProjectConcept } from '@/constants/project';
-import {
-  deleteRecruitBookmark,
-  postRecruitBookmark,
-} from '@/lib/api/project/project-recruitment';
+import { useToggleRecruitBookmark } from '@/hooks/queries/projects/useToggleRecruitBookmark';
 import { cn } from '@/lib/utils';
-import { useRecruitStore } from '@/store/recruit-store';
+import { IRecruitProject } from '@/types/project.type';
 import Link from 'next/link';
 import Icon from '../common/icon';
 import { TagList } from '../common/tag-list';
 
-export interface IRecruitCardProps {
-  id: number;
-  type: 'MODEL' | 'PHOTOGRAPHER';
-  imageUrl: string;
-  title: string;
-  location: string;
-  date: string;
-  tagList: IProjectConcept[];
-  isBookmarked: boolean;
-}
-
-const RecruitCard = (props: IRecruitCardProps) => {
-  const { recruits, toggleBookmark } = useRecruitStore((state) => ({
-    recruits: state.recruits,
-    toggleBookmark: state.toggleBookmark,
-  }));
-
-  const isBookmarked = recruits.find(
-    (recruit) => recruit.id === props.id,
-  )?.isBookmarked;
+const RecruitCard = (props: IRecruitProject) => {
+  const toggleBookmarkMutation = useToggleRecruitBookmark();
 
   const handleBookmarkToggle = async (event: React.MouseEvent) => {
     event.preventDefault();
-    try {
-      const projectId = props.id;
-      if (isBookmarked) {
-        await deleteRecruitBookmark(projectId);
-      } else {
-        await postRecruitBookmark(projectId);
-      }
-      toggleBookmark(projectId);
-    } catch (error) {
-      console.error('Failed to toggle bookmark:', error);
-    }
+    toggleBookmarkMutation.mutate({
+      projectId: props.id,
+      isBookmarked: props.isBookmarked,
+    });
   };
 
   return (
@@ -77,7 +48,7 @@ const RecruitCard = (props: IRecruitCardProps) => {
             className={`h-[24px] w-[24px] flex-shrink-0`}
             fill={props.isBookmarked ? '#E45E25' : '#ffffff'}
             stroke={props.isBookmarked ? '#E45E25' : '#7e7774'}
-            onClick={handleBookmarkToggle} // Attach click handler
+            onClick={handleBookmarkToggle}
           />
         </div>
         <div
@@ -87,11 +58,11 @@ const RecruitCard = (props: IRecruitCardProps) => {
         >
           <div className={cn('flex items-center gap-[6px]')}>
             <Icon id="location-icon" className="h-[18px] w-[18px]" />
-            <span>{props.location}</span>
+            <span>{props.spot}</span>
           </div>
           <div className={cn('flex items-center gap-[6px]')}>
             <Icon id="time-icon" className="h-[18px] w-[18px]" />
-            <span>{props.date}</span>
+            <span>{props.shootingAt}</span>
           </div>
           <TagList tags={props.tagList} size={'small'} />
         </div>

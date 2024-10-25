@@ -1,6 +1,6 @@
 'use client';
 
-import { IRecruitFilter } from '@/lib/api/project/project-recruitment';
+import { IRecruitFilter } from '@/lib/api/project/project.interface';
 import { cn } from '@/lib/utils';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';

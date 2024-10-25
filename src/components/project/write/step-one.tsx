@@ -6,7 +6,7 @@ import IconButton from '@/components/common/icon-button';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { useProjectRegisterStore } from '@/store/project-regist-store';
-import { LocationType, ProfessionRole, TimeOption } from '@/types/project.type';
+import { Identity, LocationType, TimeOption } from '@/types/project.type';
 import { getCookie } from 'cookies-next';
 import React, { useRef, useState } from 'react';
 
@@ -16,9 +16,7 @@ import '../../../styles/input.css';
 const StepOne: React.FC = () => {
   const { projectInfo, setProjectInfo, nextStep } = useProjectRegisterStore();
   const type =
-    (getCookie('identity') as ProfessionRole) === 'MODEL'
-      ? 'PHOTOGRAPHER'
-      : 'MODEL';
+    (getCookie('identity') as Identity) === 'MODEL' ? 'PHOTOGRAPHER' : 'MODEL';
   const [projectName, setProjectName] = useState<string>(
     projectInfo.projectName,
   );
@@ -129,6 +127,7 @@ const StepOne: React.FC = () => {
                 placeholder="YYYY/MM/DD"
                 ref={dateInputRef}
                 onClick={handleDateClick}
+                min={new Date().toISOString().split('T')[0]}
                 className="font-body-14 flex h-[40px] w-full flex-1 flex-col items-center justify-center rounded-[8px] border bg-transparent p-[10.514px] text-center text-gray-20 placeholder-gray-60 focus:ring-0"
               />
               <IconButton

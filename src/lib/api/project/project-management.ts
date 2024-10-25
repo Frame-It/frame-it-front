@@ -148,7 +148,6 @@ export const getInProgressProject = async (
 
     throw new Error('Failed to fetch in-progress project');
   }
-  // console.log('getInProgressProject:', data);
 
   return data;
 };

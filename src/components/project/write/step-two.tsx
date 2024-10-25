@@ -15,7 +15,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from '@/components/ui/use-toast';
 import { PROJECT_CONCEPTS } from '@/constants/project';
-import { postAnnouncement } from '@/lib/api/project/project-recruitment';
+import { useRecruitmentMutation } from '@/hooks/queries/projects/useRecruitmentMutation';
 import {
   ProjectImageFormValues,
   projectImageSchema,
@@ -29,6 +29,7 @@ import { ChangeEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 const StepTwo = ({ isEdit = false }: { isEdit?: boolean }) => {
+  const { mutateAsync } = useRecruitmentMutation();
   const { projectInfo, reset } = useProjectRegisterStore();
   const [selectedTags, setSelectedTags] = useState<string[]>(
     projectInfo.conceptTags,
@@ -58,43 +59,40 @@ const StepTwo = ({ isEdit = false }: { isEdit?: boolean }) => {
   );
 
   const handleNext = async () => {
-    if (isNextEnabled) {
-      const formData = new FormData();
-      formData.append('title', projectInfo.projectName);
-      formData.append('recruitmentRole', projectInfo.type || 'MODEL');
-      formData.append(
-        'shootingAt',
-        // `${projectInfo.shootingDate.date}T${projectInfo.shootingDate.time}:00`,
-        `${projectInfo.shootingDate.date}T00:00:00`,
+    const formData = new FormData();
+    formData.append('title', projectInfo.projectName);
+    formData.append('recruitmentRole', projectInfo.type || 'MODEL');
+    formData.append(
+      'shootingAt',
+      // `${projectInfo.shootingDate.date}T${projectInfo.shootingDate.time}:00`,
+      `${projectInfo.shootingDate.date}T00:00:00`,
+    );
+    formData.append('timeOption', projectInfo.shootingDate.period ?? '');
+    formData.append('locationType', projectInfo.location.type ?? '');
+    formData.append('spot', projectInfo.location.address);
+    formData.append('description', description);
+    formData.append('retouchingDescription', retouchingDetails);
+
+    selectedTags.forEach((tag) => {
+      formData.append('concepts', tag);
+    });
+
+    projectInfo.photos?.forEach((file) => {
+      formData.append('conceptPhotos', file, file.name);
+    });
+
+    try {
+      const projectId = await mutateAsync(formData);
+      console.log('step two id', projectId);
+      router.replace(
+        `?complete=true&title=${projectInfo.projectName}&id=${projectId}`,
       );
-      formData.append('timeOption', projectInfo.shootingDate.period ?? '');
-      formData.append('locationType', projectInfo.location.type ?? '');
-      formData.append('spot', projectInfo.location.address);
-      formData.append('description', description);
-      formData.append('retouchingDescription', retouchingDetails);
-
-      selectedTags.forEach((tag) => {
-        formData.append('concepts', tag);
+      reset();
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: '프로젝트 등록에 실패했습니다.',
       });
-
-      projectInfo.photos?.forEach((file) => {
-        formData.append('conceptPhotos', file, file.name);
-      });
-
-      try {
-        const { projectId } = await postAnnouncement(formData);
-        router.replace(
-          `?complete=true&title=${projectInfo.projectName}&id=${projectId}`,
-        );
-        reset();
-      } catch (error) {
-        console.error(error);
-        toast({
-          title: '프로젝트 등록에 실패했습니다.',
-        });
-      }
-    } else {
-      alert('컨셉 태그와 프로젝트 설명을 입력해주세요.');
     }
   };
 

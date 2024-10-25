@@ -8,14 +8,10 @@ import IconButton from '@/components/common/icon-button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
 import { GuestProjectGuide } from '@/constants/guide';
+import { useToggleRecruitBookmark } from '@/hooks/queries/projects/useToggleRecruitBookmark';
 import useDisclosure from '@/hooks/useDisclosure';
-import {
-  deleteRecruitBookmark,
-  postProjectApply,
-  postRecruitBookmark,
-} from '@/lib/api/project/project-recruitment';
+import { postProjectApply } from '@/lib/api/project/project-recruitment';
 import { cn } from '@/lib/utils';
-import { useRecruitStore } from '@/store/recruit-store';
 import { getCookie } from 'cookies-next';
 
 import Link from 'next/link';
@@ -199,22 +195,10 @@ const BookmarkButton: FC<BookmarkButtonProps> = ({
   projectId,
   isBookmarked,
 }) => {
-  const { recruits, toggleBookmark } = useRecruitStore();
-  const nowBookmarked =
-    recruits.find((recruit) => recruit.id === projectId)?.isBookmarked ??
-    isBookmarked;
+  const { mutate: toggleBookmark } = useToggleRecruitBookmark();
 
-  const handleBookmarkToggle = async () => {
-    try {
-      if (isBookmarked) {
-        await deleteRecruitBookmark(projectId);
-      } else {
-        await postRecruitBookmark(projectId);
-      }
-      toggleBookmark(projectId);
-    } catch (error) {
-      console.error('Failed to toggle bookmark:', error);
-    }
+  const handleBookmarkToggle = () => {
+    toggleBookmark({ projectId, isBookmarked });
   };
 
   return (
@@ -223,12 +207,12 @@ const BookmarkButton: FC<BookmarkButtonProps> = ({
         <Icon
           id={'bookmark-icon'}
           size={24}
-          stroke={nowBookmarked ? 'white' : '#7E7774'}
-          fill={nowBookmarked ? '#4D4744' : 'white'}
+          stroke={isBookmarked ? 'white' : '#7E7774'}
+          fill={isBookmarked ? '#4D4744' : 'white'}
           onClick={handleBookmarkToggle}
         />
       }
-      className={cn(nowBookmarked ? 'bg-[#4D4744]' : 'bg-white')}
+      className={cn(isBookmarked ? 'bg-[#4D4744]' : 'bg-white')}
     />
   );
 };
