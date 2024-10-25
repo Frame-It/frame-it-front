@@ -31,17 +31,18 @@ export const sendTokenHandler = async () => {
           title: '알림 설정을 해주세요!',
           duration: 1300,
         });
-        return;
+        return null;
       } else {
         // 토큰을 받았다면 여기서 DB에 저장하면 됩니다.
         returnToken = currentToken;
       }
     })
-    .catch((error) => {
+    .catch(() => {
       toast({
         title: '알림 설정을 해주세요!',
         duration: 1300,
       });
+      return null;
     });
 
   return returnToken;

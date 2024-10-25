@@ -20,21 +20,30 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();
 
+// messaging.onBackgroundMessage((payload) => {
+//   const title = payload.notification.title + " (onBackgroundMessage)";
+//   const notificationOptions = {
+//     body: payload.notification.body,
+//     icon: "https://avatars.githubusercontent.com/sasha1107",
+//   };
+
+//   self.registration.showNotification(title, notificationOptions);
+// });
+
+
 
 self.addEventListener("push", async event => {
   if (event.data) {
-    log("push data", event.data.json())
-
     // const { data } = event.data.json();
     const data = event.data.json().data
-    log("icon", data.icon)
+    console.log(event.data.json());
 
     const options = {
       body: data.body,
-      icon: data.icon ?? "/icons/icon-256.png",
+      icon: data.icon ?? "/icon-256.png",
       image: data.image,
       data: {
-        click_action: data.click_action, // 이 필드는 밑의 클릭 이벤트 처리에 사용됨
+        click_action: data.link, // 이 필드는 밑의 클릭 이벤트 처리에 사용됨
       },
     }
     event.waitUntil(self.registration.showNotification(data.title, options))
@@ -43,9 +52,11 @@ self.addEventListener("push", async event => {
 
 //푸시 클릭시 이동 사이트
 self.addEventListener("notificationclick", event => {
-  log("push", { event })
+  console.log("test!");
+  
   event.notification.close()
   try {
+    console.log(event.notification.data)
     const openLink = event.notification.data.click_action
     self.clients.openWindow(openLink)
   } catch {
