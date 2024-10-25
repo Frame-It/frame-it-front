@@ -1,39 +1,21 @@
 'use client';
 
-import {
-  deleteRecruitBookmark,
-  postRecruitBookmark,
-} from '@/lib/api/project/project-recruitment';
+import { useToggleRecruitBookmark } from '@/hooks/queries/projects/useToggleRecruitBookmark';
 import { cn } from '@/lib/utils';
-import { useRecruitStore } from '@/store/recruit-store';
 import { IRecruitProject } from '@/types/project.type';
 import Link from 'next/link';
 import Icon from '../common/icon';
 import { TagList } from '../common/tag-list';
 
 const RecruitCard = (props: IRecruitProject) => {
-  const { recruits, toggleBookmark } = useRecruitStore((state) => ({
-    recruits: state.recruits,
-    toggleBookmark: state.toggleBookmark,
-  }));
-
-  const isBookmarked = recruits.find(
-    (recruit) => recruit.id === props.id,
-  )?.isBookmarked;
+  const toggleBookmarkMutation = useToggleRecruitBookmark();
 
   const handleBookmarkToggle = async (event: React.MouseEvent) => {
     event.preventDefault();
-    try {
-      const projectId = props.id;
-      if (isBookmarked) {
-        await deleteRecruitBookmark(projectId);
-      } else {
-        await postRecruitBookmark(projectId);
-      }
-      toggleBookmark(projectId);
-    } catch (error) {
-      console.error('Failed to toggle bookmark:', error);
-    }
+    toggleBookmarkMutation.mutate({
+      projectId: props.id,
+      isBookmarked: props.isBookmarked,
+    });
   };
 
   return (
@@ -66,7 +48,7 @@ const RecruitCard = (props: IRecruitProject) => {
             className={`h-[24px] w-[24px] flex-shrink-0`}
             fill={props.isBookmarked ? '#E45E25' : '#ffffff'}
             stroke={props.isBookmarked ? '#E45E25' : '#7e7774'}
-            onClick={handleBookmarkToggle} // Attach click handler
+            onClick={handleBookmarkToggle}
           />
         </div>
         <div

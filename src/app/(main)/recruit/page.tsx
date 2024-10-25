@@ -3,7 +3,7 @@
 import { FilterTabs } from '@/components/common/filter-tabs';
 import RecruitCard from '@/components/project/recruit-card';
 import FilterDrawers from '@/components/project/recruitment/filter-drawers';
-import { useRecruitAnnouncements } from '@/hooks/queries/useRecruitAnnouncements';
+import { useProjectRecruitments } from '@/hooks/queries/projects/useRecruitments';
 import { IRecruitFilter } from '@/lib/api/project/project.interface';
 import { cn } from '@/lib/utils';
 import { ITabData, USER_TYPE } from '@/types/filter';
@@ -61,7 +61,7 @@ const RecruitPage = ({ searchParams }: RecruitPageProps) => {
     data: recruitList,
     isLoading,
     isError,
-  } = useRecruitAnnouncements(filter);
+  } = useProjectRecruitments(filter);
 
   if (isError) {
     return <div>Failed to load recruit announcements</div>;
