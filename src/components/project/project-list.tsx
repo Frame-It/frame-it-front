@@ -1,13 +1,13 @@
 'use client';
 
-import { IProject } from '@/types/project.type';
+import { IManageProject } from '@/types/project.type';
 import { useRouter } from 'next/navigation';
 import BottomButton from '../common/bottom-button';
 import Icon from '../common/icon';
 import ProjectListItem from './project-list-item';
 
 interface ProjectListProps {
-  projectList: IProject[];
+  projectList: IManageProject[];
 }
 
 const ProjectList: React.FC<ProjectListProps> = ({ projectList }) => {

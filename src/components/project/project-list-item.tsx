@@ -1,10 +1,10 @@
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
-import { IProject } from '@/types/project.type';
+import { IManageProject } from '@/types/project.type';
 import Link from 'next/link';
 
 interface ProjectItemProps {
-  project: IProject;
+  project: IManageProject;
   routePath?: string;
 }
 
