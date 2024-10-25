@@ -20,25 +20,25 @@ import GuestInProgressContent from './guest-in-progress';
 import ProgressBox from './progress-box';
 
 const ManagementGuest = async ({
-  id,
+  projectId,
   status,
 }: {
-  id: number;
+  projectId: number;
   status: ActiveStatus;
 }) => {
   let statusProject: RecruitingProject | InProgressProject | CompletedProject;
 
   if (status === 'RECRUITING') {
-    statusProject = await getRecruitingProject(id, 'GUEST');
+    statusProject = await getRecruitingProject(projectId, 'GUEST');
   } else if (status === 'IN_PROGRESS') {
-    statusProject = await getInProgressProject(id, 'GUEST');
+    statusProject = await getInProgressProject(projectId, 'GUEST');
   } else {
-    statusProject = await getCompletedProject(id, 'GUEST');
+    statusProject = await getCompletedProject(projectId, 'GUEST');
   }
 
   const project: IActiveProject = {
     status: statusProject.status,
-    id,
+    id: projectId,
     title: statusProject.title,
     shootingAt: statusProject.shootingAt,
     timeOption: statusProject.timeOption,
@@ -52,7 +52,7 @@ const ManagementGuest = async ({
     <ManagementGuestLayout project={project}>
       {status === 'RECRUITING' && myApplication && (
         <RecruitingContent
-          projectId={id}
+          projectId={projectId}
           status={'RECRUITING'}
           myApplication={myApplication}
           project={statusProject as RecruitingProject}
@@ -60,13 +60,13 @@ const ManagementGuest = async ({
       )}
       {status === 'IN_PROGRESS' && (
         <GuestInProgressContent
-          projectId={id}
+          projectId={projectId}
           project={statusProject as InProgressProject}
         />
       )}
       {status === 'COMPLETED' && (
         <GuestCompletedContent
-          projectId={id}
+          projectId={projectId}
           project={statusProject as CompletedProject}
         />
       )}
