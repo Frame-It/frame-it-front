@@ -1,6 +1,6 @@
 'use client';
 
-import { useToggleRecruitBookmark } from '@/hooks/queries/projects/useToggleRecruitBookmark';
+import { useRecruitBookmarkMutation } from '@/hooks/queries/projects/useRecruitBookmarkMutation';
 import { cn } from '@/lib/utils';
 import { IRecruitProject } from '@/types/project.type';
 import Link from 'next/link';
@@ -8,7 +8,7 @@ import Icon from '../common/icon';
 import { TagList } from '../common/tag-list';
 
 const RecruitCard = (props: IRecruitProject) => {
-  const toggleBookmarkMutation = useToggleRecruitBookmark();
+  const toggleBookmarkMutation = useRecruitBookmarkMutation();
 
   const handleBookmarkToggle = async (event: React.MouseEvent) => {
     event.preventDefault();

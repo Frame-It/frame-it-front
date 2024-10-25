@@ -5,7 +5,7 @@ import {
 } from '@/service/project/recruitment';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-export const useToggleRecruitBookmark = () => {
+export const useRecruitBookmarkMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
