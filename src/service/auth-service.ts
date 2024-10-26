@@ -73,6 +73,9 @@ export const registUser = async (userInfo: IUserRegistInfo) => {
     });
 
     const data = await response.json();
+
+    console.log(data);
+
     setCookie('accessToken', data.accessToken);
     setCookie('identity', data.identity);
 

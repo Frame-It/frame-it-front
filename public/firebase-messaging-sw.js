@@ -53,26 +53,34 @@ const messaging = firebase.messaging();
 //   }
 // })
 
-export const MoveToURL = {
-  PROJECT: '/project-management',
-  SIGN_UP: '/my-page/my-studio',
-};
+// 이 부분 바꾸기
+const httpHeader = "http://localhost:3000"; 
 
-
-self.addEventListener('push', function (event) {
+self.addEventListener('push', async function (event) {
   if (event.data) {
     // 알림 메세지일 경우엔 event.data.json().notification;
-    const data = event.data.json().data;
+    const data = await event.data.json().data;
 
-    const newLink = `${MoveToURL[data.type]}`
-    console.log(data)
-    
+    const { content, id, isHost, projectStatus, time, title, eventType } = data;
+
+    let newLink=`${httpHeader}`;
+
+
+
+
+    if(eventType === "SIGN_UP"){
+      newLink = `${httpHeader}`;
+    } else{
+      newLink = `${httpHeader}/project-management/${returnEmptyIfNull(id)}?status=${returnEmptyIfNull(projectStatus)}&isHost=${returnEmptyIfNull(isHost)}`;
+    }
+
     const options = {
-      body: data.body,
+      title: title,
+      body: content,
       icon: data.image,
       image: data.image,
       data: {
-        click_action: data.link, // 이 필드는 밑의 클릭 이벤트 처리에 사용됨
+        click_action: newLink, // 이 필드는 밑의 클릭 이벤트 처리에 사용됨
       },
     };
 
@@ -83,10 +91,8 @@ self.addEventListener('push', function (event) {
 });
 
 // 클릭 이벤트 처리
-// 알림을 클릭하면 사이트로 이동한다.
 self.addEventListener('notificationclick', function (event) {
   event.preventDefault();
-  // 알림창 닫기
   event.notification.close();
 
   // 이동할 url
@@ -121,3 +127,7 @@ self.addEventListener('notificationclick', function (event) {
 
   event.waitUntil(promiseChain);
 });
+
+function returnEmptyIfNull(value) {
+  return value === null || value === "null" ? "" : value;
+}
