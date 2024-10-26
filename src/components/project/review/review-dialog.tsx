@@ -1,3 +1,5 @@
+'use client';
+
 import { ITag, REVIEW_TAGS } from '@/constants/project';
 import { getProjectReview } from '@/lib/api/project/project-review';
 import { cn } from '@/lib/utils';
@@ -17,19 +19,20 @@ interface ReviewDialogProps {
   trigger?: React.ReactNode;
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
-  name?: string;
   reviewId: number;
+  isMine?: boolean;
 }
 
 const ReviewDialog = ({
   trigger,
   isOpen,
   onOpenChange,
-  name,
   reviewId,
+  isMine = false,
 }: ReviewDialogProps) => {
   const [tags, setTags] = useState<ITag['id'][] | null>(null);
   const [content, setContent] = useState('');
+  const [reviewerNickname, setReviewerNickname] = useState('');
 
   useEffect(() => {
     if (tags?.length && content) return;
@@ -39,6 +42,7 @@ const ReviewDialog = ({
         console.log(review);
         setTags(review.tags);
         setContent(review.content);
+        setReviewerNickname(review.reviewerNickname);
       } catch (error) {
         console.error('Error fetching review:', error);
       }
@@ -51,7 +55,12 @@ const ReviewDialog = ({
       <DialogContent className="w-[312px] gap-3 p-[18px]">
         <DialogHeader className="flex flex-row items-center justify-between space-y-0">
           <DialogTitle className="font-title-18 text-gray-20">
-            {name ? <span className="text-primary">{name}</span> : '나'}의 리뷰
+            {isMine ? (
+              '나'
+            ) : (
+              <span className="text-primary">{reviewerNickname}</span>
+            )}
+            의 리뷰
           </DialogTitle>
           <DialogClose asChild>
             <Icon className="h-6 w-6 text-gray-40" id={'close-icon'} />

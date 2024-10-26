@@ -11,9 +11,10 @@ import {
 import { cn } from '@/lib/utils';
 import { ActiveStatus, IActiveProject } from '@/types/project.type';
 import ProjectInfo from '../project-info';
-import { HostReviewDialogButton } from '../review/review-dialog-button';
+import ReviewCheckButton from '../review/review-check-button';
+import ReviewWriteButton from '../review/review-write-button';
 import { ApplicantList } from './applicant-list';
-import { ProjectApplyGuest } from './apply-info';
+import { StartedProjectApplyGuest } from './apply-info';
 import HostInProgressContent from './host-in-progress';
 import ProgressBox from './progress-box';
 
@@ -110,20 +111,30 @@ interface CompletedContentProps {
 
 const CompletedContent = async ({ projectId }: CompletedContentProps) => {
   const { guest, reviewId } = await getCompletedProject(projectId, 'HOST');
+  const isReviewDone = reviewId !== null;
 
   if (!guest) return;
 
   return (
     <>
-      <HostReviewDialogButton
-        projectId={projectId}
+      {isReviewDone ? (
+        <ReviewCheckButton
+          reviewId={reviewId}
+          canViewReview={true}
+          variant={'secondary'}
+          size={'large'}
+        />
+      ) : (
+        <ReviewWriteButton
+          projectId={projectId}
+          status={'COMPLETED'}
+          variant={'secondary'}
+          size={'large'}
+        />
+      )}
+      <StartedProjectApplyGuest
+        status={'COMPLETED'}
         guest={guest}
-        reviewId={reviewId}
-        status={'COMPLETED'}
-      />
-      <ProjectApplyGuest
-        status={'COMPLETED'}
-        partner={guest}
         id={projectId}
         applyContent={guest.applyContent}
         appliedAt={guest.appliedAt}

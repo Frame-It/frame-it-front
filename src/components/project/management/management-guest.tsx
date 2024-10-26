@@ -53,7 +53,6 @@ const ManagementGuest = async ({
       {status === 'RECRUITING' && myApplication && (
         <RecruitingContent
           projectId={projectId}
-          status={'RECRUITING'}
           myApplication={myApplication}
           project={statusProject as RecruitingProject}
         />
@@ -112,14 +111,12 @@ const ManagementGuestLayout = ({
 
 interface RecruitingContentProps {
   projectId: number;
-  status: ActiveStatus;
   myApplication: MyApplication;
   project: RecruitingProject;
 }
 
 const RecruitingContent = async ({
   projectId,
-  status,
   myApplication,
   project,
 }: RecruitingContentProps) => {
@@ -140,11 +137,12 @@ const RecruitingContent = async ({
         />
       )}
       <MyApplyInfo
-        principal={principal}
+        principal={{
+          appliedAt: myApplication.appliedAt,
+          applyContent: myApplication.applyContent,
+          ...principal,
+        }}
         id={projectId}
-        status={status}
-        appliedAt={myApplication.appliedAt}
-        applyContent={myApplication.applyContent}
       />
     </>
   );
