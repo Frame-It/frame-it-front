@@ -1,3 +1,4 @@
+import LoadingSpinner from '@/components/common/loading-spinner';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
@@ -12,6 +13,9 @@ export default function NotFound() {
       <Link href="/">
         <Button variant="outline" className="mt-7 w-[235px]">
           홈으로
+        </Button>
+        <Button variant="outline" className="mt-7 w-[235px]">
+          <LoadingSpinner />
         </Button>
       </Link>
     </main>
