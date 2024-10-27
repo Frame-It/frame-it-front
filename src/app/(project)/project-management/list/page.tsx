@@ -1,8 +1,8 @@
 import ManagementTabs from '@/components/project/management/management-tabs';
 import ProjectList from '@/components/project/project-list';
-import { getUserProjects } from '@/lib/api/project/project-management';
 
 import { cn } from '@/lib/utils';
+import { getUserProjects } from '@/service/project/management';
 import { IManageProject, Status } from '@/types/project.type';
 
 interface IProjectManagementListPageProps {

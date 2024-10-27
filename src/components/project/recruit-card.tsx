@@ -1,6 +1,7 @@
 'use client';
 
-import { useToggleRecruitBookmark } from '@/hooks/queries/projects/useToggleRecruitBookmark';
+import { timeOptionLabels } from '@/constants/project';
+import { useRecruitBookmarkMutation } from '@/hooks/queries/projects/useRecruitBookmarkMutation';
 import { cn } from '@/lib/utils';
 import { IRecruitProject } from '@/types/project.type';
 import Link from 'next/link';
@@ -8,7 +9,7 @@ import Icon from '../common/icon';
 import { TagList } from '../common/tag-list';
 
 const RecruitCard = (props: IRecruitProject) => {
-  const toggleBookmarkMutation = useToggleRecruitBookmark();
+  const toggleBookmarkMutation = useRecruitBookmarkMutation();
 
   const handleBookmarkToggle = async (event: React.MouseEvent) => {
     event.preventDefault();
@@ -62,7 +63,9 @@ const RecruitCard = (props: IRecruitProject) => {
           </div>
           <div className={cn('flex items-center gap-[6px]')}>
             <Icon id="time-icon" className="h-[18px] w-[18px]" />
-            <span>{props.shootingAt}</span>
+            <span>
+              {props.shootingAt} | {timeOptionLabels[props.timeOption]}
+            </span>
           </div>
           <TagList tags={props.tagList} size={'small'} />
         </div>

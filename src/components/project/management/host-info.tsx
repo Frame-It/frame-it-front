@@ -1,6 +1,7 @@
+import DMButton from '@/components/common/dm-button';
 import { ProjectMember } from '@/lib/api/project/project-management';
 import { cn } from '@/lib/utils';
-import { GuestReviewDialogButton } from '../review/review-dialog-button';
+import ReviewCheckButton from '../review/review-check-button';
 
 export const HostInfo = ({
   host,
@@ -28,11 +29,27 @@ export const HostInfo = ({
           </div>
           <div className="font-body-14m flex items-center">{host.nickname}</div>
         </div>
-        <GuestReviewDialogButton
-          host={{ userId: host.id, name: host.nickname }}
-          reviewId={reviewId}
-          canViewReview={canViewReview}
-        />
+        <>
+          {reviewId === null ? (
+            <DMButton
+              variant={'stroke'}
+              size={'small'}
+              label={'호스트에게 DM하기'}
+              className="font-tag-12 max-w-[126px]"
+              participantId={host.id}
+            />
+          ) : (
+            <>
+              <ReviewCheckButton
+                variant={'stroke'}
+                size={'small'}
+                className="font-tag-12 max-w-[126px]"
+                reviewId={reviewId}
+                canViewReview={canViewReview}
+              />
+            </>
+          )}
+        </>
       </div>
     </div>
   );

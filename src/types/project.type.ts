@@ -20,8 +20,12 @@ export interface IManageProject extends IProject {
   isHost: boolean;
 }
 
-export interface IActiveProject extends IProject {
+export interface IActiveProject extends IManageProject {
   status: ActiveStatus;
+}
+
+export interface IStartedProject extends IActiveProject {
+  status: Exclude<ActiveStatus, 'RECRUITING'>;
 }
 
 export interface IRecruitProject extends IProject {

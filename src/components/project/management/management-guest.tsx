@@ -20,25 +20,25 @@ import GuestInProgressContent from './guest-in-progress';
 import ProgressBox from './progress-box';
 
 const ManagementGuest = async ({
-  id,
+  projectId,
   status,
 }: {
-  id: number;
+  projectId: number;
   status: ActiveStatus;
 }) => {
   let statusProject: RecruitingProject | InProgressProject | CompletedProject;
 
   if (status === 'RECRUITING') {
-    statusProject = await getRecruitingProject(id, 'GUEST');
+    statusProject = await getRecruitingProject(projectId, 'GUEST');
   } else if (status === 'IN_PROGRESS') {
-    statusProject = await getInProgressProject(id, 'GUEST');
+    statusProject = await getInProgressProject(projectId, 'GUEST');
   } else {
-    statusProject = await getCompletedProject(id, 'GUEST');
+    statusProject = await getCompletedProject(projectId, 'GUEST');
   }
 
   const project: IActiveProject = {
     status: statusProject.status,
-    id,
+    id: projectId,
     title: statusProject.title,
     shootingAt: statusProject.shootingAt,
     timeOption: statusProject.timeOption,
@@ -52,21 +52,20 @@ const ManagementGuest = async ({
     <ManagementGuestLayout project={project}>
       {status === 'RECRUITING' && myApplication && (
         <RecruitingContent
-          projectId={id}
-          status={'RECRUITING'}
+          projectId={projectId}
           myApplication={myApplication}
           project={statusProject as RecruitingProject}
         />
       )}
       {status === 'IN_PROGRESS' && (
         <GuestInProgressContent
-          projectId={id}
+          projectId={projectId}
           project={statusProject as InProgressProject}
         />
       )}
       {status === 'COMPLETED' && (
         <GuestCompletedContent
-          projectId={id}
+          projectId={projectId}
           project={statusProject as CompletedProject}
         />
       )}
@@ -112,14 +111,12 @@ const ManagementGuestLayout = ({
 
 interface RecruitingContentProps {
   projectId: number;
-  status: ActiveStatus;
   myApplication: MyApplication;
   project: RecruitingProject;
 }
 
 const RecruitingContent = async ({
   projectId,
-  status,
   myApplication,
   project,
 }: RecruitingContentProps) => {
@@ -140,11 +137,12 @@ const RecruitingContent = async ({
         />
       )}
       <MyApplyInfo
-        principal={principal}
+        principal={{
+          appliedAt: myApplication.appliedAt,
+          applyContent: myApplication.applyContent,
+          ...principal,
+        }}
         id={projectId}
-        status={status}
-        appliedAt={myApplication.appliedAt}
-        applyContent={myApplication.applyContent}
       />
     </>
   );

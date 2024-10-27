@@ -15,6 +15,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from '@/components/ui/use-toast';
 import { PROJECT_CONCEPTS } from '@/constants/project';
+import { useRecruitmentEditMutation } from '@/hooks/queries/projects/useRecruitmentEditMutation';
 import { useRecruitmentMutation } from '@/hooks/queries/projects/useRecruitmentMutation';
 import {
   ProjectImageFormValues,
@@ -28,8 +29,15 @@ import { useRouter } from 'next/navigation';
 import { ChangeEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-const StepTwo = ({ isEdit = false }: { isEdit?: boolean }) => {
+const StepTwo = ({
+  isEdit = false,
+  projectId,
+}: {
+  isEdit?: boolean;
+  projectId?: number;
+}) => {
   const { mutateAsync } = useRecruitmentMutation();
+  const { mutate: editMutate } = useRecruitmentEditMutation();
   const { projectInfo, reset } = useProjectRegisterStore();
   const [selectedTags, setSelectedTags] = useState<string[]>(
     projectInfo.conceptTags,
@@ -82,11 +90,17 @@ const StepTwo = ({ isEdit = false }: { isEdit?: boolean }) => {
     });
 
     try {
-      const projectId = await mutateAsync(formData);
-      console.log('step two id', projectId);
-      router.replace(
-        `?complete=true&title=${projectInfo.projectName}&id=${projectId}`,
-      );
+      if (isEdit && projectId !== undefined) {
+        editMutate({ formData, projectId });
+        router.replace(
+          `/project-management/${projectId}?status=RECRUITING&isHost=true`,
+        );
+      } else {
+        const projectId = await mutateAsync(formData);
+        router.replace(
+          `?complete=true&title=${projectInfo.projectName}&id=${projectId}`,
+        );
+      }
       reset();
     } catch (error) {
       console.error(error);

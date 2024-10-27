@@ -1,7 +1,7 @@
 'use client';
 
 import { Progress } from '@/components/ui/progress';
-import { getRecruitAnnouncement } from '@/lib/api/project/project-recruitment';
+import { getRecruitAnnouncement } from '@/service/project/recruitment';
 import { useProjectRegisterStore } from '@/store/project-regist-store';
 import { useParams } from 'next/navigation';
 import { Suspense, lazy, useEffect, useState } from 'react';
@@ -19,11 +19,12 @@ export default function ProjectEditPage() {
   const [loading, setLoading] = useState(true);
 
   const params = useParams();
-  const projectId = params.id;
+  const projectIdStr = params.id;
+  const projectId = Number(projectIdStr);
 
   useEffect(() => {
-    if (projectId) {
-      getRecruitAnnouncement(Number(projectId))
+    if (projectIdStr) {
+      getRecruitAnnouncement(projectId)
         .then((data) => {
           setProjectInfo({
             projectName: data.title,
@@ -63,7 +64,7 @@ export default function ProjectEditPage() {
       <div className="h-full px-4 pt-6">
         <Suspense fallback={<div>Loading...</div>}>
           {currentStep === 1 && <StepOne />}
-          {currentStep === 2 && <StepTwo isEdit={true} />}
+          {currentStep === 2 && <StepTwo isEdit projectId={projectId} />}
         </Suspense>
       </div>
     </>

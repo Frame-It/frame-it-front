@@ -8,10 +8,11 @@ import IconButton from '@/components/common/icon-button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
 import { GuestProjectGuide } from '@/constants/guide';
-import { useToggleRecruitBookmark } from '@/hooks/queries/projects/useToggleRecruitBookmark';
+import { useRecruitBookmarkMutation } from '@/hooks/queries/projects/useRecruitBookmarkMutation';
 import useDisclosure from '@/hooks/useDisclosure';
-import { postProjectApply } from '@/lib/api/project/project-recruitment';
+
 import { cn } from '@/lib/utils';
+import { postProjectApply } from '@/service/project/recruitment';
 import { getCookie } from 'cookies-next';
 
 import Link from 'next/link';
@@ -195,7 +196,7 @@ const BookmarkButton: FC<BookmarkButtonProps> = ({
   projectId,
   isBookmarked,
 }) => {
-  const { mutate: toggleBookmark } = useToggleRecruitBookmark();
+  const { mutate: toggleBookmark } = useRecruitBookmarkMutation();
 
   const handleBookmarkToggle = () => {
     toggleBookmark({ projectId, isBookmarked });
