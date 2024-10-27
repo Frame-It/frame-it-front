@@ -93,10 +93,11 @@ export default function RootLayout({
                 <Script src="/sw.js" />
                 <ReactQueryDevtools />
               </ReactQueryProvider>
+              <Toaster />
             </div>
           </div>
         </div>
-        <Toaster />
+
         <SvgSymbols />
         <div className="fixed bottom-[45px] right-[100px] hidden items-center gap-x-6 xl:flex">
           <Link
