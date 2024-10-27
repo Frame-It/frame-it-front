@@ -50,7 +50,7 @@ const RegisterStepThree: React.FunctionComponent<
   }, [name]);
 
   return (
-    <section className="flex h-[calc(100dvh-58px)] flex-col justify-between px-6 pb-2">
+    <section className="flex h-full flex-col justify-between pb-2">
       <div>
         <div className="font-title-18 ml-2 mt-[42px] max-w-[200px] break-keep">
           <div>이름과 생년월일을</div>
