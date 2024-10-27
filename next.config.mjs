@@ -28,6 +28,14 @@ const nextConfig = {
       },
     ],
   },
+  async rewrites() {
+    return [
+      {
+        source: '/vworld/:path*',
+        destination: 'https://api.vworld.kr/:path*',
+      },
+    ];
+  },
 };
 
 export default withPWA(nextConfig);
