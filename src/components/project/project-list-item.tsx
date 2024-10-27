@@ -26,7 +26,7 @@ const ProjectListItem: React.FC<ProjectItemProps> = ({
           {project.isHost && <MyBadge />}
           <div className="font-body-14 flex items-center leading-[150%] text-gray-40">
             <span className='after:mx-2 after:content-["|"]'>
-              {project.spot}
+              {project.address}
             </span>
             <span className='after:mx-2 after:content-["|"]'>
               {project.shootingAt.slice(5, 10).split('-').join('/')}

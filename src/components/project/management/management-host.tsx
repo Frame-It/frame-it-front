@@ -1,14 +1,16 @@
 import Guide from '@/components/common/guide';
 import { HostProjectGuide } from '@/constants/guide';
 import {
-  CompletedProject,
-  InProgressProject,
-  RecruitingProject,
+  ICompletedProjectRes,
+  InProgressProjectRes,
+  IRecruitingProjectRes,
+} from '@/lib/api/project/project.interface';
+import { cn } from '@/lib/utils';
+import {
   getCompletedProject,
   getInProgressProject,
   getRecruitingProject,
-} from '@/lib/api/project/project-management';
-import { cn } from '@/lib/utils';
+} from '@/service/project/management';
 import { ActiveStatus, IActiveProject } from '@/types/project.type';
 import ProjectInfo from '../project-info';
 import ReviewCheckButton from '../review/review-check-button';
@@ -23,7 +25,10 @@ interface HostContentProps {
   status: ActiveStatus;
 }
 const ManagementHost = async ({ projectId, status }: HostContentProps) => {
-  let statusProject: RecruitingProject | InProgressProject | CompletedProject;
+  let statusProject:
+    | IRecruitingProjectRes
+    | InProgressProjectRes
+    | ICompletedProjectRes;
 
   if (status === 'RECRUITING') {
     statusProject = await getRecruitingProject(projectId, 'HOST');
@@ -39,7 +44,7 @@ const ManagementHost = async ({ projectId, status }: HostContentProps) => {
     title: statusProject.title,
     shootingAt: statusProject.shootingAt,
     timeOption: statusProject.timeOption,
-    spot: statusProject.spot,
+    address: statusProject.address,
     isHost: true,
   };
 
@@ -49,7 +54,7 @@ const ManagementHost = async ({ projectId, status }: HostContentProps) => {
       {status === 'IN_PROGRESS' && (
         <HostInProgressContent
           projectId={projectId}
-          project={statusProject as InProgressProject}
+          project={statusProject as unknown as InProgressProjectRes}
         />
       )}
       {status === 'COMPLETED' && <CompletedContent projectId={projectId} />}

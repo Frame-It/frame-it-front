@@ -2,7 +2,7 @@
 
 import Guide from '@/components/common/guide';
 import { GuestProjectGuide } from '@/constants/guide';
-import { InProgressProject } from '@/lib/api/project/project-management';
+import { InProgressProjectRes } from '@/lib/api/project/project.interface';
 import { cn } from '@/lib/utils';
 import { useSearchParams } from 'next/navigation';
 import ReviewCheckButton from '../review/review-check-button';
@@ -11,7 +11,7 @@ import { HostInfo } from './host-info';
 
 interface GuestInProgressContentProps {
   projectId: number;
-  project: InProgressProject;
+  project: InProgressProjectRes;
 }
 
 const GuestInProgressContent = ({

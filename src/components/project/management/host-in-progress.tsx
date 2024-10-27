@@ -2,7 +2,7 @@
 
 import Guide from '@/components/common/guide';
 import { HostProjectGuide } from '@/constants/guide';
-import { InProgressProject } from '@/lib/api/project/project-management';
+import { InProgressProjectRes } from '@/lib/api/project/project.interface';
 import { useSearchParams } from 'next/navigation';
 import ReviewCheckButton from '../review/review-check-button';
 import { StartedProjectApplyGuest } from './apply-info';
@@ -10,7 +10,7 @@ import CompleteProjectButton from './complete-project-button';
 
 interface HostInProgressContentProps {
   projectId: number;
-  project: InProgressProject;
+  project: InProgressProjectRes;
 }
 
 const HostInProgressContent = ({

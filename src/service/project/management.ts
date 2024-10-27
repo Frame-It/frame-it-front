@@ -1,7 +1,11 @@
 import { Status, UserRole } from '@/types/project.type';
 
 import { getAuthHeader } from '@/lib/api/header';
-import { IRecruitingProjectRes } from '@/lib/api/project/project.interface';
+import {
+  ICompletedProjectRes,
+  InProgressProjectRes,
+  IRecruitingProjectRes,
+} from '@/lib/api/project/project.interface';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -59,7 +63,7 @@ export const getRecruitingProject = async (
 export const getInProgressProject = async (
   projectId: number,
   userRole: UserRole,
-): Promise<IRecruitingProjectRes> => {
+): Promise<InProgressProjectRes> => {
   const headers = await getAuthHeader();
 
   const res = await fetch(
@@ -70,7 +74,7 @@ export const getInProgressProject = async (
     },
   );
 
-  const data: IRecruitingProjectRes = await res.json();
+  const data: InProgressProjectRes = await res.json();
   if (!res.ok) {
     console.log(data);
 
@@ -83,7 +87,7 @@ export const getInProgressProject = async (
 export const getCompletedProject = async (
   projectId: number,
   userRole: UserRole,
-): Promise<IRecruitingProjectRes> => {
+): Promise<ICompletedProjectRes> => {
   const headers = await getAuthHeader();
 
   const res = await fetch(
@@ -94,7 +98,7 @@ export const getCompletedProject = async (
     },
   );
 
-  const data: IRecruitingProjectRes = await res.json();
+  const data: ICompletedProjectRes = await res.json();
   if (!res.ok) {
     console.log(data);
 

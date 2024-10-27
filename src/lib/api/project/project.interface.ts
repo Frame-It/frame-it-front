@@ -49,7 +49,7 @@ export interface IRecruitFilter {
 // 공통 프로젝트 타입
 interface IBaseProject {
   title: string;
-  spot: string;
+  address: string;
   timeOption: TimeOption;
   shootingAt: string;
   status: ActiveStatus;

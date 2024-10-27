@@ -1,6 +1,6 @@
 'use client';
 
-import { CompletedProject } from '@/lib/api/project/project-management';
+import { ICompletedProjectRes } from '@/lib/api/project/project.interface';
 import { useSearchParams } from 'next/navigation';
 import ReviewCheckButton from '../review/review-check-button';
 import ReviewWriteButton from '../review/review-write-button';
@@ -8,7 +8,7 @@ import { HostInfo } from './host-info';
 
 interface GuestCompletedContentProps {
   projectId: number;
-  project: CompletedProject;
+  project: ICompletedProjectRes;
 }
 
 const GuestCompletedContent = ({
