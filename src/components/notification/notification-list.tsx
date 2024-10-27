@@ -26,7 +26,7 @@ const NotificationList: React.FunctionComponent<INotificationListProps> = ({
 
   return (
     <>
-      <ul className="flex w-full flex-col gap-y-4 px-4">
+      <ul className="flex w-full flex-col gap-y-4 px-4 py-4">
         {notificationList.map((noti) => (
           <li
             className={cn(
