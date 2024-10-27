@@ -318,7 +318,7 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = ({ id }) => {
           )}
         />
 
-        <div className="fixed inset-x-0 bottom-0 mx-auto w-full max-w-[360px] bg-white px-[16px] py-[9px]">
+        <div className="fixed inset-x-0 bottom-0 mx-auto w-full max-w-[360px] bg-white px-[16px] py-[9px] xl:absolute">
           <Button type="submit" className="w-full" disabled={!valid.success}>
             다음
           </Button>

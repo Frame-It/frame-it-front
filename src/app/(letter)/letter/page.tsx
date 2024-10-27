@@ -2,7 +2,7 @@ import Link from 'next/link';
 import RoleBadge from '@/components/common/role-badge';
 import { getUserChat } from '@/service/server-actions/chat';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { IChat, IParticipant } from '@/types/letter';
+import { IChat } from '@/types/letter';
 import { formatDistanceToNow } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { ScrollArea } from '@/components/ui/scroll-area';
