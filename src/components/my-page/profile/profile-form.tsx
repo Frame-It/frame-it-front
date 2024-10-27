@@ -82,7 +82,10 @@ const ProfileForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="pt-[58px]">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="pt-[58px] xl:pt-0"
+      >
         <Header>
           <HeaderLeft>
             <BackButton>
