@@ -25,7 +25,7 @@ export default function MyStudioLayout({
           <div className="size-[32px] text-gray-40" />
         </HeaderRight>
       </Header>
-      <div className="pt-[58px]">{children}</div>
+      <div className="pt-[58px] xl:p-0">{children}</div>
     </>
   );
 }

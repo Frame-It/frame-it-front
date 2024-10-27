@@ -98,7 +98,7 @@ export default function RootLayout({
         </div>
         <Toaster />
         <SvgSymbols />
-        <div className="fixed bottom-[45px] right-[100px] flex items-center gap-x-6">
+        <div className="fixed bottom-[45px] right-[100px] hidden items-center gap-x-6 xl:flex">
           <Link
             href="https://frameit.notion.site/fb50555b39f24ac0b735e4d6e882767d"
             target="_blank"

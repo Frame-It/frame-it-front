@@ -29,7 +29,7 @@ export default function MyStudioLayout({
           </NotificationButton>
         </HeaderRight>
       </Header>
-      <div className="pb-[66px] pt-[58px] xl:p-0">{children}</div>
+      <div className="pb-[66px] pt-[58px] xl:py-0">{children}</div>
       <BottomNavbar />
     </>
   );
