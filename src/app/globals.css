@@ -66,4 +66,7 @@
   body {
     @apply bg-background text-foreground;
   }
+  mark {
+    @apply bg-background text-primary;
+  }
 }
