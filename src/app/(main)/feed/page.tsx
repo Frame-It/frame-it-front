@@ -10,7 +10,7 @@ export default async function FeedPage({ searchParams }: Props) {
   return (
     <>
       <FeedFilter />
-      <div className="h-[calc(100dvh-58px-63px-48px)] overflow-y-auto px-[16px] pb-2">
+      <div className="h-[calc(100dvh-58px-63px-48px)] overflow-y-auto px-[16px] pb-2 xl:h-full">
         <FeedList role={filterRole} />
       </div>
     </>

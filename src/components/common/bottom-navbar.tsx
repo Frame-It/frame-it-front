@@ -8,14 +8,6 @@ import { usePathname } from 'next/navigation';
 import Drawer from './drawer';
 import Icon from './icon';
 import NotificationGuide from './noti-gide';
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from '../ui/sheet';
 
 // 원하면 path를 props로
 interface IBottomBarProps {}
@@ -93,7 +85,7 @@ const BottomNavbar: React.FunctionComponent<IBottomBarProps> = () => {
   return (
     <>
       <NotificationGuide />
-      <nav className="fixed bottom-0 z-30 mx-auto flex h-[64px] w-full max-w-[360px] border-t-[1px] border-t-[#ECE9E7] bg-white px-[32px] xl:static">
+      <nav className="fixed bottom-0 z-30 mx-auto flex h-[64px] w-full max-w-[360px] items-center justify-center border-t-[1px] border-t-[#ECE9E7] bg-white px-[32px] xl:static">
         <ul className="flex w-full items-center justify-between">
           {bottombarPaths.map((nav) => {
             if (nav.isRegist) {
@@ -113,17 +105,6 @@ const BottomNavbar: React.FunctionComponent<IBottomBarProps> = () => {
                 >
                   <RegistDrawerContent />
                 </Drawer>
-                // <Sheet key={nav.name}>
-                //   <SheetTrigger>
-                //     <Icon
-                //       id={nav.iconId}
-                //       className={cn('h-[32px] w-[32px] text-[#B4ADA9]')}
-                //     />
-                //   </SheetTrigger>
-                //   <SheetContent>
-                //     <RegistDrawerContent />
-                //   </SheetContent>
-                // </Sheet>
               );
             }
             return (
@@ -157,6 +138,7 @@ const RegistDrawerContent = () => {
       path: 'portfolio-register',
     },
   ];
+
   return (
     <>
       {menus.map((menu, i) => (
