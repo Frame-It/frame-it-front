@@ -17,6 +17,7 @@ import {
   PortfolioDetailFormValues,
   portfolioInfoSchema,
 } from '@/lib/schema/portfolio-regist-schema';
+import { checkDuplicateId } from '@/service/auth-service';
 import {
   postPortfolio,
   updatePortfolio,
@@ -47,6 +48,8 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = ({ id }) => {
   const form = useForm<PortfolioDetailFormValues>({
     resolver: zodResolver(portfolioInfoSchema),
   });
+
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const onSubmit = async (values: PortfolioDetailFormValues) => {
     if (!id) {
@@ -129,9 +132,17 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = ({ id }) => {
     form.setValue('tagList', newTagArr);
   };
 
-  const addTogather = () => {
+  const addTogather = async () => {
     if (!togather) return;
+    const isDuplicate = await checkDuplicateId(togather);
+
+    if (!isDuplicate) {
+      setErrorMessage('해당 닉네임은 존재하지 않는 닉네임 입니다.');
+      return;
+    }
+
     form.setValue('togather', togather);
+    setErrorMessage(null);
     setTogather('');
   };
 
@@ -191,7 +202,7 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = ({ id }) => {
                   maxHeight={209}
                   minHeight={87}
                   placeholder="포트폴리오 설명을 작성해 주세요"
-                  className="resize-none p-[10px]"
+                  className="w-full"
                   maxLength={500}
                   {...field}
                 />
@@ -288,9 +299,9 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = ({ id }) => {
                       size="lg"
                       type="button"
                       className="w-[65px]"
-                      onClick={(e) => {
+                      onClick={async (e) => {
                         e.preventDefault();
-                        addTogather();
+                        await addTogather();
                       }}
                     >
                       등록
@@ -312,6 +323,9 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = ({ id }) => {
                       </Badge>
                     )}
                   </div>
+                  <p className="font-caption-12 text-destructive">
+                    {errorMessage}
+                  </p>
                 </>
               </FormControl>
             </FormItem>
