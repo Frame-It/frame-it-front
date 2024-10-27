@@ -86,6 +86,9 @@ const NavLink: React.FunctionComponent<INavLinkProps> = ({
 
 const BottomNavbar: React.FunctionComponent<IBottomBarProps> = () => {
   const pathName = usePathname().split('/')[1];
+  const { isOpen, onOpenChange, onOpen } = useDisclosure();
+
+  const handleRegist = () => {};
 
   return (
     <>
@@ -95,32 +98,32 @@ const BottomNavbar: React.FunctionComponent<IBottomBarProps> = () => {
           {bottombarPaths.map((nav) => {
             if (nav.isRegist) {
               return (
-                // <Drawer
-                //   key={nav.name}
-                //   open={isOpen}
-                //   onOpenChange={onOpenChange}
-                //   trigger={
-                //     <li key={nav.iconId} onClick={handleRegist}>
-                //       <Icon
-                //         id={nav.iconId}
-                //         className={cn('h-[32px] w-[32px] text-[#B4ADA9]')}
-                //       />
-                //     </li>
-                //   }
-                // >
-                //   <RegistDrawerContent />
-                // </Drawer>
-                <Sheet key={nav.name}>
-                  <SheetTrigger>
-                    <Icon
-                      id={nav.iconId}
-                      className={cn('h-[32px] w-[32px] text-[#B4ADA9]')}
-                    />
-                  </SheetTrigger>
-                  <SheetContent>
-                    <RegistDrawerContent />
-                  </SheetContent>
-                </Sheet>
+                <Drawer
+                  key={nav.name}
+                  open={isOpen}
+                  onOpenChange={onOpenChange}
+                  trigger={
+                    <li key={nav.iconId} onClick={handleRegist}>
+                      <Icon
+                        id={nav.iconId}
+                        className={cn('h-[32px] w-[32px] text-[#B4ADA9]')}
+                      />
+                    </li>
+                  }
+                >
+                  <RegistDrawerContent />
+                </Drawer>
+                // <Sheet key={nav.name}>
+                //   <SheetTrigger>
+                //     <Icon
+                //       id={nav.iconId}
+                //       className={cn('h-[32px] w-[32px] text-[#B4ADA9]')}
+                //     />
+                //   </SheetTrigger>
+                //   <SheetContent>
+                //     <RegistDrawerContent />
+                //   </SheetContent>
+                // </Sheet>
               );
             }
             return (
