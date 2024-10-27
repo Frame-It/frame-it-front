@@ -102,15 +102,17 @@ const ProfileForm = () => {
             </button>
           </HeaderRight>
         </Header>
-        <ProfileImageSelector
-          form={form}
-          prevImageUrl={data?.profileImageUrl}
-        />
-        <ProfilSetting
-          form={form}
-          nickname={data?.nickname}
-          role={(data?.identity as 'MODEL' | 'PHOTOGRAPHER') || 'MODEL'}
-        />
+        <div className="px-4">
+          <ProfileImageSelector
+            form={form}
+            prevImageUrl={data?.profileImageUrl}
+          />
+          <ProfilSetting
+            form={form}
+            nickname={data?.nickname}
+            role={(data?.identity as 'MODEL' | 'PHOTOGRAPHER') || 'MODEL'}
+          />
+        </div>
       </form>
     </Form>
   );

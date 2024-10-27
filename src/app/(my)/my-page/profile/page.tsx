@@ -4,7 +4,7 @@ export default async function ProfilePage() {
   // 페이지 받아오기
 
   return (
-    <main>
+    <main className="xl:flex-1">
       <ProfileForm />
     </main>
   );
