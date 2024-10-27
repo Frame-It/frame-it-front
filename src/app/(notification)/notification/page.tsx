@@ -1,5 +1,6 @@
 import { fakerKO as faker } from '@faker-js/faker';
 import NotificationList from '@/components/notification/notification-list';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 export default function NotificationPage() {
   // 알림 url 받아오기
@@ -28,8 +29,8 @@ export default function NotificationPage() {
   );
 
   return (
-    <main className="h-[calc(100dvh-58px-64px)] overflow-y-auto">
+    <ScrollArea className="h-[calc(100dvh-58px)] py-[20px] xl:h-[calc(100%-58px)]">
       <NotificationList notificationList={notificationList} />
-    </main>
+    </ScrollArea>
   );
 }
