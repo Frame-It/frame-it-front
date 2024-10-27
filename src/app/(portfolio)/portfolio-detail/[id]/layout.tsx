@@ -3,10 +3,8 @@ import { Header, HeaderLeft, HeaderRight } from '@/components/common/header';
 import Icon from '@/components/common/icon';
 import ShareButton from '@/components/common/share-button';
 import PortfolioDetailMenu from '@/components/portfolio-detail/menu';
-import { MyInfoProvider } from '@/providers/my-info-provider';
 import { getMyPage } from '@/service/server-actions/my-service';
 import { getPortfolioDetail } from '@/service/server-actions/portfolio';
-import { revalidatePath } from 'next/cache';
 import { headers } from 'next/headers';
 
 export default async function PortfolioLayout({
@@ -40,7 +38,7 @@ export default async function PortfolioLayout({
           )}
         </HeaderRight>
       </Header>
-      <main className="mb-[16px] mt-[56px] px-[16px]">{children}</main>
+      <main className="mb-[16px] mt-[56px] xl:m-0">{children}</main>
     </>
   );
 }
