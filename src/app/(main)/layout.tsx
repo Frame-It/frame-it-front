@@ -15,7 +15,7 @@ export default function Layout({
   const token = cookieStore.get('accessToken');
 
   return (
-    <div className="h-screen-dvh pb-[66px] pt-[58px]">
+    <div className="h-full pb-[66px] pt-[58px] xl:flex xl:h-full xl:flex-col xl:justify-between xl:p-0">
       <Header>
         <HeaderLeft>
           <Link href="/">

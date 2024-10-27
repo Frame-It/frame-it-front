@@ -39,7 +39,7 @@ const Header = forwardRef<
       ref={ref}
       {...props}
       className={cn(
-        'fixed top-0 z-30 mx-auto flex h-[58px] w-full max-w-[360px] items-center justify-between border-b border-b-[#ECE9E7] bg-white px-[16px] py-[13px]',
+        'fixed top-0 z-30 mx-auto flex h-[58px] w-full max-w-[360px] items-center justify-between border-b border-b-[#ECE9E7] bg-white px-[16px] py-[13px] xl:static',
         className,
       )}
     >

@@ -33,15 +33,40 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={cn(pretendard.className, 'overflow-hidden')}>
-        <div className="mx-auto max-w-[360px] overflow-x-hidden">
-          <ReactQueryProvider>
-            {children}
-            <Script src="/sw.js" />
-            <ReactQueryDevtools />
-          </ReactQueryProvider>
-        </div>
+      <body className={cn(pretendard.className, 'relative overflow-hidden')}>
+        <div className="relative xl:flex xl:w-dvw xl:items-center xl:justify-between">
+          <div className="ml-[100px] hidden h-dvh xl:flex xl:flex-col">
+            <img
+              src="/color-logo.png"
+              alt="desktop-logo"
+              className="mt-[20px] h-[62px] w-[171px]"
+            />
 
+            <div className="mt-[10px] flex min-h-[800px] flex-col justify-around">
+              <div className="text-[40px] font-semibold leading-[180%]">
+                <h2>개성 넘치는 작가와 모델이 있는 곳,</h2>
+                <h2>프레이밋에서 함께 작업할 사람을 찾으세요!</h2>
+              </div>
+              <div className="text-[32px] text-gray-20">
+                <h3>웹에서도 프레이밋을 이용해 보세요!</h3>
+                <p className="text-[28px]">
+                  모바일의 모든 기능을 오른쪽 화면에서 수행할 수 있습니다.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            id="main-container"
+            className="relative mx-auto h-dvh max-w-[360px] overflow-x-hidden xl:max-h-[800px] xl:overflow-hidden"
+          >
+            <ReactQueryProvider>
+              {children}
+              <Script src="/sw.js" />
+              <ReactQueryDevtools />
+            </ReactQueryProvider>
+          </div>
+        </div>
         <Toaster />
         <SvgSymbols />
       </body>
