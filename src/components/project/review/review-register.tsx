@@ -5,12 +5,12 @@ import ConceptTag from '@/components/common/concept-tag';
 import Guide from '@/components/common/guide';
 import { AutosizeTextarea } from '@/components/ui/auto-size-textarea';
 import { REVIEW_TAGS } from '@/constants/project';
-import { postProjectReview } from '@/lib/api/project/project-review';
 import {
   ICompletedProjectRes,
   InProgressProjectRes,
 } from '@/lib/api/project/project.interface';
 import { cn } from '@/lib/utils';
+import { postProjectReview } from '@/service/project/review';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import ProjectInfo from '../project-info';
