@@ -11,7 +11,7 @@ export default async function FeedPage({ searchParams }: Props) {
   return (
     <>
       <FeedFilter />
-      <ScrollArea className="h-[calc(100dvh-58px-63px-48px)] overflow-y-auto px-[16px] pb-2 xl:h-full xl:max-h-[582px]">
+      <ScrollArea className="h-[calc(100dvh-58px-64px-48px)] overflow-y-auto px-[16px] xl:h-full xl:max-h-[600px]">
         <FeedList role={filterRole} />
       </ScrollArea>
     </>

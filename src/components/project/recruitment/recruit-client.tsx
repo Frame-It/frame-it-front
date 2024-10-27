@@ -37,7 +37,7 @@ const RecruitClient = ({
   }, [recruitList, setRecruits, currentTab, filter]);
 
   return (
-    <div className={cn('relative h-full overflow-hidden')}>
+    <div className={cn('relative h-full overflow-hidden xl:max-h-[650px]')}>
       <div className={cn('sticky z-10 bg-white')}>
         <FilterTabs tabsData={tabsData} currentTab={currentTab} />
         <div className={cn('h-[46px]')}>
@@ -45,11 +45,9 @@ const RecruitClient = ({
         </div>
       </div>
       <ScrollArea
-        className={cn(
-          'h-[calc(100%-94px)] overflow-auto py-[19px] xl:h-[582px]',
-        )}
+        className={cn('h-[calc(100%-94px)] overflow-auto py-[19px] xl:py-0')}
       >
-        <div className={cn('flex flex-col gap-[16px] px-[16px]')}>
+        <div className={cn('flex flex-col gap-[16px] px-[16px] xl:py-2')}>
           {recruits.map((recruit) => (
             <RecruitCard key={recruit.id} {...recruit} />
           ))}

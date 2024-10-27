@@ -75,7 +75,7 @@ export default function RootLayout({
           <div className="h-dvh overflow-hidden bg-no-repeat xl:h-[830px] xl:bg-[url('/png/mockup_main.png')] xl:p-[15px]">
             <div
               id="main-container"
-              className="relative mx-auto h-full w-full max-w-[360px] overflow-hidden bg-white xl:flex xl:h-[800px] xl:flex-col xl:justify-between xl:rounded-[28px]"
+              className="relative mx-auto h-full w-[360px] overflow-hidden bg-white xl:flex xl:h-[800px] xl:flex-col xl:justify-between xl:rounded-[28px]"
             >
               <div className="relative hidden items-center justify-between bg-white px-4 text-gray-20 xl:flex">
                 <div>
