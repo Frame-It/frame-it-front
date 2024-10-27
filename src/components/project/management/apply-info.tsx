@@ -2,7 +2,8 @@
 
 import Icon from '@/components/common/icon';
 import useDisclosure from '@/hooks/useDisclosure';
-import { IStartedProjectGuest } from '@/lib/api/project/project-management';
+
+import { IStartedProjectGuest } from '@/lib/api/project/project.interface';
 import { cn } from '@/lib/utils';
 import { IActiveProject, IStartedProject } from '@/types/project.type';
 import {

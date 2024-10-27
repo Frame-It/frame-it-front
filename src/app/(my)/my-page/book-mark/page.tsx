@@ -3,7 +3,7 @@
 import BookMarkCard from '@/components/my-page/bookmark/bookmark-card';
 import { Button } from '@/components/ui/button';
 import { PROJECT_CONCEPTS } from '@/constants/project';
-import { IRecruitResponse } from '@/lib/api/project/project-recruitment';
+import { IRecruitRes } from '@/lib/api/project/project.interface';
 import { cn } from '@/lib/utils';
 import { getBookMarks } from '@/service/client-actions/bookmark';
 import { useQuery } from '@tanstack/react-query';
@@ -13,12 +13,12 @@ const BookMarkPage = () => {
     queryKey: ['getBookMarks'],
     queryFn: getBookMarks,
     select: (data) => {
-      return data?.map((item: IRecruitResponse) => ({
+      return data?.map((item: IRecruitRes) => ({
         id: item.id,
         imageUrl: item.previewImageUrl,
         type: item.recruitmentRole,
         title: item.title,
-        location: item.spot,
+        location: item.address,
         date: new Date(item.shootingAt).toDateString(),
         tagList: item.concepts.map((v) =>
           PROJECT_CONCEPTS.find((concept) => concept.id === v),

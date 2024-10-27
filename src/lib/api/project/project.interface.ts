@@ -74,6 +74,13 @@ export interface IProjectMember {
   profileImageUrl: string | null;
 }
 
+export interface IStartedProjectGuest extends IProjectMember {
+  isReviewDone: boolean;
+  reviewId: number | null;
+  appliedAt: string;
+  applyContent: string;
+}
+
 // 모집 중인 프로젝트 타입
 export interface IRecruitingProjectRes extends IBaseProject {
   status: 'RECRUITING';

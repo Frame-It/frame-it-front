@@ -1,6 +1,6 @@
 'use client';
 
-import { IStartedProjectGuest } from '@/lib/api/project/project-management';
+import { IStartedProjectGuest } from '@/lib/api/project/project.interface';
 import { cn } from '@/lib/utils';
 import { ActiveStatus, IProject } from '@/types/project.type';
 import { useRouter } from 'next/navigation';
