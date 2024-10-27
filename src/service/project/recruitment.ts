@@ -3,19 +3,6 @@ import { IRecruitFilter } from '@/lib/api/project/project.interface';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-export const fetchRecruitAnnouncements = async (filter: IRecruitFilter) => {
-  const query = new URLSearchParams(
-    filter as Record<string, string>,
-  ).toString();
-  const response = await fetch(`${API_URL}/projects/announcement?${query}`);
-
-  if (!response.ok) {
-    throw new Error('Failed to fetch recruit announcements');
-  }
-
-  return response.json();
-};
-
 export const getRecruitAnnouncements = async ({
   recruitmentRole,
   startDate,
@@ -23,6 +10,7 @@ export const getRecruitAnnouncements = async ({
   timeOption,
   locationType,
   concepts,
+  spot,
 }: IRecruitFilter) => {
   const headers = await getAuthHeader();
 
@@ -37,6 +25,7 @@ export const getRecruitAnnouncements = async ({
       queryParams.append('concepts', concept);
     });
   }
+  if (spot) queryParams.append('spot', spot);
 
   const queryParamString = queryParams.toString();
   const url = `${API_URL}/projects/announcement${queryParamString ? `?${queryParamString}` : ''}`;
