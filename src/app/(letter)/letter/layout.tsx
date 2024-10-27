@@ -11,7 +11,9 @@ export default function PortfolioLayout({
       <Header className="border-gray-80 text-lg shadow-none">
         <HeaderCenter className="font-semibold text-gray-10">쪽지</HeaderCenter>
       </Header>
-      <div className="w-full flex-1 pb-[66px] pt-[58px] xl:p-0">{children}</div>
+      <main className="w-full flex-1 pb-[66px] pt-[58px] xl:p-0">
+        {children}
+      </main>
       <BottomNavbar />
     </>
   );

@@ -2,9 +2,10 @@ import Link from 'next/link';
 import RoleBadge from '@/components/common/role-badge';
 import { getUserChat } from '@/service/server-actions/chat';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { IChat } from '@/types/letter';
+import { IChat, IParticipant } from '@/types/letter';
 import { formatDistanceToNow } from 'date-fns';
 import { ko } from 'date-fns/locale';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 export default async function LetterPage() {
   const chatList: IChat[] = (await getUserChat()) || [];
@@ -15,10 +16,8 @@ export default async function LetterPage() {
     locale: ko,
   });
 
-  console.log(chatList);
-
   return (
-    <main className="h-[calc(100dvh-58px-63px)] overflow-y-auto px-4 xl:h-full">
+    <ScrollArea className="h-[calc(100dvh-58px-63px)] overflow-y-auto px-4 xl:h-[calc(800px-58px-63px-24px)]">
       <ul className="my-6 flex flex-col gap-y-6">
         {chatList?.map((chat) => {
           return (
@@ -55,6 +54,6 @@ export default async function LetterPage() {
           );
         })}
       </ul>
-    </main>
+    </ScrollArea>
   );
 }
