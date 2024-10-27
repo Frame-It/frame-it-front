@@ -15,6 +15,7 @@ export interface IRecruitRes {
   spot: string;
   concepts: string[];
   isBookmarked: boolean;
+  address: string;
 }
 
 export interface IRecruitDetailRes extends Omit<IRecruitRes, 'concepts'> {
@@ -32,6 +33,7 @@ export interface IRecruitDetailRes extends Omit<IRecruitRes, 'concepts'> {
   conceptPhotoUrls: string[];
   isHost: boolean;
   isClosed: boolean;
+  detailedAddress: string;
 }
 
 export interface IRecruitFilter {
@@ -41,6 +43,7 @@ export interface IRecruitFilter {
   timeOption?: TimeOption;
   locationType?: LocationType;
   concepts?: string[];
+  spot?: string;
 }
 
 // 공통 프로젝트 타입

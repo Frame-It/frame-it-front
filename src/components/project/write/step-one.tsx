@@ -36,6 +36,7 @@ const StepOne: React.FC = () => {
     projectInfo.location.type,
   );
   const [address, setAddress] = useState<string>(projectInfo.location.address);
+  const [spot, setSpot] = useState<string | null>(projectInfo.location.spot);
 
   const [detail, setDetail] = useState<string>(projectInfo.location.detail);
 
@@ -61,7 +62,7 @@ const StepOne: React.FC = () => {
         type,
         projectName,
         shootingDate: { date, period },
-        location: { type: locationType, address, detail },
+        location: { type: locationType, spot, address, detail },
       });
       nextStep();
     }
@@ -78,9 +79,8 @@ const StepOne: React.FC = () => {
   //   }
   // };
   const handleComplete = (location: any) => {
-    console.log(location);
-    // TODO: 시군구 코드 같이 보내기
     setAddress(location.address);
+    setSpot(location.sigunguCode);
     onToggle();
   };
 

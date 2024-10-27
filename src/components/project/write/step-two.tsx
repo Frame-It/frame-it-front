@@ -77,8 +77,9 @@ const StepTwo = ({
     );
     formData.append('timeOption', projectInfo.shootingDate.period ?? '');
     formData.append('locationType', projectInfo.location.type ?? '');
-    formData.append('spot', projectInfo.location.address);
-    // TODO: 상세 주소 필요
+    formData.append('spot', projectInfo.location.spot ?? '');
+    formData.append('address', projectInfo.location.address);
+    formData.append('detailedAddress', projectInfo.location.detail);
     formData.append('description', description);
     formData.append('retouchingDescription', retouchingDetails);
 

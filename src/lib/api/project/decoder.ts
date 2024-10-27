@@ -27,7 +27,6 @@ export const decodeRecruitResToRecruitProjectDetail = (
       };
     }),
     timeOption: recruit.timeOption,
-    spot: recruit.spot,
     status: 'RECRUITING',
     isBookmarked: recruit.isBookmarked,
     conceptPhotoUrls: recruit.conceptPhotoUrls,
@@ -36,6 +35,8 @@ export const decodeRecruitResToRecruitProjectDetail = (
     isHost: recruit.isHost,
     retouchingDescription: recruit.retouchingDescription,
     isClosed: recruit.isClosed,
+    address: recruit.address,
+    detailedAddress: recruit.detailedAddress,
   };
 };
 
@@ -62,8 +63,8 @@ export const decodeRecruitResToRecruitProject = (
       };
     }),
     timeOption: recruit.timeOption,
-    spot: recruit.spot,
     status: 'RECRUITING',
     isBookmarked: recruit.isBookmarked,
+    address: recruit.address,
   };
 };

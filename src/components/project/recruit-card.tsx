@@ -59,7 +59,7 @@ const RecruitCard = (props: IRecruitProject) => {
         >
           <div className={cn('flex items-center gap-[6px]')}>
             <Icon id="location-icon" className="h-[18px] w-[18px]" />
-            <span>{props.spot}</span>
+            <span>{props.address}</span>
           </div>
           <div className={cn('flex items-center gap-[6px]')}>
             <Icon id="time-icon" className="h-[18px] w-[18px]" />
