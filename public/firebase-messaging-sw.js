@@ -65,9 +65,6 @@ self.addEventListener('push', async function (event) {
 
     let newLink=`${httpHeader}`;
 
-
-
-
     if(eventType === "SIGN_UP"){
       newLink = `${httpHeader}`;
     } else{

@@ -29,7 +29,7 @@ export default async function MyPage() {
           </NotificationButton>
         </HeaderRight>
       </Header>
-      <main className="flex-1 px-[12px] pb-[66px] pt-[58px] xl:p-0">
+      <main className="flex-1 px-[12px] pb-[66px] pt-[58px] xl:py-0">
         {/* --- */}
         <MyPageHeader
           nickName={myInfo?.nickname}

@@ -100,7 +100,7 @@ const RegisterStepFour: React.FunctionComponent<
   };
 
   return (
-    <section className="flex h-full flex-col justify-between px-6 pb-2">
+    <section className="flex h-full flex-col justify-between px-4 px-6 pb-2">
       <div>
         <div className="font-title-18 mt-[42px] max-w-[200px] break-keep">
           <div>프레이밋에서 사용할</div>
