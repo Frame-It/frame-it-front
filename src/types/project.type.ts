@@ -48,6 +48,7 @@ export interface IRecruitProjectDetail extends IRecruitProject {
   };
   conceptPhotoUrls: string[];
   isHost: boolean;
+  isClosed: boolean;
 }
 
 export interface IApplyInfo {

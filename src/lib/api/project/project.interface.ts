@@ -31,6 +31,7 @@ export interface IRecruitDetailRes extends Omit<IRecruitRes, 'concepts'> {
   };
   conceptPhotoUrls: string[];
   isHost: boolean;
+  isClosed: boolean;
 }
 
 export interface IRecruitFilter {

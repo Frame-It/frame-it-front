@@ -55,6 +55,7 @@ const ProjectRecruitmentDetailPage: FC<ProjectRecruitmentDetailPageProps> = ({
     isHost,
     isBookmarked,
     timeOption,
+    isClosed,
   } = projectData;
 
   return (
@@ -129,6 +130,7 @@ const ProjectRecruitmentDetailPage: FC<ProjectRecruitmentDetailPageProps> = ({
             projectId={projectId}
             hostIdentity={host.identity}
             isBookmarked={isBookmarked}
+            isClosed={isClosed}
           />
         )}
       </div>

@@ -55,11 +55,13 @@ export const GuestBottom = ({
   projectId,
   hostIdentity,
   isBookmarked,
+  isClosed,
 }: {
   title: string;
   projectId: number;
   hostIdentity: 'PHOTOGRAPHER' | 'MODEL';
   isBookmarked: boolean;
+  isClosed: boolean;
 }) => {
   return (
     <>
@@ -71,6 +73,7 @@ export const GuestBottom = ({
         title={title}
         projectId={projectId}
         hostIdentity={hostIdentity}
+        isClosed={isClosed}
       />
     </>
   );
@@ -80,10 +83,12 @@ const ApplyDrawer = ({
   title,
   projectId,
   hostIdentity,
+  isClosed,
 }: {
   title: string;
   projectId: number;
   hostIdentity: 'PHOTOGRAPHER' | 'MODEL';
+  isClosed: boolean;
 }) => {
   const { isOpen, onOpenChange, onClose } = useDisclosure(false);
   const [content, setContent] = useState('');
@@ -116,7 +121,7 @@ const ApplyDrawer = ({
           size={'large'}
           label={'프로젝트 신청하기'}
           className="w-[222px]"
-          disabled={hostIdentity === myIdentity}
+          disabled={hostIdentity === myIdentity || isClosed}
         />
       }
       className="pb-0"

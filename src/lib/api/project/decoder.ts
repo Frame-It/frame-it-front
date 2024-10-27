@@ -35,6 +35,7 @@ export const decodeRecruitResToRecruitProjectDetail = (
     hostConcepts: recruit.hostConcepts,
     isHost: recruit.isHost,
     retouchingDescription: recruit.retouchingDescription,
+    isClosed: recruit.isClosed,
   };
 };
 
