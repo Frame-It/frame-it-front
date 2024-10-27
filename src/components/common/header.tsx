@@ -71,7 +71,7 @@ const HeaderCenter = forwardRef<
 >(({ className = '', children, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn('text-base font-[500] text-gray-20', className)}
+    className={cn('text-base font-[600] text-gray-20', className)}
     {...props}
   >
     {children}

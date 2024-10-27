@@ -14,7 +14,7 @@ export default async function SettingPage() {
   const myInfo = await getMyInfo();
 
   return (
-    <main>
+    <>
       <section className="mt-[20px]">
         <div className="font-semibold leading-[135%] text-gray-10">
           개인정보
@@ -50,6 +50,6 @@ export default async function SettingPage() {
           </li>
         </ul>
       </section>
-    </main>
+    </>
   );
 }
