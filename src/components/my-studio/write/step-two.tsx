@@ -168,10 +168,20 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = ({ id }) => {
   const values = form.getValues();
   const valid = portfolioInfoSchema.safeParse({ ...values });
 
+  const preventEnterKeySubmission = (
+    e: React.KeyboardEvent<HTMLFormElement>,
+  ) => {
+    const target = e.target;
+    if (e.key === 'Enter' && target instanceof HTMLInputElement) {
+      e.preventDefault();
+    }
+  };
+
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
+        onKeyDown={preventEnterKeySubmission}
         className="space-y-[24px] pb-[66px]"
       >
         <FormField
