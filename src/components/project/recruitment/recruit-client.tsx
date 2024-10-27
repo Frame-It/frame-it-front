@@ -5,6 +5,7 @@ import RecruitCard, {
   IRecruitCardProps,
 } from '@/components/project/recruit-card';
 import FilterDrawers from '@/components/project/recruitment/filter-drawers';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { IRecruitFilter } from '@/lib/api/project/project-recruitment';
 import { cn } from '@/lib/utils';
 import { useRecruitStore } from '@/store/recruit-store';
@@ -43,13 +44,17 @@ const RecruitClient = ({
           <FilterDrawers filter={filter} />
         </div>
       </div>
-      <div className={cn('h-[calc(100%-94px)] overflow-auto py-[19px]')}>
+      <ScrollArea
+        className={cn(
+          'h-[calc(100%-94px)] overflow-auto py-[19px] xl:h-[582px]',
+        )}
+      >
         <div className={cn('flex flex-col gap-[16px] px-[16px]')}>
           {recruits.map((recruit) => (
             <RecruitCard key={recruit.id} {...recruit} />
           ))}
         </div>
-      </div>
+      </ScrollArea>
     </div>
   );
 };

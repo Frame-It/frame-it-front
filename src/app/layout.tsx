@@ -58,7 +58,7 @@ export default function RootLayout({
 
           <div
             id="main-container"
-            className="relative mx-auto h-dvh max-w-[360px] overflow-x-hidden xl:max-h-[800px] xl:overflow-hidden"
+            className="relative mx-auto h-dvh w-full max-w-[360px] overflow-x-hidden xl:flex xl:h-[800px] xl:flex-col xl:justify-between xl:overflow-hidden"
           >
             <ReactQueryProvider>
               {children}

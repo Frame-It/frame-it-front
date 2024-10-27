@@ -18,7 +18,7 @@ export default async function LetterPage() {
   console.log(chatList);
 
   return (
-    <main className="h-[calc(100dvh-58px-63px)] overflow-y-auto px-4">
+    <main className="h-[calc(100dvh-58px-63px)] overflow-y-auto px-4 xl:h-full">
       <ul className="my-6 flex flex-col gap-y-6">
         {chatList?.map((chat) => {
           return (

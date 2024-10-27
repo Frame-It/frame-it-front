@@ -9,8 +9,9 @@ import Drawer from './drawer';
 import Icon from './icon';
 import NotificationGuide from './noti-gide';
 
-// 원하면 path를 props로
-interface IBottomBarProps {}
+interface IBottomBarProps {
+  className?: string;
+}
 
 interface IBottombarPaths {
   path: string;
@@ -76,7 +77,7 @@ const NavLink: React.FunctionComponent<INavLinkProps> = ({
   );
 };
 
-const BottomNavbar: React.FunctionComponent<IBottomBarProps> = () => {
+const BottomNavbar = ({ className }: IBottomBarProps) => {
   const pathName = usePathname().split('/')[1];
   const { isOpen, onOpenChange, onOpen } = useDisclosure();
 
@@ -85,7 +86,12 @@ const BottomNavbar: React.FunctionComponent<IBottomBarProps> = () => {
   return (
     <>
       <NotificationGuide />
-      <nav className="fixed bottom-0 z-30 mx-auto flex h-[64px] w-full max-w-[360px] items-center justify-center border-t-[1px] border-t-[#ECE9E7] bg-white px-[32px] xl:static">
+      <nav
+        className={cn(
+          'fixed bottom-0 z-30 mx-auto flex h-[64px] w-full max-w-[360px] items-center justify-center border-t-[1px] border-t-[#ECE9E7] bg-white px-[32px] xl:static',
+          className,
+        )}
+      >
         <ul className="flex w-full items-center justify-between">
           {bottombarPaths.map((nav) => {
             if (nav.isRegist) {

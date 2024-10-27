@@ -7,12 +7,12 @@ export default function PortfolioLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="pb-[66px] pt-[58px]">
+    <>
       <Header className="border-gray-80 text-lg shadow-none">
         <HeaderCenter className="font-semibold text-gray-10">쪽지</HeaderCenter>
       </Header>
-      {children}
+      <div className="w-full flex-1 pb-[66px] pt-[58px] xl:p-0">{children}</div>
       <BottomNavbar />
-    </div>
+    </>
   );
 }
