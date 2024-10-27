@@ -1,6 +1,6 @@
 'use client';
 
-import HighlightedText from '@/components/common/hilighted-text';
+import HighlightedText from '@/components/common/highlighted-text';
 import { PROJECT_CONCEPTS } from '@/constants/project';
 import { cn } from '@/lib/utils';
 import { getSigunguList } from '@/service/project/vworld';
@@ -90,9 +90,9 @@ export const AddressDrawerContent: FC<DrawerProps> = ({ onClose }) => {
     onClose();
   };
 
-  const appendQuery = (address: string) => {
+  const appendQuery = (spot: string) => {
     const queryString = new URLSearchParams(window.location.search);
-    queryString.set('spot', address);
+    queryString.set('spot', spot);
     router.replace(`?${queryString.toString()}`);
   };
 

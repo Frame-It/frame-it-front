@@ -34,4 +34,6 @@ const UnMarkedSpan: FC<PropsWithChildren> = ({ children }) => (
   <span className="overflow-hidden truncate whitespace-nowrap">{children}</span>
 );
 
+HighlightedText.displayName = 'HighlightedText';
+
 export default HighlightedText;

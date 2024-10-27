@@ -39,7 +39,6 @@ const ReviewDialog = ({
     (async () => {
       try {
         const review = await getProjectReview(reviewId);
-        console.log(review);
         setTags(review.tags);
         setContent(review.content);
         setReviewerNickname(review.reviewerNickname);
