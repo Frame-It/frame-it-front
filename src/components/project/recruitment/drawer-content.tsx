@@ -87,14 +87,6 @@ export const AddressDrawerContent: FC<DrawerProps> = () => {
 
   return (
     <div className="flex h-full flex-col justify-between">
-      {/* <Dialog open={isOpen}>
-          <DialogContent className="h-full">
-            <DaumPostcodeEmbed
-              onComplete={handleComplete}
-              style={{ height: '100%' }}
-            />
-          </DialogContent>
-        </Dialog> */}
       <div className={cn('relative h-[345px]')} onClick={handleClickSearch}>
         <Input
           className={cn('h-[46px]')}

@@ -3,14 +3,21 @@
 import BottomButton from '@/components/common/bottom-button';
 import Icon from '@/components/common/icon';
 import IconButton from '@/components/common/icon-button';
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogHeader,
+} from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
+import useDisclosure from '@/hooks/useDisclosure';
 import { cn } from '@/lib/utils';
 import { useProjectRegisterStore } from '@/store/project-regist-store';
 import { Identity, LocationType, TimeOption } from '@/types/project.type';
 import { getCookie } from 'cookies-next';
-import React, { useRef, useState } from 'react';
-
 import { redirect } from 'next/navigation';
+import React, { PropsWithChildren, useRef, useState } from 'react';
+import DaumPostcodeEmbed from 'react-daum-postcode';
 import '../../../styles/input.css';
 
 const StepOne: React.FC = () => {
@@ -28,13 +35,13 @@ const StepOne: React.FC = () => {
   const [locationType, setLocationType] = useState<LocationType | null>(
     projectInfo.location.type,
   );
-  // const [address, setAddress] = useState<string>(projectInfo.location.address);
-  const [address] = useState<string>('SEOUL');
+  const [address, setAddress] = useState<string>(projectInfo.location.address);
 
   const [detail, setDetail] = useState<string>(projectInfo.location.detail);
 
   const dateInputRef = useRef<HTMLInputElement>(null);
   // const timeInputRef = useRef<HTMLInputElement>(null);
+  const { isOpen, onToggle, onOpenChange } = useDisclosure(false);
 
   if (!type) redirect('/login');
 
@@ -57,8 +64,6 @@ const StepOne: React.FC = () => {
         location: { type: locationType, address, detail },
       });
       nextStep();
-    } else {
-      alert('모든 필드를 입력해주세요.');
     }
   };
 
@@ -72,6 +77,12 @@ const StepOne: React.FC = () => {
   //     timeInputRef.current.showPicker();
   //   }
   // };
+  const handleComplete = (location: any) => {
+    console.log(location);
+    // TODO: 시군구 코드 같이 보내기
+    setAddress(location.address);
+    onToggle();
+  };
 
   return (
     <div className={cn('relative flex h-full flex-col justify-between')}>
@@ -211,14 +222,32 @@ const StepOne: React.FC = () => {
               <Input
                 type="text"
                 value={address}
-                // onChange={(e) => setAddress(e.target.value)}
+                onClick={onToggle}
                 placeholder="주소"
               />
               <IconButton
                 icon={
                   <Icon id={'search-icon'} size={24} className="text-gray-40" />
                 }
+                onClick={onToggle}
               />
+
+              <Dialog open={isOpen} onOpenChange={onOpenChange}>
+                <DialogContent className="flex h-full flex-col">
+                  <DialogHeader className="flex h-6 w-full">
+                    <DialogClose asChild className="ml-auto">
+                      <Icon
+                        className="h-6 w-6 text-gray-40"
+                        id={'close-icon'}
+                      />
+                    </DialogClose>
+                  </DialogHeader>
+                  <DaumPostcodeEmbed
+                    onComplete={handleComplete}
+                    style={{ height: '100%' }}
+                  />
+                </DialogContent>
+              </Dialog>
             </div>
 
             <Input
@@ -247,5 +276,9 @@ const StepOne: React.FC = () => {
     </div>
   );
 };
+
+function SectionLayout({ children }: PropsWithChildren) {
+  return <div className={cn('flex flex-col gap-2')}>{children}</div>;
+}
 
 export default StepOne;
