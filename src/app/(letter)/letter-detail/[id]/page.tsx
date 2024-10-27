@@ -5,13 +5,14 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { getMyPage } from '@/service/server-actions/my-service';
 
 export default async function LetterDetailPage() {
   const myInfo = await getMyPage();
 
   return (
-    <>
+    <ScrollArea className="h-[calc(100dvh-73px-58px)] w-full px-[16px] xl:h-[calc(800px-73px-58px-24px)]">
       <Accordion
         type="single"
         collapsible
@@ -28,6 +29,6 @@ export default async function LetterDetailPage() {
         </AccordionItem>
       </Accordion>
       <LetterList myId={myInfo?.id} myImage={myInfo?.profileImageUrl || ''} />
-    </>
+    </ScrollArea>
   );
 }
