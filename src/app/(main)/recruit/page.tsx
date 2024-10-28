@@ -20,7 +20,7 @@ const RECRUIT = '구인';
 const tabsData: ITabData[] = [
   {
     value: 'ALL',
-    label: `${USER_TYPE.ALL}${RECRUIT}`,
+    label: `${USER_TYPE.ALL}`,
     link: '/recruit?tab=all',
   },
   {
