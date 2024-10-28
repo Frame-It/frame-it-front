@@ -9,7 +9,12 @@ interface IProjectRegistInfo {
     // time: string;
     period: TimeOption | null;
   };
-  location: { type: LocationType | null; address: string; detail: string };
+  location: {
+    type: LocationType | null;
+    spot: string | null;
+    address: string;
+    detail: string;
+  };
   conceptTags: string[];
   photos: File[] | null;
   photoUrls?: string[] | null;
@@ -35,7 +40,7 @@ const initialProjectInfo: IProjectRegistInfo = {
   projectName: '',
   // shootingDate: { date: '', time: '', period: null },
   shootingDate: { date: '', period: null },
-  location: { type: null, address: '', detail: '' },
+  location: { type: null, spot: null, address: '', detail: '' },
   conceptTags: [],
   photos: null,
   description: '',

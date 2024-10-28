@@ -42,6 +42,7 @@ interface RecruitPageProps {
     timeOption?: string;
     locationType?: string;
     concepts?: string;
+    spot?: string;
   };
 }
 
@@ -54,6 +55,7 @@ const RecruitPage = ({ searchParams }: RecruitPageProps) => {
     timeOption: searchParams.timeOption as TimeOption,
     locationType: searchParams.locationType as LocationType,
     concepts: searchParams.concepts?.split('+'),
+    spot: searchParams.spot,
   };
 
   const currentTab = searchParams.tab ?? 'all';

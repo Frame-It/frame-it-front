@@ -1,5 +1,6 @@
 import DMButton from '@/components/common/dm-button';
-import { ProjectMember } from '@/lib/api/project/project-management';
+
+import { IProjectMember } from '@/lib/api/project/project.interface';
 import { cn } from '@/lib/utils';
 import ReviewCheckButton from '../review/review-check-button';
 
@@ -8,7 +9,7 @@ export const HostInfo = ({
   reviewId,
   canViewReview,
 }: {
-  host: ProjectMember & {
+  host: IProjectMember & {
     isReviewDone: boolean;
     reviewId: number | null;
   };

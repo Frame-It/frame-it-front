@@ -2,16 +2,18 @@ import DMButton from '@/components/common/dm-button';
 import Guide from '@/components/common/guide';
 import { GuestProjectGuide } from '@/constants/guide';
 import {
-  CompletedProject,
-  InProgressProject,
-  MyApplication,
-  ProjectMember,
-  RecruitingProject,
+  ICompletedProjectRes,
+  IMyApplication,
+  InProgressProjectRes,
+  IProjectMember,
+  IRecruitingProjectRes,
+} from '@/lib/api/project/project.interface';
+import { cn } from '@/lib/utils';
+import {
   getCompletedProject,
   getInProgressProject,
   getRecruitingProject,
-} from '@/lib/api/project/project-management';
-import { cn } from '@/lib/utils';
+} from '@/service/project/management';
 import { ActiveStatus, IActiveProject } from '@/types/project.type';
 import ProjectInfo from '../project-info';
 import { MyApplyInfo } from './apply-info';
@@ -26,7 +28,10 @@ const ManagementGuest = async ({
   projectId: number;
   status: ActiveStatus;
 }) => {
-  let statusProject: RecruitingProject | InProgressProject | CompletedProject;
+  let statusProject:
+    | IRecruitingProjectRes
+    | InProgressProjectRes
+    | ICompletedProjectRes;
 
   if (status === 'RECRUITING') {
     statusProject = await getRecruitingProject(projectId, 'GUEST');
@@ -42,11 +47,11 @@ const ManagementGuest = async ({
     title: statusProject.title,
     shootingAt: statusProject.shootingAt,
     timeOption: statusProject.timeOption,
-    spot: statusProject.spot,
+    address: statusProject.address,
     isHost: false,
   };
 
-  const myApplication = (statusProject as RecruitingProject).myApplication;
+  const myApplication = (statusProject as IRecruitingProjectRes).myApplication;
 
   return (
     <ManagementGuestLayout project={project}>
@@ -54,19 +59,19 @@ const ManagementGuest = async ({
         <RecruitingContent
           projectId={projectId}
           myApplication={myApplication}
-          project={statusProject as RecruitingProject}
+          project={statusProject as IRecruitingProjectRes}
         />
       )}
       {status === 'IN_PROGRESS' && (
         <GuestInProgressContent
           projectId={projectId}
-          project={statusProject as InProgressProject}
+          project={statusProject as unknown as InProgressProjectRes}
         />
       )}
       {status === 'COMPLETED' && (
         <GuestCompletedContent
           projectId={projectId}
-          project={statusProject as CompletedProject}
+          project={statusProject as unknown as ICompletedProjectRes}
         />
       )}
     </ManagementGuestLayout>
@@ -111,8 +116,8 @@ const ManagementGuestLayout = ({
 
 interface RecruitingContentProps {
   projectId: number;
-  myApplication: MyApplication;
-  project: RecruitingProject;
+  myApplication: IMyApplication;
+  project: IRecruitingProjectRes;
 }
 
 const RecruitingContent = async ({
@@ -120,7 +125,7 @@ const RecruitingContent = async ({
   myApplication,
   project,
 }: RecruitingContentProps) => {
-  const principal: ProjectMember = {
+  const principal: IProjectMember = {
     id: myApplication.applicantId,
     nickname: myApplication.nickname,
     profileImageUrl: myApplication.profileImageUrl,

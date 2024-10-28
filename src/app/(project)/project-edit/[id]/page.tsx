@@ -35,8 +35,9 @@ export default function ProjectEditPage() {
             },
             location: {
               type: data.locationType,
-              address: data.spot,
-              detail: '',
+              address: data.address,
+              spot: data.spot,
+              detail: data.detailedAddress,
             },
             description: data.description,
             retouchingDetails: data.retouchingDescription,

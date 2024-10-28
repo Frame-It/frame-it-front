@@ -46,7 +46,8 @@ const ProjectRecruitmentDetailPage: FC<ProjectRecruitmentDetailPageProps> = ({
     title,
     description,
     shootingAt,
-    spot,
+    address,
+    detailedAddress,
     hostConcepts,
     tagList,
     retouchingDescription,
@@ -55,6 +56,7 @@ const ProjectRecruitmentDetailPage: FC<ProjectRecruitmentDetailPageProps> = ({
     isHost,
     isBookmarked,
     timeOption,
+    isClosed,
   } = projectData;
 
   return (
@@ -75,7 +77,9 @@ const ProjectRecruitmentDetailPage: FC<ProjectRecruitmentDetailPageProps> = ({
       </div>
       <div className={cn('font-title-18')}>
         촬영 장소
-        <div className={cn('font-body-14 pt-2')}>{spot}</div>
+        <div className={cn('font-body-14 pt-2')}>
+          {address} {detailedAddress}
+        </div>
       </div>
       <div className={cn('font-title-18')}>
         촬영 컨셉
@@ -129,6 +133,7 @@ const ProjectRecruitmentDetailPage: FC<ProjectRecruitmentDetailPageProps> = ({
             projectId={projectId}
             hostIdentity={host.identity}
             isBookmarked={isBookmarked}
+            isClosed={isClosed}
           />
         )}
       </div>

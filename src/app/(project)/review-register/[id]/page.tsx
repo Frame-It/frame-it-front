@@ -1,11 +1,13 @@
 import BottomButton from '@/components/common/bottom-button';
 import ReviewRegister from '@/components/project/review/review-register';
 import {
-  CompletedProject,
-  InProgressProject,
+  ICompletedProjectRes,
+  InProgressProjectRes,
+} from '@/lib/api/project/project.interface';
+import {
   getCompletedProject,
   getInProgressProject,
-} from '@/lib/api/project/project-management';
+} from '@/service/project/management';
 import { ActiveStatus } from '@/types/project.type';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
@@ -31,7 +33,7 @@ const ReviewRegisterPage = async ({
     redirect('/404');
   }
 
-  let statusProject: InProgressProject | CompletedProject;
+  let statusProject: InProgressProjectRes | ICompletedProjectRes;
   const projectId = Number(id);
   const status = searchParams.status;
 

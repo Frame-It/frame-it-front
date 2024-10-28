@@ -15,6 +15,7 @@ export interface IRecruitRes {
   spot: string;
   concepts: string[];
   isBookmarked: boolean;
+  address: string;
 }
 
 export interface IRecruitDetailRes extends Omit<IRecruitRes, 'concepts'> {
@@ -31,6 +32,8 @@ export interface IRecruitDetailRes extends Omit<IRecruitRes, 'concepts'> {
   };
   conceptPhotoUrls: string[];
   isHost: boolean;
+  isClosed: boolean;
+  detailedAddress: string;
 }
 
 export interface IRecruitFilter {
@@ -40,12 +43,13 @@ export interface IRecruitFilter {
   timeOption?: TimeOption;
   locationType?: LocationType;
   concepts?: string[];
+  spot?: string;
 }
 
 // 공통 프로젝트 타입
 interface IBaseProject {
   title: string;
-  spot: string;
+  address: string;
   timeOption: TimeOption;
   shootingAt: string;
   status: ActiveStatus;
@@ -68,6 +72,13 @@ export interface IProjectMember {
   id: number;
   nickname: string;
   profileImageUrl: string | null;
+}
+
+export interface IStartedProjectGuest extends IProjectMember {
+  isReviewDone: boolean;
+  reviewId: number | null;
+  appliedAt: string;
+  applyContent: string;
 }
 
 // 모집 중인 프로젝트 타입

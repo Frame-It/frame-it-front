@@ -12,7 +12,7 @@ export interface IProject {
   title: string;
   shootingAt: string; // Date
   timeOption: TimeOption;
-  spot: string;
+  address: string;
   status: Status;
 }
 
@@ -48,6 +48,8 @@ export interface IRecruitProjectDetail extends IRecruitProject {
   };
   conceptPhotoUrls: string[];
   isHost: boolean;
+  isClosed: boolean;
+  detailedAddress: string;
 }
 
 export interface IApplyInfo {

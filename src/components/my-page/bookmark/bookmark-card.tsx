@@ -1,15 +1,15 @@
 'use client';
 
+import Icon from '@/components/common/icon';
+import { TagList } from '@/components/common/tag-list';
 import { IProjectConcept } from '@/constants/project';
+import { cn } from '@/lib/utils';
 import {
   deleteRecruitBookmark,
   postRecruitBookmark,
-} from '@/lib/api/project/project-recruitment';
-import { cn } from '@/lib/utils';
-import Link from 'next/link';
-import Icon from '@/components/common/icon';
-import { TagList } from '@/components/common/tag-list';
+} from '@/service/project/recruitment';
 import { useQueryClient } from '@tanstack/react-query';
+import Link from 'next/link';
 
 export interface IRecruitCardProps {
   id: number;
