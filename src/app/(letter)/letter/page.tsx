@@ -19,6 +19,14 @@ export default async function LetterPage() {
   return (
     <ScrollArea className="h-[calc(100dvh-58px-63px)] overflow-y-auto px-4 xl:h-[calc(800px-58px-63px-24px)]">
       <ul className="my-6 flex flex-col gap-y-6">
+        {chatList?.length === 0 && (
+          <div className="flex h-full min-h-[500px] flex-col items-center justify-center">
+            <div className="font-title-16 text-gray-20">쪽지가 없습니다.</div>
+            <div className="font-body-16 text-gray-20">
+              같이 작업하고 싶은 분께 쪽지를 보내세요!
+            </div>
+          </div>
+        )}
         {chatList?.map((chat) => {
           return (
             <Link href={`/letter-detail/${chat.chatId}`} key={chat.chatId}>

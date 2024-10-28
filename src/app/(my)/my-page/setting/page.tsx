@@ -1,5 +1,5 @@
 import LogoutDialog from '@/components/setting/logout-dialog';
-import { Switch } from '@/components/ui/switch';
+import MarketingSwitch from '@/components/setting/marketing-switch';
 import { getMyInfo } from '@/service/server-actions/my-service';
 import Link from 'next/link';
 
@@ -38,7 +38,7 @@ export default async function SettingPage() {
         <ul className="space-y-[18px]">
           <li className="flex items-center justify-between">
             <div className={basicText}>마케팅 수신/홍보 동의 여부</div>
-            <Switch className="h-[24px]" />
+            <MarketingSwitch checked={myInfo?.notificationsEnabled} />
           </li>
           <li className={basicText}>
             <LogoutDialog>로그아웃</LogoutDialog>

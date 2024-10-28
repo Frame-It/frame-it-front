@@ -15,3 +15,17 @@ export const deleteNotification = async (id: number) => {
     });
   }
 };
+
+export const tokenUpdate = async () => {
+  const token = getCookie('accessToken');
+
+  if (token) {
+    const res = await fetch(`${API_URL}/users/{userId}/deviseToken`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+};
