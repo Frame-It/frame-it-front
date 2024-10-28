@@ -1,6 +1,12 @@
 {
   "name": "Frameit",
   "short_name": "Frameit",
+  "description": "안녕하세요 프레이밋 입니다.",
+  "theme_color": "#E45E25",
+  "background_color": "#FFFFFF",
+  "start_url": "/recruit",
+  "display": "standalone",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "/icon-192x192.png",
@@ -9,19 +15,9 @@
       "purpose": "any maskable"
     },
     {
-      "src": "/icon-384x384.png",
-      "sizes": "384x384",
-      "type": "image/png"
-    },
-    {
       "src": "/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
-  ],
-  "theme_color": "#FFFFFF",
-  "background_color": "#FFFFFF",
-  "start_url": "/",
-  "display": "standalone",
-  "orientation": "portrait"
+  ]
 }
