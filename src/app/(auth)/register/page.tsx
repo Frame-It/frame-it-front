@@ -24,7 +24,7 @@ export default function RegisterPage() {
   });
 
   return (
-    <main className="relative h-full pb-[16px] pt-[56px]">
+    <main className="relative flex h-[calc(100dvh-58px)] flex-col justify-between pb-[16px] pt-[56px] xl:h-[calc(100%-58px)] xl:p-0">
       {/* steps */}
       {step === 1 && <RegisterStepOne />}
       {step === 2 && <RegisterStepTwo />}

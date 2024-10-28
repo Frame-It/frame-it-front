@@ -12,7 +12,7 @@ const ProjectLayoutContent = ({ children }: { children: React.ReactNode }) => {
   const isComplete = searchParams.get('complete') === 'true';
 
   return (
-    <div className={cn('h-screen-dvh flex flex-col')}>
+    <>
       <Header className="border-none text-lg shadow-none">
         {!isComplete && (
           <HeaderLeft>
@@ -23,8 +23,12 @@ const ProjectLayoutContent = ({ children }: { children: React.ReactNode }) => {
         )}
         <HeaderCenter>프로젝트 등록</HeaderCenter>
       </Header>
-      <main className="mt-[56px] h-[calc(100%-58px)]">{children}</main>
-    </div>
+      <div className={cn('flex h-screen-dvh flex-col')}>
+        <main className="mt-[56px] h-[calc(100%-58px)] xl:mt-0">
+          {children}
+        </main>
+      </div>
+    </>
   );
 };
 

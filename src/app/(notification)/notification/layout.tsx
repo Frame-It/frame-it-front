@@ -1,5 +1,4 @@
 import BackButton from '@/components/common/back-button';
-import BottomNavbar from '@/components/common/bottom-navbar';
 import {
   Header,
   HeaderCenter,
@@ -14,7 +13,7 @@ export default function MyStudioLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="pb-[66px] pt-[58px]">
+    <>
       <Header>
         <HeaderLeft>
           <BackButton>
@@ -26,8 +25,9 @@ export default function MyStudioLayout({
           <div className="h-6 w-6" />
         </HeaderRight>
       </Header>
-      <div className="px-[16px]">{children}</div>
-      <BottomNavbar />
-    </div>
+      <main className="h-full w-full pb-[66px] pt-[58px] xl:flex-1 xl:p-0">
+        {children}
+      </main>
+    </>
   );
 }

@@ -17,7 +17,7 @@ export default async function PortfolioLayout({
   // id로 닉네임 받아오기
 
   return (
-    <div className="pb-[66px] pt-[58px]">
+    <>
       <Header className="border-none shadow-none">
         <HeaderLeft>
           <BackButton>
@@ -29,9 +29,9 @@ export default async function PortfolioLayout({
           <div className="size-[32px]"></div>
         </HeaderRight>
       </Header>
-      <main className="relative h-[calc(100dvh-73px-58px)] overflow-y-auto px-[16px] pt-[20px]">
+      <main className="relative overflow-y-auto pt-[78px] xl:py-0">
         {children}
       </main>
-    </div>
+    </>
   );
 }

@@ -27,3 +27,8 @@ export const getLabelById = (id: string): string | undefined => {
   const concept = USER_CONCEPTS.find((concept) => concept.id === id);
   return concept ? concept.label : undefined;
 };
+
+export const chageRoleToKor = (role: string) => {
+  const changeWord = role.toLocaleLowerCase();
+  return changeWord === 'model' ? '모델' : '작가';
+};

@@ -25,7 +25,7 @@ export default function PortfolioLayout({
           <div className="size-[32px]"></div>
         </HeaderRight>
       </Header>
-      <main className="mb-[16px] mt-[56px]">{children}</main>
+      <main className="mb-[16px] mt-[56px] xl:mt-0">{children}</main>
     </>
   );
 }

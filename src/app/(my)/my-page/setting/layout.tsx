@@ -26,7 +26,9 @@ export default function MyStudioLayout({
           <div className="size-[32px] text-gray-40" />
         </HeaderRight>
       </Header>
-      <div className="px-[12px] pb-[66px] pt-[58px]">{children}</div>
+      <main className="px-[12px] pb-[66px] pt-[58px] xl:flex-1 xl:py-0">
+        {children}
+      </main>
       <BottomNavbar />
     </>
   );

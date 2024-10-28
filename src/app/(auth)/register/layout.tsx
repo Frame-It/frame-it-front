@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 
 const RegisterLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className={cn('h-screen-dvh flex flex-col')}>
+    <>
       <Header className="px-0">
         <HeaderLeft>
           <BackButton>
@@ -13,8 +13,8 @@ const RegisterLayout = ({ children }: { children: React.ReactNode }) => {
           </BackButton>
         </HeaderLeft>
       </Header>
-      {children}
-    </div>
+      <div className={cn('flex h-screen-dvh flex-col')}>{children}</div>
+    </>
   );
 };
 

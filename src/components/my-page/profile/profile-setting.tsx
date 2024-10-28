@@ -5,7 +5,7 @@ import { FormControl, FormField, FormItem } from '@/components/ui/form';
 import { Textarea } from '@/components/ui/textarea';
 import { USER_CONCEPTS } from '@/constants/project';
 import { ProfileFormType } from '@/lib/schema/profile-schema';
-import { cn } from '@/lib/utils';
+import { chageRoleToKor, cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
 import * as React from 'react';
 import { UseFormReturn } from 'react-hook-form';
@@ -13,6 +13,7 @@ import { UseFormReturn } from 'react-hook-form';
 interface IProfilSettingProps {
   nickname?: string;
   form: UseFormReturn<ProfileFormType>;
+  role: 'MODEL' | 'PHOTOGRAPHER';
 }
 
 const wrapper = 'space-y-2';
@@ -22,6 +23,7 @@ const wrapperDesc = 'text-gray-40 leading-[150%] text-sm font-medium';
 const ProfilSetting: React.FunctionComponent<IProfilSettingProps> = ({
   form,
   nickname,
+  role,
 }) => {
   const router = useRouter();
 
@@ -48,7 +50,7 @@ const ProfilSetting: React.FunctionComponent<IProfilSettingProps> = ({
         </div>
         <div className={wrapper}>
           <dt className={wrapperTitle}>활동유형</dt>
-          <dd className={wrapperDesc}>작가</dd>
+          <dd className={wrapperDesc}>{chageRoleToKor(role)}</dd>
         </div>
         <div className={wrapper}>
           <dt className={wrapperTitle}>자기소개</dt>
