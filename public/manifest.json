@@ -4,7 +4,8 @@
   "description": "안녕하세요 프레이밋 입니다.",
   "theme_color": "#E45E25",
   "background_color": "#FFFFFF",
-  "start_url": "/recruit",
+  "id":"/recruit",
+  "start_url": "/",
   "display": "standalone",
   "orientation": "portrait",
   "icons": [

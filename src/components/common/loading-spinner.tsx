@@ -16,7 +16,7 @@ const LoadingSpinner = ({
         xmlns="http://www.w3.org/2000/svg"
         width={size}
         height={size}
-        viewBox={`0 0 ${size} ${size}`}
+        viewBox={`0 0 32 32`}
         fill="red"
       >
         <g clipPath="url(#clip0_4021_28879)">

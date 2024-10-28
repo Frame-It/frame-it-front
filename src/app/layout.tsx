@@ -10,6 +10,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import localFont from 'next/font/local';
 import Link from 'next/link';
 import Script from 'next/script';
+import { PwaProvider } from '@/providers/pwa-provider';
 
 export const metadata: Metadata = {
   manifest: '/manifest.json',
@@ -50,7 +51,7 @@ export default function RootLayout({
           href="/apple-touch-icon.png"
         />
         <meta name="apple-mobile-web-app-title" content="Frameit" />
-        <link rel="manifest" href="/site.webmanifest" />
+        <link rel="manifest" href="/manifest.json" />
       </head>
       <body className={cn(pretendard.className, 'relative overflow-hidden')}>
         {process.env.NEXT_PUBLIC_GA_ID ? (
@@ -108,7 +109,7 @@ export default function RootLayout({
                 <img src="/png/phone-icon.png" alt="camera" className="w-14" />
               </div>
               <ReactQueryProvider>
-                {children}
+                <PwaProvider>{children}</PwaProvider>
                 <Script src="/sw.js" />
                 <ReactQueryDevtools />
               </ReactQueryProvider>
