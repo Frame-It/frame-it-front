@@ -1,6 +1,6 @@
 import LogoutDialog from '@/components/setting/logout-dialog';
 import MarketingSwitch from '@/components/setting/marketing-switch';
-import { getMyInfo } from '@/service/server-actions/my-service';
+import { getMyInfo, getMyPage } from '@/service/server-actions/my-service';
 import Link from 'next/link';
 
 const settingLI = 'space-y-1 px-4 py-[12px]';
@@ -12,6 +12,7 @@ const basicText =
 
 export default async function SettingPage() {
   const myInfo = await getMyInfo();
+  const myPage = await getMyPage();
 
   return (
     <>
@@ -38,7 +39,10 @@ export default async function SettingPage() {
         <ul className="space-y-[18px]">
           <li className="flex items-center justify-between">
             <div className={basicText}>마케팅 수신/홍보 동의 여부</div>
-            <MarketingSwitch checked={myInfo?.notificationsEnabled} />
+            <MarketingSwitch
+              userId={myPage?.id}
+              checked={myInfo?.notificationsEnabled}
+            />
           </li>
           <li className={basicText}>
             <LogoutDialog>로그아웃</LogoutDialog>
