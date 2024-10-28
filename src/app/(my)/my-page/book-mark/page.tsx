@@ -29,14 +29,12 @@ const BookMarkPage = () => {
     },
   });
 
-  console.log(bookMarkList);
-
   return (
     <ScrollArea
       className={cn('h-[calc(100vh-58px)] px-4 xl:h-[calc(800px-58px)]')}
     >
       {bookMarkList?.length === 0 ? (
-        <section className="flex h-full flex-col items-center justify-center">
+        <section className="flex h-full min-h-[500px] flex-col items-center justify-center">
           <div className="font-title-16 text-gray-20">
             저장한 모집글이 없어요
           </div>
