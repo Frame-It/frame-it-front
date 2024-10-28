@@ -3,6 +3,7 @@
 import { FilterTabs } from '@/components/common/filter-tabs';
 import RecruitCard from '@/components/project/recruit-card';
 import FilterDrawers from '@/components/project/recruitment/filter-drawers';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { useProjectRecruitmentsQuery } from '@/hooks/queries/projects/useRecruitmentsQuery';
 import { IRecruitFilter } from '@/lib/api/project/project.interface';
 import { cn } from '@/lib/utils';
@@ -77,14 +78,18 @@ const RecruitPage = ({ searchParams }: RecruitPageProps) => {
           <FilterDrawers filter={filter} />
         </div>
       </div>
-      <div className={cn('h-[calc(100%-94px)] overflow-auto py-[19px]')}>
+      <ScrollArea
+        className={cn(
+          'h-[calc(100%-94px)] overflow-auto py-[19px] xl:h-[calc(800px-94px-24px-120px)]',
+        )}
+      >
         <div className={cn('flex flex-col gap-[16px] px-[16px]')}>
           {isLoading && <div>Loading...</div>}
           {recruitList?.map((recruit: IRecruitProject) => (
             <RecruitCard key={recruit.id} {...recruit} />
           ))}
         </div>
-      </div>
+      </ScrollArea>
     </div>
   );
 };
