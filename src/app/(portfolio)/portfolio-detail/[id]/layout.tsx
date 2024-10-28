@@ -5,17 +5,17 @@ import ShareButton from '@/components/common/share-button';
 import PortfolioDetailMenu from '@/components/portfolio-detail/menu';
 import { getMyPage } from '@/service/server-actions/my-service';
 import { getPortfolioDetail } from '@/service/server-actions/portfolio';
-import { headers } from 'next/headers';
 
 export default async function PortfolioLayout({
   children,
+  params,
 }: {
   children: React.ReactNode;
+  params: {
+    id: string;
+  };
 }) {
-  const headersList = headers();
-  const headerPathname = headersList.get('x-pathname') || '';
-  const id = headerPathname.split('/').at(-1);
-
+  const { id } = params;
   const myPage = await getMyPage();
   const portfolioDetail = await getPortfolioDetail(id);
   const isMyPortfolio = myPage?.id === portfolioDetail?.userId;

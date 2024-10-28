@@ -24,7 +24,7 @@ const ProjectLayoutContent = ({ children }: { children: React.ReactNode }) => {
         <HeaderCenter>프로젝트 등록</HeaderCenter>
       </Header>
       <div className={cn('flex h-screen-dvh flex-col')}>
-        <main className="mt-[56px] h-[calc(100%-58px)] xl:mt-0">
+        <main className="mt-[56px] h-[calc(100%-58px)] xl:mt-0 xl:h-[calc(800px-58px-24px)]">
           {children}
         </main>
       </div>
