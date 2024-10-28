@@ -21,7 +21,7 @@ export default function ProjectManagementLayout({
   const isList = id === undefined;
 
   return (
-    <div className="h-screen-dvh flex flex-col pt-[58px]">
+    <>
       <Header>
         <HeaderLeft>
           <BackButton path={isList ? '/my-page' : `/project-management/list`}>
@@ -37,7 +37,9 @@ export default function ProjectManagementLayout({
           )}
         </HeaderRight>
       </Header>
-      {children}
-    </div>
+      <div className="flex h-screen-dvh flex-col pt-[58px] xl:h-full xl:py-0">
+        {children}
+      </div>
+    </>
   );
 }
