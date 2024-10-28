@@ -3,6 +3,7 @@
 import { XIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Button } from '../ui/button';
+import useMount from '@/hooks/use-mount';
 
 const isSupported = () =>
   'Notification' in window &&
@@ -10,6 +11,7 @@ const isSupported = () =>
   'PushManager' in window;
 
 const NotificationGuide = () => {
+  const isMount = useMount();
   const [isNotificationAllowed, setIsNotificationAllowed] = useState<
     boolean | null
   >(null);
@@ -45,6 +47,10 @@ const NotificationGuide = () => {
 
   if (isNotificationAllowed || !isGuideVisible) {
     // 가이드 표시 상태 확인
+    return null;
+  }
+
+  if (!isMount) {
     return null;
   }
 
