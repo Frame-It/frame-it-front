@@ -1,5 +1,6 @@
 // src/services/authService.ts
 
+import { sendTokenHandler } from '@/lib/firebase';
 import { IUserRegistInfo } from '@/store/user-regist-store';
 import { getCookie, setCookie } from 'cookies-next';
 
@@ -46,6 +47,12 @@ export const registUser = async (userInfo: IUserRegistInfo) => {
   if (userInfo) {
     const oauthId = getCookie('oauthId');
 
+    let diviceToken = null;
+
+    if (userInfo.agreeList.marketing) {
+      diviceToken = await sendTokenHandler();
+    }
+
     const response = await fetch(`${SERVER_URL}/users`, {
       method: 'POST',
       headers: {
@@ -57,12 +64,14 @@ export const registUser = async (userInfo: IUserRegistInfo) => {
         name: userInfo.name,
         birthDate: userInfo.birth,
         nickname: userInfo.nickname,
-        notificationsEnabled: true,
+        notificationsEnabled: userInfo.agreeList.marketing,
         oauthUserId: oauthId,
+        deviseToken: diviceToken,
       }),
     });
 
     const data = await response.json();
+
     setCookie('accessToken', data.accessToken);
     setCookie('identity', data.identity);
 

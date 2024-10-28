@@ -23,8 +23,6 @@ import { toast } from '@/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
-interface IProfileFormProps {}
-
 const ProfileForm = () => {
   const { data, isLoading } = useQuery({
     queryKey: ['getProfile'],
@@ -84,7 +82,10 @@ const ProfileForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="pt-[58px]">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="pt-[58px] xl:pt-0"
+      >
         <Header>
           <HeaderLeft>
             <BackButton>
@@ -101,11 +102,17 @@ const ProfileForm = () => {
             </button>
           </HeaderRight>
         </Header>
-        <ProfileImageSelector
-          form={form}
-          prevImageUrl={data?.profileImageUrl}
-        />
-        <ProfilSetting form={form} nickname={data?.nickname} />
+        <div className="px-4">
+          <ProfileImageSelector
+            form={form}
+            prevImageUrl={data?.profileImageUrl}
+          />
+          <ProfilSetting
+            form={form}
+            nickname={data?.nickname}
+            role={(data?.identity as 'MODEL' | 'PHOTOGRAPHER') || 'MODEL'}
+          />
+        </div>
       </form>
     </Form>
   );

@@ -3,6 +3,7 @@
 import StepOne from '@/components/my-studio/write/step-one';
 import StepTwo from '@/components/my-studio/write/step-two';
 import { Progress } from '@/components/ui/progress';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { usePreventNavigation } from '@/hooks/use-router-prevent';
 import { getPortfolioDetailClient } from '@/service/client-actions/portfolio';
 import {
@@ -67,12 +68,12 @@ export default function MyStudioWritePage({
     <main>
       <Progress
         value={(currentStep / maxStep) * 100}
-        className="fixed z-20 mx-auto max-w-[360px]"
+        className="absolute z-20 mx-auto max-w-[360px]"
       />
-      <div className="h-[calc(100dvh-58px-64px)] overflow-y-auto px-[16px] py-[38px]">
+      <ScrollArea className="h-[calc(100dvh-58px-64px)] w-full px-4 py-[38px] xl:h-[calc(800px-58px-64px)]">
         {currentStep === 1 && <StepOne />}
         {currentStep === 2 && <StepTwo id={id} />}
-      </div>
+      </ScrollArea>
     </main>
   );
 }

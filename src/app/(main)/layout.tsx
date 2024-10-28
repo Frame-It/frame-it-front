@@ -15,7 +15,7 @@ export default function Layout({
   const token = cookieStore.get('accessToken');
 
   return (
-    <div className="h-screen-dvh pb-[66px] pt-[58px]">
+    <>
       <Header>
         <HeaderLeft>
           <Link href="/">
@@ -45,8 +45,10 @@ export default function Layout({
           )}
         </HeaderRight>
       </Header>
-      {children}
+      <div className="h-full pb-[66px] pt-[58px] xl:flex-1 xl:p-0">
+        {children}
+      </div>
       <BottomNavbar />
-    </div>
+    </>
   );
 }

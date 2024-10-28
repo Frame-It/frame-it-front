@@ -45,7 +45,7 @@ const LetterSandForm = ({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="fixed inset-x-0 bottom-0 mx-auto flex max-w-[360px] items-center justify-between bg-white px-[16px] py-[12px]"
+        className="fixed inset-x-0 bottom-0 mx-auto flex max-w-[360px] items-center justify-between px-[16px] py-[12px]"
       >
         <FormField
           control={form.control}

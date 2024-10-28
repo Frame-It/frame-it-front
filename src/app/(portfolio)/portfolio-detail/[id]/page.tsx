@@ -4,6 +4,7 @@ import PortfolioContents from '@/components/portfolio-detail/contents';
 import PortfolioDetailFooter from '@/components/portfolio-detail/footer';
 import PortfolioDetailGallery from '@/components/portfolio-detail/portfolio-gallery';
 import PortfolioProfile from '@/components/portfolio-detail/profile';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { getPortfolioDetailClient } from '@/service/client-actions/portfolio';
 import { useQuery } from '@tanstack/react-query';
 import { usePathname } from 'next/navigation';
@@ -19,7 +20,7 @@ export default function PortfolioDetailPage() {
   });
 
   return (
-    <div className="h-[calc(100dvh-54px)] overflow-y-auto pb-[14px] pt-4">
+    <ScrollArea className="h-[calc(100dvh-54px)] w-full overflow-y-auto px-[16px] pb-[14px] pt-4 xl:h-[calc(800px-54px-24px)]">
       <PortfolioProfile
         identity={data?.identity}
         userId={data?.userId}
@@ -37,6 +38,6 @@ export default function PortfolioDetailPage() {
         createdAt={data?.createdAt}
         views="아직 구현되지 않은 기능"
       />
-    </div>
+    </ScrollArea>
   );
 }
