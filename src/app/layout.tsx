@@ -85,9 +85,7 @@ export default function RootLayout({
                   </svg>
                 </span>
                 <p className="text-[28px] font-normal">
-                  모바일의 모든 기능을
-                  <strong className="text-primary">오른쪽 화면</strong>에서
-                  수행할 수 있습니다.
+                  모바일의 모든 기능을 오른쪽 화면에서 수행할 수 있습니다.
                 </p>
               </div>
             </div>

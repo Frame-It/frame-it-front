@@ -1,5 +1,6 @@
 'use client';
 
+import LoadingSpinner from '@/components/common/loading-spinner';
 import { AutosizeTextarea } from '@/components/ui/auto-size-textarea';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -44,6 +45,7 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = ({ id }) => {
 
   const [tag, setTag] = useState('');
   const [togather, setTogather] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<PortfolioDetailFormValues>({
     resolver: zodResolver(portfolioInfoSchema),
@@ -63,6 +65,7 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = ({ id }) => {
         photos: photoList?.map((el) => el.file),
       };
 
+      setIsLoading(true);
       const isSuccess = await postPortfolio(newValue);
 
       if (isSuccess) {
@@ -80,6 +83,7 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = ({ id }) => {
           duration: 1300,
         });
       }
+      setIsLoading(false);
     } else {
       const newValue = {
         title: values.title,
@@ -94,6 +98,7 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = ({ id }) => {
           .map((el) => el.prevImageUrl),
       };
 
+      setIsLoading(true);
       const isSuccess = await updatePortfolio(newValue, id);
 
       if (isSuccess) {
@@ -102,8 +107,8 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = ({ id }) => {
           title: '수정에 성공 하였습니다.',
           duration: 1300,
         });
+        // router.replace(`/my-page/my-studio`);
         clearData();
-        // router.replace(`/portfolio-detail/${id}`);
         router.refresh();
         router.back();
       } else {
@@ -113,6 +118,7 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = ({ id }) => {
           duration: 1300,
         });
       }
+      setIsLoading(false);
     }
   };
 
@@ -194,6 +200,7 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = ({ id }) => {
                 <Input
                   placeholder="제목을 입력해 주세요"
                   {...field}
+                  disabled={isLoading}
                   className="min-h-[40px]"
                 />
               </FormControl>
@@ -214,6 +221,7 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = ({ id }) => {
                   placeholder="포트폴리오 설명을 작성해 주세요"
                   className="w-full"
                   maxLength={500}
+                  disabled={isLoading}
                   {...field}
                 />
               </FormControl>
@@ -234,6 +242,7 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = ({ id }) => {
                 <>
                   <div className="flex items-center gap-x-[8px]">
                     <Input
+                      disabled={isLoading}
                       onChange={(e) => {
                         setTag(e.target.value);
                       }}
@@ -250,6 +259,7 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = ({ id }) => {
                       variant="secondary"
                       size="lg"
                       type="button"
+                      disabled={isLoading}
                       className="w-[65px]"
                       onClick={(e) => {
                         e.preventDefault();
@@ -266,6 +276,7 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = ({ id }) => {
                         {tag}
                         <button
                           type="button"
+                          disabled={isLoading}
                           onClick={(e) => {
                             e.preventDefault();
                             deleteTag(tag);
@@ -298,6 +309,7 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = ({ id }) => {
                   <div className="flex items-center gap-x-[8px]">
                     <Input
                       value={togather}
+                      disabled={isLoading}
                       onChange={(e) => {
                         e.preventDefault();
                         setTogather(e.target.value);
@@ -309,6 +321,7 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = ({ id }) => {
                       size="lg"
                       type="button"
                       className="w-[65px]"
+                      disabled={isLoading}
                       onClick={async (e) => {
                         e.preventDefault();
                         await addTogather();
@@ -327,6 +340,7 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = ({ id }) => {
                             e.preventDefault();
                             deleteTogather();
                           }}
+                          disabled={isLoading}
                         >
                           <XIcon size={18} />
                         </button>
@@ -343,8 +357,12 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = ({ id }) => {
         />
 
         <div className="fixed inset-x-0 bottom-0 mx-auto w-full max-w-[360px] bg-white px-[16px] py-[9px] xl:absolute">
-          <Button type="submit" className="w-full" disabled={!valid.success}>
-            다음
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={!valid.success || isLoading}
+          >
+            {isLoading ? <LoadingSpinner /> : '다음'}
           </Button>
         </div>
       </form>

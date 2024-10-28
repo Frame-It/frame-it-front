@@ -16,17 +16,20 @@ export default async function CompletePage({
 
   return (
     <main
-      className="h-dvh bg-cover text-white"
+      className="h-dvh bg-cover text-white xl:h-full"
       style={{
         backgroundImage: `url("${generateRoleRandomImagePath(searchParams.role)}")`,
       }}
     >
       <div className="flex h-full w-full flex-col justify-between bg-black bg-opacity-60 px-8 pb-[50px] pt-[100px]">
         <div className="">
-          <div className="font-heading-24 max-w-[227px]">
-            환영해요{' '}
-            <strong className="text-primary">{searchParams.nickname}</strong>님!
-            가입이 완료되었어요.
+          <div className="font-heading-24 flex flex-col">
+            <h2>
+              환영해요{' '}
+              <strong className="text-primary">{searchParams.nickname}</strong>
+              님!
+            </h2>
+            <h2>가입이 완료되었어요.</h2>
           </div>
           <div className="mt-6">프레이밋에서 작가로 성장해보세요.</div>
         </div>

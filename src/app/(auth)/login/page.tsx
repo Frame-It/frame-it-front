@@ -2,11 +2,12 @@
 
 import SocialButton from '@/components/common/social-button';
 import { toast } from '@/components/ui/use-toast';
+import { cn } from '@/lib/utils';
 import { sendCodeToBackend } from '@/service/auth-service';
 import { setCookie } from 'cookies-next';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const KAKAO_HREF = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}&response_type=code&state=kakao`;
 const GOOGLE_HREF = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URL}&response_type=code&scope=profile email&state=google`;
@@ -17,10 +18,12 @@ export default function LoginPage({
   searchParams: { code: string; state: string };
 }) {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const authenticate = async () => {
       if (code && state) {
+        setLoading(true);
         try {
           const data = await sendCodeToBackend(code, state);
           if (data === undefined) {
@@ -29,8 +32,6 @@ export default function LoginPage({
               variant: 'destructive',
             });
           }
-
-          console.log(data);
 
           if (!data?.signUpCompleted) {
             router.push(`/register`);
@@ -43,6 +44,8 @@ export default function LoginPage({
         } catch (error) {
           console.error('Error during authentication:', error);
           // 오류 시 에러 페이지로 이동하거나 에러 처리 가능
+        } finally {
+          setLoading(false);
         }
       }
     };
@@ -60,13 +63,23 @@ export default function LoginPage({
         </p>
       </section>
       <section className="w-full">
-        <SocialButton href={KAKAO_HREF} variant="kakao">
-          카카오 로그인
+        <SocialButton href={KAKAO_HREF} variant="kakao" disabled={loading}>
+          {'카카오 로그인'}
         </SocialButton>
-        <SocialButton href={GOOGLE_HREF} variant="google" className="mt-[12px]">
-          구글 로그인
+        <SocialButton
+          href={GOOGLE_HREF}
+          variant="google"
+          className="mt-[12px]"
+          disabled={loading}
+        >
+          {'구글 로그인'}
         </SocialButton>
-        <Link href="/">
+        <Link
+          href="/"
+          className={cn(loading ? 'pointer-events-none' : '')}
+          aria-disabled={loading}
+          tabIndex={loading ? -1 : undefined}
+        >
           <p className="font-body-14 mt-4 text-center text-white underline">
             둘러보기
           </p>

@@ -1,7 +1,7 @@
 import Icon from '@/components/common/icon';
-import { Drawer, DrawerContent } from '@/components/ui/drawer';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import useDisclosure from '@/hooks/useDisclosure';
 import { ProfileFormType } from '@/lib/schema/profile-schema';
 import { useEffect, useState } from 'react';
@@ -10,11 +10,13 @@ import { UseFormReturn } from 'react-hook-form';
 interface IProfileImageSelectorProps {
   form: UseFormReturn<ProfileFormType>;
   prevImageUrl?: string | null;
+  disabled?: boolean;
 }
 
 const ProfileImageSelector: React.FC<IProfileImageSelectorProps> = ({
   form,
   prevImageUrl,
+  disabled,
 }) => {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
 
@@ -49,7 +51,7 @@ const ProfileImageSelector: React.FC<IProfileImageSelectorProps> = ({
   };
 
   return (
-    <Drawer open={isOpen} onOpenChange={onOpenChange}>
+    <Sheet open={isOpen} onOpenChange={onOpenChange}>
       <div className="relative mx-auto mt-4 h-[114px] w-[114px]">
         <img
           src={previewImage || '/png/profile.png'}
@@ -59,6 +61,7 @@ const ProfileImageSelector: React.FC<IProfileImageSelectorProps> = ({
         <button
           type="button"
           onClick={onOpen}
+          disabled={disabled}
           className="absolute -right-2 bottom-0 flex h-7 w-7 items-center justify-center rounded-full bg-gray-90 p-1"
         >
           <svg
@@ -83,7 +86,7 @@ const ProfileImageSelector: React.FC<IProfileImageSelectorProps> = ({
           </svg>
         </button>
       </div>
-      <DrawerContent className="rounded-t-l-[16px] rounded-t-r-[16px] pb-[20px] pt-[18px]">
+      <SheetContent className="rounded-t-l-[16px] rounded-t-r-[16px] pb-[20px] pt-[18px]">
         <ul className="flex flex-col gap-y-[6px]">
           <li>
             <Label htmlFor="profileImage" className="h-full w-full">
@@ -110,8 +113,8 @@ const ProfileImageSelector: React.FC<IProfileImageSelectorProps> = ({
             </button>
           </li>
         </ul>
-      </DrawerContent>
-    </Drawer>
+      </SheetContent>
+    </Sheet>
   );
 };
 
