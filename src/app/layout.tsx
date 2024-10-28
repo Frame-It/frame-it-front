@@ -39,12 +39,12 @@ export default function RootLayout({
         {process.env.NEXT_PUBLIC_GA_ID ? (
           <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
         ) : null}
-        <div className="xl:flex xl:w-dvw xl:items-center xl:justify-center xl:gap-x-[125px]">
-          <div className="relative hidden h-dvh xl:flex xl:flex-col xl:items-center xl:justify-center">
+        <div className="xl:flex xl:w-dvw xl:items-center xl:justify-center xl:gap-x-[125px] xl:bg-gray-90">
+          <div className="hidden h-dvh xl:flex xl:flex-col xl:items-center xl:justify-center">
             <img
               src="/color-logo.png"
               alt="desktop-logo"
-              className="absolute left-0 top-[70px] w-[171px]"
+              className="absolute left-0 left-[100px] top-[70px] w-[171px]"
             />
             <div className="flex min-h-[800px] flex-col justify-around">
               <div className="text-[40px] font-semibold leading-[180%]">
@@ -103,18 +103,18 @@ export default function RootLayout({
         </div>
 
         <SvgSymbols />
-        <div className="fixed bottom-[45px] right-[100px] hidden items-center gap-x-6 xl:flex">
+        <div className="fixed bottom-[45px] left-[100px] hidden items-center gap-x-6 xl:flex">
           <Link
             href="https://frameit.notion.site/fb50555b39f24ac0b735e4d6e882767d"
             target="_blank"
-            className="text-[20px] leading-[135%] text-gray-20"
+            className="text-[18px] leading-[135%] text-gray-20"
           >
             이용 약관
           </Link>
           <Link
             href="https://frameit.notion.site/9db4e942750a419c8079a79806a03113"
             target="_blank"
-            className="text-[20px] leading-[135%] text-gray-20"
+            className="text-[18px] leading-[135%] text-gray-20"
           >
             개인정보 처리 방침
           </Link>
