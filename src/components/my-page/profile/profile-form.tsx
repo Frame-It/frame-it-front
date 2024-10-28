@@ -21,11 +21,11 @@ import {
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from '@/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import useMount from '@/hooks/use-mount';
 
 const ProfileForm = () => {
-  const { data, isLoading } = useQuery({
+  const { data } = useQuery({
     queryKey: ['getProfile'],
     queryFn: getUserProfileClient,
     staleTime: 0,
@@ -46,6 +46,8 @@ const ProfileForm = () => {
     },
   });
 
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     if (data) {
       form.reset({
@@ -57,8 +59,7 @@ const ProfileForm = () => {
   }, [data, form]);
 
   const onSubmit = async (values: ProfileFormType) => {
-    console.log(values);
-
+    setLoading(true);
     const isModified = await updateProfile({
       id: data?.id || null,
       profileImage: values.profileImage || null,
@@ -81,6 +82,7 @@ const ProfileForm = () => {
         variant: 'destructive',
       });
     }
+    setLoading(false);
   };
 
   if (!mount) {
@@ -103,6 +105,7 @@ const ProfileForm = () => {
           <HeaderRight>
             <button
               type="submit"
+              disabled={loading}
               className="size-[32px] text-primary disabled:text-gray-70"
             >
               완료
@@ -113,11 +116,13 @@ const ProfileForm = () => {
           <ProfileImageSelector
             form={form}
             prevImageUrl={data?.profileImageUrl}
+            disabled={loading}
           />
           <ProfilSetting
             form={form}
             nickname={data?.nickname}
             role={(data?.identity as 'MODEL' | 'PHOTOGRAPHER') || 'MODEL'}
+            disabled={loading}
           />
         </div>
       </form>

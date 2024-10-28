@@ -22,6 +22,7 @@ const MySturioFilter: React.FunctionComponent<IMySturioFilterProps> = () => {
             ? 'font-[600] text-gray-10'
             : 'text-gray-60',
         )}
+        replace
       >
         포트폴리오
       </Link>
@@ -31,6 +32,7 @@ const MySturioFilter: React.FunctionComponent<IMySturioFilterProps> = () => {
           'text-base',
           filter === 'project' ? 'font-[600] text-gray-10' : 'text-gray-60',
         )}
+        replace
       >
         프로젝트
       </Link>
@@ -40,6 +42,7 @@ const MySturioFilter: React.FunctionComponent<IMySturioFilterProps> = () => {
           'text-base',
           filter === 'review' ? 'font-[600] text-gray-10' : 'text-gray-60',
         )}
+        replace
       >
         리뷰
       </Link>

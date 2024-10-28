@@ -12,7 +12,7 @@ import {
 import { cn } from '@/lib/utils';
 
 interface IStepOneProps {}
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+const MAX_FILE_SIZE = 30 * 1024 * 1024; // 30MB
 
 const StepOne: React.FunctionComponent<IStepOneProps> = () => {
   // zustand
@@ -52,7 +52,7 @@ const StepOne: React.FunctionComponent<IStepOneProps> = () => {
 
     if (invalidFiles.length > 0) {
       toast({
-        title: '이미지 중에 5MB를 초과하는 파일이 있어요!',
+        title: '이미지 중에 30MB를 초과하는 파일이 있어요!',
       });
       return;
     }

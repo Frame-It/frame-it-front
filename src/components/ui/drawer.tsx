@@ -40,10 +40,8 @@ const DrawerContent = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content>
 >(({ className, children, ...props }, ref) => {
-  const container = document.querySelector('#main-container');
-
   return (
-    <DrawerPortal container={container || document.body}>
+    <DrawerPortal>
       <DrawerOverlay />
       <DrawerPrimitive.Content
         ref={ref}

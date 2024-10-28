@@ -14,6 +14,7 @@ interface IProfilSettingProps {
   nickname?: string;
   form: UseFormReturn<ProfileFormType>;
   role: 'MODEL' | 'PHOTOGRAPHER';
+  disabled?: boolean;
 }
 
 const wrapper = 'space-y-2';

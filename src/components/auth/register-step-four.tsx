@@ -11,6 +11,7 @@ import { stepFourSchema } from '@/lib/schema/user-regist-schema';
 import { checkDuplicateId, registUser } from '@/service/auth-service';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/components/ui/use-toast';
+import LoadingSpinner from '../common/loading-spinner';
 
 interface IRegisterStepFourProps {}
 
@@ -28,6 +29,7 @@ const RegisterStepFour: React.FunctionComponent<
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [isDuplicate, setIsDuplicate] = useState<boolean | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const isDisabled = isDuplicate !== false || errorMessage !== null;
 
@@ -79,6 +81,7 @@ const RegisterStepFour: React.FunctionComponent<
 
   // 가입 버튼 클릭 핸들러
   const handleSubmit = async () => {
+    setIsLoading(true);
     const isCompleted = await registUser(userInfo);
 
     if (isCompleted) {
@@ -97,6 +100,7 @@ const RegisterStepFour: React.FunctionComponent<
         duration: 1300,
       });
     }
+    setIsLoading(false);
   };
 
   return (
@@ -140,10 +144,10 @@ const RegisterStepFour: React.FunctionComponent<
       <Button
         size="lg"
         className="w-full"
-        disabled={isDisabled}
+        disabled={isDisabled || isLoading}
         onClick={handleSubmit}
       >
-        가입
+        {isLoading ? <LoadingSpinner /> : '가입'}
       </Button>
     </section>
   );

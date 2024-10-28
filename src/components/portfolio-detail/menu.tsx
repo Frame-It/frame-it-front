@@ -4,16 +4,17 @@ import Icon from '@/components/common/icon';
 import useDisclosure from '@/hooks/useDisclosure';
 import { usePathname, useRouter } from 'next/navigation';
 import AlertDialog from '../common/alert-dialog';
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerTitle,
-  DrawerTrigger,
-} from '../ui/drawer';
+
 import { toast } from '../ui/use-toast';
 import { IPortfolioDetail } from '@/types/portfolio';
 import { deletePortfolio } from '@/service/client-actions/portfolio';
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet';
 
 interface IPortfolioDetailMenuProps {
   id?: string;
@@ -34,8 +35,7 @@ const PortfolioDetailMenu: React.FunctionComponent<
     navigator.clipboard.writeText(window.location.href);
     toast({
       title: '공유 링크가 복사되었어요!',
-      duration: 1000,
-      className: 'w-[196px]',
+      duration: 1300,
     });
   };
 
@@ -48,15 +48,15 @@ const PortfolioDetailMenu: React.FunctionComponent<
 
   return (
     <>
-      <Drawer>
-        <DrawerTrigger className="flex max-w-[360px] items-center justify-center">
+      <Sheet>
+        <SheetTrigger className="flex max-w-[360px] items-center justify-center">
           <Icon id="more-icon" size={32} className="text-gray-40" />
-        </DrawerTrigger>
-        <DrawerContent className="rounded-t-l-[16px] rounded-t-r-[16px] pb-[20px] pt-[18px]">
-          <DrawerTitle className="hidden"></DrawerTitle>
+        </SheetTrigger>
+        <SheetContent className="rounded-t-l-[16px] rounded-t-r-[16px] pb-[20px] pt-[18px]">
+          <SheetTitle className="hidden"></SheetTitle>
           <ul className="flex flex-col gap-y-[6px]">
             <li>
-              <DrawerClose className="w-full p-0">
+              <SheetClose className="w-full p-0">
                 <button
                   onClick={handleShare}
                   className="flex w-full items-center gap-x-[13px] px-[18px] py-2 text-base font-semibold leading-[135%] text-gray-20"
@@ -64,10 +64,10 @@ const PortfolioDetailMenu: React.FunctionComponent<
                   <Icon id="share-icon" size={24} />
                   포트폴리오 공유하기
                 </button>
-              </DrawerClose>
+              </SheetClose>
             </li>
             <li>
-              <DrawerClose className="w-full p-0">
+              <SheetClose className="w-full p-0">
                 <button
                   onClick={handleEdit}
                   className="flex w-full items-center gap-x-[13px] px-[18px] py-2 text-base font-semibold leading-[135%] text-gray-20"
@@ -75,10 +75,10 @@ const PortfolioDetailMenu: React.FunctionComponent<
                   <Icon id="edit-icon" size={24} />
                   포트폴리오 수정하기
                 </button>
-              </DrawerClose>
+              </SheetClose>
             </li>
             <li>
-              <DrawerClose className="w-full p-0">
+              <SheetClose className="w-full p-0">
                 <button
                   onClick={handleDelete}
                   className="flex w-full items-center gap-x-[13px] px-[18px] py-2 text-base font-semibold leading-[135%] text-gray-20"
@@ -86,11 +86,11 @@ const PortfolioDetailMenu: React.FunctionComponent<
                   <Icon id="close-icon" size={24} className="text-gray-40" />
                   포트폴리오 삭제하기
                 </button>
-              </DrawerClose>
+              </SheetClose>
             </li>
           </ul>
-        </DrawerContent>
-      </Drawer>
+        </SheetContent>
+      </Sheet>
 
       {/* 삭제 dialog */}
       <AlertDialog
