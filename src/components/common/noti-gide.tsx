@@ -18,26 +18,35 @@ const NotificationGuide = () => {
   const [isGuideVisible, setIsGuideVisible] = useState(true);
 
   // 알림 권한 상태를 확인하는 함수
-  const checkNotificationPermission = () => {
-    if (Notification.permission === 'granted') {
-      setIsNotificationAllowed(true);
-    } else if (
-      Notification.permission === 'denied' ||
-      Notification.permission === 'default'
-    ) {
+  const checkNotificationPermission = async () => {
+    if (typeof Notification !== 'undefined') {
+      if (Notification.permission === 'granted') {
+        setIsNotificationAllowed(true);
+      } else if (
+        Notification.permission === 'denied' ||
+        Notification.permission === 'default'
+      ) {
+        setIsNotificationAllowed(false);
+      }
+    } else {
       setIsNotificationAllowed(false);
     }
   };
 
-  // 알림 권한 요청 함수
+  // 알림 권한 요청 함수 (리팩토링된 부분)
   const requestNotificationPermission = async () => {
     if (isSupported()) {
       const permission = await Notification.requestPermission();
-      if (permission === 'granted') {
-        setIsNotificationAllowed(true);
-      } else {
-        setIsNotificationAllowed(false);
-      }
+      handlePermission(permission); // 권한 처리 함수 호출
+    }
+  };
+
+  // 권한을 처리하는 함수
+  const handlePermission = (permission: NotificationPermission) => {
+    if (permission === 'denied' || permission === 'default') {
+      setIsNotificationAllowed(false);
+    } else {
+      setIsNotificationAllowed(true);
     }
   };
 
@@ -55,7 +64,7 @@ const NotificationGuide = () => {
   }
 
   return (
-    <div className="fixed bottom-[64px] flex max-w-[360px] items-center justify-center bg-gray-50 shadow-md xl:absolute">
+    <div className="fixed bottom-[64px] flex max-w-[350px] items-center justify-center bg-gray-50 shadow-md xl:absolute">
       <div className="rounded-lg border border-primary bg-white px-4 py-3 shadow-lg">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold">
