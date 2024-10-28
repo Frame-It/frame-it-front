@@ -4,9 +4,10 @@ import './globals.css';
 
 import SvgSymbols from '@/components/common/svg-symbols';
 import { Toaster } from '@/components/ui/toaster';
-import localFont from 'next/font/local';
+import GoogleAnalytics from '@/lib/google-analytics';
 import ReactQueryProvider from '@/providers/react-query-provider';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import localFont from 'next/font/local';
 
 export const metadata: Metadata = {
   manifest: '/manifest.json',
@@ -33,6 +34,9 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={cn(pretendard.className, 'overflow-hidden')}>
+        {process.env.NEXT_PUBLIC_GA_ID ? (
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+        ) : null}
         <div className="mx-auto max-w-[360px] overflow-x-hidden">
           <ReactQueryProvider>
             {children}
