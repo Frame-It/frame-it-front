@@ -4,6 +4,11 @@ import { XIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Button } from '../ui/button';
 
+const isSupported = () =>
+  'Notification' in window &&
+  'serviceWorker' in navigator &&
+  'PushManager' in window;
+
 const NotificationGuide = () => {
   const [isNotificationAllowed, setIsNotificationAllowed] = useState<
     boolean | null
@@ -24,11 +29,13 @@ const NotificationGuide = () => {
 
   // 알림 권한 요청 함수
   const requestNotificationPermission = async () => {
-    const permission = await Notification.requestPermission();
-    if (permission === 'granted') {
-      setIsNotificationAllowed(true);
-    } else {
-      setIsNotificationAllowed(false);
+    if (isSupported()) {
+      const permission = await Notification.requestPermission();
+      if (permission === 'granted') {
+        setIsNotificationAllowed(true);
+      } else {
+        setIsNotificationAllowed(false);
+      }
     }
   };
 
