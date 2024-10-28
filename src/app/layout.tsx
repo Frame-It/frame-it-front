@@ -4,11 +4,12 @@ import './globals.css';
 
 import SvgSymbols from '@/components/common/svg-symbols';
 import { Toaster } from '@/components/ui/toaster';
-import localFont from 'next/font/local';
+import GoogleAnalytics from '@/lib/google-analytics';
 import ReactQueryProvider from '@/providers/react-query-provider';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import Script from 'next/script';
+import localFont from 'next/font/local';
 import Link from 'next/link';
+import Script from 'next/script';
 
 export const metadata: Metadata = {
   manifest: '/manifest.json',
@@ -35,6 +36,9 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={cn(pretendard.className, 'relative overflow-hidden')}>
+        {process.env.NEXT_PUBLIC_GA_ID ? (
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+        ) : null}
         <div className="xl:flex xl:w-dvw xl:items-center xl:justify-center xl:gap-x-[125px]">
           <div className="relative hidden h-dvh xl:flex xl:flex-col xl:items-center xl:justify-center">
             <img
