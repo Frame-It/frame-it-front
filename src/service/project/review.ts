@@ -1,4 +1,5 @@
-import { getAuthHeader } from '../header';
+import { getAuthHeader } from '@/lib/api/header';
+
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 interface Review {

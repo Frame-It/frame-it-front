@@ -1,4 +1,7 @@
+'use client';
+
 import { TagList } from '@/components/common/tag-list';
+import HostInfo from '@/components/project/recruitment/host-info';
 import {
   GuestBottom,
   HostBottom,
@@ -9,8 +12,8 @@ import {
   CarouselDots,
   CarouselItem,
 } from '@/components/ui/carousel';
-import { ITag, PROJECT_CONCEPTS, USER_CONCEPTS } from '@/constants/project';
-import { getRecruitAnnouncement } from '@/lib/api/project/project-recruitment';
+import { timeOptionLabels } from '@/constants/project';
+import { useRecruitmentQuery } from '@/hooks/queries/projects/useRecruitmentQuery';
 import { cn } from '@/lib/utils';
 import { FC } from 'react';
 
@@ -20,24 +23,40 @@ interface ProjectRecruitmentDetailPageProps {
   };
 }
 
-const ProjectRecruitmentDetailPage: FC<
-  ProjectRecruitmentDetailPageProps
-> = async ({ params }) => {
+const ProjectRecruitmentDetailPage: FC<ProjectRecruitmentDetailPageProps> = ({
+  params,
+}) => {
   const projectId = parseInt(params.id, 10);
-  const projectData = await getRecruitAnnouncement(projectId);
+  const {
+    data: projectData,
+    isLoading,
+    error,
+  } = useRecruitmentQuery(projectId);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error || !projectData) {
+    console.error('Failed to fetch recruit announcement:', error);
+    return <div>Failed to load recruit announcement</div>;
+  }
 
   const {
     title,
     description,
     shootingAt,
-    spot,
+    address,
+    detailedAddress,
     hostConcepts,
-    projectConcepts,
+    tagList,
     retouchingDescription,
     host,
     conceptPhotoUrls,
     isHost,
     isBookmarked,
+    timeOption,
+    isClosed,
   } = projectData;
 
   return (
@@ -53,24 +72,19 @@ const ProjectRecruitmentDetailPage: FC<
       <div className={cn('font-title-18')}>
         촬영 일시
         <div className={cn('font-body-14 pt-2')}>
-          {new Date(shootingAt).toLocaleString()} {/* 날짜 형식 변환 */}
+          {shootingAt} {timeOptionLabels[timeOption]}
         </div>
       </div>
       <div className={cn('font-title-18')}>
         촬영 장소
-        <div className={cn('font-body-14 pt-2')}>{spot}</div>
+        <div className={cn('font-body-14 pt-2')}>
+          {address} {detailedAddress}
+        </div>
       </div>
       <div className={cn('font-title-18')}>
         촬영 컨셉
         <div className={cn('py-2')}>
-          {
-            <TagList
-              tags={projectConcepts.map((conceptId: string) =>
-                PROJECT_CONCEPTS.find((v) => v.id === conceptId),
-              )}
-              size={'medium'}
-            />
-          }
+          {<TagList tags={tagList} size={'medium'} />}
         </div>
         <Carousel>
           <CarouselContent>
@@ -98,7 +112,7 @@ const ProjectRecruitmentDetailPage: FC<
       </div>
       <div className={cn('font-title-18 flex flex-col gap-2')}>
         {host.identity === 'PHOTOGRAPHER' ? '작가' : '모델'}
-        <WriterInfo
+        <HostInfo
           hostId={host.id}
           nickname={host.nickname}
           profileImageUrl={host.profileImageUrl}
@@ -119,48 +133,11 @@ const ProjectRecruitmentDetailPage: FC<
             projectId={projectId}
             hostIdentity={host.identity}
             isBookmarked={isBookmarked}
+            isClosed={isClosed}
           />
         )}
       </div>
     </main>
-  );
-};
-
-interface WriterInfoProps {
-  hostId: number;
-  nickname: string;
-  profileImageUrl: string | null;
-  description: string;
-  concepts: string[];
-}
-
-const WriterInfo: FC<WriterInfoProps> = ({
-  hostId,
-  nickname,
-  profileImageUrl,
-  description,
-  concepts,
-}) => {
-  const tags = concepts
-    .map((conceptId) => USER_CONCEPTS.find(({ id }) => id === conceptId))
-    .filter((tag): tag is ITag => tag !== undefined);
-  return (
-    <section className="flex flex-col items-center justify-center gap-[10px] self-stretch rounded-[8px] bg-gray-90 px-[16px] pb-[18px] pt-[16px]">
-      <div className="flex flex-col items-center justify-center gap-[6px] self-stretch">
-        <img
-          className="h-[64px] w-[64px] rounded-[8px]"
-          src={profileImageUrl || '/png/profile.png'}
-          alt={`${nickname}의 프로필 사진`}
-        />
-        <div className="font-body-14m">{nickname}</div>
-      </div>
-      <div className="flex flex-col items-center justify-center gap-[10px] self-stretch">
-        <div className="font-body-14">{description}</div>
-        <div>
-          <TagList tags={tags} size={'medium'} className="gap-[4px]" />
-        </div>
-      </div>
-    </section>
   );
 };
 

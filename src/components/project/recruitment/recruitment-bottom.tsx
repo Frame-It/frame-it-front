@@ -8,14 +8,11 @@ import IconButton from '@/components/common/icon-button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
 import { GuestProjectGuide } from '@/constants/guide';
+import { useRecruitBookmarkMutation } from '@/hooks/queries/projects/useRecruitBookmarkMutation';
 import useDisclosure from '@/hooks/useDisclosure';
-import {
-  deleteRecruitBookmark,
-  postProjectApply,
-  postRecruitBookmark,
-} from '@/lib/api/project/project-recruitment';
+
 import { cn } from '@/lib/utils';
-import { useRecruitStore } from '@/store/recruit-store';
+import { postProjectApply } from '@/service/project/recruitment';
 import { getCookie } from 'cookies-next';
 
 import Link from 'next/link';
@@ -58,11 +55,13 @@ export const GuestBottom = ({
   projectId,
   hostIdentity,
   isBookmarked,
+  isClosed,
 }: {
   title: string;
   projectId: number;
   hostIdentity: 'PHOTOGRAPHER' | 'MODEL';
   isBookmarked: boolean;
+  isClosed: boolean;
 }) => {
   return (
     <>
@@ -74,6 +73,7 @@ export const GuestBottom = ({
         title={title}
         projectId={projectId}
         hostIdentity={hostIdentity}
+        isClosed={isClosed}
       />
     </>
   );
@@ -83,10 +83,12 @@ const ApplyDrawer = ({
   title,
   projectId,
   hostIdentity,
+  isClosed,
 }: {
   title: string;
   projectId: number;
   hostIdentity: 'PHOTOGRAPHER' | 'MODEL';
+  isClosed: boolean;
 }) => {
   const { isOpen, onOpenChange, onClose } = useDisclosure(false);
   const [content, setContent] = useState('');
@@ -119,7 +121,7 @@ const ApplyDrawer = ({
           size={'large'}
           label={'프로젝트 신청하기'}
           className="w-[222px]"
-          disabled={hostIdentity === myIdentity}
+          disabled={hostIdentity === myIdentity || isClosed}
         />
       }
       className="pb-0"
@@ -199,22 +201,10 @@ const BookmarkButton: FC<BookmarkButtonProps> = ({
   projectId,
   isBookmarked,
 }) => {
-  const { recruits, toggleBookmark } = useRecruitStore();
-  const nowBookmarked =
-    recruits.find((recruit) => recruit.id === projectId)?.isBookmarked ??
-    isBookmarked;
+  const { mutate: toggleBookmark } = useRecruitBookmarkMutation();
 
-  const handleBookmarkToggle = async () => {
-    try {
-      if (isBookmarked) {
-        await deleteRecruitBookmark(projectId);
-      } else {
-        await postRecruitBookmark(projectId);
-      }
-      toggleBookmark(projectId);
-    } catch (error) {
-      console.error('Failed to toggle bookmark:', error);
-    }
+  const handleBookmarkToggle = () => {
+    toggleBookmark({ projectId, isBookmarked });
   };
 
   return (
@@ -223,12 +213,12 @@ const BookmarkButton: FC<BookmarkButtonProps> = ({
         <Icon
           id={'bookmark-icon'}
           size={24}
-          stroke={nowBookmarked ? 'white' : '#7E7774'}
-          fill={nowBookmarked ? '#4D4744' : 'white'}
+          stroke={isBookmarked ? 'white' : '#7E7774'}
+          fill={isBookmarked ? '#4D4744' : 'white'}
           onClick={handleBookmarkToggle}
         />
       }
-      className={cn(nowBookmarked ? 'bg-[#4D4744]' : 'bg-white')}
+      className={cn(isBookmarked ? 'bg-[#4D4744]' : 'bg-white')}
     />
   );
 };

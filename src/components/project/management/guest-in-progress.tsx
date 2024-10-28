@@ -1,42 +1,26 @@
 'use client';
 
-import BottomButton from '@/components/common/bottom-button';
 import Guide from '@/components/common/guide';
 import { GuestProjectGuide } from '@/constants/guide';
-import useDisclosure from '@/hooks/useDisclosure';
-import {
-  InProgressProject,
-  postCompleteProject,
-} from '@/lib/api/project/project-management';
+import { InProgressProjectRes } from '@/lib/api/project/project.interface';
 import { cn } from '@/lib/utils';
-import { useRouter, useSearchParams } from 'next/navigation';
-import ReviewDialog from '../review/review-dialog';
+import { useSearchParams } from 'next/navigation';
+import ReviewCheckButton from '../review/review-check-button';
+import CompleteProjectButton from './complete-project-button';
 import { HostInfo } from './host-info';
 
 interface GuestInProgressContentProps {
   projectId: number;
-  project: InProgressProject;
+  project: InProgressProjectRes;
 }
 
 const GuestInProgressContent = ({
   projectId,
   project,
 }: GuestInProgressContentProps) => {
-  const router = useRouter();
-  const { isOpen, onOpenChange, onOpen } = useDisclosure(false);
-
   const searchParams = useSearchParams();
   const isReviewDone = project.isReviewDone;
   const isReviewDoneQuery = searchParams.get('isReviewDone') === 'true';
-
-  const handleClickComplete = async () => {
-    const { projectStatus } = await postCompleteProject(projectId);
-    router.push(`/review-register/${projectId}?status=${projectStatus}`);
-  };
-
-  const handleClickShowReview = async () => {
-    onOpen();
-  };
 
   if (!project.host) return;
 
@@ -44,18 +28,17 @@ const GuestInProgressContent = ({
     <>
       <div className={cn('flex flex-col gap-2')}>
         {isReviewDone || isReviewDoneQuery ? (
-          <BottomButton
+          <ReviewCheckButton
             variant={'secondary'}
             size={'large'}
-            label={'리뷰 확인하기'}
-            onClick={handleClickShowReview}
+            reviewId={project.reviewId}
           />
         ) : (
-          <BottomButton
+          <CompleteProjectButton
             variant={'secondary'}
             size={'large'}
-            label={'프로젝트 완료하기'}
-            onClick={handleClickComplete}
+            projectId={projectId}
+            isHost={false}
           />
         )}
         <HostInfo
@@ -63,16 +46,8 @@ const GuestInProgressContent = ({
           reviewId={project.reviewId}
           canViewReview={isReviewDone || isReviewDoneQuery}
         />
-
         <Guide guides={GuestProjectGuide.inProgress} />
       </div>
-      {project.reviewId !== null && (
-        <ReviewDialog
-          isOpen={isOpen}
-          onOpenChange={onOpenChange}
-          reviewId={project.reviewId}
-        />
-      )}
     </>
   );
 };

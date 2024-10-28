@@ -1,11 +1,12 @@
 'use client';
 
+import HighlightedText from '@/components/common/highlighted-text';
 import { PROJECT_CONCEPTS } from '@/constants/project';
-import useDisclosure from '@/hooks/useDisclosure';
 import { cn } from '@/lib/utils';
+import { getSigunguList } from '@/service/project/vworld';
 import { LocationType, TimeOption } from '@/types/project.type';
 import { useRouter } from 'next/navigation';
-import { FC, useState } from 'react';
+import { FC, FormEvent, useState } from 'react';
 import BottomButton from '../../common/bottom-button';
 import ConceptTag from '../../common/concept-tag';
 import DatePicker from '../../common/date-picker';
@@ -63,58 +64,86 @@ export const ConceptDrawerContent: FC<DrawerProps> = ({ onClose }) => {
   );
 };
 
-export const AddressDrawerContent: FC<DrawerProps> = () => {
-  // TODO: 주소 필터링 기획 협의
-  const { isOpen, onToggle } = useDisclosure(false);
+export const AddressDrawerContent: FC<DrawerProps> = ({ onClose }) => {
   const [address, setAddress] = useState<string | null>(null);
+  const [sigunguCode, setSigunguCode] = useState<string | null>(null);
+  const [sigunguFeatures, setSigunguFeatures] = useState([]);
   const router = useRouter();
 
-  const handleClickSearch = () => {
-    onToggle();
+  const handleClickSearch = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!address) return;
+    const data = await getSigunguList(address);
+
+    setSigunguFeatures(data.features);
   };
 
-  const handleComplete = ({ address }: any) => {
-    setAddress(address);
-    onToggle();
-    appendQuery(address);
+  const handleSelect = (selectedSigungu: string, selectedAddress: string) => {
+    setSigunguCode(selectedSigungu);
+    setAddress(selectedAddress);
   };
 
-  const appendQuery = (address: string) => {
+  const handleComplete = () => {
+    if (!sigunguCode) return;
+    appendQuery(sigunguCode);
+    onClose();
+  };
+
+  const appendQuery = (spot: string) => {
     const queryString = new URLSearchParams(window.location.search);
-    queryString.set('spot', address);
+    queryString.set('spot', spot);
     router.replace(`?${queryString.toString()}`);
   };
 
   return (
     <div className="flex h-full flex-col justify-between">
-      {/* <Dialog open={isOpen}>
-          <DialogContent className="h-full">
-            <DaumPostcodeEmbed
-              onComplete={handleComplete}
-              style={{ height: '100%' }}
+      <div className="relative flex h-[345px] flex-col gap-4">
+        <form className={cn('h-[46px]')} onSubmit={handleClickSearch}>
+          <Input
+            className={cn('h-[46px]')}
+            placeholder="주소를 검색해주세요"
+            value={address || ''}
+            onChange={(e) => setAddress(e.target.value)}
+          />
+          <button>
+            <Icon
+              id={'search-icon'}
+              size={24}
+              className={cn('absolute right-[15px] top-[11px] text-[#7E7774]')}
             />
-          </DialogContent>
-        </Dialog> */}
-      <div className={cn('relative h-[345px]')} onClick={handleClickSearch}>
-        <Input
-          className={cn('h-[46px]')}
-          placeholder="주소를 검색해주세요"
-          value={address || ''}
-          onChange={(e) => setAddress(e.target.value)}
-        />
-        <Icon
-          id={'search-icon'}
-          size={24}
-          className={cn('absolute right-[15px] top-[11px] text-[#7E7774]')}
-          onClick={() => console.log('search address')}
-        />
+          </button>
+        </form>
+
+        <div className="flex flex-col gap-[10px] overflow-y-auto px-2 pb-2">
+          {sigunguFeatures.map((feature: any) => {
+            return (
+              <div
+                key={feature.properties.sig_cd}
+                onClick={() =>
+                  handleSelect(
+                    feature.properties.sig_cd,
+                    feature.properties.sig_kor_nm,
+                  )
+                }
+                className="font-body-14 text-gray-60"
+              >
+                <HighlightedText
+                  word={feature.properties.sig_kor_nm}
+                  keyword={address ?? ''}
+                />
+              </div>
+            );
+          })}
+        </div>
       </div>
+
       <BottomButton
         variant={'primary'}
         size={'large'}
         label={'필터 적용하기'}
         onClick={handleComplete}
-        disabled={true}
+        disabled={!sigunguCode}
       />
     </div>
   );

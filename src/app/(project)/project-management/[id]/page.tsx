@@ -15,17 +15,16 @@ const ProjectManagementDetailPage = ({
   const { id: idStr } = params;
   const { status, isHost } = searchParams;
 
-  const id = Number(idStr);
-  const isHostFlag = isHost === 'true';
+  const projectId = Number(idStr);
 
   if (!status) {
     redirect('/404');
   }
 
-  return isHostFlag ? (
-    <ManagementHost id={id} status={status} />
+  return isHost === 'true' ? (
+    <ManagementHost projectId={projectId} status={status} />
   ) : (
-    <ManagementGuest id={id} status={status} />
+    <ManagementGuest projectId={projectId} status={status} />
   );
 };
 

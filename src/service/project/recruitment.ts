@@ -1,28 +1,7 @@
-import { LocationType, TimeOption } from '@/types/project.type';
-import { getAuthHeader } from '../header';
+import { getAuthHeader } from '@/lib/api/header';
+import { IRecruitFilter } from '@/lib/api/project/project.interface';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
-export interface IRecruitResponse {
-  id: number;
-  previewImageUrl: string;
-  title: string;
-  recruitmentRole: 'MODEL' | 'PHOTOGRAPHER';
-  shootingAt: string; // Date
-  timeOption: string;
-  spot: string;
-  concepts: string[];
-  isBookmarked: boolean;
-}
-
-export interface IRecruitFilter {
-  recruitmentRole?: IRecruitResponse['recruitmentRole'];
-  startDate?: string;
-  endDate?: string;
-  timeOption?: TimeOption;
-  locationType?: LocationType;
-  concepts?: string[];
-}
 
 export const getRecruitAnnouncements = async ({
   recruitmentRole,
@@ -31,6 +10,7 @@ export const getRecruitAnnouncements = async ({
   timeOption,
   locationType,
   concepts,
+  spot,
 }: IRecruitFilter) => {
   const headers = await getAuthHeader();
 
@@ -45,6 +25,7 @@ export const getRecruitAnnouncements = async ({
       queryParams.append('concepts', concept);
     });
   }
+  if (spot) queryParams.append('spot', spot);
 
   const queryParamString = queryParams.toString();
   const url = `${API_URL}/projects/announcement${queryParamString ? `?${queryParamString}` : ''}`;
@@ -114,11 +95,14 @@ export const postAnnouncement = async (formData: FormData) => {
   }
 };
 
-export const putAnnouncement = async (formData: FormData) => {
+export const putAnnouncement = async (
+  formData: FormData,
+  projectId: number,
+) => {
   const headers = await getAuthHeader();
 
   try {
-    const response = await fetch(`${API_URL}/projects`, {
+    const response = await fetch(`${API_URL}/projects/${projectId}`, {
       method: 'PUT',
       body: formData,
       headers,

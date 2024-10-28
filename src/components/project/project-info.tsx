@@ -1,10 +1,11 @@
+import { timeOptionLabels } from '@/constants/project';
 import { cn } from '@/lib/utils';
 import { IProject } from '@/types/project.type';
 
 const ProjectInfo = ({
   project,
 }: {
-  project: Pick<IProject, 'shootingAt' | 'title' | 'spot'>;
+  project: Pick<IProject, 'shootingAt' | 'title' | 'address' | 'timeOption'>;
 }) => {
   return (
     <div className="flex flex-col gap-1 rounded-[8px] bg-gray-90 px-[12px] py-[14px]">
@@ -16,7 +17,7 @@ const ProjectInfo = ({
             'font-tag-14 text-gray-40 after:mx-[6px] after:content-["|"]',
           )}
         >
-          {project.spot}
+          {project.address}
         </p>
         <p
           className={cn(
@@ -26,7 +27,7 @@ const ProjectInfo = ({
           {project.shootingAt.split('T')[0]}
         </p>
         <p className={cn('font-tag-14 text-gray-40 after:mx-[6px]')}>
-          {project.shootingAt.split('T')[1].slice(0, -3)}
+          {timeOptionLabels[project.timeOption]}
         </p>
       </div>
     </div>

@@ -1,17 +1,13 @@
 'use client';
 
-import useDisclosure from '@/hooks/useDisclosure';
-import {
-  ProjectMember,
-  postStartProject,
-} from '@/lib/api/project/project-management';
+import { IStartedProjectGuest } from '@/lib/api/project/project.interface';
 import { cn } from '@/lib/utils';
-import { ActiveStatus } from '@/types/project.type';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { ActiveStatus, IProject } from '@/types/project.type';
+import { useRouter } from 'next/navigation';
 import BottomButton from '../common/bottom-button';
 import DMButton from '../common/dm-button';
-import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog';
-import ReviewDialog from './review/review-dialog';
+import ProjectStartButton from './management/project-start-button';
+import ReviewCheckButton from './review/review-check-button';
 
 interface ApplyMemberItemLayoutProps {
   profileImageUrl: string;
@@ -37,7 +33,6 @@ const ApplyUserLayout = ({
           className="h-[46px] w-[46px] rounded-[8px] object-cover"
         />
       </div>
-
       <div className="flex flex-1 flex-col">
         <div className="flex flex-1 justify-between">
           <h3 className="font-body-14m text-gray-20">{nickname}</h3>
@@ -52,78 +47,73 @@ const ApplyUserLayout = ({
   );
 };
 
-type ApplyMemberItemProps = ProjectMember & {
-  status: ActiveStatus;
-} & {
-  appliedAt: string;
-  applyContent: string;
-} & {
+type ApplyMemberItemProps = {
+  guest: IStartedProjectGuest;
   projectId: number;
 };
 
-type ProjectApplyGuestItemProps = ApplyMemberItemProps & { reviewId?: number };
-
-export const ProjectApplyGuestItem = (props: ProjectApplyGuestItemProps) => {
+export const RecruitingProjectApplyGuestItem = ({
+  guest,
+  projectId,
+}: {
+  projectId: IProject['id'];
+  guest: Omit<IStartedProjectGuest, 'reviewId' | 'isReviewDone'>;
+}) => {
   return (
     <ApplyUserLayout
-      profileImageUrl={props.profileImageUrl || '/png/profile.png'}
-      nickname={props.nickname}
-      appliedAt={props.appliedAt}
-      applyContent={props.applyContent}
+      profileImageUrl={guest.profileImageUrl || '/png/profile.png'}
+      nickname={guest.nickname}
+      appliedAt={guest.appliedAt}
+      applyContent={guest.applyContent}
     >
-      <ProjectApplyGuestButtons
-        status={props.status}
-        projectId={props.projectId}
-        nickname={props.nickname}
-        reviewId={props.reviewId}
-        applicantId={props.id}
-      />
+      <RecruitingButtons projectId={projectId} applicantId={guest.id} />
     </ApplyUserLayout>
   );
 };
 
-export const MyApplyItem = (props: ApplyMemberItemProps) => {
-  return (
-    <ApplyUserLayout
-      profileImageUrl={props.profileImageUrl || '/png/profile.png'}
-      nickname={props.nickname}
-      appliedAt={props.appliedAt}
-      applyContent={props.applyContent}
-    >
-      <MyApplyButton projectId={props.projectId} />
-    </ApplyUserLayout>
-  );
-};
-
-interface ProjectApplyGuestButtonsProps {
-  status: ActiveStatus;
-  projectId: number;
-  nickname: string;
-  reviewId?: number;
-  applicantId: number;
-}
-
-const ProjectApplyGuestButtons = ({
+export const StartedProjectApplyGuestItem = ({
+  guest,
   status,
   projectId,
-  nickname,
-  reviewId,
-  applicantId,
-}: ProjectApplyGuestButtonsProps) => {
+}: ApplyMemberItemProps & {
+  status: Exclude<ActiveStatus, 'RECRUITING'>;
+}) => {
   return (
-    <ProjectApplyGuestButtonsLayout>
-      {status === 'COMPLETED' && (
-        <CompletedButtons reviewId={reviewId} nickname={nickname} />
-      )}
-      {status === 'RECRUITING' && (
-        <RecruitingButtons projectId={projectId} applicantId={applicantId} />
-      )}
+    <ApplyUserLayout
+      profileImageUrl={guest.profileImageUrl || '/png/profile.png'}
+      nickname={guest.nickname}
+      appliedAt={guest.appliedAt}
+      applyContent={guest.applyContent}
+    >
       {status === 'IN_PROGRESS' && (
-        <InProgressButtons projectId={projectId} applicantId={applicantId} />
+        <InProgressButtons applicantId={guest.id} projectId={projectId} />
       )}
-    </ProjectApplyGuestButtonsLayout>
+      {status === 'COMPLETED' && (
+        <CompletedButtons guestReviewId={guest.reviewId} />
+      )}
+    </ApplyUserLayout>
   );
 };
+
+export const MyApplyItem = ({
+  guest,
+  projectId,
+}: {
+  projectId: number;
+  guest: Omit<IStartedProjectGuest, 'reviewId' | 'isReviewDone'>;
+}) => {
+  return (
+    <ApplyUserLayout
+      profileImageUrl={guest.profileImageUrl || '/png/profile.png'}
+      nickname={guest.nickname}
+      appliedAt={guest.appliedAt}
+      applyContent={guest.applyContent}
+    >
+      <MyApplyButton projectId={projectId} />
+    </ApplyUserLayout>
+  );
+};
+
 interface ProjectApplyGuestButtonsLayoutProps {
   children: React.ReactNode;
 }
@@ -139,76 +129,23 @@ interface RecruitingButtonsProps {
   applicantId: number;
 }
 
-const RecruitingButtons = ({
+export const RecruitingButtons = ({
   projectId,
   applicantId,
 }: RecruitingButtonsProps) => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const {
-    isOpen: isModalOpen,
-    onOpenChange: onModalOpenChange,
-    onClose: onModalClose,
-    onOpen: onModalOpen,
-  } = useDisclosure(false);
-
-  const handleClickStart = async () => {
-    try {
-      await postStartProject(projectId, applicantId);
-      const updatedSearchParams = new URLSearchParams(searchParams.toString());
-      updatedSearchParams.set('status', 'IN_PROGRESS');
-      onModalClose();
-      router.replace(`?${updatedSearchParams.toString()}`);
-    } catch (e) {
-      alert(e);
-    }
-  };
-
   return (
-    <div className="flex w-full gap-[6px]">
-      <DMButton
-        variant="stroke"
-        size="small"
-        label={'DM'}
-        className="font-tag-12 max-w-none flex-1"
-        participantId={applicantId}
-      />
-      <Dialog open={isModalOpen} onOpenChange={onModalOpenChange}>
-        <DialogTrigger asChild>
-          <BottomButton
-            variant="secondary"
-            size="small"
-            label={'프로젝트 시작하기'}
-            className="font-tag-12 max-w-none flex-1"
-            onClick={onModalOpen}
-          />
-        </DialogTrigger>
-        <DialogContent className="flex w-[312px] flex-col gap-[6px] px-[12px] pb-[24px] pt-[32px]">
-          <div
-            className={cn(
-              'font-title-16 flex flex-wrap items-start justify-center self-stretch',
-            )}
-          >
-            {'프로젝트를\u00A0'}
-            <span className="text-primary">시작</span>하시나요?
-          </div>
-          <p
-            className={cn(
-              'font-body-14 mb-4 flex justify-center self-stretch text-gray-20',
-            )}
-          >
-            열린 프로젝트는 변경할 수 없습니다.
-          </p>
-          <BottomButton
-            variant={'primary'}
-            size={'middle'}
-            label={'시작하기'}
-            onClick={handleClickStart}
-            className="max-w-none"
-          />
-        </DialogContent>
-      </Dialog>
-    </div>
+    <ProjectApplyGuestButtonsLayout>
+      <div className="flex w-full gap-[6px]">
+        <DMButton
+          variant="stroke"
+          size="small"
+          label={'DM'}
+          className="font-tag-12 max-w-none flex-1"
+          participantId={applicantId}
+        />
+        <ProjectStartButton projectId={projectId} applicantId={applicantId} />
+      </div>
+    </ProjectApplyGuestButtonsLayout>
   );
 };
 
@@ -219,13 +156,33 @@ interface InProgressButtonsProps {
 
 const InProgressButtons = ({ applicantId }: InProgressButtonsProps) => {
   return (
-    <DMButton
-      variant="stroke"
-      size="small"
-      label={'DM'}
-      className="font-tag-12 max-w-none flex-1"
-      participantId={applicantId}
-    />
+    <ProjectApplyGuestButtonsLayout>
+      <DMButton
+        variant="stroke"
+        size="small"
+        label={'DM'}
+        className="font-tag-12 max-w-none flex-1"
+        participantId={applicantId}
+      />
+    </ProjectApplyGuestButtonsLayout>
+  );
+};
+
+interface CompletedButtonsProps {
+  guestReviewId: number | null;
+}
+
+const CompletedButtons = ({ guestReviewId }: CompletedButtonsProps) => {
+  return (
+    <ProjectApplyGuestButtonsLayout>
+      <ReviewCheckButton
+        variant={'stroke'}
+        size={'small'}
+        className="font-tag-12 max-w-none flex-1"
+        canViewReview={guestReviewId === null}
+        reviewId={guestReviewId}
+      />
+    </ProjectApplyGuestButtonsLayout>
   );
 };
 
@@ -250,35 +207,5 @@ const MyApplyButton = ({ projectId }: MyApplyButtonProps) => {
         onClick={handleCancelApply}
       />
     </div>
-  );
-};
-
-interface CompletedButtonsProps {
-  reviewId?: number;
-  nickname: string;
-}
-
-const CompletedButtons = ({ reviewId, nickname }: CompletedButtonsProps) => {
-  const { isOpen, onToggle } = useDisclosure(false);
-
-  return (
-    <>
-      <BottomButton
-        variant={'stroke'}
-        size={'small'}
-        label={'리뷰 확인하기'}
-        className="font-tag-12 max-w-none flex-1"
-        onClick={onToggle}
-        disabled={reviewId === null}
-      />
-      {reviewId && (
-        <ReviewDialog
-          reviewId={reviewId}
-          name={nickname}
-          isOpen={isOpen}
-          onOpenChange={onToggle}
-        />
-      )}
-    </>
   );
 };

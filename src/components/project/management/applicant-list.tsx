@@ -1,18 +1,18 @@
 'use client';
 
 import useDisclosure from '@/hooks/useDisclosure';
-import { Applicant } from '@/lib/api/project/project-management';
+import { IApplicant } from '@/lib/api/project/project.interface';
 import { cn } from '@/lib/utils';
 import { IProject } from '@/types/project.type';
 import Icon from '../../common/icon';
-import { ProjectApplyGuestItem } from '../apply-member-item';
+import { RecruitingProjectApplyGuestItem } from '../apply-member-item';
 
 export const ApplicantList = ({
   projectId,
   applicantList,
 }: {
   projectId: IProject['id'];
-  applicantList: Applicant[];
+  applicantList: IApplicant[];
 }) => {
   const { isOpen, onToggle } = useDisclosure(false);
   return (
@@ -29,15 +29,16 @@ export const ApplicantList = ({
       {isOpen && (
         <div className="mt-4 flex-1 divide-y divide-gray-80">
           {applicantList.map((applicant) => (
-            <ProjectApplyGuestItem
+            <RecruitingProjectApplyGuestItem
               key={applicant.applicantId}
               projectId={projectId}
-              nickname={applicant.nickname}
-              profileImageUrl={applicant.profileImageUrl}
-              status={'RECRUITING'}
-              appliedAt={applicant.appliedAt}
-              applyContent={applicant.applyContent}
-              id={applicant.applicantId}
+              guest={{
+                nickname: applicant.nickname,
+                profileImageUrl: applicant.profileImageUrl,
+                appliedAt: applicant.appliedAt,
+                applyContent: applicant.applyContent,
+                id: applicant.applicantId,
+              }}
             />
           ))}
         </div>

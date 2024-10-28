@@ -3,22 +3,27 @@
 import BottomButton from '@/components/common/bottom-button';
 import Icon from '@/components/common/icon';
 import IconButton from '@/components/common/icon-button';
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogHeader,
+} from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
+import useDisclosure from '@/hooks/useDisclosure';
 import { cn } from '@/lib/utils';
 import { useProjectRegisterStore } from '@/store/project-regist-store';
-import { LocationType, ProfessionRole, TimeOption } from '@/types/project.type';
+import { Identity, LocationType, TimeOption } from '@/types/project.type';
 import { getCookie } from 'cookies-next';
-import React, { useRef, useState } from 'react';
-
 import { redirect } from 'next/navigation';
+import React, { PropsWithChildren, useRef, useState } from 'react';
+import DaumPostcodeEmbed from 'react-daum-postcode';
 import '../../../styles/input.css';
 
 const StepOne: React.FC = () => {
   const { projectInfo, setProjectInfo, nextStep } = useProjectRegisterStore();
   const type =
-    (getCookie('identity') as ProfessionRole) === 'MODEL'
-      ? 'PHOTOGRAPHER'
-      : 'MODEL';
+    (getCookie('identity') as Identity) === 'MODEL' ? 'PHOTOGRAPHER' : 'MODEL';
   const [projectName, setProjectName] = useState<string>(
     projectInfo.projectName,
   );
@@ -30,13 +35,14 @@ const StepOne: React.FC = () => {
   const [locationType, setLocationType] = useState<LocationType | null>(
     projectInfo.location.type,
   );
-  // const [address, setAddress] = useState<string>(projectInfo.location.address);
-  const [address] = useState<string>('SEOUL');
+  const [address, setAddress] = useState<string>(projectInfo.location.address);
+  const [spot, setSpot] = useState<string | null>(projectInfo.location.spot);
 
   const [detail, setDetail] = useState<string>(projectInfo.location.detail);
 
   const dateInputRef = useRef<HTMLInputElement>(null);
   // const timeInputRef = useRef<HTMLInputElement>(null);
+  const { isOpen, onToggle, onOpenChange } = useDisclosure(false);
 
   if (!type) redirect('/login');
 
@@ -56,11 +62,9 @@ const StepOne: React.FC = () => {
         type,
         projectName,
         shootingDate: { date, period },
-        location: { type: locationType, address, detail },
+        location: { type: locationType, spot, address, detail },
       });
       nextStep();
-    } else {
-      alert('모든 필드를 입력해주세요.');
     }
   };
 
@@ -74,6 +78,11 @@ const StepOne: React.FC = () => {
   //     timeInputRef.current.showPicker();
   //   }
   // };
+  const handleComplete = (location: any) => {
+    setAddress(location.address);
+    setSpot(location.sigunguCode);
+    onToggle();
+  };
 
   return (
     <div className={cn('relative flex h-full flex-col justify-between')}>
@@ -129,6 +138,7 @@ const StepOne: React.FC = () => {
                 placeholder="YYYY/MM/DD"
                 ref={dateInputRef}
                 onClick={handleDateClick}
+                min={new Date().toISOString().split('T')[0]}
                 className="font-body-14 flex h-[40px] w-full flex-1 flex-col items-center justify-center rounded-[8px] border bg-transparent p-[10.514px] text-center text-gray-20 placeholder-gray-60 focus:ring-0"
               />
               <IconButton
@@ -212,14 +222,32 @@ const StepOne: React.FC = () => {
               <Input
                 type="text"
                 value={address}
-                // onChange={(e) => setAddress(e.target.value)}
+                onClick={onToggle}
                 placeholder="주소"
               />
               <IconButton
                 icon={
                   <Icon id={'search-icon'} size={24} className="text-gray-40" />
                 }
+                onClick={onToggle}
               />
+
+              <Dialog open={isOpen} onOpenChange={onOpenChange}>
+                <DialogContent className="flex h-full flex-col">
+                  <DialogHeader className="flex h-6 w-full">
+                    <DialogClose asChild className="ml-auto">
+                      <Icon
+                        className="h-6 w-6 text-gray-40"
+                        id={'close-icon'}
+                      />
+                    </DialogClose>
+                  </DialogHeader>
+                  <DaumPostcodeEmbed
+                    onComplete={handleComplete}
+                    style={{ height: '100%' }}
+                  />
+                </DialogContent>
+              </Dialog>
             </div>
 
             <Input
@@ -248,5 +276,9 @@ const StepOne: React.FC = () => {
     </div>
   );
 };
+
+function SectionLayout({ children }: PropsWithChildren) {
+  return <div className={cn('flex flex-col gap-2')}>{children}</div>;
+}
 
 export default StepOne;

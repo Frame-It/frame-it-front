@@ -1,9 +1,9 @@
 import ManagementTabs from '@/components/project/management/management-tabs';
 import ProjectList from '@/components/project/project-list';
-import { getUserProjects } from '@/lib/api/project/project-management';
 
 import { cn } from '@/lib/utils';
-import { IProject, Status } from '@/types/project.type';
+import { getUserProjects } from '@/service/project/management';
+import { IManageProject, Status } from '@/types/project.type';
 
 interface IProjectManagementListPageProps {
   searchParams: { type?: string };
@@ -23,7 +23,8 @@ const ProjectManagementListPage = async ({
 
   const status = filter !== 'all' ? statusMap[filter] : undefined;
 
-  const { projects }: { projects: IProject[] } = await getUserProjects(status);
+  const { projects }: { projects: IManageProject[] } =
+    await getUserProjects(status);
 
   return (
     <div className="flex h-full flex-col overflow-hidden">

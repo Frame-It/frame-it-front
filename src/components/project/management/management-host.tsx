@@ -1,58 +1,63 @@
 import Guide from '@/components/common/guide';
 import { HostProjectGuide } from '@/constants/guide';
 import {
-  CompletedProject,
-  InProgressProject,
-  RecruitingProject,
+  ICompletedProjectRes,
+  InProgressProjectRes,
+  IRecruitingProjectRes,
+} from '@/lib/api/project/project.interface';
+import { cn } from '@/lib/utils';
+import {
   getCompletedProject,
   getInProgressProject,
   getRecruitingProject,
-} from '@/lib/api/project/project-management';
-import { cn } from '@/lib/utils';
+} from '@/service/project/management';
 import { ActiveStatus, IActiveProject } from '@/types/project.type';
 import ProjectInfo from '../project-info';
-import { HostReviewDialogButton } from '../review/review-dialog-button';
+import ReviewCheckButton from '../review/review-check-button';
+import ReviewWriteButton from '../review/review-write-button';
 import { ApplicantList } from './applicant-list';
-import { ProjectApplyGuest } from './apply-info';
+import { StartedProjectApplyGuest } from './apply-info';
 import HostInProgressContent from './host-in-progress';
 import ProgressBox from './progress-box';
 
 interface HostContentProps {
-  id: number;
+  projectId: number;
   status: ActiveStatus;
 }
-const ManagementHost = async ({ id, status }: HostContentProps) => {
-  let statusProject: RecruitingProject | InProgressProject | CompletedProject;
+const ManagementHost = async ({ projectId, status }: HostContentProps) => {
+  let statusProject:
+    | IRecruitingProjectRes
+    | InProgressProjectRes
+    | ICompletedProjectRes;
 
   if (status === 'RECRUITING') {
-    statusProject = await getRecruitingProject(id, 'HOST');
+    statusProject = await getRecruitingProject(projectId, 'HOST');
   } else if (status === 'IN_PROGRESS') {
-    statusProject = await getInProgressProject(id, 'HOST');
+    statusProject = await getInProgressProject(projectId, 'HOST');
   } else {
-    statusProject = await getCompletedProject(id, 'HOST');
+    statusProject = await getCompletedProject(projectId, 'HOST');
   }
-  // console.log(statusProject);
 
   const project: IActiveProject = {
     status: statusProject.status,
-    id,
+    id: projectId,
     title: statusProject.title,
     shootingAt: statusProject.shootingAt,
     timeOption: statusProject.timeOption,
-    spot: statusProject.spot,
+    address: statusProject.address,
     isHost: true,
   };
 
   return (
     <ManagementHostLayout project={project}>
-      {status === 'RECRUITING' && <RecruitingContent projectId={id} />}
+      {status === 'RECRUITING' && <RecruitingContent projectId={projectId} />}
       {status === 'IN_PROGRESS' && (
         <HostInProgressContent
-          projectId={id}
-          project={statusProject as InProgressProject}
+          projectId={projectId}
+          project={statusProject as unknown as InProgressProjectRes}
         />
       )}
-      {status === 'COMPLETED' && <CompletedContent projectId={id} />}
+      {status === 'COMPLETED' && <CompletedContent projectId={projectId} />}
     </ManagementHostLayout>
   );
 };
@@ -111,20 +116,30 @@ interface CompletedContentProps {
 
 const CompletedContent = async ({ projectId }: CompletedContentProps) => {
   const { guest, reviewId } = await getCompletedProject(projectId, 'HOST');
+  const isReviewDone = reviewId !== null;
 
   if (!guest) return;
 
   return (
     <>
-      <HostReviewDialogButton
-        projectId={projectId}
+      {isReviewDone ? (
+        <ReviewCheckButton
+          reviewId={reviewId}
+          canViewReview={true}
+          variant={'secondary'}
+          size={'large'}
+        />
+      ) : (
+        <ReviewWriteButton
+          projectId={projectId}
+          status={'COMPLETED'}
+          variant={'secondary'}
+          size={'large'}
+        />
+      )}
+      <StartedProjectApplyGuest
+        status={'COMPLETED'}
         guest={guest}
-        reviewId={reviewId}
-        status={'COMPLETED'}
-      />
-      <ProjectApplyGuest
-        status={'COMPLETED'}
-        partner={guest}
         id={projectId}
         applyContent={guest.applyContent}
         appliedAt={guest.appliedAt}

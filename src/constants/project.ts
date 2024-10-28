@@ -1,3 +1,5 @@
+import { TimeOption } from '@/types/project.type';
+
 export const PROJECT_CONCEPTS = [
   { label: '모노톤', id: 'PC-001' },
   { label: '신비로운', id: 'PC-002' },
@@ -49,3 +51,9 @@ export type ITag = {
 export type IProjectConcept = ITag;
 
 export type IUserConcept = ITag;
+
+export const timeOptionLabels: Record<TimeOption, string> = {
+  MORNING: '오전',
+  AFTERNOON: '오후',
+  TO_BE_DISCUSSED: '협의가능',
+};

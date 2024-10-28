@@ -2,10 +2,14 @@
 
 import Icon from '@/components/common/icon';
 import useDisclosure from '@/hooks/useDisclosure';
-import { ProjectMember } from '@/lib/api/project/project-management';
+
+import { IStartedProjectGuest } from '@/lib/api/project/project.interface';
 import { cn } from '@/lib/utils';
-import { IActiveProject } from '@/types/project.type';
-import { MyApplyItem, ProjectApplyGuestItem } from '../apply-member-item';
+import { IActiveProject, IStartedProject } from '@/types/project.type';
+import {
+  MyApplyItem,
+  StartedProjectApplyGuestItem,
+} from '../apply-member-item';
 
 interface ApplyLayoutProps {
   title: string;
@@ -22,44 +26,32 @@ const ApplyLayout = ({ title, children }: ApplyLayoutProps) => {
 };
 
 type ProjectApplyGuestProps = {
-  partner: ProjectMember;
+  guest: IStartedProjectGuest;
   applyContent: string;
   appliedAt: string;
-} & Pick<IActiveProject, 'status' | 'id'>;
+} & Pick<IStartedProject, 'status' | 'id'>;
 
-export const ProjectApplyGuest = ({
-  partner,
+export const StartedProjectApplyGuest = ({
+  guest,
   status,
   id: projectId,
-  applyContent,
-  appliedAt,
 }: ProjectApplyGuestProps) => {
   return (
     <ApplyLayout title="프로젝트 게스트">
-      <ProjectApplyGuestItem
+      <StartedProjectApplyGuestItem
+        guest={guest}
         status={status}
-        appliedAt={appliedAt}
-        applyContent={applyContent}
         projectId={projectId}
-        {...partner}
       />
     </ApplyLayout>
   );
 };
 
 type ApplyInfoProps = {
-  principal: ProjectMember;
-  appliedAt: string;
-  applyContent: string;
-} & Pick<IActiveProject, 'status' | 'id'>;
+  principal: Omit<IStartedProjectGuest, 'reviewId' | 'isReviewDone'>;
+} & Pick<IActiveProject, 'id'>;
 
-export const MyApplyInfo = ({
-  principal,
-  status,
-  id,
-  appliedAt,
-  applyContent,
-}: ApplyInfoProps) => {
+export const MyApplyInfo = ({ principal }: ApplyInfoProps) => {
   const { isOpen, onToggle } = useDisclosure(false);
 
   return (
@@ -75,13 +67,7 @@ export const MyApplyInfo = ({
       </div>
       {isOpen && (
         <div className="flex-1 divide-y divide-gray-80">
-          <MyApplyItem
-            projectId={id}
-            appliedAt={appliedAt}
-            applyContent={applyContent}
-            status={status}
-            {...principal}
-          />
+          <MyApplyItem projectId={principal.id} guest={principal} />
         </div>
       )}
     </div>

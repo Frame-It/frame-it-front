@@ -1,13 +1,15 @@
-import { ProjectMember } from '@/lib/api/project/project-management';
+import DMButton from '@/components/common/dm-button';
+
+import { IProjectMember } from '@/lib/api/project/project.interface';
 import { cn } from '@/lib/utils';
-import { GuestReviewDialogButton } from '../review/review-dialog-button';
+import ReviewCheckButton from '../review/review-check-button';
 
 export const HostInfo = ({
   host,
   reviewId,
   canViewReview,
 }: {
-  host: ProjectMember & {
+  host: IProjectMember & {
     isReviewDone: boolean;
     reviewId: number | null;
   };
@@ -28,11 +30,27 @@ export const HostInfo = ({
           </div>
           <div className="font-body-14m flex items-center">{host.nickname}</div>
         </div>
-        <GuestReviewDialogButton
-          host={{ userId: host.id, name: host.nickname }}
-          reviewId={reviewId}
-          canViewReview={canViewReview}
-        />
+        <>
+          {reviewId === null ? (
+            <DMButton
+              variant={'stroke'}
+              size={'small'}
+              label={'호스트에게 DM하기'}
+              className="font-tag-12 max-w-[126px]"
+              participantId={host.id}
+            />
+          ) : (
+            <>
+              <ReviewCheckButton
+                variant={'stroke'}
+                size={'small'}
+                className="font-tag-12 max-w-[126px]"
+                reviewId={reviewId}
+                canViewReview={canViewReview}
+              />
+            </>
+          )}
+        </>
       </div>
     </div>
   );

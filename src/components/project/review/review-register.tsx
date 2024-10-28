@@ -6,11 +6,11 @@ import Guide from '@/components/common/guide';
 import { AutosizeTextarea } from '@/components/ui/auto-size-textarea';
 import { REVIEW_TAGS } from '@/constants/project';
 import {
-  CompletedProject,
-  InProgressProject,
-} from '@/lib/api/project/project-management';
-import { postProjectReview } from '@/lib/api/project/project-review';
+  ICompletedProjectRes,
+  InProgressProjectRes,
+} from '@/lib/api/project/project.interface';
 import { cn } from '@/lib/utils';
+import { postProjectReview } from '@/service/project/review';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import ProjectInfo from '../project-info';
@@ -20,7 +20,7 @@ const ReviewRegister = ({
   projectId,
   revieweeId,
 }: {
-  project: InProgressProject | CompletedProject;
+  project: InProgressProjectRes | ICompletedProjectRes;
   projectId: number;
   revieweeId: number;
 }) => {
@@ -111,7 +111,7 @@ const ReviewRegister = ({
           size={'large'}
           label={'작성완료'}
           onClick={handleComplete}
-          disabled={selectedTags.length === 0 || reviewContent.length === 0}
+          disabled={selectedTags.length === 0 || reviewContent.length < 10}
         />
       </div>
     </div>

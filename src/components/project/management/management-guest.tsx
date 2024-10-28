@@ -2,16 +2,18 @@ import DMButton from '@/components/common/dm-button';
 import Guide from '@/components/common/guide';
 import { GuestProjectGuide } from '@/constants/guide';
 import {
-  CompletedProject,
-  InProgressProject,
-  MyApplication,
-  ProjectMember,
-  RecruitingProject,
+  ICompletedProjectRes,
+  IMyApplication,
+  InProgressProjectRes,
+  IProjectMember,
+  IRecruitingProjectRes,
+} from '@/lib/api/project/project.interface';
+import { cn } from '@/lib/utils';
+import {
   getCompletedProject,
   getInProgressProject,
   getRecruitingProject,
-} from '@/lib/api/project/project-management';
-import { cn } from '@/lib/utils';
+} from '@/service/project/management';
 import { ActiveStatus, IActiveProject } from '@/types/project.type';
 import ProjectInfo from '../project-info';
 import { MyApplyInfo } from './apply-info';
@@ -20,54 +22,56 @@ import GuestInProgressContent from './guest-in-progress';
 import ProgressBox from './progress-box';
 
 const ManagementGuest = async ({
-  id,
+  projectId,
   status,
 }: {
-  id: number;
+  projectId: number;
   status: ActiveStatus;
 }) => {
-  let statusProject: RecruitingProject | InProgressProject | CompletedProject;
+  let statusProject:
+    | IRecruitingProjectRes
+    | InProgressProjectRes
+    | ICompletedProjectRes;
 
   if (status === 'RECRUITING') {
-    statusProject = await getRecruitingProject(id, 'GUEST');
+    statusProject = await getRecruitingProject(projectId, 'GUEST');
   } else if (status === 'IN_PROGRESS') {
-    statusProject = await getInProgressProject(id, 'GUEST');
+    statusProject = await getInProgressProject(projectId, 'GUEST');
   } else {
-    statusProject = await getCompletedProject(id, 'GUEST');
+    statusProject = await getCompletedProject(projectId, 'GUEST');
   }
 
   const project: IActiveProject = {
     status: statusProject.status,
-    id,
+    id: projectId,
     title: statusProject.title,
     shootingAt: statusProject.shootingAt,
     timeOption: statusProject.timeOption,
-    spot: statusProject.spot,
+    address: statusProject.address,
     isHost: false,
   };
 
-  const myApplication = (statusProject as RecruitingProject).myApplication;
+  const myApplication = (statusProject as IRecruitingProjectRes).myApplication;
 
   return (
     <ManagementGuestLayout project={project}>
       {status === 'RECRUITING' && myApplication && (
         <RecruitingContent
-          projectId={id}
-          status={'RECRUITING'}
+          projectId={projectId}
           myApplication={myApplication}
-          project={statusProject as RecruitingProject}
+          project={statusProject as IRecruitingProjectRes}
         />
       )}
       {status === 'IN_PROGRESS' && (
         <GuestInProgressContent
-          projectId={id}
-          project={statusProject as InProgressProject}
+          projectId={projectId}
+          project={statusProject as unknown as InProgressProjectRes}
         />
       )}
       {status === 'COMPLETED' && (
         <GuestCompletedContent
-          projectId={id}
-          project={statusProject as CompletedProject}
+          projectId={projectId}
+          project={statusProject as unknown as ICompletedProjectRes}
         />
       )}
     </ManagementGuestLayout>
@@ -112,18 +116,16 @@ const ManagementGuestLayout = ({
 
 interface RecruitingContentProps {
   projectId: number;
-  status: ActiveStatus;
-  myApplication: MyApplication;
-  project: RecruitingProject;
+  myApplication: IMyApplication;
+  project: IRecruitingProjectRes;
 }
 
 const RecruitingContent = async ({
   projectId,
-  status,
   myApplication,
   project,
 }: RecruitingContentProps) => {
-  const principal: ProjectMember = {
+  const principal: IProjectMember = {
     id: myApplication.applicantId,
     nickname: myApplication.nickname,
     profileImageUrl: myApplication.profileImageUrl,
@@ -140,11 +142,12 @@ const RecruitingContent = async ({
         />
       )}
       <MyApplyInfo
-        principal={principal}
+        principal={{
+          appliedAt: myApplication.appliedAt,
+          applyContent: myApplication.applyContent,
+          ...principal,
+        }}
         id={projectId}
-        status={status}
-        appliedAt={myApplication.appliedAt}
-        applyContent={myApplication.applyContent}
       />
     </>
   );

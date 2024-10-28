@@ -1,10 +1,11 @@
 import { Badge } from '@/components/ui/badge';
+import { timeOptionLabels } from '@/constants/project';
 import { cn } from '@/lib/utils';
-import { IProject } from '@/types/project.type';
+import { IManageProject } from '@/types/project.type';
 import Link from 'next/link';
 
 interface ProjectItemProps {
-  project: IProject;
+  project: IManageProject;
   routePath?: string;
 }
 
@@ -25,12 +26,12 @@ const ProjectListItem: React.FC<ProjectItemProps> = ({
           {project.isHost && <MyBadge />}
           <div className="font-body-14 flex items-center leading-[150%] text-gray-40">
             <span className='after:mx-2 after:content-["|"]'>
-              {project.spot}
+              {project.address}
             </span>
             <span className='after:mx-2 after:content-["|"]'>
-              {project.shootingAt.split('T')[0]}
+              {project.shootingAt.slice(5, 10).split('-').join('/')}
             </span>
-            <span>{project.shootingAt.split('T')[1].slice(0, -3)}</span>
+            <span>{timeOptionLabels[project.timeOption]}</span>
           </div>
         </div>
       </div>
