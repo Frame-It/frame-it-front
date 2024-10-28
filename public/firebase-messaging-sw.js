@@ -54,7 +54,7 @@ const messaging = firebase.messaging();
 // })
 
 // 이 부분 바꾸기
-const httpHeader = "http://localhost:3000"; 
+const httpHeader = "https://www.frameit.kr"; 
 
 self.addEventListener('push', async function (event) {
   if (event.data) {
