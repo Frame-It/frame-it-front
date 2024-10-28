@@ -4,7 +4,7 @@ import { getChatMessage } from '@/lib/api/chat/chat';
 import { cn } from '@/lib/utils';
 import { IChatDetail, IMessage } from '@/types/letter';
 import { useQuery } from '@tanstack/react-query';
-import { format, parseISO } from 'date-fns';
+import { format } from 'date-fns';
 
 import { ko } from 'date-fns/locale/ko';
 

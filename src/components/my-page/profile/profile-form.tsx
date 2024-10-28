@@ -22,6 +22,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from '@/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import useMount from '@/hooks/use-mount';
 
 const ProfileForm = () => {
   const { data, isLoading } = useQuery({
@@ -30,6 +31,8 @@ const ProfileForm = () => {
     staleTime: 0,
     gcTime: 0,
   });
+
+  const mount = useMount();
 
   const queryClient = useQueryClient();
   const router = useRouter();
@@ -79,6 +82,10 @@ const ProfileForm = () => {
       });
     }
   };
+
+  if (!mount) {
+    return null;
+  }
 
   return (
     <Form {...form}>
