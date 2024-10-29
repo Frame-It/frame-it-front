@@ -28,10 +28,17 @@ export const PwaProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [deferredPrompt, setDeferredPrompt] =
     useState<BeforeInstallPromptEvent | null>(null);
-  const isDeviceIOS = /iPad|iPhone|iPod/.test(window.navigator.userAgent);
+  const [isDeviceIOS, setIsDeviceIOS] = useState<boolean>(false);
+
+  useEffect(() => {
+    setIsDeviceIOS(/iPad|iPhone|iPod/.test(window.navigator.userAgent));
+  }, []);
 
   const [isPromptDismissed, setIsPromptDismissed] = useState<boolean>(() => {
-    return localStorage.getItem('pwaPromptDismissed') === 'true';
+    return (
+      typeof window !== 'undefined' &&
+      localStorage.getItem('pwaPromptDismissed') === 'true'
+    );
   });
 
   useEffect(() => {
