@@ -1,6 +1,7 @@
 'use client';
 
 import { FilterTabs } from '@/components/common/filter-tabs';
+import LoadingSpinner from '@/components/common/loading-spinner';
 import RecruitCard from '@/components/project/recruit-card';
 import FilterDrawers from '@/components/project/recruitment/filter-drawers';
 import { ScrollArea } from '@/components/ui/scroll-area';

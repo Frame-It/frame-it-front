@@ -7,7 +7,11 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Drawer from './drawer';
 import Icon from './icon';
-import NotificationGuide from './noti-gide';
+import dynamic from 'next/dynamic';
+
+const AppInstallPrompt = dynamic(() => import('./app-install-prompt'), {
+  ssr: false,
+});
 
 interface IBottomBarProps {
   className?: string;
@@ -85,7 +89,7 @@ const BottomNavbar = ({ className }: IBottomBarProps) => {
 
   return (
     <>
-      <NotificationGuide />
+      <AppInstallPrompt />
       <nav
         className={cn(
           'fixed bottom-0 z-30 mx-auto flex h-[64px] w-full max-w-[360px] items-center justify-center border-t-[1px] border-t-[#ECE9E7] bg-white px-[32px] xl:static',

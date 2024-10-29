@@ -47,20 +47,3 @@ export const sendTokenHandler = async () => {
 
   return returnToken;
 };
-
-export const clickPushHandler = () => {
-  const isSupported = () =>
-    'Notification' in window &&
-    'serviceWorker' in navigator &&
-    'PushManager' in window;
-
-  if (isSupported()) {
-    Notification.requestPermission().then((permission) => {
-      if (permission !== 'granted') {
-        // 푸시 거부됐을 때 처리할 내용
-      } else {
-        // 푸시 승인됐을 때 처리할 내용
-      }
-    });
-  }
-};

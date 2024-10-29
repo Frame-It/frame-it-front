@@ -22,8 +22,6 @@ const MarketingSwitch = ({
     }
 
     if (!checked && userId) {
-      console.log('renewal!!');
-
       await tokenRenewal(userId);
     }
 

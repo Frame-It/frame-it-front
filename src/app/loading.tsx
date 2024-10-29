@@ -6,7 +6,7 @@ export default function Loading() {
       <h2 className="font-title-18 break-keep text-center">
         페이지를 로딩 중 입니다. 잠시만 기다려 주세요!
       </h2>
-      <LoadingSpinner size={50} />
+      <LoadingSpinner size={36} />
     </div>
   );
 }
