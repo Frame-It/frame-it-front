@@ -4,7 +4,7 @@ import './globals.css';
 
 import SvgSymbols from '@/components/common/svg-symbols';
 import { Toaster } from '@/components/ui/toaster';
-import GoogleAnalytics from '@/lib/google-analytics';
+import { GoogleTagManager } from '@next/third-parties/google';
 import ReactQueryProvider from '@/providers/react-query-provider';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import localFont from 'next/font/local';
@@ -53,10 +53,13 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="Frameit" />
         <link rel="manifest" href="/manifest.json" />
       </head>
+      {/* Google Tag Manager */}
+      {process.env.NEXT_PUBLIC_GTM_ID ? (
+        <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID} />
+      ) : null}
+
       <body className={cn(pretendard.className, 'relative overflow-hidden')}>
-        {process.env.NEXT_PUBLIC_GA_ID ? (
-          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
-        ) : null}
+        {/* PC & Mobile Layout */}
         <div className="xl:flex xl:w-dvw xl:items-center xl:justify-center xl:gap-x-[125px] xl:bg-gray-90">
           <div className="hidden h-dvh xl:flex xl:flex-col xl:items-center xl:justify-center">
             <div className="flex min-h-[800px] flex-col justify-around">
@@ -135,6 +138,19 @@ export default function RootLayout({
             개인정보 처리 방침
           </Link>
         </div>
+
+        {/* Google Tag Manager */}
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-T89Z9DPL"
+            height="0"
+            width="0"
+            style={{
+              display: 'none',
+              visibility: 'hidden',
+            }}
+          ></iframe>
+        </noscript>
       </body>
     </html>
   );

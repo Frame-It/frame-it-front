@@ -188,7 +188,7 @@ const StepTwo: React.FunctionComponent<IStepTwoProps> = ({ id }) => {
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         onKeyDown={preventEnterKeySubmission}
-        className="space-y-[24px] pb-[66px]"
+        className="space-y-[24px] px-4 pb-[66px] pt-8"
       >
         <FormField
           control={form.control}
