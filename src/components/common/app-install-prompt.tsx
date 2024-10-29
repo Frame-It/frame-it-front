@@ -37,9 +37,11 @@ export default function AppInstallPrompt() {
     };
   }, [handleInstallClick, setDeferredPrompt]);
 
+  const show = deferredPrompt || !isPromptDismissed || null;
+
   return (
     <>
-      {deferredPrompt || !isPromptDismissed ? (
+      {show ? (
         <MobileInstallPrompt
           handleInstallClick={handleInstallClick}
           handleCancelClick={dismissPrompt}
