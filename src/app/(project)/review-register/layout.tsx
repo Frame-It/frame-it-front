@@ -23,7 +23,7 @@ export default function ReviewRegisterLayout({
     );
   };
   return (
-    <div className="h-screen-dvh flex flex-col pt-[58px]">
+    <div className="flex h-screen-dvh flex-col pt-[58px]">
       <Header>
         <HeaderLeft>
           <BackButton onClick={handleClickBack}>
