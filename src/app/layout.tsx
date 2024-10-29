@@ -29,6 +29,8 @@ const pretendard = localFont({
   variable: '--font-pretendard',
 });
 
+const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || '';
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -54,9 +56,7 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
       </head>
       {/* Google Tag Manager */}
-      {process.env.NEXT_PUBLIC_GTM_ID ? (
-        <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID} />
-      ) : null}
+      <GoogleTagManager gtmId={GTM_ID} />
 
       <body className={cn(pretendard.className, 'relative overflow-hidden')}>
         {/* PC & Mobile Layout */}
@@ -140,7 +140,7 @@ export default function RootLayout({
         </div>
 
         {/* Google Tag Manager */}
-        <noscript>
+        {/* <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-T89Z9DPL"
             height="0"
@@ -150,7 +150,7 @@ export default function RootLayout({
               visibility: 'hidden',
             }}
           ></iframe>
-        </noscript>
+        </noscript> */}
       </body>
     </html>
   );
