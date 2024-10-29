@@ -4,6 +4,7 @@ import SocialButton from '@/components/common/social-button';
 import { toast } from '@/components/ui/use-toast';
 import { cn } from '@/lib/utils';
 import { sendCodeToBackend } from '@/service/auth-service';
+import { tokenRenewal } from '@/service/client-actions/notification';
 import { setCookie } from 'cookies-next';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -39,6 +40,9 @@ export default function LoginPage({
           } else {
             setCookie('identity', data.identity);
             setCookie('accessToken', data.accessToken);
+            if (data.notificationsEnabled === true) {
+              await tokenRenewal(data.id);
+            }
             router.push('/');
           }
         } catch (error) {

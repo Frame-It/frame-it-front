@@ -14,8 +14,6 @@ interface INotificationListProps {
   notificationList: INotification[];
 }
 
-const NOTI_URL = process.env.NEXT_PUBLIC_NOTI_URL;
-
 const NotificationList: React.FunctionComponent<INotificationListProps> = ({
   notificationList,
 }) => {
@@ -33,10 +31,12 @@ const NotificationList: React.FunctionComponent<INotificationListProps> = ({
     <>
       <ul className="flex w-full flex-col gap-y-4 px-4 py-2">
         {notificationList.map((noti) => {
-          let newLink = NOTI_URL;
+          let newLink = '';
 
           if (noti.eventType !== 'SIGN_UP') {
-            newLink = `${NOTI_URL}/project-management/${noti.resourcesId}?status=${returnEmptyIfNull(noti.projectStatus)}&isHost=${returnEmptyIfNull(noti.isHost)}`;
+            newLink = `/project-management/${noti.resourcesId}?status=${returnEmptyIfNull(noti.projectStatus)}&isHost=${returnEmptyIfNull(noti.isHost)}`;
+          } else {
+            newLink = '/my-page/my-studio';
           }
 
           return (
@@ -45,8 +45,8 @@ const NotificationList: React.FunctionComponent<INotificationListProps> = ({
                 `rounded-[8px] border border-gray-80 bg-gray-95 p-[12px]`,
                 noti.isRead && 'bg-white',
               )}
-              onClick={() => router.push(newLink || '/')}
               key={noti.id}
+              onClick={() => router.push(newLink || '/')}
             >
               <div className="">
                 <div className="flex w-full items-center">

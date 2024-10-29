@@ -102,7 +102,7 @@ export default function RootLayout({
             >
               <div className="relative hidden items-center justify-between bg-white px-4 text-gray-20 xl:flex">
                 <div>
-                  {new Date().getHours()}:{new Date().getMinutes()}
+                  {`${new Date().getHours().toString().padStart(2, '0')}:${new Date().getMinutes().toString().padStart(2, '0')}`}
                 </div>
                 <img
                   src="/png/camera.png"

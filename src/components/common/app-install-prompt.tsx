@@ -39,13 +39,13 @@ export default function AppInstallPrompt() {
 
   return (
     <>
-      {deferredPrompt && !isPromptDismissed && (
+      {deferredPrompt || !isPromptDismissed ? (
         <MobileInstallPrompt
           handleInstallClick={handleInstallClick}
           handleCancelClick={dismissPrompt}
           platform={isDeviceIOS ? 'ios' : 'android'}
         />
-      )}
+      ) : null}
     </>
   );
 }
