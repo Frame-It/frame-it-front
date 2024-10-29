@@ -65,12 +65,12 @@ export default function MyStudioWritePage({
   }, [id]);
 
   return (
-    <main>
+    <main className="h-[calc(100dvh-58px-64px)] xl:h-[calc(800px-58px-64px)]">
       <Progress
         value={(currentStep / maxStep) * 100}
         className="fixed z-20 mx-auto max-w-[360px]"
       />
-      <ScrollArea className="h-[calc(100dvh-58px)] w-full px-4 py-[38px] xl:h-[calc(800px-58px-64px)]">
+      <ScrollArea className="h-full w-full px-4 py-4">
         {currentStep === 1 && <StepOne />}
         {currentStep === 2 && <StepTwo id={id} />}
       </ScrollArea>
