@@ -58,8 +58,6 @@ export const getMyProjects = async () => {
 
       const data: any = await res.json();
 
-      console.log(data);
-
       return data;
     } catch (error) {
       console.log(error);

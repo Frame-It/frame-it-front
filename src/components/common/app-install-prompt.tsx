@@ -37,7 +37,7 @@ export default function AppInstallPrompt() {
     };
   }, [handleInstallClick, setDeferredPrompt]);
 
-  const notShow = !deferredPrompt || !isPromptDismissed || null;
+  const notShow = deferredPrompt || !isPromptDismissed || null;
 
   return (
     <>

@@ -61,8 +61,6 @@ export const updateProfile = async (value: {
 }) => {
   const token = getCookie('accessToken');
 
-  console.log(value);
-
   if (token && value.id) {
     try {
       const formData = new FormData();
