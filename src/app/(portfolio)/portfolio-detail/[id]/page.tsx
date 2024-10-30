@@ -16,7 +16,6 @@ export default function PortfolioDetailPage() {
     queryKey: ['portfolioDetail', id],
     queryFn: ({ queryKey }) => getPortfolioDetailClient(queryKey[1]),
     enabled: !!id,
-    staleTime: 0,
   });
 
   return (
@@ -34,7 +33,7 @@ export default function PortfolioDetailPage() {
       />
       <PortfolioDetailGallery imageList={data?.photosUrl} />
       <PortfolioDetailFooter
-        collaborators={data?.collaborators || '알수없음 님'}
+        collaborators={data?.collaborators}
         createdAt={data?.createdAt}
         views="아직 구현되지 않은 기능"
       />

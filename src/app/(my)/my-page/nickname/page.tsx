@@ -137,7 +137,6 @@ export default function ProfilePage() {
                           onChangeCapture={() => {
                             setIsDuplicate(true);
                             setCheckDuplicate(false);
-                            console.log('초기화');
                           }}
                           {...field}
                           value={field.value || ''}

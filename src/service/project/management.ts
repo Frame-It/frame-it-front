@@ -54,7 +54,6 @@ export const getRecruitingProject = async (
   const data: IRecruitingProjectRes = await res.json();
 
   if (!res.ok) {
-    console.log(data);
     throw new Error('Failed to fetch recruiting project');
   }
   return data;
@@ -76,8 +75,6 @@ export const getInProgressProject = async (
 
   const data: InProgressProjectRes = await res.json();
   if (!res.ok) {
-    console.log(data);
-
     throw new Error('Failed to fetch in-progress project');
   }
 
@@ -100,8 +97,6 @@ export const getCompletedProject = async (
 
   const data: ICompletedProjectRes = await res.json();
   if (!res.ok) {
-    console.log(data);
-
     throw new Error('Failed fetch completed project');
   }
   return data;

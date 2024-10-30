@@ -12,8 +12,6 @@ export const getChatByParticipantId = async (participantId: number) => {
 
   const data = await res.text();
   if (!res.ok) {
-    console.log(data);
-
     throw new Error('Failed to fetch in-progress project');
   }
 
@@ -36,8 +34,8 @@ export const postCreateChat = async (participantId: number) => {
   const data = res.text();
 
   if (!res.ok) {
-    console.log(res);
-    console.log(data);
+    // console.log(res);
+    // console.log(data);
   }
 
   return data;

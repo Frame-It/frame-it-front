@@ -9,9 +9,11 @@ const privatePaths = [
   '/project-management',
   '/project-recruitment',
   '/letter',
+  '/portfolio-detail/',
   '/portfolio-register',
   '/project-register',
   '/notification',
+  '/portfolio',
 ];
 const restrictedPaths = ['/login', '/register'];
 
@@ -108,6 +110,7 @@ export const config = {
     '/project-register',
     '/portfolio-register',
     '/studio/:path*',
+    '/portfolio-detail/:path*',
     '/project-management/:path*',
     '/project-recruitment/:path*',
   ],
