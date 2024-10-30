@@ -31,7 +31,10 @@ export const PwaProvider: React.FC<{ children: React.ReactNode }> = ({
   const [isDeviceIOS, setIsDeviceIOS] = useState<boolean>(false);
 
   useEffect(() => {
-    setIsDeviceIOS(/iPad|iPhone|iPod/.test(window.navigator.userAgent));
+    const userAgent = window.navigator.userAgent;
+    setIsDeviceIOS(
+      /iPad|iPhone|iPod|Macintosh/.test(userAgent) && 'ontouchend' in document,
+    );
   }, []);
 
   const [isPromptDismissed, setIsPromptDismissed] = useState<boolean>(() => {
