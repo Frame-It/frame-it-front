@@ -4,12 +4,14 @@ import { Button } from '@/components/ui/button';
 interface IMobileInstallPromptProps {
   handleInstallClick: () => void;
   handleCancelClick: () => void;
+  handleCancelForever: () => void;
   platform: 'ios' | 'android';
 }
 
 const MobileInstallPrompt = ({
   handleInstallClick,
   handleCancelClick,
+  handleCancelForever,
   platform,
 }: IMobileInstallPromptProps) => {
   return (
@@ -19,6 +21,10 @@ const MobileInstallPrompt = ({
         <p className="font-body-14 mt-[6px] text-gray-20">
           앱을 설치하고 다양한 알림을 받아보세요!
         </p>
+        <XIcon
+          onClick={() => handleCancelClick()}
+          className="absolute right-4 top-4"
+        />
 
         {platform === 'ios' ? (
           <div className="my-4 mt-2 flex items-center justify-center gap-x-2 rounded-md border border-gray-20 p-4">
@@ -35,10 +41,10 @@ const MobileInstallPrompt = ({
           </Button>
         )}
         <button
-          onClick={handleCancelClick}
+          onClick={handleCancelForever}
           className="text-center text-sm font-medium text-gray-40 underline"
         >
-          지금은 안 할래요
+          다시 보지 않기
         </button>
       </div>
       {/* <div className="rounded-lg border bg-white px-4 py-3 shadow-lg">

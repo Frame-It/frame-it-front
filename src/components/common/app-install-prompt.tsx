@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import { usePwaContext } from '@/providers/pwa-provider';
 import MobileInstallPrompt from './mobile-install-prompt';
+import { usePathname } from 'next/navigation';
 
 export default function AppInstallPrompt() {
   const {
@@ -12,6 +13,9 @@ export default function AppInstallPrompt() {
     isPromptDismissed,
     dismissPrompt,
   } = usePwaContext();
+
+  const [tempShow, setTempShow] = useState(true);
+  const pathname = usePathname();
 
   const handleInstallClick = useCallback(() => {
     if (deferredPrompt) {
@@ -37,16 +41,25 @@ export default function AppInstallPrompt() {
     };
   }, [handleInstallClick, setDeferredPrompt]);
 
-  const notShow = deferredPrompt || !isPromptDismissed || null;
+  useEffect(() => {
+    setTempShow(true);
+  }, [pathname]);
+
+  const notShowForever = !isPromptDismissed;
 
   return (
     <>
-      {notShow ? (
-        <MobileInstallPrompt
-          handleInstallClick={handleInstallClick}
-          handleCancelClick={() => dismissPrompt()}
-          platform={isDeviceIOS ? 'ios' : 'android'}
-        />
+      {notShowForever ? (
+        <>
+          {tempShow ? (
+            <MobileInstallPrompt
+              handleInstallClick={handleInstallClick}
+              handleCancelClick={() => setTempShow(false)}
+              handleCancelForever={() => dismissPrompt()}
+              platform={isDeviceIOS ? 'ios' : 'android'}
+            />
+          ) : null}
+        </>
       ) : null}
     </>
   );

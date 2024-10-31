@@ -11,6 +11,14 @@ import localFont from 'next/font/local';
 import Link from 'next/link';
 import Script from 'next/script';
 import { PwaProvider } from '@/providers/pwa-provider';
+import dynamic from 'next/dynamic';
+
+const AppInstallPrompt = dynamic(
+  () => import('@/components/common/app-install-prompt'),
+  {
+    ssr: false,
+  },
+);
 
 export const metadata: Metadata = {
   manifest: '/manifest.json',
@@ -112,7 +120,10 @@ export default function RootLayout({
                 <img src="/png/phone-icon.png" alt="camera" className="w-14" />
               </div>
               <ReactQueryProvider>
-                <PwaProvider>{children}</PwaProvider>
+                <PwaProvider>
+                  {children}
+                  <AppInstallPrompt />
+                </PwaProvider>
                 <Script src="/sw.js" />
                 <ReactQueryDevtools />
               </ReactQueryProvider>
