@@ -3,6 +3,7 @@
 import BottomButton from '@/components/common/bottom-button';
 import { FilterTabs } from '@/components/common/filter-tabs';
 import Icon from '@/components/common/icon';
+import LoadingSpinner from '@/components/common/loading-spinner';
 import RecruitCard from '@/components/project/recruit-card';
 import FilterDrawers from '@/components/project/recruitment/filter-drawers';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -82,6 +83,7 @@ const RecruitPage = ({ searchParams }: RecruitPageProps) => {
           <FilterDrawers filter={filter} />
         </div>
       </div>
+
       {recruitList?.length === 0 ? (
         <div className="flex flex-1 flex-col items-center justify-center gap-[9px] text-center">
           <Icon id={'pictogram-icon'} width={87} height={71} stroke="#7E7774" />
@@ -99,18 +101,25 @@ const RecruitPage = ({ searchParams }: RecruitPageProps) => {
           />
         </div>
       ) : (
-        <ScrollArea
-          className={cn(
-            'h-[calc(100%-94px)] overflow-auto py-[19px] xl:h-[calc(800px-94px-24px-120px)]',
+        <>
+          {isLoading ? (
+            <div className="flex h-full justify-center">
+              <LoadingSpinner />
+            </div>
+          ) : (
+            <ScrollArea
+              className={cn(
+                'h-[calc(100%-94px)] overflow-auto py-[19px] xl:h-[calc(800px-94px-24px-120px)]',
+              )}
+            >
+              <div className={cn('flex h-full flex-col gap-[16px] px-[16px]')}>
+                {recruitList?.map((recruit: IRecruitProject) => (
+                  <RecruitCard key={recruit.id} {...recruit} />
+                ))}
+              </div>
+            </ScrollArea>
           )}
-        >
-          <div className={cn('flex h-full flex-col gap-[16px] px-[16px]')}>
-            {isLoading && <div>Loading...</div>}
-            {recruitList?.map((recruit: IRecruitProject) => (
-              <RecruitCard key={recruit.id} {...recruit} />
-            ))}
-          </div>
-        </ScrollArea>
+        </>
       )}
     </div>
   );

@@ -1,5 +1,6 @@
 'use client';
 
+import LoadingSpinner from '@/components/common/loading-spinner';
 import { Progress } from '@/components/ui/progress';
 import { getRecruitAnnouncement } from '@/service/project/recruitment';
 import { useProjectRegisterStore } from '@/store/project-regist-store';
@@ -54,7 +55,12 @@ export default function ProjectEditPage() {
     }
   }, [projectId, setProjectInfo]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading)
+    return (
+      <div className="flex h-full justify-center">
+        <LoadingSpinner />
+      </div>
+    );
 
   return (
     <>
@@ -63,7 +69,7 @@ export default function ProjectEditPage() {
         className="fixed z-20 mx-auto max-w-[360px]"
       />
       <div className="h-full px-4 pt-6">
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<></>}>
           {currentStep === 1 && <StepOne />}
           {currentStep === 2 && <StepTwo isEdit projectId={projectId} />}
         </Suspense>
