@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Frameit:프레이밋
 
-## Getting Started
+[배포 링크](https://www.frameit.kr/)
 
-First, run the development server:
+### 프레이밋이란?
+
+프레이밋은 사진을 찍는 사람(작가)와 본인의 사진을 남기고 싶은 사람(모델)을 연결시켜주는 플랫폼입니다.
+
+프레이밋에서는 프로젝트를 개설하고 신청할 수 있으며, 개인 포트폴리오를 업로드하여 다른 유저와 연결될 수 있습니다.
+
+### 기간
+
+> 2024.05 ~ 진행 중
+
+### 구성원
+
+- FE 개발: 오황석([@osh6006](https://github.com/osh6006)), 최주은([@jee-woo](https://github.com/jee-woo))
+- BE 개발: 유재민([@yujamint](https://github.com/yujamint)), 전인표([@ingpyo](https://github.com/ingpyo))
+- 기획: 정지원
+- 디자인: 박다혜, 박소은
+
+## 기능
+
+### 회원가입 / 로그인
+
+<div style="display: flex; gap: 10px;">
+  <!-- <img src="image-1.png" alt="회원가입, 로그인 화면" width="240"/>
+  <img src="image-2.png" alt="회원가입 약관 화면" width="240"/>
+  <img src="image-3.png" alt="역할 선택 화면 화면" width="240"/>
+  <img src="image-4.png" alt="역할 선택 화면 화면" width="240"/> -->
+</div>
+
+### 1. 모집
+
+> 프레이밋의 핵심 기능으로, 프로젝트 호스트와 작가 혹은 모델을 연결하는 서비스입니다.
+>
+> 호스트가 게시한 프로젝트 공고에 맞는 사용자들이 프로젝트에 신청하여, 적합한 파트너를 쉽게 찾을 수 있습니다.
+
+- 프로젝트 공고: 사용자들은 자신과 맞는 프로젝트를 선택하고 신청할 수 있으며, 프로젝트 진행 상태를 추적할 수 있습니다.
+- 리뷰 기능: 프로젝트 완료 후 파트너에 대한 리뷰를 작성하여 피드백을 남길 수 있습니다.
+- 북마크 기능: 관심 있는 프로젝트 공고는 북마크하여 관리가 용이합니다.
+
+<!--
+- 모집
+- 프로젝트 공고
+- 프로젝트 관리
+- 스튜디오 > 프로젝트/리뷰 탭
+- 북마크 -->
+
+### 2. 탐색
+
+> 작가와 모델이 자신의 작업물을 포트폴리오로 업로드하고 공유할 수 있는 공간입니다.
+
+- 피드: 다른 사용자들의 포트폴리오를 피드 형태로 볼 수 있습니다.
+- 마이 스튜디오: 사진 작업물이 담긴 포트폴리오를 등록할 수 있습니다.
+
+<!-- #### 관련 페이지:
+
+탐색
+포트폴리오 상세
+스튜디오
+마이 스튜디오 -->
+
+### 3. 스튜디오
+
+> 사용자 활동 내역을 기록하고 표현하는 개인 페이지입니다.
+> 프로젝트 관리, 포트폴리오 등록, 프로필 수정 등 다양한 활동을 할 수 있습니다.
+
+<!-- 관련 페이지:
+
+마이 스튜디오
+스튜디오
+포트폴리오 등록
+프로필 수정 -->
+
+## 기술 스택
+
+## 프로젝트 실행
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
