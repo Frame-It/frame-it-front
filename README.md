@@ -24,10 +24,10 @@
 ### 회원가입 / 로그인
 
 <div style="display: flex; gap: 10px;">
-  <!-- <img src="image-1.png" alt="회원가입, 로그인 화면" width="240"/>
-  <img src="image-2.png" alt="회원가입 약관 화면" width="240"/>
-  <img src="image-3.png" alt="역할 선택 화면 화면" width="240"/>
-  <img src="image-4.png" alt="역할 선택 화면 화면" width="240"/> -->
+  <img src="https://github.com/user-attachments/assets/c6f50819-8f67-4d2a-b469-27352cf5fa9e" alt="회원가입, 로그인 화면" width="240"/>
+  <img src="https://github.com/user-attachments/assets/0857ae23-fda2-48dc-95ba-417aaf70a486" alt="회원가입 약관 화면" width="240"/>
+  <img src="https://github.com/user-attachments/assets/9c945cf2-a233-412a-8741-c93524323b71" alt="역할 선택 화면" width="240"/>
+  <img src="https://github.com/user-attachments/assets/47fa429d-6bcb-4a1b-a323-4283645fffcb" alt="이름 생년월일 입력 화면" width="240"/>
 </div>
 
 ### 1. 모집
