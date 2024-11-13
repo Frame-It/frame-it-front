@@ -38,7 +38,7 @@ export default function ProjectLayout({
   children: React.ReactNode;
 }) {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<></>}>
       <ProjectLayoutContent>{children}</ProjectLayoutContent>
     </Suspense>
   );

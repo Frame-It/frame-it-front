@@ -1,5 +1,6 @@
 'use client';
 
+import LoadingSpinner from '@/components/common/loading-spinner';
 import { TagList } from '@/components/common/tag-list';
 import HostInfo from '@/components/project/recruitment/host-info';
 import {
@@ -34,7 +35,11 @@ const ProjectRecruitmentDetailPage: FC<ProjectRecruitmentDetailPageProps> = ({
   } = useRecruitmentQuery(projectId);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex h-full justify-center">
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   if (error || !projectData) {
@@ -84,7 +89,7 @@ const ProjectRecruitmentDetailPage: FC<ProjectRecruitmentDetailPageProps> = ({
       <div className={cn('font-title-18')}>
         촬영 컨셉
         <div className={cn('py-2')}>
-          {<TagList tags={tagList} size={'medium'} />}
+          <TagList tags={tagList} size={'medium'} />
         </div>
         <Carousel>
           <CarouselContent>
