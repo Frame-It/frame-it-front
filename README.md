@@ -14,23 +14,35 @@
 
 ### 구성원
 
-- FE 개발: 오황석([@osh6006](https://github.com/osh6006)), 최주은([@jee-woo](https://github.com/jee-woo))
-- BE 개발: 유재민([@yujamint](https://github.com/yujamint)), 전인표([@ingpyo](https://github.com/ingpyo))
+- FE: 오황석([@osh6006](https://github.com/osh6006)), 최주은([@jee-woo](https://github.com/jee-woo))
+- BE: 유재민([@yujamint](https://github.com/yujamint)), 전인표([@ingpyo](https://github.com/ingpyo))
 - 기획: 정지원
 - 디자인: 박다혜, 박소은
 
 ## 기능
 
-### 회원가입 / 로그인
+### 1. 회원가입 / 로그인
 
-<div style="display: flex; gap: 10px;">
+<div style="display: flex; flex-direction: column; gap: 8px;">
+<div style="display: flex; gap: 8px;">
   <img src="https://github.com/user-attachments/assets/c6f50819-8f67-4d2a-b469-27352cf5fa9e" alt="회원가입, 로그인 화면" width="240"/>
   <img src="https://github.com/user-attachments/assets/0857ae23-fda2-48dc-95ba-417aaf70a486" alt="회원가입 약관 화면" width="240"/>
   <img src="https://github.com/user-attachments/assets/9c945cf2-a233-412a-8741-c93524323b71" alt="역할 선택 화면" width="240"/>
-  <img src="https://github.com/user-attachments/assets/47fa429d-6bcb-4a1b-a323-4283645fffcb" alt="이름 생년월일 입력 화면" width="240"/>
+</div>
+<div style="display: flex; gap: 8px;">
+  <img src="https://github.com/user-attachments/assets/47fa429d-6bcb-4a1b-a323-4283645fffcb" alt="이름, 생년월일 입력 화면" width="240"/>
+  <img src="https://github.com/user-attachments/assets/7c15adaa-59d2-43a2-abb5-d75324b3b4ca" alt="닉네임 입력 화면" width="240"/>
+  <img src="https://github.com/user-attachments/assets/5d17fe4b-d650-4378-b2c2-c83f44e9e51e" alt="회원가입 완료 화면" width="240"/>
+</div>
 </div>
 
-### 1. 모집
+<hr />
+
+- 카카오와 구글 아이디를 통해 로그인할 수 있습니다. 비회원의 경우 프로젝트 공고 목록과 피드 목록을 볼 수 있습니다.
+- 사용자는 작가와 모델 중 하나의 역할을 선택하여 회원가입 할 수 있습니다.
+- 프레이밋에서는 닉네임으로 활동합니다.
+
+### 2. 모집
 
 > 프레이밋의 핵심 기능으로, 프로젝트 호스트와 작가 혹은 모델을 연결하는 서비스입니다.
 >
@@ -47,7 +59,7 @@
 - 스튜디오 > 프로젝트/리뷰 탭
 - 북마크 -->
 
-### 2. 탐색
+### 3. 탐색
 
 > 작가와 모델이 자신의 작업물을 포트폴리오로 업로드하고 공유할 수 있는 공간입니다.
 
@@ -61,7 +73,7 @@
 스튜디오
 마이 스튜디오 -->
 
-### 3. 스튜디오
+### 4. 스튜디오
 
 > 사용자 활동 내역을 기록하고 표현하는 개인 페이지입니다.
 > 프로젝트 관리, 포트폴리오 등록, 프로필 수정 등 다양한 활동을 할 수 있습니다.
