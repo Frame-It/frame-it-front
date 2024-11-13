@@ -16,7 +16,7 @@ const ProjectList: React.FC<ProjectListProps> = ({ projectList }) => {
     <section className="flex h-full flex-auto flex-col">
       {projectList.length === 0 ? (
         <div className="flex flex-1 flex-col items-center justify-center gap-[9px] text-center">
-          <Icon id={'pictogram-icon'} width={87} height={71} />
+          <Icon id={'pictogram-icon'} width={87} height={71} stroke="#7E7774" />
           <div>
             <div className="font-title-16 text-gray-20">
               새로운 프로젝트를 시작해보세요!
