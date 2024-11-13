@@ -48,8 +48,18 @@
 >
 > 호스트가 게시한 프로젝트 공고에 맞는 사용자들이 프로젝트에 신청하여, 적합한 파트너를 쉽게 찾을 수 있습니다.
 
-- 프로젝트 공고: 사용자들은 자신과 맞는 프로젝트를 선택하고 신청할 수 있으며, 프로젝트 진행 상태를 추적할 수 있습니다.
-- 리뷰 기능: 프로젝트 완료 후 파트너에 대한 리뷰를 작성하여 피드백을 남길 수 있습니다.
+#### 모집 공고
+
+<div style="display: flex; flex-direction: column; gap: 8px;">
+  <div style="display: flex; gap: 8px;">
+    <img src="https://github.com/user-attachments/assets/148e2e0b-d1b3-4155-b5a8-790ec27635e7" alt="모집 목록" width="240"/>
+    <img src="https://github.com/user-attachments/assets/08a26d93-32a3-4f3e-9a2f-757e2d282b25" alt="공고 상세 화면" width="240"/>
+    <img src="https://github.com/user-attachments/assets/c2f0d2bc-cfa5-458e-a5b5-d75eb359c633" alt="프로젝트 신청 모달" width="240"/>
+  </div>
+</div>
+<hr />
+
+- 프로젝트 공고: 사용자들은 자신과 맞는 프로젝트를 선택하고 신청할 수 있습니다.
 - 북마크 기능: 관심 있는 프로젝트 공고는 북마크하여 관리가 용이합니다.
 
 <!--
