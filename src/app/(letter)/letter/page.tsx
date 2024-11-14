@@ -44,7 +44,7 @@ export default async function LetterPage() {
                         role={chat.participants.identity as 'author' | 'model'}
                       />
                       <div className="font-body-14m">
-                        {chat.participants.name}
+                        {chat.participants.nickname}
                       </div>
                     </div>
 
