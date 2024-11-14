@@ -7,7 +7,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Drawer from './drawer';
 import Icon from './icon';
-import dynamic from 'next/dynamic';
 
 interface IBottomBarProps {
   className?: string;
@@ -79,7 +78,7 @@ const NavLink: React.FunctionComponent<INavLinkProps> = ({
 
 const BottomNavbar = ({ className }: IBottomBarProps) => {
   const pathName = usePathname().split('/')[1];
-  const { isOpen, onOpenChange, onOpen } = useDisclosure();
+  const { isOpen, onOpenChange } = useDisclosure();
 
   const handleRegist = () => {};
 

@@ -6,6 +6,7 @@ import {
   HeaderRight,
 } from '@/components/common/header';
 import Icon from '@/components/common/icon';
+import { getMyInfo } from '@/service/server-actions/my-service';
 
 import React from 'react';
 
@@ -16,6 +17,8 @@ export default async function PortfolioLayout({
 }) {
   // id로 닉네임 받아오기
 
+  const myInfo = await getMyInfo();
+
   return (
     <>
       <Header className="border-none shadow-none">
@@ -24,7 +27,7 @@ export default async function PortfolioLayout({
             <Icon id="back-icon" className="size-[32px] text-gray-40" />
           </BackButton>
         </HeaderLeft>
-        <HeaderCenter>닉네임원 닉네임원</HeaderCenter>
+        <HeaderCenter>{myInfo?.nickname || ''}</HeaderCenter>
         <HeaderRight>
           <div className="size-[32px]"></div>
         </HeaderRight>
