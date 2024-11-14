@@ -107,6 +107,7 @@ const BottomNavbar = ({ className }: IBottomBarProps) => {
                       />
                     </li>
                   }
+                  className="pb-4 pt-0"
                 >
                   <RegistDrawerContent />
                 </Drawer>
