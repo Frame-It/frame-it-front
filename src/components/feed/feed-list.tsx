@@ -2,50 +2,43 @@
 
 import PhotoList from '../common/photo-list';
 import { useInView } from 'react-intersection-observer';
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { getFeeds } from '@/service/client-actions/portfolio';
-import { useEffect } from 'react';
 import { IFeed, IPortfolioResponse } from '@/types/portfolio';
 import EmptyFeeds from './empty-feeds';
+import { useFeedListQuery } from '@/service/feed/use-service';
+import LoadingSpinner from '../common/loading-spinner';
 
 interface IFeedListProps {
   role: string;
 }
 
 const FeedList: React.FunctionComponent<IFeedListProps> = ({ role }) => {
-  const { ref, inView } = useInView();
-
   const {
+    isLoading,
     data: feedData,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
     status,
-    error,
-  } = useInfiniteQuery({
-    queryKey: ['feeds', role],
-    queryFn: ({ pageParam = 0, queryKey }) =>
-      getFeeds({ pageParam, role: queryKey[1] }),
-    initialPageParam: 0,
-    enabled: !!role,
-    getNextPageParam: (lastPage) => {
-      const { number, totalPages } = lastPage;
-      return number + 1 < totalPages ? number + 1 : undefined;
+  } = useFeedListQuery(role);
+
+  const { ref } = useInView({
+    onChange(inView) {
+      if (inView && hasNextPage) {
+        fetchNextPage();
+      }
     },
   });
 
-  useEffect(() => {
-    if (inView && hasNextPage) {
-      fetchNextPage();
-    }
-  }, [inView, fetchNextPage, hasNextPage]);
-
   const isEmptyFeed =
-    !feedData || feedData.pages.every((page) => page?.content?.length === 0);
+    !isLoading && feedData?.pages.every((page) => page?.content?.length === 0);
 
   return (
     <section className="mx-auto h-full w-full">
-      {status === 'pending' && <p>Loading feeds...</p>}
+      {isLoading && (
+        <div className="flex h-[calc(55dvh)] w-full items-center justify-center">
+          <LoadingSpinner />
+        </div>
+      )}
       {status === 'error' && <p>Error loading feeds.</p>}
       {isEmptyFeed ? (
         <EmptyFeeds />
