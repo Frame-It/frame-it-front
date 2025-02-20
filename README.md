@@ -152,6 +152,6 @@
 ## 프로젝트 실행
 
 ```sh
-npm run dev # develoment
+npm run dev # development
 npm run build && npm run start # production
 ```
