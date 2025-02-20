@@ -1,6 +1,5 @@
+import { getFeeds } from './service';
 import { infiniteQueryOptions } from '@tanstack/react-query';
-
-import { getFeeds } from '../client-actions/portfolio';
 
 export const feedQueryKey = {
   all: ['feed'],
