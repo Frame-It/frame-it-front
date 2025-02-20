@@ -1,6 +1,7 @@
 import IconIDTypes from '@/types/icon';
+import { SVGProps } from 'react';
 
-interface IIconProps {
+interface IIconProps extends SVGProps<SVGSVGElement> {
   id: IconIDTypes;
   size?: number | string;
   className?: string;
