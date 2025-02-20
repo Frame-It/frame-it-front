@@ -5,6 +5,7 @@ import { useInView } from 'react-intersection-observer';
 import { IFeed, IPortfolioResponse } from '@/types/portfolio';
 import EmptyFeeds from './empty-feeds';
 import { useFeedListQuery } from '@/service/feed/use-service';
+import LoadingSpinner from '../common/loading-spinner';
 
 interface IFeedListProps {
   role: string;
@@ -12,6 +13,7 @@ interface IFeedListProps {
 
 const FeedList: React.FunctionComponent<IFeedListProps> = ({ role }) => {
   const {
+    isLoading,
     data: feedData,
     fetchNextPage,
     hasNextPage,
@@ -28,11 +30,15 @@ const FeedList: React.FunctionComponent<IFeedListProps> = ({ role }) => {
   });
 
   const isEmptyFeed =
-    !feedData || feedData.pages.every((page) => page?.content?.length === 0);
+    !isLoading && feedData?.pages.every((page) => page?.content?.length === 0);
 
   return (
     <section className="mx-auto h-full w-full">
-      {status === 'pending' && <p>Loading feeds...</p>}
+      {isLoading && (
+        <div className="flex h-[calc(55dvh)] w-full items-center justify-center">
+          <LoadingSpinner />
+        </div>
+      )}
       {status === 'error' && <p>Error loading feeds.</p>}
       {isEmptyFeed ? (
         <EmptyFeeds />
