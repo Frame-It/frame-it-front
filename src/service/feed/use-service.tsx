@@ -1,7 +1,6 @@
-// Query
-
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { feedListQueryOption } from './query-option';
+// Query
 
 // Infinite Query
 
