@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils';
 
-import React, { forwardRef, ReactNode, isValidElement } from 'react';
+import React, { ReactNode, forwardRef, isValidElement } from 'react';
 
 // Header 컴포넌트
 const Header = forwardRef<
@@ -44,7 +44,9 @@ const Header = forwardRef<
       )}
     >
       <div className="flex items-center justify-center">{leftContent}</div>
-      <div className="flex-grow text-center">{centerContent}</div>
+      <div className="absolute left-1/2 -translate-x-1/2 transform text-center">
+        {centerContent}
+      </div>
       <div className="flex items-center justify-end">{rightContent}</div>
     </header>
   );
@@ -93,4 +95,4 @@ HeaderLeft.displayName = 'HeaderLeft';
 HeaderCenter.displayName = 'HeaderCenter';
 HeaderRight.displayName = 'HeaderRight';
 
-export { Header, HeaderLeft, HeaderCenter, HeaderRight };
+export { Header, HeaderCenter, HeaderLeft, HeaderRight };
