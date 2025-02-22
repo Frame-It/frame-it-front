@@ -74,8 +74,8 @@ const ProjectRecruitmentDetailPage: FC<ProjectRecruitmentDetailPageProps> = ({
       )}
     >
       <div>
-        <div className="font-title-18 flex flex-col gap-2.5">{title}</div>
-        <div className="font-body-16 flex items-center gap-1 text-[#B7B5B4]">
+        <div className="font-title-18 flex flex-col">{title}</div>
+        <div className="font-body-16 flex items-center gap-1 pt-2.5 text-[#B7B5B4]">
           <Icon id={'view-icon-18'} className="stroke-[#B7B5B4]" size={18} />
           {viewCount}
         </div>
