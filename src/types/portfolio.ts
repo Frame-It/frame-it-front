@@ -52,4 +52,5 @@ export interface IPortfolioDetail {
   hashtags: string[];
   collaborators: string;
   createdAt: string;
+  viewCount: number;
 }
