@@ -50,6 +50,7 @@ export interface IRecruitProjectDetail extends IRecruitProject {
   isHost: boolean;
   isClosed: boolean;
   detailedAddress: string;
+  viewCount: number;
 }
 
 export interface IApplyInfo {

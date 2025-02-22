@@ -1,4 +1,4 @@
-import { IChat, IChatDetail, IMessage } from '@/types/letter';
+import { IChatDetail } from '@/types/letter';
 import { getAuthHeader } from '../header';
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -12,7 +12,7 @@ export const getChatByParticipantId = async (participantId: number) => {
 
   const data = await res.text();
   if (!res.ok) {
-    throw new Error('Failed to fetch in-progress project');
+    throw new Error('Failed to fetch chat id');
   }
 
   return data;
