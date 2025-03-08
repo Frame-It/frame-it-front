@@ -1,11 +1,3 @@
-import { queryOptions } from '@tanstack/react-query';
-
-export const profileQueryKey = {
+export const portfolioQueryKey = {
   all: ['portfolio'],
-};
-
-export const profileQueryOption = () => {
-  return queryOptions({
-    queryKey: profileQueryKey.all,
-  });
 };

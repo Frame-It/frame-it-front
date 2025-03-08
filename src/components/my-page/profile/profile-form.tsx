@@ -14,24 +14,17 @@ import ProfilSetting from './profile-setting';
 import { ProfileFormType, profileSchema } from '@/lib/schema/profile-schema';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import {
-  getUserProfileClient,
-  updateProfile,
-} from '@/service/client-actions/my-client';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { updateProfile } from '@/service/client-actions/my-client';
 import { toast } from '@/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import useMount from '@/hooks/use-mount';
+import { useGetMyProfileQuery } from '@/service/profile/use-service';
+import { useQueryClient } from '@tanstack/react-query';
+import { profileQueryKey } from '@/service/profile/query-option';
 
 const ProfileForm = () => {
-  const { data } = useQuery({
-    queryKey: ['getProfile'],
-    queryFn: getUserProfileClient,
-    staleTime: 0,
-    gcTime: 0,
-  });
-
+  const { data } = useGetMyProfileQuery();
   const mount = useMount();
 
   const queryClient = useQueryClient();
@@ -73,7 +66,7 @@ const ProfileForm = () => {
         title: '수정에 성공하였습니다!',
         variant: 'success',
       });
-      queryClient.invalidateQueries({ queryKey: ['getProfile'] });
+      queryClient.invalidateQueries({ queryKey: profileQueryKey.all });
       router.replace('/my-page/my-studio');
       router.refresh();
     } else {
