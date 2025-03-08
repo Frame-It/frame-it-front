@@ -1,4 +1,5 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+import api from '@/lib';
+import { IPortfolioResponse } from '@/types/portfolio';
 
 export const getFeeds = async ({
   pageParam = 0,
@@ -14,15 +15,10 @@ export const getFeeds = async ({
   };
 
   const path = rolePathMap[role] ?? '';
-  const url = `${API_URL}/portfolios${path}?page=${pageParam}&size=10`;
 
-  const res = await fetch(url, {
-    method: 'GET',
-    cache: 'no-store',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+  const { data } = await api.get<IPortfolioResponse, unknown>(
+    `/portfolios${path}?page=${pageParam}&size=10`,
+  );
 
-  return res.json();
+  return data;
 };
