@@ -23,22 +23,16 @@ import { toast } from '@/components/ui/use-toast';
 import { NickNameFormType, nicknameSchema } from '@/lib/schema/profile-schema';
 import { cn } from '@/lib/utils';
 import { checkDuplicateId } from '@/service/auth-service';
-import {
-  getUserProfileClient,
-  updateNickname,
-} from '@/service/client-actions/my-client';
+import { updateNickname } from '@/service/client-actions/my-client';
+import { useGetMyProfileQuery } from '@/service/profile/use-service';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 export default function ProfilePage() {
-  const { data } = useQuery({
-    queryKey: ['getProfile'],
-    queryFn: getUserProfileClient,
-    staleTime: 0,
-  });
+  const { data } = useGetMyProfileQuery();
 
   const queryClient = useQueryClient();
   const router = useRouter();
