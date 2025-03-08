@@ -1,23 +1,18 @@
-'use client';
-
 import PortfolioContents from '@/components/portfolio-detail/contents';
 import PortfolioDetailFooter from '@/components/portfolio-detail/footer';
 import PortfolioDetailGallery from '@/components/portfolio-detail/portfolio-gallery';
 import PortfolioProfile from '@/components/portfolio-detail/profile';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { getPortfolioDetailClient } from '@/service/client-actions/portfolio';
-import { useQuery } from '@tanstack/react-query';
-import { usePathname } from 'next/navigation';
+import { getPortfolioDetail } from '@/service/server-actions/portfolio';
 
-export default function PortfolioDetailPage() {
-  const id = usePathname().split('/').at(-1);
+export default async function PortfolioDetailPage({
+  params,
+}: {
+  params: { id: string };
+}) {
+  const id = params.id;
 
-  const { data } = useQuery({
-    queryKey: ['portfolioDetail', id],
-    queryFn: ({ queryKey }) => getPortfolioDetailClient(queryKey[1]),
-    enabled: !!id,
-  });
-
+  const data = await getPortfolioDetail(id);
   return (
     <ScrollArea className="h-[calc(100dvh-54px)] w-full overflow-y-auto px-[16px] pb-[14px] pt-4 xl:h-[calc(800px-54px-24px)]">
       <PortfolioProfile
