@@ -1,5 +1,6 @@
 'use client';
 
+import Icon from '@/components/common/icon';
 import LoadingSpinner from '@/components/common/loading-spinner';
 import { TagList } from '@/components/common/tag-list';
 import HostInfo from '@/components/project/recruitment/host-info';
@@ -13,6 +14,7 @@ import {
   CarouselDots,
   CarouselItem,
 } from '@/components/ui/carousel';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { timeOptionLabels } from '@/constants/project';
 import { useRecruitmentQuery } from '@/hooks/queries/projects/useRecruitmentQuery';
 import { cn } from '@/lib/utils';
@@ -62,6 +64,7 @@ const ProjectRecruitmentDetailPage: FC<ProjectRecruitmentDetailPageProps> = ({
     isBookmarked,
     timeOption,
     isClosed,
+    viewCount,
   } = projectData;
 
   return (
@@ -70,9 +73,13 @@ const ProjectRecruitmentDetailPage: FC<ProjectRecruitmentDetailPageProps> = ({
         'flex h-[calc(100%-64px)] flex-col gap-6 overflow-y-scroll px-4 pb-[29px] pt-4 text-gray-10',
       )}
     >
-      <div className={cn('font-title-18')}>
-        {title}
-        <div className={cn('font-body-16 pt-2')}>{description}</div>
+      <div>
+        <div className="font-title-18 flex flex-col">{title}</div>
+        <div className="font-body-16 flex items-center gap-1 pt-2.5 text-[#B7B5B4]">
+          <Icon id={'view-icon-18'} className="stroke-[#B7B5B4]" size={18} />
+          {viewCount}
+        </div>
+        <div className={cn('font-body-16 pt-6')}>{description}</div>
       </div>
       <div className={cn('font-title-18')}>
         촬영 일시
@@ -91,25 +98,46 @@ const ProjectRecruitmentDetailPage: FC<ProjectRecruitmentDetailPageProps> = ({
         <div className={cn('py-2')}>
           <TagList tags={tagList} size={'medium'} />
         </div>
-        <Carousel>
-          <CarouselContent>
-            {conceptPhotoUrls.map((url: string, index: number) => (
-              <CarouselItem
-                key={index}
-                className={cn('flex flex-col items-center justify-center')}
-              >
-                <div className={cn('w-full')}>
+        <Dialog>
+          <DialogTrigger asChild>
+            <ul className="flex w-full flex-col gap-y-4">
+              {conceptPhotoUrls?.map((el, i) => (
+                <li key={i}>
                   <img
-                    src={url}
-                    alt={'imagecarousel'}
-                    className="h-[246px] w-[328px] rounded-[8px] object-cover"
+                    src={el}
+                    alt={'세부 이미지' + i}
+                    className="w-full rounded-[8px] object-cover"
                   />
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselDots className="mt-[8px]" />
-        </Carousel>
+                </li>
+              ))}
+            </ul>
+          </DialogTrigger>
+          <DialogContent
+            className="border-none bg-transparent px-[16px]"
+            closeClassName="right-[24px] -top-[16px]"
+            closeSize="w-[24px] h-[24px] text-white"
+          >
+            <Carousel>
+              <CarouselContent>
+                {conceptPhotoUrls.map((url: string, index: number) => (
+                  <CarouselItem
+                    key={index}
+                    className={cn('flex flex-col items-center justify-center')}
+                  >
+                    <div className={cn('w-full')}>
+                      <img
+                        src={url}
+                        alt={'imagecarousel'}
+                        className="h-[246px] w-[328px] rounded-[8px] object-cover"
+                      />
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselDots className="mt-[8px]" />
+            </Carousel>
+          </DialogContent>
+        </Dialog>
       </div>
       <div className={cn('font-title-18')}>
         보정 내용

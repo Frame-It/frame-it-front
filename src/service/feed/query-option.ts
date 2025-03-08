@@ -1,5 +1,5 @@
-import { infiniteQueryOptions } from '@tanstack/react-query';
 import { getFeeds } from './service';
+import { infiniteQueryOptions } from '@tanstack/react-query';
 
 export const feedQueryKey = {
   all: ['feed'],

@@ -37,6 +37,7 @@ export const decodeRecruitResToRecruitProjectDetail = (
     isClosed: recruit.isClosed,
     address: recruit.address,
     detailedAddress: recruit.detailedAddress,
+    viewCount: recruit.viewCount,
   };
 };
 

@@ -4,7 +4,8 @@ export type ProjectIconID =
   | 'time-icon'
   | 'bookmark-icon'
   | 'arrow-down-icon'
-  | 'reload-icon';
+  | 'reload-icon'
+  | 'view-icon-18';
 
 export const projectSVG = (
   <>
@@ -160,6 +161,26 @@ export const projectSVG = (
           <rect width="18" height="18" fill="white" />
         </clipPath>
       </defs>
+    </symbol>
+
+    <symbol
+      id="view-icon-18"
+      xmlns="http://www.w3.org/2000/svg"
+      width="18"
+      height="18"
+      viewBox="0 0 18 18"
+      fill="none"
+    >
+      <path
+        d="M9 5C6.02738 5 3.77593 6.98417 2.52212 8.38522C2.20789 8.73635 2.20789 9.26365 2.52212 9.61478C3.77593 11.0158 6.02738 13 9 13C11.9726 13 14.2241 11.0158 15.4779 9.61478C15.7921 9.26365 15.7921 8.73635 15.4779 8.38522C14.2241 6.98417 11.9726 5 9 5Z"
+        stroke="currentStroke"
+        strokeWidth="1.5"
+      />
+      <path
+        d="M11.25 9C11.25 10.2426 10.2426 11.25 9 11.25C7.75736 11.25 6.75 10.2426 6.75 9C6.75 7.75736 7.75736 6.75 9 6.75C10.2426 6.75 11.25 7.75736 11.25 9Z"
+        stroke="currentStroke"
+        strokeWidth="1.5"
+      />
     </symbol>
   </>
 );

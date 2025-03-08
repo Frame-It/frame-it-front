@@ -35,7 +35,7 @@ export default function PortfolioDetailPage() {
       <PortfolioDetailFooter
         collaborators={data?.collaborators}
         createdAt={data?.createdAt}
-        views="아직 구현되지 않은 기능"
+        views={data?.viewCount}
       />
     </ScrollArea>
   );
