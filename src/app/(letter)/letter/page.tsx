@@ -10,7 +10,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 export default async function LetterPage() {
   const chatList: IChat[] = (await getUserChat()) || [];
 
-  const lastMessageTime = new Date('2024-10-16T18:26:50.099667');
+  const lastMessageTime = new Date(chatList[0].lastMessageTime);
   const timeAgo = formatDistanceToNow(lastMessageTime, {
     addSuffix: true,
     locale: ko,
@@ -41,7 +41,11 @@ export default async function LetterPage() {
                   <div className="flex items-center justify-between py-[2.5px]">
                     <div className="flex items-center gap-x-[4px]">
                       <RoleBadge
-                        role={chat.participants.identity as 'author' | 'model'}
+                        role={
+                          chat.participants.identity === 'MODEL'
+                            ? 'model'
+                            : 'author'
+                        }
                       />
                       <div className="font-body-14m">
                         {chat.participants.name}

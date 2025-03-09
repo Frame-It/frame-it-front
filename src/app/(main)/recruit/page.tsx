@@ -109,10 +109,14 @@ const RecruitPage = ({ searchParams }: RecruitPageProps) => {
           ) : (
             <ScrollArea
               className={cn(
-                'h-[calc(100%-94px)] overflow-auto py-[19px] xl:h-[calc(800px-94px-24px-120px)]',
+                'h-[calc(100%-94px)] overflow-auto xl:h-[calc(800px-94px-24px-120px)]',
               )}
             >
-              <div className={cn('flex h-full flex-col gap-[16px] px-[16px]')}>
+              <div
+                className={cn(
+                  'flex h-full flex-col gap-[16px] px-[16px] py-[19px]',
+                )}
+              >
                 {recruitList?.map((recruit: IRecruitProject) => (
                   <RecruitCard key={recruit.id} {...recruit} />
                 ))}

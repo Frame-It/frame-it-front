@@ -1,33 +1,28 @@
-'use client';
-
-import BookMarkCard from '@/components/my-page/bookmark/bookmark-card';
+import BookMarkCard, {
+  IRecruitCardProps,
+} from '@/components/my-page/bookmark/bookmark-card';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { PROJECT_CONCEPTS } from '@/constants/project';
 import { IRecruitRes } from '@/lib/api/project/project.interface';
 import { cn } from '@/lib/utils';
-import { getBookMarks } from '@/service/client-actions/bookmark';
-import { useQuery } from '@tanstack/react-query';
+import { getUserBookMarks } from '@/service/bookmark/service';
+export const dynamic = 'force-dynamic';
 
-const BookMarkPage = () => {
-  const { data: bookMarkList, isLoading } = useQuery({
-    queryKey: ['getBookMarks'],
-    queryFn: getBookMarks,
-    select: (data) => {
-      return data?.map((item: IRecruitRes) => ({
-        id: item.id,
-        imageUrl: item.previewImageUrl,
-        type: item.recruitmentRole,
-        title: item.title,
-        location: item.address,
-        date: new Date(item.shootingAt).toDateString(),
-        tagList: item.concepts.map((v) =>
-          PROJECT_CONCEPTS.find((concept) => concept.id === v),
-        ),
-        isBookmarked: item.isBookmarked,
-      }));
-    },
-  });
+export default async function bookMarkPage() {
+  const data = await getUserBookMarks();
+  const bookMarkList = data?.map((item: IRecruitRes) => ({
+    id: item.id,
+    imageUrl: item.previewImageUrl,
+    type: item.recruitmentRole,
+    title: item.title,
+    location: item.address,
+    date: new Date(item.shootingAt).toDateString(),
+    tagList: item.concepts.map((v) =>
+      PROJECT_CONCEPTS.find((concept) => concept.id === v),
+    ),
+    isBookmarked: item.isBookmarked,
+  }));
 
   return (
     <ScrollArea
@@ -47,13 +42,11 @@ const BookMarkPage = () => {
         </section>
       ) : (
         <ul className="my-4 space-y-4">
-          {bookMarkList?.map((recruitInfo: any) => (
+          {bookMarkList?.map((recruitInfo: IRecruitCardProps) => (
             <BookMarkCard key={recruitInfo.id} {...recruitInfo} />
           ))}
         </ul>
       )}
     </ScrollArea>
   );
-};
-
-export default BookMarkPage;
+}

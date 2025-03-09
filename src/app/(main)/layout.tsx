@@ -2,17 +2,20 @@ import BottomNavbar from '@/components/common/bottom-navbar';
 import { Header, HeaderLeft, HeaderRight } from '@/components/common/header';
 import Icon from '@/components/common/icon';
 import NotificationButton from '@/components/common/notification-button';
+import { getNotification } from '@/service/server-actions/notification';
 import { cookies } from 'next/headers';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function Layout({
+export default async function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   const cookieStore = cookies();
   const token = cookieStore.get('accessToken');
+  const notiArr = await getNotification();
+  const isRead = notiArr.some((el) => el.isRead);
 
   return (
     <>
@@ -32,8 +35,11 @@ export default function Layout({
         </HeaderLeft>
         <HeaderRight>
           {token ? (
-            <NotificationButton>
+            <NotificationButton className="relative">
               <Icon id="notification-icon" className="h-6 w-6" />
+              {isRead ? (
+                <div className="absolute -right-[2px] top-0 aspect-square h-2 w-2 rounded-full bg-primary" />
+              ) : null}
             </NotificationButton>
           ) : (
             <Link

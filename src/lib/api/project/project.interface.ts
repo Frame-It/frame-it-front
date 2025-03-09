@@ -34,6 +34,7 @@ export interface IRecruitDetailRes extends Omit<IRecruitRes, 'concepts'> {
   isHost: boolean;
   isClosed: boolean;
   detailedAddress: string;
+  viewCount: number;
 }
 
 export interface IRecruitFilter {
