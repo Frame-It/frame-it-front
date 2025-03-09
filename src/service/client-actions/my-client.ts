@@ -1,4 +1,4 @@
-import { IMyInfo, IMyStudio } from '@/types/my';
+import { IMyStudio } from '@/types/my';
 import { getCookie } from 'cookies-next';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
