@@ -55,7 +55,7 @@ async function handleResponse<T, E = unknown>(response: Response): Promise<T> {
 
   if (!response.ok) {
     throw new ApiError<E>(
-      `API request failed: ${response.url}  ${response.statusText}`,
+      `API request failed: ${response.url} ${response.statusText}`,
       response.status,
       data,
     );

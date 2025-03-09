@@ -7,8 +7,9 @@ import { PROJECT_CONCEPTS } from '@/constants/project';
 import { IRecruitRes } from '@/lib/api/project/project.interface';
 import { cn } from '@/lib/utils';
 import { getUserBookMarks } from '@/service/bookmark/service';
+export const dynamic = 'force-dynamic';
 
-const BookMarkPage = async () => {
+export default async function bookMarkPage() {
   const data = await getUserBookMarks();
   const bookMarkList = data?.map((item: IRecruitRes) => ({
     id: item.id,
@@ -48,6 +49,4 @@ const BookMarkPage = async () => {
       )}
     </ScrollArea>
   );
-};
-
-export default BookMarkPage;
+}
