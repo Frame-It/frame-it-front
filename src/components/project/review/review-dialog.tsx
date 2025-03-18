@@ -2,7 +2,7 @@
 
 import { ITag, REVIEW_TAGS } from '@/constants/project';
 import { cn } from '@/lib/utils';
-import { getProjectReview } from '@/service/project/review';
+import { getProjectReview } from '@/service/project-review/service';
 import { useEffect, useState } from 'react';
 import ConceptTag from '../../common/concept-tag';
 import Icon from '../../common/icon';

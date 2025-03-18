@@ -10,7 +10,7 @@ import {
   InProgressProjectRes,
 } from '@/lib/api/project/project.interface';
 import { cn } from '@/lib/utils';
-import { postProjectReview } from '@/service/project/review';
+import { postProjectReview } from '@/service/project-review/service';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import ProjectInfo from '../project-info';
