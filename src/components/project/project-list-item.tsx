@@ -29,7 +29,7 @@ const ProjectListItem: React.FC<ProjectItemProps> = ({
               {project.address}
             </span>
             <span className='after:mx-2 after:content-["|"]'>
-              {project.shootingAt.slice(5, 10).split('-').join('/')}
+              {project.shootingAt}
             </span>
             <span>{timeOptionLabels[project.timeOption]}</span>
           </div>

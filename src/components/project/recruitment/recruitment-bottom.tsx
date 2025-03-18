@@ -8,11 +8,11 @@ import IconButton from '@/components/common/icon-button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
 import { GuestProjectGuide } from '@/constants/guide';
-import { useRecruitBookmarkMutation } from '@/hooks/queries/projects/useRecruitBookmarkMutation';
 import useDisclosure from '@/hooks/useDisclosure';
 
 import { cn } from '@/lib/utils';
-import { postProjectApply } from '@/service/project/recruitment';
+import { useRecruitBookmarkMutation } from '@/service/bookmark/use-service';
+import { postProjectApply } from '@/service/project-recruitment/service';
 import { getCookie } from 'cookies-next';
 
 import Link from 'next/link';

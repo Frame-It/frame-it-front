@@ -2,7 +2,7 @@
 
 import LoadingSpinner from '@/components/common/loading-spinner';
 import { Progress } from '@/components/ui/progress';
-import { getRecruitAnnouncement } from '@/service/project/recruitment';
+import { getRecruitAnnouncement } from '@/service/project-recruitment/service';
 import { useProjectRegisterStore } from '@/store/project-regist-store';
 import { useParams } from 'next/navigation';
 import { Suspense, lazy, useEffect, useState } from 'react';

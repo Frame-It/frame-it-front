@@ -1,17 +1,22 @@
 'use client';
 
-import { IManageProject } from '@/types/project.type';
+import { useUserProjectsQuery } from '@/service/project-management/use-service';
+import { Status } from '@/types/project.type';
 import { useRouter } from 'next/navigation';
 import BottomButton from '../common/bottom-button';
 import Icon from '../common/icon';
 import ProjectListItem from './project-list-item';
 
 interface ProjectListProps {
-  projectList: IManageProject[];
+  status?: Status;
 }
 
-const ProjectList: React.FC<ProjectListProps> = ({ projectList }) => {
+const ProjectList: React.FC<ProjectListProps> = ({ status }) => {
   const router = useRouter();
+  const { data: projectList } = useUserProjectsQuery(status);
+
+  if (!projectList) return null;
+
   return (
     <section className="flex h-full flex-auto flex-col">
       {projectList.length === 0 ? (

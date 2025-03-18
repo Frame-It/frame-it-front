@@ -16,8 +16,8 @@ import {
 } from '@/components/ui/carousel';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { timeOptionLabels } from '@/constants/project';
-import { useRecruitmentQuery } from '@/hooks/queries/projects/useRecruitmentQuery';
 import { cn } from '@/lib/utils';
+import { useRecruitmentQuery } from '@/service/project-recruitment/use-service';
 import { FC } from 'react';
 
 interface ProjectRecruitmentDetailPageProps {

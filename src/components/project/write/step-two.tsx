@@ -16,13 +16,15 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from '@/components/ui/use-toast';
 import { PROJECT_CONCEPTS } from '@/constants/project';
-import { useRecruitmentEditMutation } from '@/hooks/queries/projects/useRecruitmentEditMutation';
-import { useRecruitmentMutation } from '@/hooks/queries/projects/useRecruitmentMutation';
 import {
   ProjectImageFormValues,
   projectImageSchema,
 } from '@/lib/schema/project-regist-schema';
 import { cn } from '@/lib/utils';
+import {
+  useRecruitmentEditMutation,
+  useRecruitmentMutation,
+} from '@/service/project-recruitment/use-service';
 import { useProjectRegisterStore } from '@/store/project-regist-store';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { PlusIcon } from 'lucide-react';

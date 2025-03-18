@@ -1,7 +1,7 @@
 import BottomButton, {
   BottomButtonProps,
 } from '@/components/common/bottom-button';
-import { postCompleteProject } from '@/service/project/management';
+import { postCompleteProject } from '@/service/project-management/service';
 import { IProject } from '@/types/project.type';
 import { useRouter } from 'next/navigation';
 

@@ -4,7 +4,7 @@ import BottomButton from '@/components/common/bottom-button';
 import { AutosizeTextarea } from '@/components/ui/auto-size-textarea';
 import { SquareCheckbox } from '@/components/ui/checkbox';
 import { cn } from '@/lib/utils';
-import { deleteApplyProject } from '@/service/project/management';
+import { deleteApplyProject } from '@/service/project-management/service';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
