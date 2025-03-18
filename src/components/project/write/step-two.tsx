@@ -3,6 +3,7 @@
 import BottomButton from '@/components/common/bottom-button';
 import ConceptTag from '@/components/common/concept-tag';
 import Guide from '@/components/common/guide';
+import LoadingSpinner from '@/components/common/loading-spinner';
 import {
   Form,
   FormControl,
@@ -36,13 +37,15 @@ const StepTwo = ({
   isEdit?: boolean;
   projectId?: number;
 }) => {
-  const { mutateAsync } = useRecruitmentMutation();
-  const { mutate: editMutate } = useRecruitmentEditMutation();
+  const { mutateAsync, isPending: isRegistPending } = useRecruitmentMutation();
+  const { mutate: editMutate, isPending: isEditPending } =
+    useRecruitmentEditMutation();
   const { projectInfo, reset } = useProjectRegisterStore();
   const [selectedTags, setSelectedTags] = useState<string[]>(
     projectInfo.conceptTags,
   );
 
+  const isPending = isEditPending || isRegistPending;
   const router = useRouter();
 
   const [description, setDescription] = useState<string>(
@@ -169,9 +172,10 @@ const StepTwo = ({
           onClick={handleNext}
           variant={'primary'}
           size={'large'}
-          label={isEdit ? '수정하기' : '다음'}
-          disabled={!isNextEnabled}
-        />
+          disabled={!isNextEnabled || isPending}
+        >
+          {isPending ? <LoadingSpinner /> : isEdit ? '수정하기' : '다음'}
+        </BottomButton>
       </div>
     </div>
   );

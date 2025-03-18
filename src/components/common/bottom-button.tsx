@@ -1,10 +1,11 @@
 import { cn } from '@/lib/utils';
 import React, { ButtonHTMLAttributes } from 'react';
+import { Button } from '../ui/button';
 
 export interface IBottomButtonProps {
   variant: 'primary' | 'secondary' | 'stroke';
   size: 'large' | 'middle' | 'small';
-  label: string;
+  label?: string;
   disabled?: boolean;
 }
 
@@ -13,7 +14,7 @@ export type BottomButtonProps = IBottomButtonProps &
 
 const BottomButton: React.FC<
   IBottomButtonProps & ButtonHTMLAttributes<HTMLButtonElement>
-> = ({ variant, size, label, disabled = false, ...props }) => {
+> = ({ variant, size, label, disabled = false, children, ...props }) => {
   const sizeStyles = {
     large: 'max-w-[328px] min-h-[46px] h-[46px]',
     middle: 'max-w-[220px] min-h-[40px] h-[40px]',
@@ -47,13 +48,13 @@ const BottomButton: React.FC<
   );
 
   return (
-    <button
+    <Button
       disabled={disabled}
       {...props}
       className={cn(classes, props.className)}
     >
-      {label}
-    </button>
+      {label || children}
+    </Button>
   );
 };
 
