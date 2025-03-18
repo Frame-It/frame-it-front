@@ -15,15 +15,13 @@ import { cn } from '@/lib/utils';
 import { useProjectRegisterStore } from '@/store/project-regist-store';
 import { Identity, LocationType, TimeOption } from '@/types/project.type';
 import { getCookie } from 'cookies-next';
-import { redirect } from 'next/navigation';
-import React, { PropsWithChildren, useRef, useState } from 'react';
+import { PropsWithChildren, useEffect, useRef, useState } from 'react';
 import DaumPostcodeEmbed from 'react-daum-postcode';
 import '../../../styles/input.css';
 
 const StepOne: React.FC = () => {
   const { projectInfo, setProjectInfo, nextStep } = useProjectRegisterStore();
-  const type =
-    (getCookie('identity') as Identity) === 'MODEL' ? 'PHOTOGRAPHER' : 'MODEL';
+  const [type, setType] = useState<Identity | null>(null);
   const [projectName, setProjectName] = useState<string>(
     projectInfo.projectName,
   );
@@ -43,8 +41,13 @@ const StepOne: React.FC = () => {
   const dateInputRef = useRef<HTMLInputElement>(null);
   // const timeInputRef = useRef<HTMLInputElement>(null);
   const { isOpen, onToggle, onOpenChange } = useDisclosure(false);
+  const cookieIdentity = getCookie('identity') as Identity;
 
-  if (!type) redirect('/login');
+  useEffect(() => {
+    if (cookieIdentity) {
+      setType(cookieIdentity === 'MODEL' ? 'PHOTOGRAPHER' : 'MODEL');
+    }
+  }, [cookieIdentity]);
 
   const isNextEnabled =
     type &&
@@ -99,12 +102,14 @@ const StepOne: React.FC = () => {
               size={'middle'}
               label={'모델'}
               className="border-gray-60"
+              onClick={() => setType('MODEL')}
             />
             <BottomButton
               variant={type === 'PHOTOGRAPHER' ? 'secondary' : 'stroke'}
               size={'middle'}
               label={'작가'}
               className="border-gray-60"
+              onClick={() => setType('PHOTOGRAPHER')}
             />
           </div>
         </div>
