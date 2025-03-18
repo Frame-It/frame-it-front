@@ -1,9 +1,12 @@
-import { RecruitmentQueryKey } from '@/constants/query-keys/project';
 import {
-  deleteRecruitBookmark,
-  postRecruitBookmark,
-} from '@/service/project-recruitment/service';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+  useMutation,
+  UseMutationResult,
+  useQueryClient,
+} from '@tanstack/react-query';
+import {
+  createRecruitBookmarkMutationOption,
+  ToggleBookmarkParams,
+} from './query-option';
 
 // Query
 
@@ -11,33 +14,12 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 // Mutation
 
-export const useRecruitBookmarkMutation = () => {
+export const useRecruitBookmarkMutation = (): UseMutationResult<
+  void,
+  Error,
+  ToggleBookmarkParams
+> => {
   const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: async ({
-      projectId,
-      isBookmarked,
-    }: {
-      projectId: number;
-      isBookmarked: boolean;
-    }) => {
-      if (isBookmarked) {
-        await deleteRecruitBookmark(projectId);
-      } else {
-        await postRecruitBookmark(projectId);
-      }
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [RecruitmentQueryKey.RECRUIT_ANNOUNCEMENTS],
-      });
-      queryClient.invalidateQueries({
-        queryKey: [RecruitmentQueryKey.RECRUIT_ANNOUNCEMENT],
-      });
-    },
-    onError: (error) => {
-      console.error('Failed to toggle bookmark:', error);
-    },
-  });
+  const mutationOptions = createRecruitBookmarkMutationOption(queryClient);
+  return useMutation(mutationOptions);
 };
