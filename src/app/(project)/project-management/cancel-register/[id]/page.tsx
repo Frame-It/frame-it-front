@@ -1,7 +1,7 @@
 import CancelRegister from '@/components/project/cancel/cancel-register';
 import ProjectInfo from '@/components/project/project-info';
 import { cn } from '@/lib/utils';
-import { getRecruitingProject } from '@/service/project/management';
+import { getRecruitingProject } from '@/service/project-management/service';
 
 interface CancelRegisterPageProps {
   params: { id: string };

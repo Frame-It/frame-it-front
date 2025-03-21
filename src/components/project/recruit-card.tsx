@@ -1,8 +1,8 @@
 'use client';
 
 import { timeOptionLabels } from '@/constants/project';
-import { useRecruitBookmarkMutation } from '@/hooks/queries/projects/useRecruitBookmarkMutation';
 import { cn } from '@/lib/utils';
+import { useRecruitBookmarkMutation } from '@/service/bookmark/use-service';
 import { IRecruitProject } from '@/types/project.type';
 import Link from 'next/link';
 import Icon from '../common/icon';

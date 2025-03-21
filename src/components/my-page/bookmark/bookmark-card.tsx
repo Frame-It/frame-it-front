@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 import {
   deleteRecruitBookmark,
   postRecruitBookmark,
-} from '@/service/project/recruitment';
+} from '@/service/project-recruitment/service';
 import { useQueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
 

@@ -7,9 +7,10 @@ import LoadingSpinner from '@/components/common/loading-spinner';
 import RecruitCard from '@/components/project/recruit-card';
 import FilterDrawers from '@/components/project/recruitment/filter-drawers';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { useProjectRecruitmentsQuery } from '@/hooks/queries/projects/useRecruitmentsQuery';
+
 import { IRecruitFilter } from '@/lib/api/project/project.interface';
 import { cn } from '@/lib/utils';
+import { useProjectRecruitmentsQuery } from '@/service/project-recruitment/use-service';
 import { ITabData, USER_TYPE } from '@/types/filter';
 import {
   Identity,

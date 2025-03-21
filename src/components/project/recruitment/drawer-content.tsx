@@ -3,7 +3,8 @@
 import HighlightedText from '@/components/common/highlighted-text';
 import { PROJECT_CONCEPTS } from '@/constants/project';
 import { cn } from '@/lib/utils';
-import { getSigunguList } from '@/service/project/vworld';
+
+import { getSigunguList } from '@/service/project-recruitment/service';
 import { LocationType, TimeOption } from '@/types/project.type';
 import { useRouter } from 'next/navigation';
 import { FC, FormEvent, useState } from 'react';

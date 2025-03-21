@@ -4,7 +4,7 @@ import BottomButton from '@/components/common/bottom-button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import useDisclosure from '@/hooks/useDisclosure';
 import { cn } from '@/lib/utils';
-import { postStartProject } from '@/service/project/management';
+import { postStartProject } from '@/service/project-management/service';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 const ProjectStartButton = ({
