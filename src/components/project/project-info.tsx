@@ -17,7 +17,7 @@ const ProjectInfo = ({
             'font-tag-14 text-gray-40 after:mx-[6px] after:content-["|"]',
           )}
         >
-          {project.address}
+          {project.address.split(' ').slice(0, 2).join(' ')}
         </p>
         <p
           className={cn(

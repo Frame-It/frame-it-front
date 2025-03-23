@@ -1,5 +1,9 @@
 import { PROJECT_CONCEPTS } from '@/constants/project';
-import { IRecruitProject, IRecruitProjectDetail } from '@/types/project.type';
+import {
+  IManageProject,
+  IRecruitProject,
+  IRecruitProjectDetail,
+} from '@/types/project.type';
 import { IRecruitDetailRes, IRecruitRes } from './project.interface';
 
 export const decodeRecruitResToRecruitProjectDetail = (
@@ -66,6 +70,25 @@ export const decodeRecruitResToRecruitProject = (
     timeOption: recruit.timeOption,
     status: 'RECRUITING',
     isBookmarked: recruit.isBookmarked,
-    address: recruit.address,
+    address: recruit.address.split(' ').slice(0, 2).join(' '),
+  };
+};
+
+export const decodeUserProject = (project: IManageProject): IManageProject => {
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const month = String(date.getMonth() + 1);
+    const day = String(date.getDate());
+    return `${month}/${day}`;
+  };
+
+  return {
+    id: project.id,
+    title: project.title,
+    shootingAt: formatDate(project.shootingAt),
+    timeOption: project.timeOption,
+    address: project.address.split(' ').slice(0, 2).join(' '),
+    status: project.status,
+    isHost: project.isHost,
   };
 };

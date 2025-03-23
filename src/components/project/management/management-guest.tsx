@@ -13,7 +13,7 @@ import {
   getCompletedProject,
   getInProgressProject,
   getRecruitingProject,
-} from '@/service/project/management';
+} from '@/service/project-management/service';
 import { ActiveStatus, IActiveProject } from '@/types/project.type';
 import ProjectInfo from '../project-info';
 import { MyApplyInfo } from './apply-info';

@@ -24,7 +24,7 @@ const PhotoList: React.FunctionComponent<IPhotoListProps> = ({
   };
 
   return (
-    <ul className="flex w-full flex-col gap-y-4">
+    <ul className="flex w-full flex-col">
       {imageList?.map((feed, i) => {
         return (
           <li
@@ -36,7 +36,7 @@ const PhotoList: React.FunctionComponent<IPhotoListProps> = ({
               key={feed.id}
               src={feed.portfolioImageUrl}
               alt={'feed 이미지' + i}
-              className="rounded-[8px]"
+              className="my-2 rounded-[8px]"
               style={{ width: '100%', height: 'auto' }}
             />
             {isFeed ? (

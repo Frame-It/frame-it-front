@@ -7,7 +7,7 @@ import {
 import {
   getCompletedProject,
   getInProgressProject,
-} from '@/service/project/management';
+} from '@/service/project-management/service';
 import { ActiveStatus } from '@/types/project.type';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
