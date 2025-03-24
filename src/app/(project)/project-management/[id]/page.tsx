@@ -8,6 +8,7 @@ interface ProjectManagementDetailPageProps {
   searchParams: { status?: ActiveStatus; isHost?: string };
 }
 
+// TODO: status와 isHost를 searchParams로 관리하지 말고, 프로젝트 상세 정보 API를 호출해서 받아오는 게 어떨지?
 const ProjectManagementDetailPage = ({
   params,
   searchParams,

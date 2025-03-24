@@ -1,3 +1,5 @@
+'use client';
+
 import BottomButton, {
   BottomButtonProps,
 } from '@/components/common/bottom-button';

@@ -17,9 +17,9 @@ import {
 import { ActiveStatus, IActiveProject } from '@/types/project.type';
 import ProjectInfo from '../project-info';
 import { MyApplyInfo } from './apply-info';
+import ProgressBox from './common/progress-box';
 import GuestCompletedContent from './guest-completed';
 import GuestInProgressContent from './guest-in-progress';
-import ProgressBox from './progress-box';
 
 const ManagementGuest = async ({
   projectId,
