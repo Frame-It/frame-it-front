@@ -1,13 +1,15 @@
 import { ActiveStatus } from '@/types/project.type';
-import CompletedContent from './host/completed/completed-content';
-import InProgressContent from './host/in-progress/in-progress-content';
-import RecruitingContent from './host/recruiting/recruiting-content';
+import CompletedContent from './completed/completed-content';
+import { default as InProgressContent } from './in-progress/in-progress-content';
+import RecruitingContent from './recruiting/recruiting-content';
 
-interface HostContentProps {
+const ManagementGuest = async ({
+  projectId,
+  status,
+}: {
   projectId: number;
   status: ActiveStatus;
-}
-const ManagementHost = async ({ projectId, status }: HostContentProps) => {
+}) => {
   switch (status) {
     case 'RECRUITING':
       return <RecruitingContent projectId={projectId} />;
@@ -18,4 +20,4 @@ const ManagementHost = async ({ projectId, status }: HostContentProps) => {
   }
 };
 
-export default ManagementHost;
+export default ManagementGuest;

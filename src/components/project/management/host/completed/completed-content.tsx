@@ -2,7 +2,7 @@ import ReviewCheckButton from '@/components/project/review/review-check-button';
 import ReviewWriteButton from '@/components/project/review/review-write-button';
 import { getCompletedProject } from '@/service/project-management/service';
 import { IActiveProject } from '@/types/project.type';
-import { StartedProjectApplyGuest } from '../../apply-info';
+import { StartedProjectApplyGuest } from '../../common/apply-info';
 import ManagementHostLayout from '../host-layout';
 
 interface CompletedContentProps {

@@ -2,8 +2,8 @@ import { getCompletedProject } from '@/service/project-management/service';
 import { IActiveProject } from '@/types/project.type';
 import ReviewCheckButton from '../../../review/review-check-button';
 import ReviewWriteButton from '../../../review/review-write-button';
-import { HostInfo } from '../../host-info';
 import ManagementGuestLayout from '../guest-layout';
+import { HostInfo } from '../host-info';
 
 interface GuestCompletedContentProps {
   projectId: number;

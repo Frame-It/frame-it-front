@@ -2,7 +2,7 @@ import DMButton from '@/components/common/dm-button';
 import { IProjectMember } from '@/lib/api/project/project.interface';
 import { getRecruitingProject } from '@/service/project-management/service';
 import { IActiveProject } from '@/types/project.type';
-import { MyApplyInfo } from '../../apply-info';
+import { MyApplyInfo } from '../../common/apply-info';
 import ManagementGuestLayout from '../guest-layout';
 
 interface RecruitingContentProps {

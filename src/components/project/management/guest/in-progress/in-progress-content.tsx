@@ -4,9 +4,9 @@ import { cn } from '@/lib/utils';
 import { getInProgressProject } from '@/service/project-management/service';
 import { IActiveProject } from '@/types/project.type';
 import ReviewCheckButton from '../../../review/review-check-button';
-import CompleteProjectButton from '../../complete-project-button';
-import { HostInfo } from '../../host-info';
+import CompleteProjectButton from '../../common/complete-project-button';
 import ManagementGuestLayout from '../guest-layout';
+import { HostInfo } from '../host-info';
 
 interface GuestInProgressContentProps {
   projectId: number;

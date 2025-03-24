@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils';
 import { ActiveStatus } from '@/types/project.type';
-import ProjectProgress from '../project-progress';
+import ProjectProgress from './project-progress';
 
 const ProgressBox = ({ status }: { status: ActiveStatus }) => {
   return (

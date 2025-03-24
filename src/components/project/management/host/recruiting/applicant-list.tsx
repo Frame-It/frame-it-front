@@ -5,7 +5,7 @@ import { IApplicant } from '@/lib/api/project/project.interface';
 import { cn } from '@/lib/utils';
 import { IProject } from '@/types/project.type';
 import Icon from '../../../../common/icon';
-import { RecruitingProjectApplyGuestItem } from '../../../apply-member-item';
+import { RecruitingProjectApplyGuestItem } from '../../common/apply-member-item';
 
 export const ApplicantList = ({
   projectId,

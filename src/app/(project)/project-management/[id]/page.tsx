@@ -1,5 +1,5 @@
-import ManagementGuest from '@/components/project/management/management-guest';
-import ManagementHost from '@/components/project/management/management-host';
+import ManagementGuest from '@/components/project/management/guest/management-guest';
+import ManagementHost from '@/components/project/management/host/management-host';
 import { ActiveStatus } from '@/types/project.type';
 import { redirect } from 'next/navigation';
 

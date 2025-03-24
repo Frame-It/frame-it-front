@@ -3,8 +3,8 @@ import { HostProjectGuide } from '@/constants/guide';
 import { getInProgressProject } from '@/service/project-management/service';
 import { IActiveProject } from '@/types/project.type';
 import ReviewCheckButton from '../../../review/review-check-button';
-import { StartedProjectApplyGuest } from '../../apply-info';
-import CompleteProjectButton from '../../complete-project-button';
+import { StartedProjectApplyGuest } from '../../common/apply-info';
+import CompleteProjectButton from '../../common/complete-project-button';
 import ManagementHostLayout from '../host-layout';
 
 interface HostInProgressContentProps {
