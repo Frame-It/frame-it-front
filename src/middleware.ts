@@ -2,18 +2,23 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 // 경로 그룹 변수 정의
-const publicPaths = ['/', '/recruit', '/feed', '/complete'];
+const publicPaths = [
+  '/',
+  '/recruit',
+  '/feed',
+  '/complete',
+  '/project-recruitment',
+  '/portfolio-detail/',
+  '/portfolio',
+  '/studio',
+];
 const privatePaths = [
   '/my-page',
-  '/studio',
   '/project-management',
-  '/project-recruitment',
   '/letter',
-  '/portfolio-detail/',
   '/portfolio-register',
   '/project-register',
   '/notification',
-  '/portfolio',
 ];
 const restrictedPaths = ['/login', '/register'];
 
