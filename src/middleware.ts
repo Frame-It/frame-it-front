@@ -32,7 +32,7 @@ export async function middleware(request: NextRequest) {
   // 로그인이 안되어있어도 접근할 수 있는 경로
   if (publicPaths.includes(url.pathname)) {
     if (url.pathname === '/') {
-      url.pathname = '/recruit';
+      url.pathname = '/feed';
       return NextResponse.redirect(url);
     }
 
