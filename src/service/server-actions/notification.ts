@@ -20,6 +20,10 @@ export const getNotification = async () => {
       },
     });
 
+    if (res.status === 403) {
+      return []; // 로그인 만료 시 임시 처리
+    }
+
     if (!res.ok) {
       throw new Error('알림 데이터 받아오기 오류 : ' + res.status);
     }
