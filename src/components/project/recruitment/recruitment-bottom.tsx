@@ -109,11 +109,13 @@ const ApplyDrawer = ({
     }
   };
 
+  const isLogin = localStorage.getItem('accessToken');
+
   return (
     <Drawer
       title={'지원하기'}
       open={isOpen}
-      onOpenChange={onOpenChange}
+      onOpenChange={isLogin ? onOpenChange : () => router.push('/login')}
       onClose={onClose}
       trigger={
         <BottomButton
