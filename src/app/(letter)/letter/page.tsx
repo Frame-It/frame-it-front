@@ -1,20 +1,22 @@
-import Link from 'next/link';
 import RoleBadge from '@/components/common/role-badge';
-import { getUserChat } from '@/service/server-actions/chat';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { getUserChat } from '@/service/server-actions/chat';
 import { IChat } from '@/types/letter';
 import { formatDistanceToNow } from 'date-fns';
 import { ko } from 'date-fns/locale';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import Link from 'next/link';
 
 export default async function LetterPage() {
   const chatList: IChat[] = (await getUserChat()) || [];
 
-  const lastMessageTime = new Date(chatList[0].lastMessageTime);
-  const timeAgo = formatDistanceToNow(lastMessageTime, {
-    addSuffix: true,
-    locale: ko,
-  });
+  const timeAgo =
+    chatList.length > 0
+      ? formatDistanceToNow(new Date(chatList[0].lastMessageTime), {
+          addSuffix: true,
+          locale: ko,
+        })
+      : '';
 
   return (
     <ScrollArea className="h-[calc(100dvh-58px-63px)] overflow-y-auto px-4 xl:h-[calc(800px-58px-63px-24px)]">
