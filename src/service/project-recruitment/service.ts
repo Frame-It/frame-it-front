@@ -12,7 +12,7 @@ export const getRecruitAnnouncements = async ({
   concepts,
   spot,
 }: IRecruitFilter) => {
-  const headers = await getAuthHeader();
+  // const headers = await getAuthHeader();
 
   const queryParams = new URLSearchParams();
   if (recruitmentRole) queryParams.append('recruitmentRole', recruitmentRole);
@@ -31,7 +31,7 @@ export const getRecruitAnnouncements = async ({
   const url = `${API_URL}/projects/announcement${queryParamString ? `?${queryParamString}` : ''}`;
 
   const res = await fetch(url, {
-    headers,
+    // headers,
     cache: 'no-store',
   });
 
@@ -52,10 +52,8 @@ export const getRecruitAnnouncements = async ({
 };
 
 export const getRecruitAnnouncement = async (id: number) => {
-  const headers = await getAuthHeader();
   const url = `${API_URL}/projects/${id}/announcement`;
   const res = await fetch(url, {
-    headers,
     cache: 'no-store',
   });
   const data = await res.json();
@@ -83,11 +81,12 @@ export const postAnnouncement = async (formData: FormData) => {
       headers,
     });
 
+    const result = await response.json();
+
     if (!response.ok) {
-      // throw new Error('Network response was not ok');
+      throw new Error(result.message);
     }
 
-    const result = await response.json();
     return result;
   } catch (e) {
     console.error(e);
@@ -108,11 +107,11 @@ export const putAnnouncement = async (
       headers,
     });
 
-    if (!response.ok) {
-      // throw new Error('Network response was not ok');
-    }
-
     const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.message);
+    }
     return result;
   } catch (e) {
     console.error(e);

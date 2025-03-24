@@ -7,7 +7,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Drawer from './drawer';
 import Icon from './icon';
-import dynamic from 'next/dynamic';
 
 interface IBottomBarProps {
   className?: string;
@@ -26,14 +25,14 @@ interface INavLinkProps extends IBottombarPaths {
 
 const bottombarPaths: IBottombarPaths[] = [
   {
-    path: '/recruit',
-    name: '모집',
-    iconId: 'search-icon',
-  },
-  {
     path: '/feed',
     name: '피드',
     iconId: 'feed-icon',
+  },
+  {
+    path: '/recruit',
+    name: '모집',
+    iconId: 'search-icon',
   },
   {
     path: '',

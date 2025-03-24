@@ -2,18 +2,23 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 // 경로 그룹 변수 정의
-const publicPaths = ['/', '/recruit', '/feed', '/complete'];
+const publicPaths = [
+  '/',
+  '/recruit',
+  '/feed',
+  '/complete',
+  '/project-recruitment',
+  '/portfolio-detail/',
+  '/portfolio',
+  '/studio',
+];
 const privatePaths = [
   '/my-page',
-  '/studio',
   '/project-management',
-  '/project-recruitment',
   '/letter',
-  '/portfolio-detail/',
   '/portfolio-register',
   '/project-register',
   '/notification',
-  '/portfolio',
 ];
 const restrictedPaths = ['/login', '/register'];
 
@@ -27,7 +32,7 @@ export async function middleware(request: NextRequest) {
   // 로그인이 안되어있어도 접근할 수 있는 경로
   if (publicPaths.includes(url.pathname)) {
     if (url.pathname === '/') {
-      url.pathname = '/recruit';
+      url.pathname = '/feed';
       return NextResponse.redirect(url);
     }
 

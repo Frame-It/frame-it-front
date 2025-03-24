@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
+import { decodeUserProject } from '@/lib/api/project/decoder';
 import {
   getGuestProjects,
   getMyProjects,
@@ -38,7 +39,10 @@ const ProjectList = ({ id }: { id?: number }) => {
       ) : (
         <ul className="mt-[8px] flex flex-col gap-y-[18px]">
           {data?.projects.map((project: any, i: number) => (
-            <ProjectListItem project={project} key={project.id} />
+            <ProjectListItem
+              project={decodeUserProject(project)}
+              key={project.id}
+            />
             // <li
             //   onClick={() => router.push('/')}
             //   key={project.title + project.time + i}

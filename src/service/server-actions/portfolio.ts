@@ -28,14 +28,15 @@ export const getPortfolioDetail = async (id?: string) => {
   const cookieStore = cookies();
   const token = cookieStore.get('accessToken');
 
-  if (token && id) {
+  if (id) {
+    const headers = {
+      'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token.value}` } : {}),
+    };
     const res = await fetch(`${API_URL}/portfolios/portfolio/${id}`, {
       method: 'GET',
       cache: 'no-store',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token.value}`,
-      },
+      headers,
       next: { tags: ['getPortfolioDetail'] },
     });
 
