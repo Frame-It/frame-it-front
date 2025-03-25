@@ -82,10 +82,7 @@ const Complete = ({
         </p>
       </div>
 
-      <Link
-        href={`/project-management/${projectId}?status=${status}&isHost=${isHost}&isReviewDone=true`}
-        className="w-[217px]"
-      >
+      <Link href={`/project-management/${projectId}`} className="w-[217px]">
         <BottomButton
           variant={'secondary'}
           size={'middle'}

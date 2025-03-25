@@ -18,16 +18,8 @@ const CompleteProjectButton = ({
   const router = useRouter();
 
   const handleClickComplete = async () => {
-    try {
-      const { projectStatus } = await postCompleteProject(projectId);
-      router.replace(
-        `/review-register/${projectId}?status=${projectStatus}&isHost=${isHost}`,
-      );
-    } catch (e) {
-      router.replace(
-        `/review-register/${projectId}?status=IN_PROGRESS&isHost=${isHost}`,
-      );
-    }
+    await postCompleteProject(projectId);
+    router.refresh();
   };
 
   return (

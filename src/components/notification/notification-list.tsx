@@ -1,14 +1,14 @@
 'use client';
 
-import { cn } from '@/lib/utils';
 import Icon from '@/components/common/icon';
+import useDisclosure from '@/hooks/useDisclosure';
+import { cn } from '@/lib/utils';
+import { deleteNotification } from '@/service/client-actions/notification';
+import { INotification } from '@/types/notification';
 import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
-import AlertDialog from '../common/alert-dialog';
-import useDisclosure from '@/hooks/useDisclosure';
-import { INotification } from '@/types/notification';
 import { useState } from 'react';
-import { deleteNotification } from '@/service/client-actions/notification';
+import AlertDialog from '../common/alert-dialog';
 
 interface INotificationListProps {
   notificationList: INotification[];
@@ -34,7 +34,7 @@ const NotificationList: React.FunctionComponent<INotificationListProps> = ({
           let newLink = '';
 
           if (noti.eventType !== 'SIGN_UP') {
-            newLink = `/project-management/${noti.resourcesId}?status=${returnEmptyIfNull(noti.projectStatus)}&isHost=${returnEmptyIfNull(noti.isHost)}`;
+            newLink = `/project-management/${noti.resourcesId}`;
           } else {
             newLink = '/my-page/my-studio';
           }
