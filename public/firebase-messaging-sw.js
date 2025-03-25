@@ -68,7 +68,7 @@ self.addEventListener('push', async function (event) {
     if(eventType === "SIGN_UP"){
       newLink = `${httpHeader}`;
     } else{
-      newLink = `${httpHeader}/project-management/${returnEmptyIfNull(id)}?status=${returnEmptyIfNull(projectStatus)}&isHost=${returnEmptyIfNull(isHost)}`;
+      newLink = `${httpHeader}/project-management/${returnEmptyIfNull(id)}}`;
     }
 
     const options = {

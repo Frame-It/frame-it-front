@@ -2,7 +2,7 @@ import DMButton from '@/components/common/dm-button';
 
 import { IProjectMember } from '@/lib/api/project/project.interface';
 import { cn } from '@/lib/utils';
-import ReviewCheckButton from '../review/review-check-button';
+import ReviewCheckButton from '../../review/review-check-button';
 
 export const HostInfo = ({
   host,

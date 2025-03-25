@@ -36,9 +36,7 @@ export const HostBottom: FC<HostBottomProps> = ({
         icon={<Icon id={'edit-icon'} size={24} className="text-gray-40" />}
         onClick={() => router.push(`/project-edit/${projectId}`)}
       />
-      <Link
-        href={`/project-management/${projectId}?status=RECRUITING&isHost=true`}
-      >
+      <Link href={`/project-management/${projectId}`}>
         <BottomButton
           variant={'secondary'}
           size={'large'}
@@ -179,9 +177,7 @@ const ApplyDrawer = ({
                 size={'middle'}
                 label={'확인하기'}
                 onClick={() => {
-                  router.push(
-                    `/project-management/${projectId}?status=RECRUITING&isHost=false`,
-                  );
+                  router.push(`/project-management/${projectId}`);
                 }}
                 className="max-w-none"
               />

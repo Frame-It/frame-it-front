@@ -1,27 +1,27 @@
-import ManagementGuest from '@/components/project/management/management-guest';
-import ManagementHost from '@/components/project/management/management-host';
-import { ActiveStatus } from '@/types/project.type';
+import ManagementGuest from '@/components/project/management/guest/management-guest';
+import ManagementHost from '@/components/project/management/host/management-host';
+import { getProjectStatus } from '@/service/project-management/service';
 import { redirect } from 'next/navigation';
 
 interface ProjectManagementDetailPageProps {
   params: { id: string };
-  searchParams: { status?: ActiveStatus; isHost?: string };
 }
 
-const ProjectManagementDetailPage = ({
+const ProjectManagementDetailPage = async ({
   params,
-  searchParams,
 }: ProjectManagementDetailPageProps) => {
   const { id: idStr } = params;
-  const { status, isHost } = searchParams;
-
   const projectId = Number(idStr);
+
+  const projectInfo = await getProjectStatus(projectId);
+
+  const { status, isHost } = projectInfo;
 
   if (!status) {
     redirect('/404');
   }
 
-  return isHost === 'true' ? (
+  return isHost ? (
     <ManagementHost projectId={projectId} status={status} />
   ) : (
     <ManagementGuest projectId={projectId} status={status} />

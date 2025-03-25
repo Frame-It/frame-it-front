@@ -2,7 +2,7 @@
 
 import { cn } from '@/lib/utils';
 import * as React from 'react';
-import { Progress } from '../../ui/progress';
+import { Progress } from '../../../ui/progress';
 
 interface IProjectProgressProps {
   status: 'RECRUITING' | 'IN_PROGRESS' | 'COMPLETED';

@@ -99,9 +99,7 @@ const StepTwo = ({
     try {
       if (isEdit && projectId !== undefined) {
         editMutate({ formData, projectId });
-        router.replace(
-          `/project-management/${projectId}?status=RECRUITING&isHost=true`,
-        );
+        router.replace(`/project-management`);
       } else {
         const projectId = await mutateAsync(formData);
         router.replace(
