@@ -12,30 +12,30 @@ export const getMyPortfolios = async ({
 }) => {
   const token = getCookie('accessToken');
 
-  if (token) {
-    try {
-      const res = await fetch(
-        `${API_URL}/portfolios/user/${id}?page=${pageParam}&size=10`,
-        {
-          method: 'GET',
-          cache: 'no-store',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
+  // if (token) {
+  try {
+    const res = await fetch(
+      `${API_URL}/portfolios/user/${id}?page=${pageParam}&size=10`,
+      {
+        method: 'GET',
+        cache: 'no-store',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
-      );
+      },
+    );
 
-      if (!res.ok) {
-        throw new Error('something error');
-      }
-
-      const data: IPortfolioResponse = await res.json();
-      return data;
-    } catch (error) {
-      console.log(error);
+    if (!res.ok) {
+      throw new Error('something error');
     }
+
+    const data: IPortfolioResponse = await res.json();
+    return data;
+  } catch (error) {
+    console.log(error);
   }
+  // }
 };
 
 export const getMyProjects = async () => {
