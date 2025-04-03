@@ -26,9 +26,11 @@ const ProjectInfo = ({
         >
           {project.shootingAt.split('T')[0]}
         </p>
-        <p className={cn('font-tag-14 text-gray-40 after:mx-[6px]')}>
-          {timeOptionLabels[project.timeOption]}
-        </p>
+        {timeOptionLabels[project.timeOption] && (
+          <p className={cn('font-tag-14 text-gray-40 after:mx-[6px]')}>
+            {timeOptionLabels[project.timeOption]}
+          </p>
+        )}
       </div>
     </div>
   );

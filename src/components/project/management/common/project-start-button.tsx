@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import useDisclosure from '@/hooks/useDisclosure';
 import { cn } from '@/lib/utils';
 import { postStartProject } from '@/service/project-management/service';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 const ProjectStartButton = ({
   projectId,
@@ -15,7 +15,6 @@ const ProjectStartButton = ({
   applicantId: number;
 }) => {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const {
     isOpen: isModalOpen,
     onOpenChange: onModalOpenChange,
@@ -26,10 +25,8 @@ const ProjectStartButton = ({
   const handleClickStart = async () => {
     try {
       await postStartProject(projectId, applicantId);
-      const updatedSearchParams = new URLSearchParams(searchParams.toString());
-      updatedSearchParams.set('status', 'IN_PROGRESS');
       onModalClose();
-      router.replace(`?${updatedSearchParams.toString()}`);
+      router.refresh();
     } catch (e) {
       alert(e);
     }

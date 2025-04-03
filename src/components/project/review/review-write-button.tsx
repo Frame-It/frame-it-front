@@ -16,7 +16,7 @@ const ReviewWriteButton = ({
 } & Pick<BottomButtonProps, 'variant' | 'size'>) => {
   const router = useRouter();
   const handleClickReview = () => {
-    router.push(`/review-register/${projectId}?status=${status}`);
+    router.push(`/review-register/${projectId}`);
   };
 
   return (

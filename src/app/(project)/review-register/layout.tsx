@@ -14,13 +14,9 @@ export default function ReviewRegisterLayout({
   const router = useRouter();
   const searchParams = useSearchParams();
   const isComplete = searchParams.get('complete') === 'true';
-  const isHost = searchParams.get('isHost');
-  const status = searchParams.get('status');
 
   const handleClickBack = () => {
-    router.push(
-      `/project-management/${params.id}?status=${status}&isHost=${isHost}`,
-    );
+    router.push(`/project-management/${params.id}`);
   };
   return (
     <div className="flex h-screen-dvh flex-col pt-[58px]">

@@ -39,7 +39,7 @@ const ReviewRegister = ({
 
   const handleComplete = async () => {
     try {
-      const { projectStatus } = await postProjectReview({
+      await postProjectReview({
         projectId,
         content: reviewContent,
         tags: selectedTags,
@@ -48,7 +48,6 @@ const ReviewRegister = ({
 
       const newParams = new URLSearchParams(searchParams);
       newParams.set('complete', 'true');
-      newParams.set('status', projectStatus);
       router.push(`?${newParams.toString()}`);
     } catch (e) {
       alert(e);

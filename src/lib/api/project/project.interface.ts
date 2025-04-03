@@ -5,6 +5,11 @@ import {
   TimeOption,
 } from '@/types/project.type';
 
+export interface IProjectStatusRes {
+  status: ActiveStatus;
+  isHost: boolean;
+}
+
 export interface IRecruitRes {
   id: number;
   previewImageUrl: string;

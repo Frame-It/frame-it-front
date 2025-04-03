@@ -4,10 +4,27 @@ import { getAuthHeader } from '@/lib/api/header';
 import {
   ICompletedProjectRes,
   InProgressProjectRes,
+  IProjectStatusRes,
   IRecruitingProjectRes,
 } from '@/lib/api/project/project.interface';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+export const getProjectStatus = async (
+  projectId: number,
+): Promise<IProjectStatusRes> => {
+  const headers = await getAuthHeader();
+
+  const res = await fetch(`${API_URL}/projects/${projectId}/status`, {
+    headers,
+  });
+
+  const data: IProjectStatusRes = await res.json();
+  if (!res.ok) {
+    throw new Error('Failed fetch project status');
+  }
+  return data;
+};
 
 export const getUserProjects = async (
   status?: Status,

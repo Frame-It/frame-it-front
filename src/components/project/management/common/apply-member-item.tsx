@@ -4,10 +4,10 @@ import { IStartedProjectGuest } from '@/lib/api/project/project.interface';
 import { cn } from '@/lib/utils';
 import { ActiveStatus, IProject } from '@/types/project.type';
 import { useRouter } from 'next/navigation';
-import BottomButton from '../common/bottom-button';
-import DMButton from '../common/dm-button';
-import ProjectStartButton from './management/project-start-button';
-import ReviewCheckButton from './review/review-check-button';
+import BottomButton from '../../../common/bottom-button';
+import DMButton from '../../../common/dm-button';
+import ReviewCheckButton from '../../review/review-check-button';
+import ProjectStartButton from './project-start-button';
 
 interface ApplyMemberItemLayoutProps {
   profileImageUrl: string;
@@ -129,7 +129,7 @@ interface RecruitingButtonsProps {
   applicantId: number;
 }
 
-export const RecruitingButtons = ({
+const RecruitingButtons = ({
   projectId,
   applicantId,
 }: RecruitingButtonsProps) => {
