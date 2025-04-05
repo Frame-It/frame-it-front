@@ -1,14 +1,10 @@
 'use client';
 
 import SocialButton from '@/components/common/social-button';
-import { toast } from '@/components/ui/use-toast';
+import useNativeLogin from '@/hooks/use-native-login';
+import useWebLogin from '@/hooks/use-web-login';
 import { cn } from '@/lib/utils';
-import { sendCodeToBackend } from '@/service/auth-service';
-import { tokenRenewal } from '@/service/client-actions/notification';
-import { setCookie } from 'cookies-next';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
 
 const KAKAO_HREF = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}&response_type=code&state=kakao`;
 const GOOGLE_HREF = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URL}&response_type=code&scope=profile email&state=google`;
@@ -18,44 +14,9 @@ export default function LoginPage({
 }: {
   searchParams: { code: string; state: string };
 }) {
-  const router = useRouter();
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    const authenticate = async () => {
-      if (code && state) {
-        setLoading(true);
-        try {
-          const data = await sendCodeToBackend(code, state);
-          if (data === undefined) {
-            toast({
-              title: '서버에서 오류가 발생하였습니다.',
-              variant: 'destructive',
-            });
-          }
-
-          if (!data?.signUpCompleted) {
-            router.push(`/register`);
-            setCookie('oauthId', data.oauthUserId);
-          } else {
-            setCookie('identity', data.identity);
-            setCookie('accessToken', data.accessToken);
-            if (data.notificationsEnabled === true) {
-              await tokenRenewal(data.id);
-            }
-            router.push('/');
-          }
-        } catch (error) {
-          console.error('Error during authentication:', error);
-          // 오류 시 에러 페이지로 이동하거나 에러 처리 가능
-        } finally {
-          setLoading(false);
-        }
-      }
-    };
-
-    authenticate();
-  }, [code, router, state]);
+  const { loading: nativeLoading } = useNativeLogin({ code, state });
+  const { loading: webLoading } = useWebLogin({ code, state });
+  const loading = nativeLoading || webLoading;
 
   return (
     <main className="mb-[16px] mt-[56px] flex h-full flex-1 flex-col items-stretch justify-center space-y-[217px] px-[45px]">
