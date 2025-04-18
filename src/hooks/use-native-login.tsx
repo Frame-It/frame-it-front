@@ -1,4 +1,5 @@
 import { toast } from '@/components/ui/use-toast';
+import { isNativeApp } from '@/lib/platform';
 import { tokenRenewal } from '@/service/client-actions/notification';
 import { setCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
@@ -9,10 +10,9 @@ const useNativeLogin = ({ code, state }: { code: string; state: string }) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (window.ReactNativeWebView === undefined) return;
+    if (!isNativeApp()) return;
     window.receiveAuthData = async (authData: any) => {
       try {
-        // window.alert(`data: ${authData.accessToken} ${authData.identity}`);
         if (authData === undefined) {
           toast({
             title: '서버에서 오류가 발생하였습니다.',
@@ -26,8 +26,6 @@ const useNativeLogin = ({ code, state }: { code: string; state: string }) => {
           throw Error('토큰 오류');
 
         if (!authData?.signUpCompleted) {
-          // alert('회원가입 페이지로 이동');
-
           router.push(`/register`);
 
           setCookie('oauthId', authData.oauthUserId);
@@ -38,7 +36,6 @@ const useNativeLogin = ({ code, state }: { code: string; state: string }) => {
             await tokenRenewal(authData.id);
           }
 
-          // alert('홈 이동');
           router.push('/');
         }
       } catch (error) {
@@ -50,7 +47,6 @@ const useNativeLogin = ({ code, state }: { code: string; state: string }) => {
       } finally {
         setLoading(false);
       }
-      // return 'receiveAuthData';
     };
 
     window.ReactNativeWebView?.postMessage(
@@ -62,7 +58,7 @@ const useNativeLogin = ({ code, state }: { code: string; state: string }) => {
 
   useEffect(() => {
     if (loading) return;
-    if (window.ReactNativeWebView === undefined) return;
+    if (!isNativeApp()) return;
 
     const authenticate = async () => {
       if (code && state) {

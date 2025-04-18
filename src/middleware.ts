@@ -1,4 +1,5 @@
 // middleware.ts
+import { isNativeApp } from '@/lib/platform';
 import { NextRequest, NextResponse } from 'next/server';
 
 // 경로 그룹 변수 정의
@@ -11,6 +12,7 @@ const publicPaths = [
   '/portfolio-detail/',
   '/portfolio',
   '/studio',
+  '/refresh',
 ];
 const privatePaths = [
   '/my-page',
@@ -28,6 +30,16 @@ export async function middleware(request: NextRequest) {
 
   const url = request.nextUrl;
   const { status } = await getValidateToken(request);
+  // console.log('status', status);
+  const userAgent = request.headers.get('user-agent') || '';
+
+  if (status === 403) {
+    // console.log('accessToken 만료');
+    if (request.nextUrl.pathname !== '/refresh' && isNativeApp(userAgent)) {
+      // console.log('native app');
+      return NextResponse.redirect(new URL('/refresh', request.url));
+    }
+  }
 
   // 로그인이 안되어있어도 접근할 수 있는 경로
   if (publicPaths.includes(url.pathname)) {
@@ -104,7 +116,7 @@ export const config = {
     '/login',
     '/register',
     '/complete',
-
+    '/refresh',
     // main
     '/',
     '/feed',
