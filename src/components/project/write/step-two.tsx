@@ -16,10 +16,6 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from '@/components/ui/use-toast';
 import { PROJECT_CONCEPTS } from '@/constants/project';
-import {
-  ProjectImageFormValues,
-  projectImageSchema,
-} from '@/lib/schema/project-regist-schema';
 import { cn } from '@/lib/utils';
 import {
   useRecruitmentEditMutation,
@@ -31,6 +27,28 @@ import { PlusIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+
+const projectStepTwoSchema = z.object({
+  conceptTags: z
+    .array(z.string())
+    .min(1, '최소 1개 이상의 컨셉을 선택해주세요')
+    .max(3, '최대 3개까지 선택 가능합니다')
+    .refine((tags) => tags.length <= 3, '최대 3개까지 선택 가능합니다'),
+  description: z
+    .string()
+    .min(1, '프로젝트 설명을 입력해주세요')
+    .max(300, '최대 300자까지 입력 가능합니다'),
+  retouchingDetails: z
+    .string()
+    .min(1, '보정 내용을 입력해주세요')
+    .max(60, '최대 60자까지 입력 가능합니다'),
+  photos: z
+    .array(z.instanceof(File))
+    .min(1, '최소 1개 이상의 사진을 업로드해주세요'),
+});
+
+type ProjectStepTwoFormValues = z.infer<typeof projectStepTwoSchema>;
 
 const StepTwo = ({
   isEdit = false,
@@ -43,56 +61,38 @@ const StepTwo = ({
   const { mutateAsync: editMutate, isPending: isEditPending } =
     useRecruitmentEditMutation();
   const { projectInfo, reset } = useProjectRegisterStore();
-  const [selectedTags, setSelectedTags] = useState<string[]>(
-    projectInfo.conceptTags,
-  );
-
-  const isPending = isEditPending || isRegistPending;
   const router = useRouter();
 
-  const [description, setDescription] = useState<string>(
-    projectInfo.description,
-  );
-  const [retouchingDetails, setRetouchingDetails] = useState(
-    projectInfo.retouchingDetails,
-  );
-  const handleTagToggle = (id: string) => {
-    setSelectedTags((prevSelectedTags) =>
-      prevSelectedTags.includes(id)
-        ? prevSelectedTags.filter((tagId) => tagId !== id)
-        : [...prevSelectedTags, id],
-    );
-  };
+  const isPending = isEditPending || isRegistPending;
 
-  const isNextEnabled = Boolean(
-    selectedTags.length &&
-      description &&
-      retouchingDetails &&
-      (projectInfo.photos?.length || projectInfo.photoUrls?.length),
-  );
+  const form = useForm<ProjectStepTwoFormValues>({
+    resolver: zodResolver(projectStepTwoSchema),
+    defaultValues: {
+      conceptTags: projectInfo.conceptTags,
+      description: projectInfo.description,
+      retouchingDetails: projectInfo.retouchingDetails,
+      photos: projectInfo.photos || [],
+    },
+  });
 
-  const handleNext = async () => {
+  const onSubmit = async (data: ProjectStepTwoFormValues) => {
     const formData = new FormData();
     formData.append('title', projectInfo.projectName);
     formData.append('recruitmentRole', projectInfo.type || 'MODEL');
-    formData.append(
-      'shootingAt',
-      // `${projectInfo.shootingDate.date}T${projectInfo.shootingDate.time}:00`,
-      `${projectInfo.shootingDate.date}T00:00:00`,
-    );
+    formData.append('shootingAt', `${projectInfo.shootingDate.date}T00:00:00`);
     formData.append('timeOption', projectInfo.shootingDate.period ?? '');
     formData.append('locationType', projectInfo.location.type ?? '');
     formData.append('spot', projectInfo.location.spot ?? '');
     formData.append('address', projectInfo.location.address);
     formData.append('detailedAddress', projectInfo.location.detail);
-    formData.append('description', description);
-    formData.append('retouchingDescription', retouchingDetails);
+    formData.append('description', data.description);
+    formData.append('retouchingDescription', data.retouchingDetails);
 
-    selectedTags.forEach((tag) => {
+    data.conceptTags.forEach((tag) => {
       formData.append('concepts', tag);
     });
 
-    projectInfo.photos?.forEach((file) => {
+    data.photos.forEach((file) => {
       formData.append('conceptPhotos', file, file.name);
     });
 
@@ -116,68 +116,115 @@ const StepTwo = ({
   };
 
   return (
-    <div className={cn('relative flex h-full flex-col justify-between')}>
-      <div
-        className={cn(
-          'flex h-[calc(100%-64px)] flex-col gap-4 overflow-auto scrollbar-hide',
-        )}
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className={cn('relative flex h-full flex-col justify-between')}
       >
-        <div className={cn('flex flex-col gap-2')}>
-          <label className={cn('font-title-16')}>컨셉</label>
-          <div className={cn('flex flex-wrap gap-2')}>
-            {PROJECT_CONCEPTS.map((tag) => (
-              <ConceptTag
-                key={tag.id}
-                id={tag.id}
-                label={tag.label}
-                isSelected={selectedTags.includes(tag.id)}
-                onToggle={handleTagToggle}
-              />
-            ))}
+        <div
+          className={cn(
+            'flex h-[calc(100%-64px)] flex-col gap-4 overflow-auto scrollbar-hide',
+          )}
+        >
+          <div className={cn('flex flex-col gap-2')}>
+            <label className={cn('font-title-16')}>컨셉</label>
+            <div className={cn('flex flex-wrap gap-2')}>
+              {PROJECT_CONCEPTS.map((tag) => (
+                <ConceptTag
+                  key={tag.id}
+                  id={tag.id}
+                  label={tag.label}
+                  isSelected={form.watch('conceptTags').includes(tag.id)}
+                  onToggle={() => {
+                    const currentTags = form.getValues('conceptTags');
+                    const newTags = currentTags.includes(tag.id)
+                      ? currentTags.filter((id) => id !== tag.id)
+                      : [...currentTags, tag.id];
+
+                    try {
+                      // Zod 스키마로 유효성 검사
+                      projectStepTwoSchema.shape.conceptTags.parse(newTags);
+                      form.setValue('conceptTags', newTags);
+                    } catch (error) {
+                      if (error instanceof z.ZodError) {
+                        toast({
+                          title: error.errors[0].message,
+                        });
+                      }
+                    }
+                  }}
+                />
+              ))}
+            </div>
+            {form.formState.errors.conceptTags && (
+              <p className="text-sm text-red-500">
+                {form.formState.errors.conceptTags.message}
+              </p>
+            )}
+          </div>
+          <ApplyGuide />
+          <Images form={form} />
+          <div className={cn('flex flex-col gap-2')}>
+            <label className={cn('font-title-16')}>프로젝트 설명</label>
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Textarea
+                      {...field}
+                      className={cn('resize-none border border-gray-60 p-2')}
+                      placeholder="ex) 자연광 스튜디오에서 함께 촬영하실 모델분을 찾습니다!"
+                      rows={5}
+                      maxLength={300}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          <div className={cn('flex flex-col gap-2')}>
+            <label className={cn('font-title-16')}>보정 내용</label>
+            <FormField
+              control={form.control}
+              name="retouchingDetails"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Textarea
+                      {...field}
+                      className={cn('resize-none border border-gray-60 p-2')}
+                      placeholder="추가 수정 가능한 보정 횟수, 보정 스타일, 보정 툴 등을 적어주세요"
+                      rows={2}
+                      maxLength={60}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
         </div>
-        <ApplyGuide />
-        <Images />
-        <div className={cn('flex flex-col gap-2')}>
-          <label className={cn('font-title-16')}>프로젝트 설명</label>
-          <Textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            className={cn('resize-none border border-gray-60 p-2')}
-            placeholder="ex) 자연광 스튜디오에서 함께 촬영하실 모델분을 찾습니다!"
-            rows={5}
-            maxLength={300}
-          />
-        </div>
 
-        <div className={cn('flex flex-col gap-2')}>
-          <label className={cn('font-title-16')}>보정 내용</label>
-          <Textarea
-            value={retouchingDetails}
-            onChange={(e) => setRetouchingDetails(e.target.value)}
-            className={cn('resize-none border border-gray-60 p-2')}
-            placeholder="추가 수정 가능한 보정 횟수, 보정 스타일, 보정 툴 등을 적어주세요"
-            rows={2}
-            maxLength={60}
-          />
-        </div>
-      </div>
-
-      <div
-        className={cn(
-          'absolute bottom-0 left-0 flex h-[64px] w-full items-center',
-        )}
-      >
-        <BottomButton
-          onClick={handleNext}
-          variant={'primary'}
-          size={'large'}
-          disabled={!isNextEnabled || isPending}
+        <div
+          className={cn(
+            'absolute bottom-0 left-0 flex h-[64px] w-full items-center',
+          )}
         >
-          {isPending ? <LoadingSpinner /> : isEdit ? '수정하기' : '다음'}
-        </BottomButton>
-      </div>
-    </div>
+          <BottomButton
+            type="submit"
+            variant={'primary'}
+            size={'large'}
+            disabled={!form.formState.isValid || isPending}
+          >
+            {isPending ? <LoadingSpinner /> : isEdit ? '수정하기' : '다음'}
+          </BottomButton>
+        </div>
+      </form>
+    </Form>
   );
 };
 
@@ -189,17 +236,11 @@ const ApplyGuide = () => {
   return <Guide guides={guides} title="지원 안내" />;
 };
 
-const Images = () => {
+const Images = ({ form }: { form: any }) => {
   const { setProjectInfo, projectInfo } = useProjectRegisterStore();
-
-  const form = useForm<ProjectImageFormValues>({
-    resolver: zodResolver(projectImageSchema),
-  });
-
   const [previews, setPreviews] = useState<string[]>(
     projectInfo.photoUrls ?? [],
   );
-  const [files, setFiles] = useState<File[]>([]);
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { files: newFiles, displayUrls } = getImageData(e);
@@ -213,15 +254,14 @@ const Images = () => {
 
     const newFilesArray = Array.from(newFiles) as File[];
     const updatedPreviews = [...previews, ...displayUrls];
-    const updatedFiles = [...files, ...newFilesArray];
+    const updatedFiles = [...form.getValues('photos'), ...newFilesArray];
 
     setPreviews(updatedPreviews);
-    setFiles(updatedFiles);
-    form.setValue('images', updatedFiles);
+    form.setValue('photos', updatedFiles);
 
     setProjectInfo({
-      ...projectInfo, // 기존 projectInfo 복사
-      photos: updatedFiles, // photos 필드 업데이트
+      ...projectInfo,
+      photos: updatedFiles,
     });
   };
 
@@ -234,43 +274,37 @@ const Images = () => {
 
   return (
     <section className="flex h-fit flex-shrink-0 items-center gap-2 overflow-x-auto scrollbar-hide">
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(() => console.log(form.getValues()))}
-          // className="mt-[16px]"
-        >
-          {files.length >= 10 ? null : (
-            <FormField
-              control={form.control}
-              name="images"
-              render={() => (
-                <FormItem>
-                  <FormControl>
-                    <>
-                      <FormLabel
-                        htmlFor="images"
-                        className="relative flex h-[87px] w-[95px] cursor-pointer flex-col items-center justify-center rounded-[8px] border border-gray-60"
-                      >
-                        <PlusIcon size={32} className="text-gray-40" />
-                        <Input
-                          id="images"
-                          accept="image/*"
-                          type="file"
-                          multiple
-                          className="hidden"
-                          onChange={handleFileChange}
-                        />
-                      </FormLabel>
-                    </>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          )}
-        </form>
-      </Form>
-      {/* 미리보기 섹션 */}
+      <form onSubmit={form.handleSubmit(() => console.log(form.getValues()))}>
+        {form.watch('photos')?.length >= 10 ? null : (
+          <FormField
+            control={form.control}
+            name="photos"
+            render={() => (
+              <FormItem>
+                <FormControl>
+                  <>
+                    <FormLabel
+                      htmlFor="images"
+                      className="relative flex h-[87px] w-[95px] cursor-pointer flex-col items-center justify-center rounded-[8px] border border-gray-60"
+                    >
+                      <PlusIcon size={32} className="text-gray-40" />
+                      <Input
+                        id="images"
+                        accept="image/*"
+                        type="file"
+                        multiple
+                        className="hidden"
+                        onChange={handleFileChange}
+                      />
+                    </FormLabel>
+                  </>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
+      </form>
       <div className="flex items-center gap-2">
         {previews.map((preview, index) => (
           <div key={index} className="relative flex h-[87px] w-[95px] gap-2">
@@ -305,6 +339,7 @@ const Images = () => {
     </section>
   );
 };
+
 function getImageData(event: ChangeEvent<HTMLInputElement>) {
   const dataTransfer = new DataTransfer();
 

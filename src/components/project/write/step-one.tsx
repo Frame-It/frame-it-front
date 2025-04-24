@@ -13,82 +13,106 @@ import { Input } from '@/components/ui/input';
 import useDisclosure from '@/hooks/useDisclosure';
 import { cn } from '@/lib/utils';
 import { useProjectRegisterStore } from '@/store/project-regist-store';
-import { Identity, LocationType, TimeOption } from '@/types/project.type';
+import '@/styles/input.css';
+import { Identity } from '@/types/project.type';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { getCookie } from 'cookies-next';
-import { PropsWithChildren, useEffect, useRef, useState } from 'react';
+import { PropsWithChildren, useEffect, useRef } from 'react';
 import DaumPostcodeEmbed from 'react-daum-postcode';
-import '../../../styles/input.css';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+
+const projectSchema = z.object({
+  type: z.enum(['MODEL', 'PHOTOGRAPHER']),
+  projectName: z
+    .string()
+    .min(1, '프로젝트명을 입력해주세요')
+    .max(24, '최대 24자까지 입력 가능합니다'),
+  shootingDate: z.object({
+    date: z.string().min(1, '촬영 날짜를 선택해주세요'),
+    period: z.enum(['MORNING', 'AFTERNOON', 'TO_BE_DISCUSSED']),
+  }),
+  location: z.object({
+    type: z.enum(['INDOOR', 'OUTDOOR']),
+    spot: z.string().nullable(),
+    address: z.string().min(1, '주소를 입력해주세요'),
+    detail: z.string().min(1, '상세 주소를 입력해주세요'),
+  }),
+});
+
+type ProjectFormData = z.infer<typeof projectSchema>;
 
 const StepOne: React.FC = () => {
   const { projectInfo, setProjectInfo, nextStep } = useProjectRegisterStore();
-  const [type, setType] = useState<Identity | null>(null);
-  const [projectName, setProjectName] = useState<string>(
-    projectInfo.projectName,
-  );
-  const [date, setDate] = useState<string>(projectInfo.shootingDate.date);
-  // const [time, setTime] = useState<string>(projectInfo.shootingDate.time);
-  const [period, setPeriod] = useState<TimeOption | null>(
-    projectInfo.shootingDate.period,
-  );
-  const [locationType, setLocationType] = useState<LocationType | null>(
-    projectInfo.location.type,
-  );
-  const [address, setAddress] = useState<string>(projectInfo.location.address);
-  const [spot, setSpot] = useState<string | null>(projectInfo.location.spot);
-
-  const [detail, setDetail] = useState<string>(projectInfo.location.detail);
-
-  const dateInputRef = useRef<HTMLInputElement>(null);
-  // const timeInputRef = useRef<HTMLInputElement>(null);
   const { isOpen, onToggle, onOpenChange } = useDisclosure(false);
   const cookieIdentity = getCookie('identity') as Identity;
+  const dateInputRef = useRef<HTMLInputElement>(null);
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors, isValid },
+  } = useForm<ProjectFormData>({
+    resolver: zodResolver(projectSchema),
+    mode: 'onChange',
+    defaultValues: {
+      type: projectInfo.type || undefined,
+      projectName: projectInfo.projectName,
+      shootingDate: {
+        date: projectInfo.shootingDate.date,
+        period: projectInfo.shootingDate.period || undefined,
+      },
+      location: {
+        type: projectInfo.location.type || undefined,
+        spot: projectInfo.location.spot,
+        address: projectInfo.location.address,
+        detail: projectInfo.location.detail,
+      },
+    },
+  });
 
   useEffect(() => {
     if (cookieIdentity) {
-      setType(cookieIdentity === 'MODEL' ? 'PHOTOGRAPHER' : 'MODEL');
+      setValue('type', cookieIdentity === 'MODEL' ? 'PHOTOGRAPHER' : 'MODEL');
     }
-  }, [cookieIdentity]);
-
-  const isNextEnabled =
-    type &&
-    projectName &&
-    date &&
-    // time &&
-    period &&
-    locationType &&
-    address &&
-    detail;
-
-  const handleNext = () => {
-    if (isNextEnabled) {
-      setProjectInfo({
-        type,
-        projectName,
-        shootingDate: { date, period },
-        location: { type: locationType, spot, address, detail },
-      });
-      nextStep();
-    }
-  };
+  }, [cookieIdentity, setValue]);
 
   const handleDateClick = () => {
     if (dateInputRef.current) {
       dateInputRef.current.showPicker();
+      dateInputRef.current.addEventListener('change', (e) => {
+        const target = e.target as HTMLInputElement;
+        setValue('shootingDate.date', target.value);
+      });
     }
   };
-  // const handleTimeClick = () => {
-  //   if (timeInputRef.current) {
-  //     timeInputRef.current.showPicker();
-  //   }
-  // };
+
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue('shootingDate.date', e.target.value);
+  };
+
   const handleComplete = (location: any) => {
-    setAddress(location.address);
-    setSpot(location.sigunguCode);
+    setValue('location.address', location.address);
+    setValue('location.spot', location.sigunguCode);
     onToggle();
   };
 
+  const onSubmit = (data: ProjectFormData) => {
+    setProjectInfo(data);
+    nextStep();
+  };
+
+  const watchedType = watch('type');
+  const watchedPeriod = watch('shootingDate.period');
+  const watchedLocationType = watch('location.type');
+
   return (
-    <div className={cn('relative flex h-full flex-col justify-between')}>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className={cn('relative flex h-full flex-col justify-between')}
+    >
       <div
         className={cn(
           'flex h-[calc(100%-64px)] flex-col gap-4 overflow-auto scrollbar-hide',
@@ -98,21 +122,24 @@ const StepOne: React.FC = () => {
           <label className={cn('font-title-16')}>구인</label>
           <div className={cn('flex gap-2')}>
             <BottomButton
-              variant={type === 'MODEL' ? 'secondary' : 'stroke'}
+              variant={watchedType === 'MODEL' ? 'secondary' : 'stroke'}
               size={'middle'}
               label={'모델'}
               className="border-gray-60"
-              onClick={() => setType('MODEL')}
+              onClick={() => setValue('type', 'MODEL')}
+              type="button"
             />
             <BottomButton
-              variant={type === 'PHOTOGRAPHER' ? 'secondary' : 'stroke'}
+              variant={watchedType === 'PHOTOGRAPHER' ? 'secondary' : 'stroke'}
               size={'middle'}
               label={'작가'}
               className="border-gray-60"
-              onClick={() => setType('PHOTOGRAPHER')}
+              onClick={() => setValue('type', 'PHOTOGRAPHER')}
+              type="button"
             />
           </div>
         </div>
+
         <div className={cn('flex flex-col gap-2')}>
           <label className={cn('font-title-16')}>
             프로젝트명
@@ -121,12 +148,15 @@ const StepOne: React.FC = () => {
             </div>
           </label>
           <Input
-            value={projectName}
-            onChange={(e) => setProjectName(e.target.value)}
+            {...register('projectName')}
             maxLength={24}
             placeholder="ex) 함께 촬영하실 모델분 구해요!"
           />
+          {errors.projectName && (
+            <p className="text-sm text-red-500">{errors.projectName.message}</p>
+          )}
         </div>
+
         <div className={cn('flex flex-col gap-2')}>
           <label className={cn('font-title-16')}>
             촬영일시
@@ -138,8 +168,8 @@ const StepOne: React.FC = () => {
             <div className="flex gap-[6px]">
               <Input
                 type="date"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
+                {...register('shootingDate.date')}
+                onChange={handleDateChange}
                 placeholder="YYYY/MM/DD"
                 ref={dateInputRef}
                 onClick={handleDateClick}
@@ -155,50 +185,47 @@ const StepOne: React.FC = () => {
                   />
                 }
                 onClick={handleDateClick}
+                type="button"
               />
             </div>
-            {/* <div className="flex gap-[6px]">
-              <Input
-                value={time}
-                type="time"
-                placeholder="00:00"
-                onChange={(e) => setTime(e.target.value)}
-                ref={timeInputRef}
-                onClick={handleTimeClick}
-                className="font-body-14 flex h-[40px] w-full flex-1 flex-col items-center justify-center rounded-[8px] bg-transparent p-[10.514px] text-center text-gray-20 placeholder-gray-60 focus:ring-0"
-              />
-              <IconButton
-                icon={
-                  <Icon id={'time-icon'} size={24} className="text-gray-40" />
-                }
-                onClick={handleTimeClick}
-              />
-            </div> */}
+            {errors.shootingDate?.date && (
+              <p className="text-sm text-red-500">
+                {errors.shootingDate.date.message}
+              </p>
+            )}
             <div className={cn('flex gap-2')}>
               <BottomButton
-                variant={period === 'MORNING' ? 'secondary' : 'stroke'}
+                variant={watchedPeriod === 'MORNING' ? 'secondary' : 'stroke'}
                 size={'middle'}
                 label={'오전'}
-                onClick={() => setPeriod('MORNING')}
+                onClick={() => setValue('shootingDate.period', 'MORNING')}
                 className="border-gray-60"
+                type="button"
               />
               <BottomButton
-                variant={period === 'AFTERNOON' ? 'secondary' : 'stroke'}
+                variant={watchedPeriod === 'AFTERNOON' ? 'secondary' : 'stroke'}
                 size={'middle'}
                 label={'오후'}
-                onClick={() => setPeriod('AFTERNOON')}
+                onClick={() => setValue('shootingDate.period', 'AFTERNOON')}
                 className="border-gray-60"
+                type="button"
               />
               <BottomButton
-                variant={period === 'TO_BE_DISCUSSED' ? 'secondary' : 'stroke'}
+                variant={
+                  watchedPeriod === 'TO_BE_DISCUSSED' ? 'secondary' : 'stroke'
+                }
                 size={'middle'}
                 label={'시간협의'}
-                onClick={() => setPeriod('TO_BE_DISCUSSED')}
+                onClick={() =>
+                  setValue('shootingDate.period', 'TO_BE_DISCUSSED')
+                }
                 className="border-gray-60"
+                type="button"
               />
             </div>
           </div>
         </div>
+
         <div className={cn('flex flex-col gap-2')}>
           <label className={cn('font-title-16')}>
             촬영장소
@@ -209,24 +236,30 @@ const StepOne: React.FC = () => {
           <div className={cn('flex flex-col gap-2')}>
             <div className={cn('flex gap-2')}>
               <BottomButton
-                variant={locationType === 'INDOOR' ? 'secondary' : 'stroke'}
+                variant={
+                  watchedLocationType === 'INDOOR' ? 'secondary' : 'stroke'
+                }
                 size={'middle'}
                 label={'실내'}
-                onClick={() => setLocationType('INDOOR')}
+                onClick={() => setValue('location.type', 'INDOOR')}
                 className="border-gray-60"
+                type="button"
               />
               <BottomButton
-                variant={locationType === 'OUTDOOR' ? 'secondary' : 'stroke'}
+                variant={
+                  watchedLocationType === 'OUTDOOR' ? 'secondary' : 'stroke'
+                }
                 size={'middle'}
                 label={'야외'}
-                onClick={() => setLocationType('OUTDOOR')}
+                onClick={() => setValue('location.type', 'OUTDOOR')}
                 className="border-gray-60"
+                type="button"
               />
             </div>
             <div className="flex gap-[6px]">
               <Input
                 type="text"
-                value={address}
+                {...register('location.address')}
                 onClick={onToggle}
                 placeholder="주소"
               />
@@ -235,6 +268,7 @@ const StepOne: React.FC = () => {
                   <Icon id={'search-icon'} size={24} className="text-gray-40" />
                 }
                 onClick={onToggle}
+                type="button"
               />
 
               <Dialog open={isOpen} onOpenChange={onOpenChange}>
@@ -254,13 +288,22 @@ const StepOne: React.FC = () => {
                 </DialogContent>
               </Dialog>
             </div>
+            {errors.location?.address && (
+              <p className="text-sm text-red-500">
+                {errors.location.address.message}
+              </p>
+            )}
 
             <Input
               type="text"
-              value={detail}
-              onChange={(e) => setDetail(e.target.value)}
+              {...register('location.detail')}
               placeholder="상세 주소를 입력해 주세요."
             />
+            {errors.location?.detail && (
+              <p className="text-sm text-red-500">
+                {errors.location.detail.message}
+              </p>
+            )}
           </div>
         </div>
       </div>
@@ -271,14 +314,14 @@ const StepOne: React.FC = () => {
         )}
       >
         <BottomButton
-          onClick={handleNext}
+          type="submit"
           variant={'primary'}
           size={'large'}
           label={'다음'}
-          disabled={!isNextEnabled}
+          disabled={!isValid}
         />
       </div>
-    </div>
+    </form>
   );
 };
 
