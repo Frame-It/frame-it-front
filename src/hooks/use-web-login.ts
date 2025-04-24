@@ -1,4 +1,5 @@
 import { toast } from '@/components/ui/use-toast';
+import { isNativeApp } from '@/lib/platform';
 import { sendCodeToBackend } from '@/service/auth-service';
 import { tokenRenewal } from '@/service/client-actions/notification';
 import { setCookie } from 'cookies-next';
@@ -11,7 +12,7 @@ const useWebLogin = ({ code, state }: { code: string; state: string }) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (window.ReactNativeWebView) return;
+    if (isNativeApp()) return;
 
     const authenticate = async () => {
       if (code && state) {
