@@ -12,11 +12,18 @@ import ProjectNameSection from './sections/project-name-section';
 import ProjectTypeSection from './sections/project-type-section';
 import ShootingDateSection from './sections/shooting-date-section';
 
+const stepOneSchema = projectSchema.pick({
+  type: true,
+  projectName: true,
+  shootingDate: true,
+  location: true,
+});
+
 const StepOne: React.FC = () => {
   const { projectInfo, setProjectInfo, nextStep } = useProjectRegisterStore();
 
   const methods = useForm<ProjectFormData>({
-    resolver: zodResolver(projectSchema),
+    resolver: zodResolver(stepOneSchema),
     mode: 'onChange',
     defaultValues: {
       type: projectInfo.type || undefined,

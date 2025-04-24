@@ -45,7 +45,7 @@ const ShootingDateSection = () => {
           <Input
             type="date"
             {...register('shootingDate.date')}
-            // onChange={handleDateChange}
+            onChange={handleDateChange}
             placeholder="YYYY/MM/DD"
             value={date}
             ref={dateInputRef}
