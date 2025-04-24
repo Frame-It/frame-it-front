@@ -1,9 +1,8 @@
 import { Identity, LocationType, TimeOption } from '@/types/project.type';
-import { getCookie } from 'cookies-next';
 import { create } from 'zustand';
 
 interface IProjectRegistInfo {
-  type: Identity;
+  type: Identity | null;
   projectName: string;
   shootingDate: {
     date: string;
@@ -37,9 +36,8 @@ interface ProjectRegisterState {
 }
 
 const initialProjectInfo: IProjectRegistInfo = {
-  type: getCookie('identity') as Identity,
+  type: null,
   projectName: '',
-  // shootingDate: { date: '', time: '', period: null },
   shootingDate: { date: '', period: null },
   location: { type: null, spot: null, address: '', detail: '' },
   conceptTags: [],
