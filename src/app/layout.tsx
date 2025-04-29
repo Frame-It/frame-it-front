@@ -4,21 +4,20 @@ import './globals.css';
 
 import SvgSymbols from '@/components/common/svg-symbols';
 import { Toaster } from '@/components/ui/toaster';
-import { GoogleTagManager } from '@next/third-parties/google';
+import { PwaProvider } from '@/providers/pwa-provider';
 import ReactQueryProvider from '@/providers/react-query-provider';
+import { GoogleTagManager } from '@next/third-parties/google';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import localFont from 'next/font/local';
 import Link from 'next/link';
 import Script from 'next/script';
-import { PwaProvider } from '@/providers/pwa-provider';
-import dynamic from 'next/dynamic';
 
-const AppInstallPrompt = dynamic(
-  () => import('@/components/common/app-install-prompt'),
-  {
-    ssr: false,
-  },
-);
+// const AppInstallPrompt = dynamic(
+//   () => import('@/components/common/app-install-prompt'),
+//   {
+//     ssr: false,
+//   },
+// );
 
 export const metadata: Metadata = {
   manifest: '/manifest.json',
@@ -122,7 +121,7 @@ export default function RootLayout({
               <ReactQueryProvider>
                 <PwaProvider>
                   {children}
-                  <AppInstallPrompt />
+                  {/* <AppInstallPrompt /> */}
                 </PwaProvider>
                 <Script src="/sw.js" />
                 <ReactQueryDevtools />

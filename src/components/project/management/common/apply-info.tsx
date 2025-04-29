@@ -6,10 +6,7 @@ import useDisclosure from '@/hooks/useDisclosure';
 import { IStartedProjectGuest } from '@/lib/api/project/project.interface';
 import { cn } from '@/lib/utils';
 import { IActiveProject, IStartedProject } from '@/types/project.type';
-import {
-  MyApplyItem,
-  StartedProjectApplyGuestItem,
-} from '../apply-member-item';
+import { MyApplyItem, StartedProjectApplyGuestItem } from './apply-member-item';
 
 interface ApplyLayoutProps {
   title: string;

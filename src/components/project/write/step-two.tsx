@@ -40,7 +40,7 @@ const StepTwo = ({
   projectId?: number;
 }) => {
   const { mutateAsync, isPending: isRegistPending } = useRecruitmentMutation();
-  const { mutate: editMutate, isPending: isEditPending } =
+  const { mutateAsync: editMutate, isPending: isEditPending } =
     useRecruitmentEditMutation();
   const { projectInfo, reset } = useProjectRegisterStore();
   const [selectedTags, setSelectedTags] = useState<string[]>(
@@ -98,10 +98,8 @@ const StepTwo = ({
 
     try {
       if (isEdit && projectId !== undefined) {
-        editMutate({ formData, projectId });
-        router.replace(
-          `/project-management/${projectId}?status=RECRUITING&isHost=true`,
-        );
+        await editMutate({ formData, projectId });
+        router.replace(`/project-management`);
       } else {
         const projectId = await mutateAsync(formData);
         router.replace(
