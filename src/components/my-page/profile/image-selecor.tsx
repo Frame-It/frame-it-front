@@ -43,7 +43,6 @@ const ProfileImageSelector: React.FC<IProfileImageSelectorProps> = ({
   };
 
   const handleDelete = () => {
-    // TODO : 삭제시키기
     form.setValue('profileImage', undefined);
     form.setValue('isDelete', true);
     setPreviewImage(null);
@@ -56,7 +55,7 @@ const ProfileImageSelector: React.FC<IProfileImageSelectorProps> = ({
         <img
           src={previewImage || '/png/profile.png'}
           alt="프로필 이미지"
-          className="overflow-hidden rounded-[16px] bg-cover bg-center"
+          className="size-[114px] overflow-hidden rounded-[16px] bg-cover"
         />
         <button
           type="button"

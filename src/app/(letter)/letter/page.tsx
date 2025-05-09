@@ -50,7 +50,7 @@ export default async function LetterPage() {
                         }
                       />
                       <div className="font-body-14m">
-                        {chat.participants.name}
+                        {chat.participants.nickname}
                       </div>
                     </div>
 

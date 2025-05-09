@@ -78,7 +78,7 @@ const NavLink: React.FunctionComponent<INavLinkProps> = ({
 
 const BottomNavbar = ({ className }: IBottomBarProps) => {
   const pathName = usePathname().split('/')[1];
-  const { isOpen, onOpenChange, onOpen } = useDisclosure();
+  const { isOpen, onOpenChange } = useDisclosure();
 
   const handleRegist = () => {};
 
@@ -106,6 +106,7 @@ const BottomNavbar = ({ className }: IBottomBarProps) => {
                       />
                     </li>
                   }
+                  className="pb-4 pt-0"
                 >
                   <RegistDrawerContent />
                 </Drawer>

@@ -1,6 +1,7 @@
 export interface IParticipant {
   id: number;
   name: string;
+  nickname: string;
   profileImageUrl: string;
   identity: 'MODEL' | 'PHOTOGRAPHER';
 }
