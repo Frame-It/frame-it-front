@@ -38,6 +38,7 @@ const ImageUploadSection = () => {
     setProjectInfo({
       ...projectInfo,
       photos: updatedFiles,
+      photoUrls: updatedPreviews,
     });
   };
 
