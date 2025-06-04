@@ -174,7 +174,7 @@ export const postProjectApply = async (
 };
 
 export const getSigunguList = async (keyword: string) => {
-  const url = `/vworld/req/data?attrFilter=sig_kor_nm:like:${keyword}&geometry=false&data=LT_C_ADSIGG_INFO&request=GetFeature&key=069702E3-D907-3290-8F9E-12C5B4249082&domain=www.frameit.kr`;
+  const url = `/vworld/req/data?attrFilter=sig_kor_nm:like:${keyword}&geometry=false&data=LT_C_ADSIGG_INFO&request=GetFeature&key=${process.env.NEXT_PUBLIC_VWORLD_API_KEY}&domain=www.frameit.kr`;
 
   const res = await fetch(url);
 

@@ -4,19 +4,31 @@ import BackButton from '@/components/common/back-button';
 import { Header, HeaderCenter, HeaderLeft } from '@/components/common/header';
 import Icon from '@/components/common/icon';
 import { cn } from '@/lib/utils';
-import { useSearchParams } from 'next/navigation';
+import { useProjectRegisterStore } from '@/store/project-regist-store';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
 
 const ProjectLayoutContent = ({ children }: { children: React.ReactNode }) => {
   const searchParams = useSearchParams();
   const isComplete = searchParams.get('complete') === 'true';
-
+  const router = useRouter();
+  const { currentStep, prevStep } = useProjectRegisterStore();
+  const handleClickBack = () => {
+    if (currentStep === 1) {
+      router.back();
+    } else {
+      prevStep();
+    }
+  };
   return (
     <>
       <Header className="border-none text-lg shadow-none">
         {!isComplete && (
           <HeaderLeft>
-            <BackButton className="flex items-center justify-center">
+            <BackButton
+              className="flex items-center justify-center"
+              onClick={handleClickBack}
+            >
               <Icon id="back-icon" className="size-[32px] text-gray-40" />
             </BackButton>
           </HeaderLeft>
