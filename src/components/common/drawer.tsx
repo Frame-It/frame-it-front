@@ -1,6 +1,5 @@
 import { cn } from '@/lib/utils';
 import { PropsWithChildren, ReactNode } from 'react';
-import Icon from './icon';
 import {
   Sheet,
   SheetClose,
@@ -9,12 +8,13 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '../ui/sheet';
+import Icon from './icon';
 
 interface IDrawerProps {
   title?: string;
   open: boolean;
   onClose?: () => void;
-  trigger: ReactNode;
+  trigger?: ReactNode;
   onOpenChange?: (open: boolean) => void;
   className?: string;
 }
@@ -30,11 +30,13 @@ const Drawer = ({
 }: IDrawerProps & PropsWithChildren) => {
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetTrigger asChild>
-        <div className="btn-primary flex items-center justify-center">
-          {trigger}
-        </div>
-      </SheetTrigger>
+      {trigger && (
+        <SheetTrigger asChild>
+          <div className="btn-primary flex items-center justify-center">
+            {trigger}
+          </div>
+        </SheetTrigger>
+      )}
       <SheetContent>
         {title ? (
           <SheetHeader className={cn('flex items-center justify-between')}>

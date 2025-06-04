@@ -110,83 +110,83 @@ const ApplyDrawer = ({
   const isLogin = localStorage.getItem('accessToken');
 
   return (
-    <Drawer
-      title={'지원하기'}
-      open={isOpen}
-      onOpenChange={isLogin ? onOpenChange : () => router.push('/login')}
-      onClose={onClose}
-      trigger={
-        <BottomButton
-          variant={'primary'}
-          size={'large'}
-          label={'프로젝트 신청하기'}
-          className="w-[222px]"
-          disabled={hostIdentity === myIdentity || isClosed}
-        />
-      }
-      className="pb-0"
-    >
-      <div className={cn('relative flex flex-col gap-3 pb-[74px]')}>
-        <div className="font-body-14 flex items-center gap-2 self-stretch rounded-[8px] border-[1px] border-primary p-2 px-3 text-primary">
-          {title}
+    <>
+      <BottomButton
+        variant={'primary'}
+        size={'large'}
+        label={'프로젝트 신청하기'}
+        className="w-[222px]"
+        disabled={hostIdentity === myIdentity || isClosed}
+      />
+      <Drawer
+        title={'지원하기'}
+        open={isOpen}
+        onOpenChange={isLogin ? onOpenChange : () => router.push('/login')}
+        onClose={onClose}
+        className="pb-0"
+      >
+        <div className={cn('relative flex flex-col gap-3 pb-[74px]')}>
+          <div className="font-body-14 flex items-center gap-2 self-stretch rounded-[8px] border-[1px] border-primary p-2 px-3 text-primary">
+            {title}
+          </div>
+          <div className="flex flex-col gap-2">
+            <h1 className={cn('font-title-16 text-gray-10')}>
+              {hostIdentity === 'PHOTOGRAPHER' ? '작가' : '모델'}님께 하고싶은
+              말
+            </h1>
+            <Textarea
+              placeholder="자유롭게 적어주세요."
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              maxLength={100}
+            />
+          </div>
+          <Guide title="지원 안내" guides={GuestProjectGuide.general} />
+          <div
+            className={cn(
+              'absolute bottom-0 left-0 flex h-[64px] w-full items-center',
+            )}
+          >
+            <Dialog open={isModalOpen} onOpenChange={onModalOpenChange}>
+              <DialogTrigger asChild>
+                <BottomButton
+                  variant={'primary'}
+                  size={'large'}
+                  label={'신청 하기'}
+                  disabled={!content}
+                  onClick={handleClickApply}
+                />
+              </DialogTrigger>
+              <DialogContent className="flex w-[312px] flex-col gap-[6px] px-[12px] pb-[24px] pt-[32px]">
+                <div
+                  className={cn(
+                    'font-title-16 flex flex-wrap items-start justify-center self-stretch',
+                  )}
+                >
+                  신청이 완료되었습니다.
+                </div>
+                <p
+                  className={cn(
+                    'font-body-14 mb-4 flex justify-center self-stretch text-gray-20',
+                  )}
+                >
+                  {title}
+                </p>
+                <BottomButton
+                  variant={'secondary'}
+                  size={'middle'}
+                  label={'확인하기'}
+                  onClick={() => {
+                    router.push(`/project-management/${projectId}`);
+                  }}
+                  className="max-w-none"
+                />
+              </DialogContent>
+            </Dialog>
+          </div>
         </div>
-        <div className="flex flex-col gap-2">
-          <h1 className={cn('font-title-16 text-gray-10')}>
-            {hostIdentity === 'PHOTOGRAPHER' ? '작가' : '모델'}님께 하고싶은 말
-          </h1>
-          <Textarea
-            placeholder="자유롭게 적어주세요."
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            maxLength={100}
-          />
-        </div>
-        <Guide title="지원 안내" guides={GuestProjectGuide.general} />
-        <div
-          className={cn(
-            'absolute bottom-0 left-0 flex h-[64px] w-full items-center',
-          )}
-        >
-          <Dialog open={isModalOpen} onOpenChange={onModalOpenChange}>
-            <DialogTrigger asChild>
-              <BottomButton
-                variant={'primary'}
-                size={'large'}
-                label={'신청 하기'}
-                disabled={!content}
-                onClick={handleClickApply}
-              />
-            </DialogTrigger>
-            <DialogContent className="flex w-[312px] flex-col gap-[6px] px-[12px] pb-[24px] pt-[32px]">
-              <div
-                className={cn(
-                  'font-title-16 flex flex-wrap items-start justify-center self-stretch',
-                )}
-              >
-                신청이 완료되었습니다.
-              </div>
-              <p
-                className={cn(
-                  'font-body-14 mb-4 flex justify-center self-stretch text-gray-20',
-                )}
-              >
-                {title}
-              </p>
-              <BottomButton
-                variant={'secondary'}
-                size={'middle'}
-                label={'확인하기'}
-                onClick={() => {
-                  router.push(`/project-management/${projectId}`);
-                }}
-                className="max-w-none"
-              />
-            </DialogContent>
-          </Dialog>
-        </div>
-      </div>
-      <></>
-    </Drawer>
+      </Drawer>
+    </>
   );
 };
 

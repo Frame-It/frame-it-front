@@ -2,7 +2,7 @@ import { Identity, LocationType, TimeOption } from '@/types/project.type';
 import { create } from 'zustand';
 
 interface IProjectRegistInfo {
-  type: Identity;
+  type: Identity | null;
   projectName: string;
   shootingDate: {
     date: string;
@@ -36,9 +36,8 @@ interface ProjectRegisterState {
 }
 
 const initialProjectInfo: IProjectRegistInfo = {
-  type: 'PHOTOGRAPHER',
+  type: null,
   projectName: '',
-  // shootingDate: { date: '', time: '', period: null },
   shootingDate: { date: '', period: null },
   location: { type: null, spot: null, address: '', detail: '' },
   conceptTags: [],
